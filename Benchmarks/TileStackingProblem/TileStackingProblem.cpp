@@ -49,8 +49,9 @@ int dp[N+1][M+1];
 int dp_sum[N+1][M+1]; // dp_sum[i][j] = dp[0][j] + dp[1][j] + dp[2][j] + ... + dp[i][j]
 
 int main()
-freopen("../input_files/TileStackingProblem", "r", stdin);
+
 {
+   freopen("../input_files/TileStackingProblem", "r", stdin);
     ios_base::sync_with_stdio(0);
     int n, m, k;
     cin >> n >> m >> k;

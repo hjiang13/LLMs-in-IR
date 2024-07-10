@@ -1,0 +1,446 @@
+; ModuleID = '../../Benchmarks/FroginMaze/FroginMaze.cpp'
+source_filename = "../../Benchmarks/FroginMaze/FroginMaze.cpp"
+target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-f80:128-n8:16:32:64-S128"
+target triple = "x86_64-unknown-linux-gnu"
+
+%"class.std::ios_base::Init" = type { i8 }
+%"struct.std::pair" = type { i32, i32 }
+%struct._IO_FILE = type { i32, i8*, i8*, i8*, i8*, i8*, i8*, i8*, i8*, i8*, i8*, i8*, %struct._IO_marker*, %struct._IO_FILE*, i32, i32, i64, i16, i8, [1 x i8], i8*, i64, %struct._IO_codecvt*, %struct._IO_wide_data*, %struct._IO_FILE*, i8*, i64, i32, [20 x i8] }
+%struct._IO_marker = type opaque
+%struct._IO_codecvt = type opaque
+%struct._IO_wide_data = type opaque
+%"class.std::basic_istream" = type { i32 (...)**, i64, %"class.std::basic_ios" }
+%"class.std::basic_ios" = type { %"class.std::ios_base", %"class.std::basic_ostream"*, i8, i8, %"class.std::basic_streambuf"*, %"class.std::ctype"*, %"class.std::num_put"*, %"class.std::num_get"* }
+%"class.std::ios_base" = type { i32 (...)**, i64, i64, i32, i32, i32, %"struct.std::ios_base::_Callback_list"*, %"struct.std::ios_base::_Words", [8 x %"struct.std::ios_base::_Words"], i32, %"struct.std::ios_base::_Words"*, %"class.std::locale" }
+%"struct.std::ios_base::_Callback_list" = type { %"struct.std::ios_base::_Callback_list"*, void (i32, %"class.std::ios_base"*, i32)*, i32, i32 }
+%"struct.std::ios_base::_Words" = type { i8*, i64 }
+%"class.std::locale" = type { %"class.std::locale::_Impl"* }
+%"class.std::locale::_Impl" = type { i32, %"class.std::locale::facet"**, i64, %"class.std::locale::facet"**, i8** }
+%"class.std::locale::facet" = type <{ i32 (...)**, i32, [4 x i8] }>
+%"class.std::basic_ostream" = type { i32 (...)**, %"class.std::basic_ios" }
+%"class.std::basic_streambuf" = type { i32 (...)**, i8*, i8*, i8*, i8*, i8*, i8*, %"class.std::locale" }
+%"class.std::ctype" = type <{ %"class.std::locale::facet.base", [4 x i8], %struct.__locale_struct*, i8, [7 x i8], i32*, i32*, i16*, i8, [256 x i8], [256 x i8], i8, [6 x i8] }>
+%"class.std::locale::facet.base" = type <{ i32 (...)**, i32 }>
+%struct.__locale_struct = type { [13 x %struct.__locale_data*], i16*, i32*, i32*, [13 x i8*] }
+%struct.__locale_data = type opaque
+%"class.std::num_put" = type { %"class.std::locale::facet.base", [4 x i8] }
+%"class.std::num_get" = type { %"class.std::locale::facet.base", [4 x i8] }
+
+@_ZStL8__ioinit = internal global %"class.std::ios_base::Init" zeroinitializer, align 1
+@__dso_handle = external hidden global i8
+@grid = dso_local global [22 x [22 x i8]] zeroinitializer, align 16
+@value = dso_local local_unnamed_addr global [22 x [22 x double]] zeroinitializer, align 16
+@tunnels = dso_local local_unnamed_addr global [22 x [22 x %"struct.std::pair"]] zeroinitializer, align 16
+@dx = dso_local local_unnamed_addr global [4 x i32] [i32 0, i32 1, i32 0, i32 -1], align 16
+@dy = dso_local local_unnamed_addr global [4 x i32] [i32 1, i32 0, i32 -1, i32 0], align 16
+@.str = private unnamed_addr constant [26 x i8] c"../input_files/FroginMaze\00", align 1
+@.str.1 = private unnamed_addr constant [2 x i8] c"r\00", align 1
+@stdin = external dso_local local_unnamed_addr global %struct._IO_FILE*, align 8
+@_ZSt3cin = external dso_local global %"class.std::basic_istream", align 8
+@_ZSt4cout = external dso_local global %"class.std::basic_ostream", align 8
+@llvm.global_ctors = appending global [1 x { i32, void ()*, i8* }] [{ i32, void ()*, i8* } { i32 65535, void ()* @_GLOBAL__sub_I_FroginMaze.cpp, i8* null }]
+
+declare dso_local void @_ZNSt8ios_base4InitC1Ev(%"class.std::ios_base::Init"* nonnull align 1 dereferenceable(1)) unnamed_addr #0
+
+; Function Attrs: nounwind
+declare dso_local void @_ZNSt8ios_base4InitD1Ev(%"class.std::ios_base::Init"* nonnull align 1 dereferenceable(1)) unnamed_addr #1
+
+; Function Attrs: nofree nounwind
+declare dso_local i32 @__cxa_atexit(void (i8*)*, i8*, i8*) local_unnamed_addr #2
+
+; Function Attrs: norecurse uwtable
+define dso_local i32 @main() local_unnamed_addr #3 {
+  %1 = alloca i32, align 4
+  %2 = alloca i32, align 4
+  %3 = alloca i32, align 4
+  %4 = alloca i32, align 4
+  %5 = alloca i32, align 4
+  %6 = alloca i32, align 4
+  %7 = alloca i32, align 4
+  %8 = load %struct._IO_FILE*, %struct._IO_FILE** @stdin, align 8, !tbaa !3
+  %9 = tail call %struct._IO_FILE* @freopen(i8* getelementptr inbounds ([26 x i8], [26 x i8]* @.str, i64 0, i64 0), i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.1, i64 0, i64 0), %struct._IO_FILE* %8)
+  %10 = bitcast i32* %1 to i8*
+  call void @llvm.lifetime.start.p0i8(i64 4, i8* nonnull %10) #7
+  %11 = bitcast i32* %2 to i8*
+  call void @llvm.lifetime.start.p0i8(i64 4, i8* nonnull %11) #7
+  %12 = bitcast i32* %3 to i8*
+  call void @llvm.lifetime.start.p0i8(i64 4, i8* nonnull %12) #7
+  %13 = call nonnull align 8 dereferenceable(16) %"class.std::basic_istream"* @_ZNSirsERi(%"class.std::basic_istream"* nonnull align 8 dereferenceable(16) @_ZSt3cin, i32* nonnull align 4 dereferenceable(4) %1)
+  %14 = call nonnull align 8 dereferenceable(16) %"class.std::basic_istream"* @_ZNSirsERi(%"class.std::basic_istream"* nonnull align 8 dereferenceable(16) %13, i32* nonnull align 4 dereferenceable(4) %2)
+  %15 = call nonnull align 8 dereferenceable(16) %"class.std::basic_istream"* @_ZNSirsERi(%"class.std::basic_istream"* nonnull align 8 dereferenceable(16) %14, i32* nonnull align 4 dereferenceable(4) %3)
+  call void @llvm.memset.p0i8.i64(i8* noundef nonnull align 16 dereferenceable(484) getelementptr inbounds ([22 x [22 x i8]], [22 x [22 x i8]]* @grid, i64 0, i64 0, i64 0), i8 35, i64 484, i1 false)
+  %16 = load i32, i32* %1, align 4, !tbaa !7
+  %17 = icmp sgt i32 %16, 0
+  %18 = load i32, i32* %2, align 4
+  %19 = icmp sgt i32 %18, 0
+  %20 = select i1 %17, i1 %19, i1 false
+  br i1 %20, label %21, label %31
+
+21:                                               ; preds = %0, %43
+  %22 = phi i32 [ %44, %43 ], [ %16, %0 ]
+  %23 = phi i32 [ %45, %43 ], [ %18, %0 ]
+  %24 = phi i64 [ %27, %43 ], [ 0, %0 ]
+  %25 = phi i32 [ %47, %43 ], [ undef, %0 ]
+  %26 = phi i32 [ %46, %43 ], [ undef, %0 ]
+  %27 = add nuw nsw i64 %24, 1
+  %28 = icmp sgt i32 %23, 0
+  br i1 %28, label %29, label %43
+
+29:                                               ; preds = %21
+  %30 = trunc i64 %27 to i32
+  br label %50
+
+31:                                               ; preds = %43, %0
+  %32 = phi i32 [ %16, %0 ], [ %44, %43 ]
+  %33 = phi i32 [ undef, %0 ], [ %46, %43 ]
+  %34 = phi i32 [ undef, %0 ], [ %47, %43 ]
+  %35 = bitcast i32* %4 to i8*
+  %36 = bitcast i32* %5 to i8*
+  %37 = bitcast i32* %6 to i8*
+  %38 = bitcast i32* %7 to i8*
+  %39 = load i32, i32* %3, align 4, !tbaa !7
+  %40 = icmp sgt i32 %39, 0
+  br i1 %40, label %88, label %69
+
+41:                                               ; preds = %61
+  %42 = load i32, i32* %1, align 4, !tbaa !7
+  br label %43
+
+43:                                               ; preds = %41, %21
+  %44 = phi i32 [ %22, %21 ], [ %42, %41 ]
+  %45 = phi i32 [ %23, %21 ], [ %64, %41 ]
+  %46 = phi i32 [ %26, %21 ], [ %62, %41 ]
+  %47 = phi i32 [ %25, %21 ], [ %63, %41 ]
+  %48 = sext i32 %44 to i64
+  %49 = icmp slt i64 %27, %48
+  br i1 %49, label %21, label %31, !llvm.loop !9
+
+50:                                               ; preds = %29, %61
+  %51 = phi i64 [ 0, %29 ], [ %54, %61 ]
+  %52 = phi i32 [ %25, %29 ], [ %63, %61 ]
+  %53 = phi i32 [ %26, %29 ], [ %62, %61 ]
+  %54 = add nuw nsw i64 %51, 1
+  %55 = getelementptr inbounds [22 x [22 x i8]], [22 x [22 x i8]]* @grid, i64 0, i64 %27, i64 %54
+  %56 = call nonnull align 8 dereferenceable(16) %"class.std::basic_istream"* @_ZStrsIcSt11char_traitsIcEERSt13basic_istreamIT_T0_ES6_RS3_(%"class.std::basic_istream"* nonnull align 8 dereferenceable(16) @_ZSt3cin, i8* nonnull align 1 dereferenceable(1) %55)
+  %57 = load i8, i8* %55, align 1, !tbaa !12
+  %58 = icmp eq i8 %57, 65
+  br i1 %58, label %59, label %61
+
+59:                                               ; preds = %50
+  store i8 79, i8* %55, align 1, !tbaa !12
+  %60 = trunc i64 %54 to i32
+  br label %61
+
+61:                                               ; preds = %50, %59
+  %62 = phi i32 [ %30, %59 ], [ %53, %50 ]
+  %63 = phi i32 [ %60, %59 ], [ %52, %50 ]
+  %64 = load i32, i32* %2, align 4, !tbaa !7
+  %65 = sext i32 %64 to i64
+  %66 = icmp slt i64 %54, %65
+  br i1 %66, label %50, label %41, !llvm.loop !13
+
+67:                                               ; preds = %88
+  %68 = load i32, i32* %1, align 4, !tbaa !7
+  br label %69
+
+69:                                               ; preds = %67, %31
+  %70 = phi i32 [ %68, %67 ], [ %32, %31 ]
+  %71 = load i32, i32* %2, align 4
+  %72 = icmp slt i32 %70, 1
+  %73 = icmp slt i32 %71, 1
+  %74 = select i1 %72, i1 true, i1 %73
+  br i1 %74, label %111, label %75
+
+75:                                               ; preds = %69
+  %76 = add nuw i32 %71, 1
+  %77 = add nuw i32 %70, 1
+  %78 = zext i32 %77 to i64
+  %79 = zext i32 %76 to i64
+  %80 = load i32, i32* getelementptr inbounds ([4 x i32], [4 x i32]* @dx, i64 0, i64 0), align 16
+  %81 = load i32, i32* getelementptr inbounds ([4 x i32], [4 x i32]* @dy, i64 0, i64 0), align 16
+  %82 = load i32, i32* getelementptr inbounds ([4 x i32], [4 x i32]* @dx, i64 0, i64 1), align 4
+  %83 = load i32, i32* getelementptr inbounds ([4 x i32], [4 x i32]* @dy, i64 0, i64 1), align 4
+  %84 = load i32, i32* getelementptr inbounds ([4 x i32], [4 x i32]* @dx, i64 0, i64 2), align 8
+  %85 = load i32, i32* getelementptr inbounds ([4 x i32], [4 x i32]* @dy, i64 0, i64 2), align 8
+  %86 = load i32, i32* getelementptr inbounds ([4 x i32], [4 x i32]* @dx, i64 0, i64 3), align 4
+  %87 = load i32, i32* getelementptr inbounds ([4 x i32], [4 x i32]* @dy, i64 0, i64 3), align 4
+  br label %109
+
+88:                                               ; preds = %31, %88
+  %89 = phi i32 [ %106, %88 ], [ 0, %31 ]
+  call void @llvm.lifetime.start.p0i8(i64 4, i8* nonnull %35) #7
+  call void @llvm.lifetime.start.p0i8(i64 4, i8* nonnull %36) #7
+  call void @llvm.lifetime.start.p0i8(i64 4, i8* nonnull %37) #7
+  call void @llvm.lifetime.start.p0i8(i64 4, i8* nonnull %38) #7
+  %90 = call nonnull align 8 dereferenceable(16) %"class.std::basic_istream"* @_ZNSirsERi(%"class.std::basic_istream"* nonnull align 8 dereferenceable(16) @_ZSt3cin, i32* nonnull align 4 dereferenceable(4) %4)
+  %91 = call nonnull align 8 dereferenceable(16) %"class.std::basic_istream"* @_ZNSirsERi(%"class.std::basic_istream"* nonnull align 8 dereferenceable(16) %90, i32* nonnull align 4 dereferenceable(4) %5)
+  %92 = call nonnull align 8 dereferenceable(16) %"class.std::basic_istream"* @_ZNSirsERi(%"class.std::basic_istream"* nonnull align 8 dereferenceable(16) %91, i32* nonnull align 4 dereferenceable(4) %6)
+  %93 = call nonnull align 8 dereferenceable(16) %"class.std::basic_istream"* @_ZNSirsERi(%"class.std::basic_istream"* nonnull align 8 dereferenceable(16) %92, i32* nonnull align 4 dereferenceable(4) %7)
+  %94 = load i32, i32* %6, align 4, !tbaa !7
+  %95 = load i32, i32* %7, align 4, !tbaa !7
+  %96 = load i32, i32* %4, align 4, !tbaa !7
+  %97 = sext i32 %96 to i64
+  %98 = load i32, i32* %5, align 4, !tbaa !7
+  %99 = sext i32 %98 to i64
+  %100 = getelementptr inbounds [22 x [22 x %"struct.std::pair"]], [22 x [22 x %"struct.std::pair"]]* @tunnels, i64 0, i64 %97, i64 %99, i32 0
+  store i32 %94, i32* %100, align 8, !tbaa !14
+  %101 = getelementptr inbounds [22 x [22 x %"struct.std::pair"]], [22 x [22 x %"struct.std::pair"]]* @tunnels, i64 0, i64 %97, i64 %99, i32 1
+  store i32 %95, i32* %101, align 4, !tbaa !16
+  %102 = sext i32 %94 to i64
+  %103 = sext i32 %95 to i64
+  %104 = getelementptr inbounds [22 x [22 x %"struct.std::pair"]], [22 x [22 x %"struct.std::pair"]]* @tunnels, i64 0, i64 %102, i64 %103, i32 0
+  store i32 %96, i32* %104, align 8, !tbaa !14
+  %105 = getelementptr inbounds [22 x [22 x %"struct.std::pair"]], [22 x [22 x %"struct.std::pair"]]* @tunnels, i64 0, i64 %102, i64 %103, i32 1
+  store i32 %98, i32* %105, align 4, !tbaa !16
+  call void @llvm.lifetime.end.p0i8(i64 4, i8* nonnull %38) #7
+  call void @llvm.lifetime.end.p0i8(i64 4, i8* nonnull %37) #7
+  call void @llvm.lifetime.end.p0i8(i64 4, i8* nonnull %36) #7
+  call void @llvm.lifetime.end.p0i8(i64 4, i8* nonnull %35) #7
+  %106 = add nuw nsw i32 %89, 1
+  %107 = load i32, i32* %3, align 4, !tbaa !7
+  %108 = icmp slt i32 %106, %107
+  br i1 %108, label %88, label %67, !llvm.loop !17
+
+109:                                              ; preds = %75, %128
+  %110 = phi i32 [ %129, %128 ], [ 0, %75 ]
+  br label %117
+
+111:                                              ; preds = %128, %69
+  %112 = sext i32 %33 to i64
+  %113 = sext i32 %34 to i64
+  %114 = getelementptr inbounds [22 x [22 x double]], [22 x [22 x double]]* @value, i64 0, i64 %112, i64 %113
+  %115 = load double, double* %114, align 8, !tbaa !18
+  %116 = call nonnull align 8 dereferenceable(8) %"class.std::basic_ostream"* @_ZNSo9_M_insertIdEERSoT_(%"class.std::basic_ostream"* nonnull align 8 dereferenceable(8) @_ZSt4cout, double %115)
+  call void @llvm.lifetime.end.p0i8(i64 4, i8* nonnull %12) #7
+  call void @llvm.lifetime.end.p0i8(i64 4, i8* nonnull %11) #7
+  call void @llvm.lifetime.end.p0i8(i64 4, i8* nonnull %10) #7
+  ret i32 0
+
+117:                                              ; preds = %109, %131
+  %118 = phi i64 [ 1, %109 ], [ %132, %131 ]
+  %119 = trunc i64 %118 to i32
+  %120 = add nsw i32 %80, %119
+  %121 = sext i32 %120 to i64
+  %122 = add nsw i32 %82, %119
+  %123 = sext i32 %122 to i64
+  %124 = add nsw i32 %84, %119
+  %125 = sext i32 %124 to i64
+  %126 = add nsw i32 %86, %119
+  %127 = sext i32 %126 to i64
+  br label %134
+
+128:                                              ; preds = %131
+  %129 = add nuw nsw i32 %110, 1
+  %130 = icmp eq i32 %129, 60000
+  br i1 %130, label %111, label %109, !llvm.loop !20
+
+131:                                              ; preds = %177
+  %132 = add nuw nsw i64 %118, 1
+  %133 = icmp eq i64 %132, %78
+  br i1 %133, label %128, label %117, !llvm.loop !21
+
+134:                                              ; preds = %117, %177
+  %135 = phi i64 [ 1, %117 ], [ %178, %177 ]
+  %136 = getelementptr inbounds [22 x [22 x i8]], [22 x [22 x i8]]* @grid, i64 0, i64 %118, i64 %135
+  %137 = load i8, i8* %136, align 1, !tbaa !12
+  switch i8 %137, label %177 [
+    i8 37, label %174
+    i8 42, label %145
+    i8 79, label %138
+  ]
+
+138:                                              ; preds = %134
+  %139 = trunc i64 %135 to i32
+  %140 = add nsw i32 %81, %139
+  %141 = sext i32 %140 to i64
+  %142 = getelementptr inbounds [22 x [22 x i8]], [22 x [22 x i8]]* @grid, i64 0, i64 %121, i64 %141
+  %143 = load i8, i8* %142, align 1, !tbaa !12
+  %144 = icmp eq i8 %143, 35
+  br i1 %144, label %161, label %146
+
+145:                                              ; preds = %134
+  br label %174
+
+146:                                              ; preds = %138
+  %147 = getelementptr inbounds [22 x [22 x %"struct.std::pair"]], [22 x [22 x %"struct.std::pair"]]* @tunnels, i64 0, i64 %121, i64 %141, i32 0
+  %148 = load i32, i32* %147, align 8, !tbaa !14
+  %149 = icmp eq i32 %148, 0
+  %150 = getelementptr inbounds [22 x [22 x %"struct.std::pair"]], [22 x [22 x %"struct.std::pair"]]* @tunnels, i64 0, i64 %121, i64 %141, i32 1
+  %151 = load i32, i32* %150, align 4
+  %152 = icmp eq i32 %151, 0
+  %153 = select i1 %149, i1 %152, i1 false
+  %154 = getelementptr inbounds [22 x [22 x double]], [22 x [22 x double]]* @value, i64 0, i64 %121, i64 %141
+  %155 = sext i32 %148 to i64
+  %156 = sext i32 %151 to i64
+  %157 = getelementptr inbounds [22 x [22 x double]], [22 x [22 x double]]* @value, i64 0, i64 %155, i64 %156
+  %158 = select i1 %153, double* %154, double* %157
+  %159 = load double, double* %158, align 8, !tbaa !18
+  %160 = fadd double %159, 0.000000e+00
+  br label %161
+
+161:                                              ; preds = %146, %138
+  %162 = phi i32 [ 0, %138 ], [ 1, %146 ]
+  %163 = phi double [ 0.000000e+00, %138 ], [ %160, %146 ]
+  %164 = add nsw i32 %83, %139
+  %165 = sext i32 %164 to i64
+  %166 = getelementptr inbounds [22 x [22 x i8]], [22 x [22 x i8]]* @grid, i64 0, i64 %123, i64 %165
+  %167 = load i8, i8* %166, align 1, !tbaa !12
+  %168 = icmp eq i8 %167, 35
+  br i1 %168, label %196, label %180
+
+169:                                              ; preds = %228, %244
+  %170 = phi double [ %222, %244 ], [ %243, %228 ]
+  %171 = phi i32 [ %221, %244 ], [ %229, %228 ]
+  %172 = sitofp i32 %171 to double
+  %173 = fdiv double %170, %172
+  br label %174
+
+174:                                              ; preds = %244, %134, %145, %169
+  %175 = phi double [ %173, %169 ], [ 0.000000e+00, %145 ], [ 1.000000e+00, %134 ], [ 0.000000e+00, %244 ]
+  %176 = getelementptr inbounds [22 x [22 x double]], [22 x [22 x double]]* @value, i64 0, i64 %118, i64 %135
+  store double %175, double* %176, align 8, !tbaa !18
+  br label %177
+
+177:                                              ; preds = %174, %134
+  %178 = add nuw nsw i64 %135, 1
+  %179 = icmp eq i64 %178, %79
+  br i1 %179, label %131, label %134, !llvm.loop !22
+
+180:                                              ; preds = %161
+  %181 = add nuw nsw i32 %162, 1
+  %182 = getelementptr inbounds [22 x [22 x %"struct.std::pair"]], [22 x [22 x %"struct.std::pair"]]* @tunnels, i64 0, i64 %123, i64 %165, i32 0
+  %183 = load i32, i32* %182, align 8, !tbaa !14
+  %184 = icmp eq i32 %183, 0
+  %185 = getelementptr inbounds [22 x [22 x %"struct.std::pair"]], [22 x [22 x %"struct.std::pair"]]* @tunnels, i64 0, i64 %123, i64 %165, i32 1
+  %186 = load i32, i32* %185, align 4
+  %187 = icmp eq i32 %186, 0
+  %188 = select i1 %184, i1 %187, i1 false
+  %189 = getelementptr inbounds [22 x [22 x double]], [22 x [22 x double]]* @value, i64 0, i64 %123, i64 %165
+  %190 = sext i32 %183 to i64
+  %191 = sext i32 %186 to i64
+  %192 = getelementptr inbounds [22 x [22 x double]], [22 x [22 x double]]* @value, i64 0, i64 %190, i64 %191
+  %193 = select i1 %188, double* %189, double* %192
+  %194 = load double, double* %193, align 8, !tbaa !18
+  %195 = fadd double %163, %194
+  br label %196
+
+196:                                              ; preds = %180, %161
+  %197 = phi i32 [ %162, %161 ], [ %181, %180 ]
+  %198 = phi double [ %163, %161 ], [ %195, %180 ]
+  %199 = add nsw i32 %85, %139
+  %200 = sext i32 %199 to i64
+  %201 = getelementptr inbounds [22 x [22 x i8]], [22 x [22 x i8]]* @grid, i64 0, i64 %125, i64 %200
+  %202 = load i8, i8* %201, align 1, !tbaa !12
+  %203 = icmp eq i8 %202, 35
+  br i1 %203, label %220, label %204
+
+204:                                              ; preds = %196
+  %205 = add nuw nsw i32 %197, 1
+  %206 = getelementptr inbounds [22 x [22 x %"struct.std::pair"]], [22 x [22 x %"struct.std::pair"]]* @tunnels, i64 0, i64 %125, i64 %200, i32 0
+  %207 = load i32, i32* %206, align 8, !tbaa !14
+  %208 = icmp eq i32 %207, 0
+  %209 = getelementptr inbounds [22 x [22 x %"struct.std::pair"]], [22 x [22 x %"struct.std::pair"]]* @tunnels, i64 0, i64 %125, i64 %200, i32 1
+  %210 = load i32, i32* %209, align 4
+  %211 = icmp eq i32 %210, 0
+  %212 = select i1 %208, i1 %211, i1 false
+  %213 = getelementptr inbounds [22 x [22 x double]], [22 x [22 x double]]* @value, i64 0, i64 %125, i64 %200
+  %214 = sext i32 %207 to i64
+  %215 = sext i32 %210 to i64
+  %216 = getelementptr inbounds [22 x [22 x double]], [22 x [22 x double]]* @value, i64 0, i64 %214, i64 %215
+  %217 = select i1 %212, double* %213, double* %216
+  %218 = load double, double* %217, align 8, !tbaa !18
+  %219 = fadd double %198, %218
+  br label %220
+
+220:                                              ; preds = %204, %196
+  %221 = phi i32 [ %197, %196 ], [ %205, %204 ]
+  %222 = phi double [ %198, %196 ], [ %219, %204 ]
+  %223 = add nsw i32 %87, %139
+  %224 = sext i32 %223 to i64
+  %225 = getelementptr inbounds [22 x [22 x i8]], [22 x [22 x i8]]* @grid, i64 0, i64 %127, i64 %224
+  %226 = load i8, i8* %225, align 1, !tbaa !12
+  %227 = icmp eq i8 %226, 35
+  br i1 %227, label %244, label %228
+
+228:                                              ; preds = %220
+  %229 = add nuw nsw i32 %221, 1
+  %230 = getelementptr inbounds [22 x [22 x %"struct.std::pair"]], [22 x [22 x %"struct.std::pair"]]* @tunnels, i64 0, i64 %127, i64 %224, i32 0
+  %231 = load i32, i32* %230, align 8, !tbaa !14
+  %232 = icmp eq i32 %231, 0
+  %233 = getelementptr inbounds [22 x [22 x %"struct.std::pair"]], [22 x [22 x %"struct.std::pair"]]* @tunnels, i64 0, i64 %127, i64 %224, i32 1
+  %234 = load i32, i32* %233, align 4
+  %235 = icmp eq i32 %234, 0
+  %236 = select i1 %232, i1 %235, i1 false
+  %237 = sext i32 %231 to i64
+  %238 = sext i32 %234 to i64
+  %239 = getelementptr inbounds [22 x [22 x double]], [22 x [22 x double]]* @value, i64 0, i64 %237, i64 %238
+  %240 = getelementptr inbounds [22 x [22 x double]], [22 x [22 x double]]* @value, i64 0, i64 %127, i64 %224
+  %241 = select i1 %236, double* %240, double* %239
+  %242 = load double, double* %241, align 8, !tbaa !18
+  %243 = fadd double %222, %242
+  br label %169
+
+244:                                              ; preds = %220
+  %245 = icmp eq i32 %221, 0
+  br i1 %245, label %174, label %169
+}
+
+declare dso_local %struct._IO_FILE* @freopen(i8*, i8*, %struct._IO_FILE*) local_unnamed_addr #0
+
+; Function Attrs: argmemonly mustprogress nofree nosync nounwind willreturn
+declare void @llvm.lifetime.start.p0i8(i64 immarg, i8* nocapture) #4
+
+declare dso_local nonnull align 8 dereferenceable(16) %"class.std::basic_istream"* @_ZNSirsERi(%"class.std::basic_istream"* nonnull align 8 dereferenceable(16), i32* nonnull align 4 dereferenceable(4)) local_unnamed_addr #0
+
+; Function Attrs: argmemonly mustprogress nofree nosync nounwind willreturn
+declare void @llvm.lifetime.end.p0i8(i64 immarg, i8* nocapture) #4
+
+declare dso_local nonnull align 8 dereferenceable(16) %"class.std::basic_istream"* @_ZStrsIcSt11char_traitsIcEERSt13basic_istreamIT_T0_ES6_RS3_(%"class.std::basic_istream"* nonnull align 8 dereferenceable(16), i8* nonnull align 1 dereferenceable(1)) local_unnamed_addr #0
+
+declare dso_local nonnull align 8 dereferenceable(8) %"class.std::basic_ostream"* @_ZNSo9_M_insertIdEERSoT_(%"class.std::basic_ostream"* nonnull align 8 dereferenceable(8), double) local_unnamed_addr #0
+
+; Function Attrs: uwtable
+define internal void @_GLOBAL__sub_I_FroginMaze.cpp() #5 section ".text.startup" {
+  tail call void @_ZNSt8ios_base4InitC1Ev(%"class.std::ios_base::Init"* nonnull align 1 dereferenceable(1) @_ZStL8__ioinit)
+  %1 = tail call i32 @__cxa_atexit(void (i8*)* bitcast (void (%"class.std::ios_base::Init"*)* @_ZNSt8ios_base4InitD1Ev to void (i8*)*), i8* getelementptr inbounds (%"class.std::ios_base::Init", %"class.std::ios_base::Init"* @_ZStL8__ioinit, i64 0, i32 0), i8* nonnull @__dso_handle) #7
+  ret void
+}
+
+; Function Attrs: argmemonly nofree nounwind willreturn writeonly
+declare void @llvm.memset.p0i8.i64(i8* nocapture writeonly, i8, i64, i1 immarg) #6
+
+attributes #0 = { "frame-pointer"="none" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #1 = { nounwind "frame-pointer"="none" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #2 = { nofree nounwind }
+attributes #3 = { norecurse uwtable "frame-pointer"="none" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #4 = { argmemonly mustprogress nofree nosync nounwind willreturn }
+attributes #5 = { uwtable "frame-pointer"="none" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #6 = { argmemonly nofree nounwind willreturn writeonly }
+attributes #7 = { nounwind }
+
+!llvm.module.flags = !{!0, !1}
+!llvm.ident = !{!2}
+
+!0 = !{i32 1, !"wchar_size", i32 4}
+!1 = !{i32 7, !"uwtable", i32 1}
+!2 = !{!"clang version 13.0.0 (https://github.com/llvm/llvm-project.git d7b669b3a30345cfcdb2fde2af6f48aa4b94845d)"}
+!3 = !{!4, !4, i64 0}
+!4 = !{!"any pointer", !5, i64 0}
+!5 = !{!"omnipotent char", !6, i64 0}
+!6 = !{!"Simple C++ TBAA"}
+!7 = !{!8, !8, i64 0}
+!8 = !{!"int", !5, i64 0}
+!9 = distinct !{!9, !10, !11}
+!10 = !{!"llvm.loop.mustprogress"}
+!11 = !{!"llvm.loop.unswitch.partial.disable"}
+!12 = !{!5, !5, i64 0}
+!13 = distinct !{!13, !10}
+!14 = !{!15, !8, i64 0}
+!15 = !{!"_ZTSSt4pairIiiE", !8, i64 0, !8, i64 4}
+!16 = !{!15, !8, i64 4}
+!17 = distinct !{!17, !10}
+!18 = !{!19, !19, i64 0}
+!19 = !{!"double", !5, i64 0}
+!20 = distinct !{!20, !10}
+!21 = distinct !{!21, !10}
+!22 = distinct !{!22, !10}

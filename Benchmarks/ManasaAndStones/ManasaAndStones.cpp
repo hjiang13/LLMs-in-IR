@@ -25,8 +25,9 @@ void printPossibleScore(uint64_t n, uint64_t a, uint64_t b)
 }
 
 int main() 
-freopen("../input_files/ManasaAndStones", "r", stdin);
+
 {
+    freopen("../input_files/ManasaAndStones", "r", stdin);
     short T;
     cin >> T;
     int az=89;

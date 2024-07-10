@@ -1,0 +1,317 @@
+; ModuleID = '../../Benchmarks/LinkedListCycle/LinkedListCycle.cpp'
+source_filename = "../../Benchmarks/LinkedListCycle/LinkedListCycle.cpp"
+target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-f80:128-n8:16:32:64-S128"
+target triple = "x86_64-unknown-linux-gnu"
+
+%"class.std::ios_base::Init" = type { i8 }
+%struct._IO_FILE = type { i32, i8*, i8*, i8*, i8*, i8*, i8*, i8*, i8*, i8*, i8*, i8*, %struct._IO_marker*, %struct._IO_FILE*, i32, i32, i64, i16, i8, [1 x i8], i8*, i64, %struct._IO_codecvt*, %struct._IO_wide_data*, %struct._IO_FILE*, i8*, i64, i32, [20 x i8] }
+%struct._IO_marker = type opaque
+%struct._IO_codecvt = type opaque
+%struct._IO_wide_data = type opaque
+%"class.std::basic_ostream" = type { i32 (...)**, %"class.std::basic_ios" }
+%"class.std::basic_ios" = type { %"class.std::ios_base", %"class.std::basic_ostream"*, i8, i8, %"class.std::basic_streambuf"*, %"class.std::ctype"*, %"class.std::num_put"*, %"class.std::num_get"* }
+%"class.std::ios_base" = type { i32 (...)**, i64, i64, i32, i32, i32, %"struct.std::ios_base::_Callback_list"*, %"struct.std::ios_base::_Words", [8 x %"struct.std::ios_base::_Words"], i32, %"struct.std::ios_base::_Words"*, %"class.std::locale" }
+%"struct.std::ios_base::_Callback_list" = type { %"struct.std::ios_base::_Callback_list"*, void (i32, %"class.std::ios_base"*, i32)*, i32, i32 }
+%"struct.std::ios_base::_Words" = type { i8*, i64 }
+%"class.std::locale" = type { %"class.std::locale::_Impl"* }
+%"class.std::locale::_Impl" = type { i32, %"class.std::locale::facet"**, i64, %"class.std::locale::facet"**, i8** }
+%"class.std::locale::facet" = type <{ i32 (...)**, i32, [4 x i8] }>
+%"class.std::basic_streambuf" = type { i32 (...)**, i8*, i8*, i8*, i8*, i8*, i8*, %"class.std::locale" }
+%"class.std::ctype" = type <{ %"class.std::locale::facet.base", [4 x i8], %struct.__locale_struct*, i8, [7 x i8], i32*, i32*, i16*, i8, [256 x i8], [256 x i8], i8, [6 x i8] }>
+%"class.std::locale::facet.base" = type <{ i32 (...)**, i32 }>
+%struct.__locale_struct = type { [13 x %struct.__locale_data*], i16*, i32*, i32*, [13 x i8*] }
+%struct.__locale_data = type opaque
+%"class.std::num_put" = type { %"class.std::locale::facet.base", [4 x i8] }
+%"class.std::num_get" = type { %"class.std::locale::facet.base", [4 x i8] }
+%struct.Node = type { i32, %struct.Node* }
+
+@_ZStL8__ioinit = internal global %"class.std::ios_base::Init" zeroinitializer, align 1
+@__dso_handle = external hidden global i8
+@.str = private unnamed_addr constant [31 x i8] c"../input_files/LinkedListCycle\00", align 1
+@.str.1 = private unnamed_addr constant [2 x i8] c"r\00", align 1
+@stdin = external dso_local local_unnamed_addr global %struct._IO_FILE*, align 8
+@_ZSt4cout = external dso_local global %"class.std::basic_ostream", align 8
+@.str.2 = private unnamed_addr constant [2 x i8] c"1\00", align 1
+@.str.3 = private unnamed_addr constant [2 x i8] c"0\00", align 1
+@llvm.global_ctors = appending global [1 x { i32, void ()*, i8* }] [{ i32, void ()*, i8* } { i32 65535, void ()* @_GLOBAL__sub_I_LinkedListCycle.cpp, i8* null }]
+
+declare dso_local void @_ZNSt8ios_base4InitC1Ev(%"class.std::ios_base::Init"* nonnull align 1 dereferenceable(1)) unnamed_addr #0
+
+; Function Attrs: nounwind
+declare dso_local void @_ZNSt8ios_base4InitD1Ev(%"class.std::ios_base::Init"* nonnull align 1 dereferenceable(1)) unnamed_addr #1
+
+; Function Attrs: nofree nounwind
+declare dso_local i32 @__cxa_atexit(void (i8*)*, i8*, i8*) local_unnamed_addr #2
+
+; Function Attrs: mustprogress nofree norecurse nosync nounwind readonly uwtable willreturn
+define dso_local i32 @_Z8HasCycleP4Node(%struct.Node* readonly %0) local_unnamed_addr #3 {
+  %2 = icmp eq %struct.Node* %0, null
+  br i1 %2, label %21, label %3
+
+3:                                                ; preds = %1, %17
+  %4 = phi %struct.Node* [ %13, %17 ], [ %0, %1 ]
+  %5 = phi %struct.Node* [ %19, %17 ], [ %0, %1 ]
+  %6 = getelementptr inbounds %struct.Node, %struct.Node* %4, i64 0, i32 1
+  %7 = load %struct.Node*, %struct.Node** %6, align 8, !tbaa !3
+  %8 = icmp eq %struct.Node* %7, null
+  br i1 %8, label %21, label %9
+
+9:                                                ; preds = %3
+  %10 = icmp eq %struct.Node* %7, %5
+  br i1 %10, label %21, label %11
+
+11:                                               ; preds = %9
+  %12 = getelementptr inbounds %struct.Node, %struct.Node* %7, i64 0, i32 1
+  %13 = load %struct.Node*, %struct.Node** %12, align 8, !tbaa !3
+  %14 = icmp eq %struct.Node* %13, %5
+  br i1 %14, label %21, label %15
+
+15:                                               ; preds = %11
+  %16 = icmp eq %struct.Node* %13, null
+  br i1 %16, label %21, label %17
+
+17:                                               ; preds = %15
+  %18 = getelementptr inbounds %struct.Node, %struct.Node* %5, i64 0, i32 1
+  %19 = load %struct.Node*, %struct.Node** %18, align 8, !tbaa !3
+  %20 = icmp eq %struct.Node* %19, null
+  br i1 %20, label %21, label %3, !llvm.loop !9
+
+21:                                               ; preds = %17, %15, %11, %9, %3, %1
+  %22 = phi i32 [ 0, %1 ], [ 1, %17 ], [ 0, %15 ], [ 1, %11 ], [ 1, %9 ], [ 0, %3 ]
+  ret i32 %22
+}
+
+; Function Attrs: mustprogress norecurse uwtable
+define dso_local i32 @main() local_unnamed_addr #4 {
+  %1 = load %struct._IO_FILE*, %struct._IO_FILE** @stdin, align 8, !tbaa !11
+  %2 = tail call %struct._IO_FILE* @freopen(i8* getelementptr inbounds ([31 x i8], [31 x i8]* @.str, i64 0, i64 0), i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.1, i64 0, i64 0), %struct._IO_FILE* %1)
+  %3 = tail call noalias nonnull dereferenceable(16) i8* @_Znwm(i64 16) #8
+  %4 = bitcast i8* %3 to %struct.Node*
+  tail call void @llvm.memset.p0i8.i64(i8* noundef nonnull align 16 dereferenceable(16) %3, i8 0, i64 16, i1 false)
+  %5 = tail call noalias nonnull dereferenceable(16) i8* @_Znwm(i64 16) #8
+  %6 = bitcast i8* %5 to %struct.Node*
+  tail call void @llvm.memset.p0i8.i64(i8* noundef nonnull align 16 dereferenceable(16) %5, i8 0, i64 16, i1 false)
+  %7 = tail call noalias nonnull dereferenceable(16) i8* @_Znwm(i64 16) #8
+  %8 = bitcast i8* %7 to %struct.Node*
+  tail call void @llvm.memset.p0i8.i64(i8* noundef nonnull align 16 dereferenceable(16) %7, i8 0, i64 16, i1 false)
+  %9 = tail call noalias nonnull dereferenceable(16) i8* @_Znwm(i64 16) #8
+  %10 = bitcast i8* %9 to %struct.Node*
+  tail call void @llvm.memset.p0i8.i64(i8* noundef nonnull align 16 dereferenceable(16) %9, i8 0, i64 16, i1 false)
+  %11 = tail call noalias nonnull dereferenceable(16) i8* @_Znwm(i64 16) #8
+  %12 = bitcast i8* %11 to %struct.Node*
+  tail call void @llvm.memset.p0i8.i64(i8* noundef nonnull align 16 dereferenceable(16) %11, i8 0, i64 16, i1 false)
+  %13 = tail call noalias nonnull dereferenceable(16) i8* @_Znwm(i64 16) #8
+  %14 = bitcast i8* %13 to %struct.Node*
+  tail call void @llvm.memset.p0i8.i64(i8* noundef nonnull align 16 dereferenceable(16) %13, i8 0, i64 16, i1 false)
+  %15 = tail call nonnull align 8 dereferenceable(8) %"class.std::basic_ostream"* @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(%"class.std::basic_ostream"* nonnull align 8 dereferenceable(8) @_ZSt4cout, i8* nonnull getelementptr inbounds ([2 x i8], [2 x i8]* @.str.3, i64 0, i64 0), i64 1)
+  %16 = getelementptr inbounds %struct.Node, %struct.Node* %4, i64 0, i32 1
+  %17 = bitcast %struct.Node** %16 to i8**
+  store i8* %5, i8** %17, align 8, !tbaa !3
+  %18 = getelementptr inbounds %struct.Node, %struct.Node* %6, i64 0, i32 1
+  %19 = bitcast %struct.Node** %18 to i8**
+  store i8* %7, i8** %19, align 8, !tbaa !3
+  %20 = getelementptr inbounds %struct.Node, %struct.Node* %8, i64 0, i32 1
+  %21 = bitcast %struct.Node** %20 to i8**
+  store i8* %3, i8** %21, align 8, !tbaa !3
+  br label %22
+
+22:                                               ; preds = %0, %36
+  %23 = phi %struct.Node* [ %4, %0 ], [ %34, %36 ]
+  %24 = phi %struct.Node* [ %6, %0 ], [ %38, %36 ]
+  %25 = icmp eq %struct.Node* %24, %23
+  br i1 %25, label %40, label %26
+
+26:                                               ; preds = %22
+  %27 = getelementptr inbounds %struct.Node, %struct.Node* %24, i64 0, i32 1
+  %28 = load %struct.Node*, %struct.Node** %27, align 8, !tbaa !3
+  %29 = icmp eq %struct.Node* %28, %23
+  br i1 %29, label %40, label %30
+
+30:                                               ; preds = %26
+  %31 = icmp eq %struct.Node* %28, null
+  br i1 %31, label %40, label %32
+
+32:                                               ; preds = %30
+  %33 = getelementptr inbounds %struct.Node, %struct.Node* %23, i64 0, i32 1
+  %34 = load %struct.Node*, %struct.Node** %33, align 8, !tbaa !3
+  %35 = icmp eq %struct.Node* %34, null
+  br i1 %35, label %40, label %36, !llvm.loop !9
+
+36:                                               ; preds = %32
+  %37 = getelementptr inbounds %struct.Node, %struct.Node* %28, i64 0, i32 1
+  %38 = load %struct.Node*, %struct.Node** %37, align 8, !tbaa !3
+  %39 = icmp eq %struct.Node* %38, null
+  br i1 %39, label %40, label %22
+
+40:                                               ; preds = %36, %30, %22, %26, %32
+  %41 = phi i8* [ getelementptr inbounds ([2 x i8], [2 x i8]* @.str.2, i64 0, i64 0), %32 ], [ getelementptr inbounds ([2 x i8], [2 x i8]* @.str.2, i64 0, i64 0), %26 ], [ getelementptr inbounds ([2 x i8], [2 x i8]* @.str.2, i64 0, i64 0), %22 ], [ getelementptr inbounds ([2 x i8], [2 x i8]* @.str.3, i64 0, i64 0), %30 ], [ getelementptr inbounds ([2 x i8], [2 x i8]* @.str.3, i64 0, i64 0), %36 ]
+  %42 = tail call nonnull align 8 dereferenceable(8) %"class.std::basic_ostream"* @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(%"class.std::basic_ostream"* nonnull align 8 dereferenceable(8) @_ZSt4cout, i8* nonnull %41, i64 1)
+  store i8* %5, i8** %17, align 8, !tbaa !3
+  store i8* %7, i8** %19, align 8, !tbaa !3
+  store i8* %9, i8** %21, align 8, !tbaa !3
+  %43 = getelementptr inbounds %struct.Node, %struct.Node* %10, i64 0, i32 1
+  %44 = bitcast %struct.Node** %43 to i8**
+  store i8* %11, i8** %44, align 8, !tbaa !3
+  %45 = getelementptr inbounds %struct.Node, %struct.Node* %12, i64 0, i32 1
+  %46 = bitcast %struct.Node** %45 to i8**
+  store i8* %13, i8** %46, align 8, !tbaa !3
+  %47 = getelementptr inbounds %struct.Node, %struct.Node* %14, i64 0, i32 1
+  %48 = bitcast %struct.Node** %47 to i8**
+  store i8* %11, i8** %48, align 8, !tbaa !3
+  br label %49
+
+49:                                               ; preds = %40, %63
+  %50 = phi %struct.Node* [ %4, %40 ], [ %61, %63 ]
+  %51 = phi %struct.Node* [ %6, %40 ], [ %65, %63 ]
+  %52 = icmp eq %struct.Node* %51, %50
+  br i1 %52, label %67, label %53
+
+53:                                               ; preds = %49
+  %54 = getelementptr inbounds %struct.Node, %struct.Node* %51, i64 0, i32 1
+  %55 = load %struct.Node*, %struct.Node** %54, align 8, !tbaa !3
+  %56 = icmp eq %struct.Node* %55, %50
+  br i1 %56, label %67, label %57
+
+57:                                               ; preds = %53
+  %58 = icmp eq %struct.Node* %55, null
+  br i1 %58, label %67, label %59
+
+59:                                               ; preds = %57
+  %60 = getelementptr inbounds %struct.Node, %struct.Node* %50, i64 0, i32 1
+  %61 = load %struct.Node*, %struct.Node** %60, align 8, !tbaa !3
+  %62 = icmp eq %struct.Node* %61, null
+  br i1 %62, label %67, label %63, !llvm.loop !9
+
+63:                                               ; preds = %59
+  %64 = getelementptr inbounds %struct.Node, %struct.Node* %55, i64 0, i32 1
+  %65 = load %struct.Node*, %struct.Node** %64, align 8, !tbaa !3
+  %66 = icmp eq %struct.Node* %65, null
+  br i1 %66, label %67, label %49
+
+67:                                               ; preds = %63, %57, %49, %53, %59
+  %68 = phi i8* [ getelementptr inbounds ([2 x i8], [2 x i8]* @.str.2, i64 0, i64 0), %59 ], [ getelementptr inbounds ([2 x i8], [2 x i8]* @.str.2, i64 0, i64 0), %53 ], [ getelementptr inbounds ([2 x i8], [2 x i8]* @.str.2, i64 0, i64 0), %49 ], [ getelementptr inbounds ([2 x i8], [2 x i8]* @.str.3, i64 0, i64 0), %57 ], [ getelementptr inbounds ([2 x i8], [2 x i8]* @.str.3, i64 0, i64 0), %63 ]
+  %69 = tail call nonnull align 8 dereferenceable(8) %"class.std::basic_ostream"* @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(%"class.std::basic_ostream"* nonnull align 8 dereferenceable(8) @_ZSt4cout, i8* nonnull %68, i64 1)
+  store i8* %5, i8** %17, align 8, !tbaa !3
+  store i8* %7, i8** %19, align 8, !tbaa !3
+  store i8* %9, i8** %21, align 8, !tbaa !3
+  store i8* %11, i8** %44, align 8, !tbaa !3
+  store i8* %13, i8** %46, align 8, !tbaa !3
+  store %struct.Node* null, %struct.Node** %47, align 8, !tbaa !3
+  br label %70
+
+70:                                               ; preds = %67, %84
+  %71 = phi %struct.Node* [ %4, %67 ], [ %82, %84 ]
+  %72 = phi %struct.Node* [ %6, %67 ], [ %86, %84 ]
+  %73 = icmp eq %struct.Node* %72, %71
+  br i1 %73, label %88, label %74
+
+74:                                               ; preds = %70
+  %75 = getelementptr inbounds %struct.Node, %struct.Node* %72, i64 0, i32 1
+  %76 = load %struct.Node*, %struct.Node** %75, align 8, !tbaa !3
+  %77 = icmp eq %struct.Node* %76, %71
+  br i1 %77, label %88, label %78
+
+78:                                               ; preds = %74
+  %79 = icmp eq %struct.Node* %76, null
+  br i1 %79, label %88, label %80
+
+80:                                               ; preds = %78
+  %81 = getelementptr inbounds %struct.Node, %struct.Node* %71, i64 0, i32 1
+  %82 = load %struct.Node*, %struct.Node** %81, align 8, !tbaa !3
+  %83 = icmp eq %struct.Node* %82, null
+  br i1 %83, label %88, label %84, !llvm.loop !9
+
+84:                                               ; preds = %80
+  %85 = getelementptr inbounds %struct.Node, %struct.Node* %76, i64 0, i32 1
+  %86 = load %struct.Node*, %struct.Node** %85, align 8, !tbaa !3
+  %87 = icmp eq %struct.Node* %86, null
+  br i1 %87, label %88, label %70
+
+88:                                               ; preds = %84, %78, %70, %74, %80
+  %89 = phi i8* [ getelementptr inbounds ([2 x i8], [2 x i8]* @.str.2, i64 0, i64 0), %80 ], [ getelementptr inbounds ([2 x i8], [2 x i8]* @.str.2, i64 0, i64 0), %74 ], [ getelementptr inbounds ([2 x i8], [2 x i8]* @.str.2, i64 0, i64 0), %70 ], [ getelementptr inbounds ([2 x i8], [2 x i8]* @.str.3, i64 0, i64 0), %78 ], [ getelementptr inbounds ([2 x i8], [2 x i8]* @.str.3, i64 0, i64 0), %84 ]
+  %90 = tail call nonnull align 8 dereferenceable(8) %"class.std::basic_ostream"* @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(%"class.std::basic_ostream"* nonnull align 8 dereferenceable(8) @_ZSt4cout, i8* nonnull %89, i64 1)
+  store i8* %5, i8** %17, align 8, !tbaa !3
+  store i8* %7, i8** %19, align 8, !tbaa !3
+  store i8* %9, i8** %21, align 8, !tbaa !3
+  store i8* %11, i8** %44, align 8, !tbaa !3
+  store i8* %13, i8** %46, align 8, !tbaa !3
+  store i8* %3, i8** %48, align 8, !tbaa !3
+  br label %91
+
+91:                                               ; preds = %88, %105
+  %92 = phi %struct.Node* [ %4, %88 ], [ %103, %105 ]
+  %93 = phi %struct.Node* [ %6, %88 ], [ %107, %105 ]
+  %94 = icmp eq %struct.Node* %93, %92
+  br i1 %94, label %109, label %95
+
+95:                                               ; preds = %91
+  %96 = getelementptr inbounds %struct.Node, %struct.Node* %93, i64 0, i32 1
+  %97 = load %struct.Node*, %struct.Node** %96, align 8, !tbaa !3
+  %98 = icmp eq %struct.Node* %97, %92
+  br i1 %98, label %109, label %99
+
+99:                                               ; preds = %95
+  %100 = icmp eq %struct.Node* %97, null
+  br i1 %100, label %109, label %101
+
+101:                                              ; preds = %99
+  %102 = getelementptr inbounds %struct.Node, %struct.Node* %92, i64 0, i32 1
+  %103 = load %struct.Node*, %struct.Node** %102, align 8, !tbaa !3
+  %104 = icmp eq %struct.Node* %103, null
+  br i1 %104, label %109, label %105, !llvm.loop !9
+
+105:                                              ; preds = %101
+  %106 = getelementptr inbounds %struct.Node, %struct.Node* %97, i64 0, i32 1
+  %107 = load %struct.Node*, %struct.Node** %106, align 8, !tbaa !3
+  %108 = icmp eq %struct.Node* %107, null
+  br i1 %108, label %109, label %91
+
+109:                                              ; preds = %105, %99, %91, %95, %101
+  %110 = phi i8* [ getelementptr inbounds ([2 x i8], [2 x i8]* @.str.2, i64 0, i64 0), %101 ], [ getelementptr inbounds ([2 x i8], [2 x i8]* @.str.2, i64 0, i64 0), %95 ], [ getelementptr inbounds ([2 x i8], [2 x i8]* @.str.2, i64 0, i64 0), %91 ], [ getelementptr inbounds ([2 x i8], [2 x i8]* @.str.3, i64 0, i64 0), %99 ], [ getelementptr inbounds ([2 x i8], [2 x i8]* @.str.3, i64 0, i64 0), %105 ]
+  %111 = tail call nonnull align 8 dereferenceable(8) %"class.std::basic_ostream"* @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(%"class.std::basic_ostream"* nonnull align 8 dereferenceable(8) @_ZSt4cout, i8* nonnull %110, i64 1)
+  ret i32 0
+}
+
+declare dso_local %struct._IO_FILE* @freopen(i8*, i8*, %struct._IO_FILE*) local_unnamed_addr #0
+
+; Function Attrs: nobuiltin allocsize(0)
+declare dso_local nonnull i8* @_Znwm(i64) local_unnamed_addr #5
+
+; Function Attrs: argmemonly mustprogress nofree nounwind willreturn writeonly
+declare void @llvm.memset.p0i8.i64(i8* nocapture writeonly, i8, i64, i1 immarg) #6
+
+declare dso_local nonnull align 8 dereferenceable(8) %"class.std::basic_ostream"* @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(%"class.std::basic_ostream"* nonnull align 8 dereferenceable(8), i8*, i64) local_unnamed_addr #0
+
+; Function Attrs: uwtable
+define internal void @_GLOBAL__sub_I_LinkedListCycle.cpp() #7 section ".text.startup" {
+  tail call void @_ZNSt8ios_base4InitC1Ev(%"class.std::ios_base::Init"* nonnull align 1 dereferenceable(1) @_ZStL8__ioinit)
+  %1 = tail call i32 @__cxa_atexit(void (i8*)* bitcast (void (%"class.std::ios_base::Init"*)* @_ZNSt8ios_base4InitD1Ev to void (i8*)*), i8* getelementptr inbounds (%"class.std::ios_base::Init", %"class.std::ios_base::Init"* @_ZStL8__ioinit, i64 0, i32 0), i8* nonnull @__dso_handle) #9
+  ret void
+}
+
+attributes #0 = { "frame-pointer"="none" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #1 = { nounwind "frame-pointer"="none" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #2 = { nofree nounwind }
+attributes #3 = { mustprogress nofree norecurse nosync nounwind readonly uwtable willreturn "frame-pointer"="none" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #4 = { mustprogress norecurse uwtable "frame-pointer"="none" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #5 = { nobuiltin allocsize(0) "frame-pointer"="none" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #6 = { argmemonly mustprogress nofree nounwind willreturn writeonly }
+attributes #7 = { uwtable "frame-pointer"="none" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #8 = { builtin allocsize(0) }
+attributes #9 = { nounwind }
+
+!llvm.module.flags = !{!0, !1}
+!llvm.ident = !{!2}
+
+!0 = !{i32 1, !"wchar_size", i32 4}
+!1 = !{i32 7, !"uwtable", i32 1}
+!2 = !{!"clang version 13.0.0 (https://github.com/llvm/llvm-project.git d7b669b3a30345cfcdb2fde2af6f48aa4b94845d)"}
+!3 = !{!4, !8, i64 8}
+!4 = !{!"_ZTS4Node", !5, i64 0, !8, i64 8}
+!5 = !{!"int", !6, i64 0}
+!6 = !{!"omnipotent char", !7, i64 0}
+!7 = !{!"Simple C++ TBAA"}
+!8 = !{!"any pointer", !6, i64 0}
+!9 = distinct !{!9, !10}
+!10 = !{!"llvm.loop.mustprogress"}
+!11 = !{!8, !8, i64 0}
