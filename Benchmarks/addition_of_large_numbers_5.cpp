@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <cstring>
+
 char a[250],b[250];
 int daoxu(char *s, int *x)
 {
