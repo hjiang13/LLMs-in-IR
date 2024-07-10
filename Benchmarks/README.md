@@ -1,1 +1,0 @@
-These are the benchmarks from HoJ-104
