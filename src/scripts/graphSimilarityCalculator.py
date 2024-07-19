@@ -36,8 +36,8 @@ def main(dot_file1, dot_file2):
         print("Error in calculating the graph edit distance.")
 
 # Paths to your DOT files
-dot_file1 = "path/to/your/first/graph.dot"
-dot_file2 = "path/to/your/second/graph.dot"
+dot_file1 = "../../processed_data/CFG/counting_sort2/counting_sort2_.main.dot"
+dot_file2 = "../../processed_data/CFG_LLM/counting_sort2/ConstructtheArray_LLMs_cfg.dot"
 
 # Run the main function
 main(dot_file1, dot_file2)
