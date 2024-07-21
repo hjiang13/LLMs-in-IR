@@ -1,6 +1,3 @@
-To convert the provided LLVM IR code to equivalent C code, we need to carefully follow the structure and data flow within the LLVM IR and then translate it into a high-level C representation. Here is the decompiled C code based on the provided LLVM IR:
-
-```c
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -55,26 +52,3 @@ int main() {
 
     return 0;
 }
-```
-
-### Explanation:
-
-1. **File Handling**:
-   - The `freopen` function is used to redirect standard input to read from a file (`../input_files/counting_sort2`).
-   
-2. **Reading Input**:
-   - The number of elements `n` is read from the input.
-   
-3. **Memory Allocation**:
-   - A counting array (`count_array`) of size 100 is allocated and initialized to zero using `calloc`.
-
-4. **Counting Occurrences**:
-   - A loop reads `n` integers from the input and increments the corresponding index in the `count_array`.
-
-5. **Output the Sorted Values**:
-   - The counting array is used to print the integers in sorted order.
-
-6. **Memory Cleanup**:
-   - The dynamically allocated memory for `count_array` is freed.
-
-This C code mirrors the logic and flow of the provided LLVM IR code, ensuring it performs the same counting sort algorithm.
