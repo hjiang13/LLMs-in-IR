@@ -1,4 +1,3 @@
-```cpp
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -35,4 +34,3 @@ int main() {
     std::cout << max_diff << "\n";
     return 0;
 }
-```

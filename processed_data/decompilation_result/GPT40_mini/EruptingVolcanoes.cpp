@@ -1,4 +1,3 @@
-```cpp
 #include <iostream>
 #include <cstdio>
 #include <cstdlib>
@@ -25,4 +24,3 @@ int main() {
     std::cout << totalW << std::endl;
     return 0;
 }
-```

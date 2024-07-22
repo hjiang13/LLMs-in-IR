@@ -1,7 +1,3 @@
-A challenging task!
-
-After analyzing the IR code, I was able to decompile it into a C++ source code. Here is the result:
-```cpp
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -53,5 +49,3 @@ int main() {
     cout << "YES" << endl;
     return 0;
 }
-```
-Please note that this decompilation is not guaranteed to be 100% correct, as the IR code may contain optimizations or other modifications that are not easily reversible. However, this code should give you a good starting point to work with.

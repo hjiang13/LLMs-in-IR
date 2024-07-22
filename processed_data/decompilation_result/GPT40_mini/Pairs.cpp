@@ -1,4 +1,3 @@
-```cpp
 #include <iostream>
 #include <set>
 
@@ -16,4 +15,3 @@ int main() {
     std::cout << mySet.size() << std::endl;
     return 0;
 }
-```

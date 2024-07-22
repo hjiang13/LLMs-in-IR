@@ -1,4 +1,3 @@
-```cpp
 #include <iostream>
 #include <set>
 #include <cstdio>
@@ -95,4 +94,3 @@ int main() {
     clear();
     return 0;
 }
-```

@@ -1,4 +1,3 @@
-```cpp
 #include <cstdio>
 #include <set>
 #include <utility>
@@ -66,4 +65,3 @@ int main() {
     }
     return 0;
 }
-```

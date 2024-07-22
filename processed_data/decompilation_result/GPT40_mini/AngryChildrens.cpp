@@ -1,4 +1,3 @@
-```cpp
 #include <iostream>
 #include <cstdio>
 #include <cstdlib>
@@ -53,4 +52,3 @@ void insertionSort(long long* start, long long* end) {
 void makeHeap(long long* start, long long* end) {
     // Implementation of heap logic
 }
-```

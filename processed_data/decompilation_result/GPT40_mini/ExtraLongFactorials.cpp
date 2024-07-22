@@ -1,4 +1,3 @@
-```cpp
 #include <cstdio>
 #include <cstdlib>
 
@@ -36,4 +35,3 @@ int main() {
     fact(n);
     return 0;
 }
-```

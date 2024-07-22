@@ -1,4 +1,3 @@
-```cpp
 #include <iostream>
 #include <string>
 #include <utility>
@@ -42,4 +41,3 @@ int main(int argc, char** argv) {
     solve();
     return 0;
 }
-```

@@ -1,4 +1,3 @@
-```cpp
 #include <iostream>
 #include <cstdio>
 
@@ -37,4 +36,3 @@ end:
     std::cout << (dp[n][k][0] == 63 ? -1 : dp[n][k][0]) << std::endl;
     return 0;
 }
-```

@@ -1,4 +1,3 @@
-```cpp
 #include <iostream>
 #include <cstdio>
 #include <vector>
@@ -36,4 +35,3 @@ int main() {
     std::cout << sum << std::endl; // Print the result
     return 0;
 }
-```

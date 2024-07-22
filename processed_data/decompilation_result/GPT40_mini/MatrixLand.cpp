@@ -1,4 +1,3 @@
-```cpp
 #include <iostream>
 #include <cstdio>
 
@@ -70,4 +69,3 @@ int main() {
     std::cout << maxl << std::endl;
     return 0;
 }
-```

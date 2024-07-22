@@ -1,4 +1,3 @@
-```cpp
 #include <iostream>
 #include <cstdio>
 #include <set>
@@ -27,4 +26,3 @@ int main() {
     std::cout << "WIN " << n << std::endl;
     return 0;
 }
-```

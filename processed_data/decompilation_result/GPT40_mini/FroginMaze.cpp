@@ -1,4 +1,3 @@
-```cpp
 #include <iostream>
 #include <cstdio>
 #include <utility>
@@ -51,4 +50,3 @@ int main() {
 
     return 0;
 }
-```

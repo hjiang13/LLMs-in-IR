@@ -1,4 +1,3 @@
-```cpp
 #include <iostream>
 #include <vector>
 #include <utility>
@@ -78,4 +77,3 @@ int main() {
     carShow.Process();
     return 0;
 }
-```

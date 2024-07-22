@@ -1,4 +1,3 @@
-```cpp
 #include <iostream>
 #include <string>
 
@@ -22,4 +21,3 @@ int main() {
     std::cout << result << std::endl;
     return 0;
 }
-```

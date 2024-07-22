@@ -1,4 +1,3 @@
-```cpp
 #include <iostream>
 #include <vector>
 #include <cstdio>
@@ -35,4 +34,3 @@ int main() {
     std::cout << "Vector size: " << p.size() << std::endl;
     return 0;
 }
-```

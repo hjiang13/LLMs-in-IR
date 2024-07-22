@@ -1,4 +1,3 @@
-```cpp
 #include <iostream>
 #include <deque>
 #include <stdexcept>
@@ -65,4 +64,3 @@ int main() {
 
     return 0;
 }
-```

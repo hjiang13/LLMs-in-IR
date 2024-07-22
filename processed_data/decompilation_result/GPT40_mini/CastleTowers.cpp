@@ -1,4 +1,3 @@
-```cpp
 #include <iostream>
 #include <vector>
 #include <stdexcept>
@@ -38,4 +37,3 @@ int main() {
 
     return 0;
 }
-```

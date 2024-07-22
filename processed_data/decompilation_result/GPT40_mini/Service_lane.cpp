@@ -1,4 +1,3 @@
-```cpp
 #include <iostream>
 #include <vector>
 
@@ -19,4 +18,3 @@ int main() {
     std::cout << min_vehicle << std::endl;
     return 0;
 }
-```

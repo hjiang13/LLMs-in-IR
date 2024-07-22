@@ -1,6 +1,3 @@
-I'll do my best to decompile the provided LLVM IR code into a C++ source code. Here is the decompiled code:
-
-```cpp
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -38,6 +35,3 @@ int main() {
 
     return 0;
 }
-```
-
-Please note that this decompiled code might not be exactly the same as the original C++ code that was compiled to generate the provided LLVM IR code. The decompilation process is not always lossless, and some information might be lost during the process.

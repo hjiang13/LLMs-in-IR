@@ -1,4 +1,3 @@
-```cpp
 #include <iostream>
 #include <vector>
 
@@ -76,4 +75,3 @@ int main() {
     cout << (ans + 1000000007) % 1000000007 << endl;
     return 0;
 }
-```

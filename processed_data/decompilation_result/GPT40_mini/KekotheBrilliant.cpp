@@ -1,4 +1,3 @@
-```cpp
 #include <iostream>
 #include <vector>
 #include <set>
@@ -36,4 +35,3 @@ int main() {
     std::cout << "Done" << std::endl;
     return 0;
 }
-```

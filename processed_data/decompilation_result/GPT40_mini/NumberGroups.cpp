@@ -1,4 +1,3 @@
-```cpp
 #include <iostream>
 #include <cstdio>
 
@@ -12,4 +11,3 @@ int main() {
     std::cout.flush();
     return 0;
 }
-```

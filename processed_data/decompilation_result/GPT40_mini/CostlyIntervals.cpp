@@ -1,4 +1,3 @@
-```cpp
 #include <iostream>
 #include <vector>
 #include <set>
@@ -117,4 +116,3 @@ int main(int argc, char** argv) {
     solve();
     return 0;
 }
-```

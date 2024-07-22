@@ -1,4 +1,3 @@
-```cpp
 #include <iostream>
 #include <map>
 #include <tuple>
@@ -53,4 +52,3 @@ int main() {
     }
     return 0;
 }
-```

@@ -1,4 +1,3 @@
-```cpp
 #include <cstdio>
 #include <cstdlib>
 
@@ -85,4 +84,3 @@ int main() {
     init();
     return 0;
 }
-```
