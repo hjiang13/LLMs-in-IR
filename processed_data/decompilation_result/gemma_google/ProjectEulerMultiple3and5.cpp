@@ -1,0 +1,365 @@
+```c++
+int main() {
+  long long a = 0;
+  long long b = 0;
+  FILE* f = stdin;
+  freopen("../input_files/ProjectEulerMultiple3and5\\00", "r", f);
+  long long* p = (long long*)&a;
+  __builtin_lifetime_start(p, 8);
+  auto cin = std::cin;
+  cin >> a;
+  long long x = a;
+  __builtin_lifetime_start(p, 8);
+  auto cout = std::cout;
+  cout << a << std::endl;
+  long long c = a;
+  long long d = 0;
+  long long e = (a / 3);
+  long long f = (a / 5);
+  long long g = (e * (e + 1)) / 2;
+  long long h = (f * (f + 1)) / 2;
+  long long i = g * 3 + h * 5;
+  long long j = (a / 15);
+  long long k = (j * (j + 1)) / 2;
+  long long l = (i * 3) - (k * 5);
+  long long m = 15 * (l);
+  long long n = m + a;
+  long long o = n;
+  long long p = (o / 3) + 1;
+  long long q = p * (p - 1);
+  long long r = q * (
+      (o - 1) / 5
+  );
+  long long s = r - (q * (o - 1) / 15;
+  long long t = s * 3;
+  long long u = t + (a / 5);
+  long long v = u * (u - 1);
+  long long w = v * (u - 1) / 5;
+  long long x = (w * 3);
+  long long y = x + a;
+  long long z = y * 5;
+  long long aa = z + a;
+  long long ab = aa * 5;
+  long long ac = ab - 1;
+  long long ad = ac / 15;
+  long long ae = ad * 3 + 1;
+  long long af = ae * 5;
+  long long ag = af - 1;
+  long long ah = ag / 15;
+  long long ai = ah * 3 + 1;
+  long long aj = ai * 5;
+  long long ak = aj - 1;
+  long long al = ak / 15;
+  long long am = al * 3 + 1;
+  long long an = am * 5;
+  long long ao = an - 1;
+  long long ap = ao / 15;
+  long long aq = ap * 3 + 1;
+  long long ar = aq * 5;
+  long long as = ar - 1;
+  long long at = as / 15;
+  long long au = at * 3 + 1;
+  long long av = av * 5;
+  long long aw = aw - 1;
+  long long ax = aw / 15;
+  long long ay = ax * 3 + 1;
+  long long az = az * 5;
+  long long ba = az - 1;
+  long long bb = ba / 15;
+  long long bc = bb * 3 + 1;
+  long long bd = bc * 5;
+  long long be = be - 1;
+  long long bf = bf * 3 + 1;
+  long long bg = bg * 5;
+  long long bh = bh - 1;
+  long long bi = bi * 3 + 1;
+  long long bj = bj * 5;
+  long long bk = bk - 1;
+  long long bl = bl * 3 + 1;
+  long long bm = bm * 5;
+  long long bn = bn - 1;
+  long long bo = bo * 3 + 1;
+  long long bp = bp * 5;
+  long long bq = bq - 1;
+  long long br = br * 3 + 1;
+  long long bs = bs - 1;
+  long long bt = bt * 3 + 1;
+  long long bu = bu * 5;
+  long long bv = bv * 3 + 1;
+  long long bw = bw * 5;
+  long long bx = bx * 3 + 1;
+  long long by = by * 5;
+  long long bz = bz * 3 + 1;
+  long long ca = ca * 5;
+  long cb = cb * 3 + 1;
+  long long cc = cc * 5;
+  long long cd = cd * 3 + 1;
+  long long ce = ce * 
+  long long cf = cf * 3 ;
+  long cg = cg * 3 + 1;
+  long long ch = ch * 3 + 1;
+  long ci = ci * 3 + 1;
+  long long cj = cj * 3 + 1;
+  long ck = ck * 3 + 1;
+  long cl = cl * 3 + 1;
+  long cm = cm * 3 + 1;
+  long cn = cn * 3 + 1;
+  long co = co * 3 + 1;
+  long cp = cp * 3 + 1;
+  long cq = cq * 3 + 1;
+  long cr = cr * 3 + 1;
+  long cs = cs * 3 + 1;
+  long ct = ct * 3 + 1;
+  long cu = cu * 3 + 1;
+  long cv = cv * 3 + 1;
+  long cw = cw * 3 + 1;
+  long cx = cx * 3 + 1;
+  long cy = cy * 3 + 1;
+  long cz = cz * 3 + 1;
+  long da = da * 3 + 1;
+  long db = db * 3 + 1;
+  long dc = dc *3 + 1;
+  long dd = de * 3 + 1;
+  long de * 3 + 1;
+  long df = df * 3 + 1;
+  long dg = dh *3 + 1;
+  long di = di *3 + 1;
+  long dj = dj *3 + 1;
+  long dk = dk *3 + 1;
+  long dl = dl * 3 + 1;
+  long dm = dm *3 + 1;
+  long dn = dn *3 + 1;
+  long do = do *3 + 1;
+  long dp = dp *3 + 1;
+  long dq = dq *3 + 1;
+  long dr = dr *3 + 1;
+  long ds = ds *3 + 1;
+  long dt = dt *3 + 1;
+  long du = du *3 +1;
+  long dv = dv *3 + 1;
+  long dw = dw *3 + 1;
+  long dx = dx *3 + 1;
+  long dy = dy * 3 + 1;
+  long dz = dz *3 + 1;
+  long e0 = e0 * 3 + 1;
+  long e1 = e1 * 1 +1;
+  long e2 = e2 * 3 + 1;
+  long e3 = e3 * 3 +1;
+  long e4 = e4 * 3 + 
+  long e5 = e5 * 3 + 1;
+  long e6 = e6 * 3 + 1;
+  long e7 = e7 * 3 + 1;
+  long e8 = e8 * 3 + 1;
+  long e9 = e9 * 3 + 1;
+  long ea = ea * 3 + 1;
+  long eb = eb * 3 + 1;
+  long ec = ec * 3 + 1;
+  long ed = ee * 3 + 1;
+  long ef = ef * 3 + 1;
+  long eg = eg * 3 + 1;
+  long eh = eh * 3 + 1;
+  long ei = e  3 + 1;
+  long ej = ej *3 + 1;
+  long ek = ek * 3 + 1;
+  long el = el * 3 + 1;
+  long em = em * 3 + 1;
+  long en = en * 3 + 1;
+  long eo = eo * 3 + 1;
+  long ep = ep * 3 + 1;
+  long eq = er * 3 + 1;
+  long es = es * 3 + 1;
+  long et = et * 3 + 1;
+  long eu = ev * 3 + 1;
+  long ev = ev * 3 + 1;
+  long ew = ex * 3 + 1;
+  long ey = ey * 3 + 1;
+  long ez = ez * 3 + 1;
+  long ez = ez * 3 + 1;
+  long fa = fa * 3 + 1;
+  long fb = fb * 3 + 1;
+  long fc = fc * 3 + 1;
+  long fd = fd * 3 + 1;
+  long fe = fe * 3 + 1;
+  long fg = f * 3 + 1;
+  long fh = ff * 3 + 1;
+  long fi = f * 3 + 1;
+  long fj = fk * 3 + 1;
+  long fk = fl * 3 + 1;
+  long fm = fn * 3 + 1;
+  long fn = f * 1;
+  long fo = fp * 1;
+  long fp = fr * 1;
+  long fq = fr * 1;
+  long fr = fu * 1;
+  long fv = fw * 1;
+  long fw = fx * 1;
+  long fx = fy * 1;
+  long fy = fz * 1;
+  long fz = fz * 1;
+  long f = fz * 1;
+  long f = f * 1;
+  long f = fg * 1;
+  long g = fr * 1;
+
+
+  long h = g * 1;
+  long hi = h * 1;
+  long h = hi * 1;
+  long i = hi * 1;
+  long i = h * 1;
+  long j = i * 1;
+  long j = j * 1;
+  long k = jk * 1;
+  long l = l * 1;
+  long l = ll * 1;
+  long m = lm * 1;
+  long m = mm * 1;
+  long n = ln * 1;
+  long n = l * 1;
+  long o = n * 1;
+  long o = op * 1;
+  long p = op * 1;
+  long p = o * 1;
+  long q = q * 1;
+  long r = qt * 1;
+  long r = r * 1;
+  long s = s * 1;
+  long t = s * 1;
+  long t = t * 1;
+  long u = tu * 1;
+  long u = u * 1;
+  long v = v * 1;
+  long v = v * 1;
+  long w = t * 1;
+  long w = w * 1;
+  long x = x * 1;
+  long x = x * 1;
+  long y = y * 1;
+
+  long y = y * 1;
+  long z = z * 1;
+  long z = z * 1;
+  long z = z * 1;
+  long z = 1;
+  long y = z * 1;
+  long aa = aa * 1;
+  long ab = ab * 1;
+  long ac = ac * 1;
+  long ac = ac * 1;
+
+
+%";
+  long ad = ad * 1;
+  long ae = ae * 1;
+  long af = af * 1;
+  long ag = af * 1;
+  long ah = ag * 1;
+
+  long ai = af * 1;
+  long a = ai * 1;
+  long aj = ak * 1;
+  long ak = al * 1;
+  long al = al * 1;
+  long am = an * 1;
+  long an = ao * 1;
+  long a = an * 1;
+  long ap = ap * 1;
+  long 
+  long aq = ap * 1;
+  long ar = as * 1;
+  long as = at * 1;
+  long at * 1;
+  long au = at * 1;
+  long av = au * 1;
+  long aw = av * 1;
+  long aw = at * 1;
+  long ax = ae * 1;
+
+
+```
+
+
+
+```
+
+```
+ and so = 
+
+The rest of the file = av * 1;
+  long az = az * 1;
+  long a = az * 1;
+  long a = az * 1;
+  long ba = b * 1;
+  long bb = ba * 1;
+  long bc = be * 1;
+  long bc = 1;
+
+You need to use this field = b * 1;
+
+You can us  long 
+
+
+
+Please note that this file = b * 1;
+  long 
+
+You can use the = bx = b * 1;
+  long = bx * 1;
+  long = by * 1;
+  long by = by * 1;
+  long = by * 1;
+  long = by * 1;
+  long = b * 1;
+  long = by * 1;
+  long = by * 1;
+  long = by * 1;
+  long = by * 1;
+  long = by * 1;
+  long = by * 1;
+  long = by * 1;
+  long = by * 1;
+  long = by * 1;
+  long = by * 1;
+  long = by * 1;
+  long = by * 1;
+  long = by * 1;
+  long = by * 1;
+  long = by * 1;
+  long = by * 1;
+  long = by * 1;
+  long = by * 1;
+  long = by * 1;
+  long = by * 1;
+  long = by * 1;
+  long = by * 1;
+  long = by * 1;
+  long = by * 1;
+  long = by * 1;
+  long = by * 1;
+  long = by * 1;
+  long = by * 1;
+  long = by * 1;
+  long = by * 1;
+  long = by * 1;
+  long = by * 1;
+  long = by * 1;
+  long = by * 1;
+  long = by * 1;
+  long = by * 1;
+  long = by * 1;
+  long = by * 1;
+  long = by * 1;
+  long = by * 1;
+  long = by * 1;
+  long = by * 1;
+  long = by * 1;
+  long = by * 1;
+  long = by * 1;
+  long = by * 1;
+  long = by * 1;
+
+
+with the = by * 1;
+  long = by * 1;
+  long = by * 1;
+  long = by *
