@@ -1,0 +1,100 @@
+; ModuleID = './MutualIndivisibility.cpp'
+source_filename = "./MutualIndivisibility.cpp"
+target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-f80:128-n8:16:32:64-S128"
+target triple = "x86_64-unknown-linux-gnu"
+
+@.str = private unnamed_addr constant [3 x i8] c"%d\00", align 1
+@.str.1 = private unnamed_addr constant [6 x i8] c"%d %d\00", align 1
+@.str.2 = private unnamed_addr constant [4 x i8] c"%d\0A\00", align 1
+@.str.3 = private unnamed_addr constant [7 x i8] c"%d %d\0A\00", align 1
+
+; Function Attrs: mustprogress nofree norecurse nounwind uwtable
+define dso_local i32 @main() local_unnamed_addr #0 {
+  %1 = alloca i32, align 4
+  %2 = alloca i32, align 4
+  %3 = alloca i32, align 4
+  %4 = bitcast i32* %1 to i8*
+  call void @llvm.lifetime.start.p0i8(i64 4, i8* nonnull %4) #3
+  %5 = bitcast i32* %2 to i8*
+  call void @llvm.lifetime.start.p0i8(i64 4, i8* nonnull %5) #3
+  %6 = bitcast i32* %3 to i8*
+  call void @llvm.lifetime.start.p0i8(i64 4, i8* nonnull %6) #3
+  %7 = call i32 (i8*, ...) @__isoc99_scanf(i8* getelementptr inbounds ([3 x i8], [3 x i8]* @.str, i64 0, i64 0), i32* nonnull %1)
+  %8 = icmp eq i32 %7, 1
+  br i1 %8, label %9, label %35
+
+9:                                                ; preds = %0
+  %10 = load i32, i32* %1, align 4, !tbaa !3
+  %11 = icmp eq i32 %10, 0
+  br i1 %11, label %35, label %12
+
+12:                                               ; preds = %9
+  %13 = call i32 (i8*, ...) @__isoc99_scanf(i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str.1, i64 0, i64 0), i32* nonnull %2, i32* nonnull %3)
+  %14 = icmp eq i32 %13, 3
+  br i1 %14, label %15, label %35
+
+15:                                               ; preds = %12
+  %16 = load i32, i32* %2, align 4, !tbaa !3
+  %17 = load i32, i32* %1, align 4, !tbaa !3
+  %18 = sdiv i32 %17, 2
+  %19 = icmp sgt i32 %16, %18
+  %20 = add nsw i32 %18, 1
+  %21 = select i1 %19, i32 %16, i32 %20
+  %22 = load i32, i32* %3, align 4, !tbaa !3
+  %23 = icmp sgt i32 %22, %21
+  br i1 %23, label %26, label %24
+
+24:                                               ; preds = %15
+  %25 = icmp slt i32 %22, 1
+  br i1 %25, label %35, label %28
+
+26:                                               ; preds = %15
+  %27 = call i32 (i8*, ...) @printf(i8* nonnull dereferenceable(1) getelementptr inbounds ([4 x i8], [4 x i8]* @.str.2, i64 0, i64 0), i32 -1)
+  br label %35
+
+28:                                               ; preds = %24, %28
+  %29 = phi i32 [ %32, %28 ], [ 1, %24 ]
+  %30 = add nsw i32 %29, %21
+  %31 = call i32 (i8*, ...) @printf(i8* nonnull dereferenceable(1) getelementptr inbounds ([7 x i8], [7 x i8]* @.str.3, i64 0, i64 0), i32 %29, i32 %30)
+  %32 = add nuw nsw i32 %29, 1
+  %33 = load i32, i32* %3, align 4, !tbaa !3
+  %34 = icmp slt i32 %29, %33
+  br i1 %34, label %28, label %35, !llvm.loop !7
+
+35:                                               ; preds = %28, %24, %26, %12, %9, %0
+  %36 = phi i32 [ -1, %0 ], [ 0, %9 ], [ -1, %12 ], [ 0, %26 ], [ 0, %24 ], [ 0, %28 ]
+  call void @llvm.lifetime.end.p0i8(i64 4, i8* nonnull %6) #3
+  call void @llvm.lifetime.end.p0i8(i64 4, i8* nonnull %5) #3
+  call void @llvm.lifetime.end.p0i8(i64 4, i8* nonnull %4) #3
+  ret i32 %36
+}
+
+; Function Attrs: argmemonly mustprogress nofree nosync nounwind willreturn
+declare void @llvm.lifetime.start.p0i8(i64 immarg, i8* nocapture) #1
+
+; Function Attrs: nofree nounwind
+declare dso_local noundef i32 @__isoc99_scanf(i8* nocapture noundef readonly, ...) local_unnamed_addr #2
+
+; Function Attrs: nofree nounwind
+declare dso_local noundef i32 @printf(i8* nocapture noundef readonly, ...) local_unnamed_addr #2
+
+; Function Attrs: argmemonly mustprogress nofree nosync nounwind willreturn
+declare void @llvm.lifetime.end.p0i8(i64 immarg, i8* nocapture) #1
+
+attributes #0 = { mustprogress nofree norecurse nounwind uwtable "frame-pointer"="none" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #1 = { argmemonly mustprogress nofree nosync nounwind willreturn }
+attributes #2 = { nofree nounwind "frame-pointer"="none" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #3 = { nounwind }
+
+!llvm.module.flags = !{!0, !1}
+!llvm.ident = !{!2}
+
+!0 = !{i32 1, !"wchar_size", i32 4}
+!1 = !{i32 7, !"uwtable", i32 1}
+!2 = !{!"clang version 13.0.0 (https://github.com/llvm/llvm-project.git d7b669b3a30345cfcdb2fde2af6f48aa4b94845d)"}
+!3 = !{!4, !4, i64 0}
+!4 = !{!"int", !5, i64 0}
+!5 = !{!"omnipotent char", !6, i64 0}
+!6 = !{!"Simple C++ TBAA"}
+!7 = distinct !{!7, !8}
+!8 = !{!"llvm.loop.mustprogress"}
