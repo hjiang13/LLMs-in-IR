@@ -79,7 +79,7 @@ int query(int a, int b) {
 }
 
 int main() {
-    freopen("../input_files/Airports/00", "r", stdin);
+    freopen("../input_files/Airports", "r", stdin);
     std::cin >> n >> d;
     for (int i = 0; i < n; i++) {
         int x;

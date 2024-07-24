@@ -5,7 +5,7 @@ int main() {
     int a, b, c;
     int result;
 
-    FILE* file = freopen("../input_files/BoatTrips00", "r", stdin);
+    FILE* file = freopen("../input_files/BoatTrips", "r", stdin);
     
     std::cin >> a >> b >> c;
 
