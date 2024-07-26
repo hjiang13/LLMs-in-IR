@@ -1,0 +1,39 @@
+```dot
+digraph ControlFlowGraph {
+    node [shape=rectangle];
+    entry [label="entry"];
+    %1 = alloca i32 [label="%1 = alloca i32"];
+    %2 = alloca i32 [label="%2 = alloca i32"];
+    %3 = alloca i32 [label="%3 = alloca i32"];
+    %4 = alloca i32 [label="%4 = alloca i32"];
+    %5 = load %struct._IO_FILE*, %struct._IO_FILE** @stdin, align 8 [label="%5 = load %struct._IO_FILE*, %struct._IO_FILE** @stdin, align 8"];
+    %6 = tail call %struct._IO_FILE* @freopen(i8* getelementptr inbounds ([28 x i8], [28 x i8]* @.str, i64 0, i64 0), i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.1, i64 0, i64 0), %struct._IO_FILE* %5) [label="%6 = tail call %struct._IO_FILE* @freopen(...)"];
+    %7 = bitcast i32* %1 to i8* [label="%7 = bitcast i32* %1 to i8*"];
+    ...
+    exit [label="exit"];
+    
+    entry -> %1;
+    %1 -> %2;
+    %2 -> %3;
+    %3 -> %4;
+    %4 -> %5;
+    %5 -> %6;
+    %6 -> %7;
+    ...
+    %43 -> %44;
+    %44 -> %54;
+    %45 -> %46;
+    %46 -> %47;
+    ...
+    %70 -> %0;
+    %71 -> %72;
+    ...
+    %84 -> %85;
+    %85 -> %86;
+    %86 -> %87;
+    %87 -> %88;
+    %88 -> %89;
+    %89 -> %90;
+    %90 -> exit;
+}
+```

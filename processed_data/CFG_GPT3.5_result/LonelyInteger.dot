@@ -1,0 +1,78 @@
+```dot
+digraph ControlFlowGraph {
+    node [shape=rectangle];
+    entry [label="entry"];
+    block1 [label="%2 = getelementptr ..."];
+    block2 [label="%4 = getelementptr ..."];
+    block3 [label="%6 = ptrtoint i32* %3 to i64"];
+    block4 [label="%8 = sub i64 %6, %7"];
+    block5 [label="switch i64 %9"];
+    block6 [label="%11 = load i32, i32* %5"];
+    block7 [label="%13 = load i32, i32* %5"];
+    block8 [label="%14 = icmp ugt i64 %9, 1"];
+    block9 [label="%16 = add nsw i64 %9, -1"];
+    block10 [label="%17 = icmp ult i64 %16, 8"];
+    block11 [label="%19 = and i64 %16, -8"];
+    block12 [label="%27 = phi i32 [ %77, %72 ], [ 0, %0 ]"];
+    block13 [label="%33 = icmp eq i32* %29, %28"];
+    block14 [label="%35 = load i32, i32* %2"];
+    block15 [label="%37 = ptrtoint i32* %28 to i64"];
+    block16 [label="%45 = icmp eq i64 %39"];
+    block17 [label="%47 = add nsw i64 %46, %40"];
+    block18 [label="%48 = icmp ult i64 %47, %40"];
+    block19 [label="%50 = or i1 %48, %49"];
+    block20 [label="%52 = icmp eq i64 %51"];
+    block21 [label="%54 = shl nuw nsw i64 %51, 2"];
+    block22 [label="%58 = phi i32* [ %57, %56 ], [ null, %44 ]"];
+    block23 [label="%60 = getelementptr inbounds i32, i32* %59, i64 %40"];
+    block24 [label="%62 = icmp sgt i64 %39, 0"];
+    block25 [label="%64 = bitcast i32* %59 to i8*"];
+    block26 [label="%67 = icmp eq i32* %30, null"];
+    block27 [label="%71 = getelementptr inbounds i32, i32* %59, i64 %51"];
+    block28 [label="%73 = phi i32* [ %59, %70 ], [ %30, %34 ]"];
+    block29 [label="%84 = bitcast i8* %25 to i32*"];
+    block30 [label="%85 = load i32, i32* %85"];
+    block31 [label="%90 = load i32, i32* %85"];
+    block32 [label="%91 = add nsw i64 %20, -1"];
+    block33 [label="%94 = and i64 %91, -8"];
+    block34 [label="%102 = and i64 %99, 4611686018427387900"];
+    block35 [label="%105 = phi i64 [ 0, %102 ], [ %145, %104 ]"];
+    block36 [label="%122 = load <4 x i32>, <4 x i32>* %123"];
+    block37 [label="%134 = xor <4 x i32> %130, %125"];
+    block38 [label="%136 = or i64 %105, 25"];
+    block39 [label="%137 = getelementptr inbounds i32, i32* %85, i64 %136"];
+    block40 [label="%138 = bitcast i32* %137 to <4 x i32>*"];
+    block41 [label="%142 = load <4 x i32>, <4 x i32>* %141"];
+    block42 [label="%143 = xor <4 x i32> %139, %134"];
+    block43 [label="%145 = add nuw i64 %105, 32"];
+    block44 [label="%146 = add i64 %108, -4"];
+    block45 [label="%154 = icmp eq i64 %100, 0"];
+    block46 [label="%177 = icmp eq i64 %91, %94"];
+    block47 [label="%179 = phi i64 [ 1, %89 ], [ %95, %172 ]"];
+    block48 [label="%184 = getelementptr inbounds i32, i32* %85, i64 %182"];
+    block49 [label="%185 = load i32, i32* %184"];
+    block50 [label="%187 = add nuw nsw i64 %182, 1"];
+    block51 [label="%188 = icmp eq i64 %187, %20"];
+    block52 [label="%192 = phi i32 [ %190, %189 ], [ 0, %13 ]"];
+    block53 [label="%193 = invoke nonnull align 8 dereferenceable(8) %"class.std::basic_ostream"* @_ZNSolsEi"];
+    exit [label="exit"];
+    
+    entry -> block1;
+    block1 -> block2;
+    block2 -> block3;
+    block3 -> block4;
+    block4 -> block5;
+    block5 -> block6;
+    block5 -> block7;
+    block5 -> block8;
+    block8 -> block13;
+    block8 -> block9;
+    block9 -> block10;
+    block10 -> block11;
+    
+    // Add more edges based on the control flow of the program
+    
+    block53 -> exit;
+}
+```
+```

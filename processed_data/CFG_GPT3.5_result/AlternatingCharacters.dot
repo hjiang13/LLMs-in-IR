@@ -1,0 +1,50 @@
+```dot
+digraph ControlFlowGraph {
+    node [shape=rectangle];
+
+    entry [label="entry"];
+    block1 [label="%5 = icmp slt i32 %4, 2"];
+    block2 [label="%8 = load i8*, i8** %7"];
+    block3 [label="%12 = icmp ult i64 %11, 8"];
+    block4 [label="%14 = and i64 %11, -8"];
+    block5 [label="%18 = phi i64 [ 0, %13 ], [ %37, %17 ]"];
+    block6 [label="%40 = add <4 x i32> %36, %35"];
+    block7 [label="%45 = phi i64 [ %15, %39 ], [ 1, %6 ]"];
+    block8 [label="%49 = phi i64 [ %57, %48 ], [ %45, %44 ]"];
+    block9 [label="%58 = icmp eq i64 %57, %10"];
+    block10 [label="%60 = phi i32 [ 0, %1 ], [ %41, %39 ], [ %56, %48 ]"];
+    block11 [label="%97 = icmp eq i8 %93, %96"];
+    block12 [label="%105 = phi i64 [ %58, %82 ], [ 1, %50 ]"];
+    block13 [label="%122 = icmp eq i8 %121, 0"];
+    block14 [label="%145 = icmp eq i32 %143, 0"];
+    block15 [label="%154 = phi { i8*, i32 } [ %147, %146 ], [ %149, %148 ]"];
+    block16 [label="%153 = icmp eq i8* %152, %12"];
+    block17 [label="ret i32 0"];
+
+    entry -> block1;
+    block1 -> block2 [label="true"];
+    block1 -> block6 [label="false"];
+    block2 -> block3;
+    block3 -> block4 [label="true"];
+    block3 -> block7 [label="false"];
+    block4 -> block5;
+    block5 -> block6;
+    block6 -> block7;
+    block7 -> block8;
+    block8 -> block9 [label="true"];
+    block8 -> block10 [label="false"];
+    block9 -> block17 [label="true"];
+    block9 -> block11 [label="false"];
+    block10 -> block11;
+    block11 -> block12;
+    block12 -> block13 [label="true"];
+    block12 -> block14 [label="false"];
+    block13 -> block15 [label="true"];
+    block13 -> block16 [label="false"];
+    block14 -> block17 [label="true"];
+    block14 -> block2 [label="false"];
+    block15 -> block16;
+    block16 -> block17 [label="true"];
+    block16 -> block15 [label="false"];
+}
+```
