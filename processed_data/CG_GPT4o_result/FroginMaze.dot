@@ -1,0 +1,34 @@
+To create a call graph from the provided Intermediate Representation (IR) code, we will extract function declarations and their corresponding calls. The output will be in the DOT format, which can be used to visualize the call graph.
+
+Here's the constructed call graph based on the analysis of the provided IR code:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    main [label="main"];
+    _GLOBAL__sub_I_FroginMaze_cpp [label="_GLOBAL__sub_I_FroginMaze.cpp"];
+    @_ZNSirsERi [label="_ZNSirsERi"];
+    @_ZStrsIcSt11char_traitsIcEERSt13basic_istreamIT_T0_ES6_RS3_ [label="_ZStrsIcSt11char_traitsIcEERSt13basic_istreamIT_T0_ES6_RS3_"];
+    @_ZNSo9_M_insertIdEERSoT_ [label="_ZNSo9_M_insertIdEERSoT_"];
+    @__cxa_atexit [label="__cxa_atexit"];
+    @_ZNSt8ios_base4InitC1Ev [label="_ZNSt8ios_base4InitC1Ev"];
+    @_ZNSt8ios_base4InitD1Ev [label="_ZNSt8ios_base4InitD1Ev"];
+    @freopen [label="freopen"];
+    
+    // Edges
+    main -> _GLOBAL__sub_I_FroginMaze_cpp;
+    main -> @_ZNSirsERi;
+    main -> @__cxa_atexit;
+    main -> @freopen;
+    main -> @_ZNSt8ios_base4InitC1Ev;
+    main -> @_ZNSt8ios_base4InitD1Ev;
+    @_GLOBAL__sub_I_FroginMaze_cpp -> @_ZNSt8ios_base4InitC1Ev;
+    @_GLOBAL__sub_I_FroginMaze_cpp -> @__cxa_atexit;
+}
+```
+
+### Explanation:
+- **Nodes**: Each function is represented as a node. The name of the function is used as the label for the node.
+- **Edges**: Edges are drawn from the calling function to the called function, indicating the relationship between them.
+
+This representation allows for visualizing how functions in the `FroginMaze.cpp` module are interconnected through function calls. You can visualize this DOT format using tools like Graphviz.

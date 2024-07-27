@@ -1,0 +1,48 @@
+Based on the provided Intermediate Representation (IR) code, we can extract the functions defined in the code to create a call graph. The call graph will represent the relationships between the functions, specifically which functions call which other functions.
+
+Here's the call graph in DOT format:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    node [shape=box];
+    main [label="main()"];
+    fit [label="fit(int, int)"];
+    _GLOBAL__sub_I_TheSnakevstheWind_cpp [label="_GLOBAL__sub_I_TheSnakevstheWind.cpp()"];
+    _ZNSt8ios_base4InitC1Ev [label="_ZNSt8ios_base4InitC1Ev()"];
+    _ZNSt8ios_base4InitD1Ev [label="_ZNSt8ios_base4InitD1Ev()"];
+    __cxa_atexit [label="__cxa_atexit()"];
+    freopen [label="freopen()"];
+    _ZNSt8ios_base15sync_with_stdioEb [label="_ZNSt8ios_base15sync_with_stdioEb()"];
+    _ZNSirsERi [label="_ZNSirsERi()"];
+    _ZStrsIcSt11char_traitsIcEERSt13basic_istreamIT_T0_ES6_RS3_ [label="_ZStrsIcSt11char_traitsIcEERSt13basic_istreamIT_T0_ES6_RS3_()"];
+    _ZNSolsEi [label="_ZNSolsEi()"];
+    _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l [label="_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l()"];
+    _ZNSo3putEc [label="_ZNSo3putEc()"];
+    _ZNSo5flushEv [label="_ZNSo5flushEv()"];
+    _ZSt16__throw_bad_castv [label="_ZSt16__throw_bad_castv()"];
+    _ZNKSt5ctypeIcE13_M_widen_initEv [label="_ZNKSt5ctypeIcE13_M_widen_initEv()"];
+
+    // Edges (function calls)
+    main -> _GLOBAL__sub_I_TheSnakevstheWind_cpp;
+    main -> freopen;
+    main -> _ZNSt8ios_base15sync_with_stdioEb;
+    main -> _ZNSirsERi;
+    main -> _ZStrsIcSt11char_traitsIcEERSt13basic_istreamIT_T0_ES6_RS3_;
+    main -> _ZNSolsEi;
+    main -> _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l;
+    main -> _ZNSo3putEc;
+    main -> _ZNSo5flushEv;
+    _GLOBAL__sub_I_TheSnakevstheWind_cpp -> _ZNSt8ios_base4InitC1Ev;
+    _GLOBAL__sub_I_TheSnakevstheWind_cpp -> __cxa_atexit;
+    _ZNSt8ios_base4InitD1Ev -> _ZNSt8ios_base4InitD1Ev;
+    _ZSt16__throw_bad_castv -> _ZSt16__throw_bad_castv;
+    _ZNKSt5ctypeIcE13_M_widen_initEv -> _ZNKSt5ctypeIcE13_M_widen_initEv;
+}
+```
+
+### Explanation:
+- **Nodes**: Each function is represented as a node in the graph with its name as the label.
+- **Edges**: Directed edges are created from caller functions to the called functions, indicating the flow of the program.
+  
+Save this DOT format to a file and use Graphviz tools (like `dot`) to visualize the call graph.

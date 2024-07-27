@@ -1,0 +1,33 @@
+To produce a call graph from the provided Intermediate Representation (IR) code, we will extract the functions and the function calls made within these functions. Then we will represent this information in the DOT format. Below is your call graph in DOT format:
+
+```dot
+digraph call_graph {
+    // Nodes
+    main [label="main()"];
+    calci [label="_Z4calciii(i32, i32, i32)"];
+    Search [label="_Z6SearchiiiPxx(i32, i32, i32, i64*, i64)"];
+    Rb_tree_erase [label="_ZNSt8_Rb_treeIxSt4pairIKxiESt10_Select1stIS2_ESt4lessIxESaIS2_EE8_M_eraseEPSt13_Rb_tree_nodeIS2_E"];
+    Rb_tree_insert [label="_ZNSt8_Rb_treeIxSt4pairIKxiESt10_Select1stIS2_ESt4lessIxESaIS2_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorIS2_ERS1_"];
+    ios_base_init [label="_ZNSt8ios_base4InitC1Ev"];
+    ios_base_deinit [label="_ZNSt8ios_base4InitD1Ev"];
+    clang_call_terminate [label="__clang_call_terminate"];
+    __cxa_atexit [label="__cxa_atexit"];
+    
+    // Edges
+    main -> calci;
+    main -> ios_base_init;
+    main -> clang_call_terminate;
+    calci -> Search;
+    calci -> Rb_tree_erase;
+    calci -> Rb_tree_insert;
+    Rb_tree_erase -> Rb_tree_insert;
+    ios_base_init -> ios_base_deinit;
+}
+```
+
+### Explanation:
+- **Nodes**: Each function in the IR code is represented as a node in the graph. The function names are taken from the mangled names in the IR code.
+- **Edges**: Directed edges are created from caller functions to the functions they invoke. For instance, the `main` function calls `calci`, and `calci` calls `Search`, `Rb_tree_erase`, and `Rb_tree_insert`.
+- **Special Functions**: Functions related to the standard IO and memory management, such as `ios_base_init`, `clang_call_terminate`, and `__cxa_atexit`, are also included.
+
+This structure provides a clear visualization of how the functions interact and call one another, which can be helpful for understanding the flow of the program.

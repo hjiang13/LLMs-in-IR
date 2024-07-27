@@ -1,0 +1,41 @@
+To create a call graph in the DOT format based on the provided Intermediate Representation (IR) code, we need to identify functions in the code and the calls made between them. Below is a simplified representation of the call graph in the DOT format, showcasing the functions as nodes and their relationships as edges.
+
+### DOT Format of the Call Graph
+
+```dot
+digraph CallGraph {
+    // Nodes
+    main [label="main()"];
+    _GLOBAL__sub_I_ChocolateFeast_cpp [label="_GLOBAL__sub_I_ChocolateFeast.cpp()"];
+    _ZNSt8ios_base4InitC1Ev [label="_ZNSt8ios_base4InitC1Ev()"];
+    _ZNSt8ios_base4InitD1Ev [label="_ZNSt8ios_base4InitD1Ev()"];
+    __cxa_atexit [label="__cxa_atexit()"];
+    freopen [label="freopen()"];
+    _ZNSirsERi [label="_ZNSirsERi()"];
+    _ZNSolsEi [label="_ZNSolsEi()"];
+    _ZNSo3putEc [label="_ZNSo3putEc()"];
+    _ZNSo5flushEv [label="_ZNSo5flushEv()"];
+    _ZSt16__throw_bad_castv [label="_ZSt16__throw_bad_castv()"];
+    _ZNKSt5ctypeIcE13_M_widen_initEv [label="_ZNKSt5ctypeIcE13_M_widen_initEv()"];
+
+    // Edges
+    _GLOBAL__sub_I_ChocolateFeast_cpp -> _ZNSt8ios_base4InitC1Ev;
+    _GLOBAL__sub_I_ChocolateFeast_cpp -> __cxa_atexit;
+    main -> _ZNSirsERi;
+    main -> _ZNSolsEi;
+    main -> _ZNSo3putEc;
+    main -> _ZNSo5flushEv;
+    main -> _ZSt16__throw_bad_castv;
+    main -> _ZNKSt5ctypeIcE13_M_widen_initEv;
+    main -> freopen;
+}
+```
+
+### Explanation:
+
+- Each function from the IR code is represented as a node in the graph.
+- The edges indicate calls from one function to another.
+- The labels for each node correspond to the function names as they appear in the IR code.
+- The main function is the entry point, and its relationships with other functions are displayed through directed edges.
+
+This representation allows you to visualize the relationships and flow of calls between functions in the IR code.

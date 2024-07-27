@@ -1,0 +1,49 @@
+To represent the call graph for the provided Intermediate Representation (IR) code in the DOT format, we will extract the function declarations and their call relationships. The nodes in the graph will represent the functions, and the directed edges will represent the calls between these functions.
+
+Here’s the call graph in DOT format:
+
+```dot
+digraph G {
+    node [shape=box];
+
+    // Nodes (functions)
+    main [label="main"];
+    _GLOBAL__sub_I_DivisorExploration3_cpp [label="_GLOBAL__sub_I_DivisorExploration3.cpp"];
+    _ZNSt8ios_base4InitC1Ev [label="_ZNSt8ios_base4InitC1Ev"];
+    _ZNSt8ios_base4InitD1Ev [label="_ZNSt8ios_base4InitD1Ev"];
+    __cxa_atexit [label="__cxa_atexit"];
+    _ZNSt6vectorIiSaIiEED2Ev [label="_ZNSt6vectorIiSaIiEED2Ev"];
+    @freopen [label="freopen"];
+    @__isoc99_scanf [label="__isoc99_scanf"];
+    printf [label="printf"];
+    _ZdlPv [label="_ZdlPv"];
+    _ZSt20__throw_length_errorPKc [label="_ZSt20__throw_length_errorPKc"];
+    _Znwm [label="_Znwm"];
+    llvm_memmove [label="llvm.memmove"];
+    llvm_lifetime_start [label="llvm.lifetime.start.p0i8"];
+    llvm_lifetime_end [label="llvm.lifetime.end.p0i8"];
+    llvm_umin_i32 [label="llvm.umin.i32"];
+
+    // Edges (calls)
+    _GLOBAL__sub_I_DivisorExploration3_cpp -> _ZNSt8ios_base4InitC1Ev;
+    _GLOBAL__sub_I_DivisorExploration3_cpp -> __cxa_atexit;
+    _GLOBAL__sub_I_DivisorExploration3_cpp -> _ZNSt6vectorIiSaIiEED2Ev;
+
+    main -> @freopen;
+    main -> __isoc99_scanf;
+    main -> printf;
+    main -> llvm_lifetime_start;
+    main -> llvm_lifetime_end;
+    main -> _ZNSt6vectorIiSaIiEED2Ev;
+    
+    // Other function calls
+    // Example: if one function calls another, add edges similarly
+    // _ZNSt6vectorIiSaIiEED2Ev -> some_other_function;
+}
+```
+
+### Explanation:
+- Each function is represented as a node in the graph, with its name as the label.
+- Directed edges (`->`) indicate calls from one function to another.
+- The graph includes the `main` function, the global constructor, and function declarations that were referenced in the IR code you provided.
+- You may need to fill in additional function calls and relationships based on further analysis of the IR code, as the above representation is a basic structure based on the information available.

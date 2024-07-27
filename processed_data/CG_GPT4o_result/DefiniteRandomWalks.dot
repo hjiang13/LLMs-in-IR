@@ -1,0 +1,48 @@
+To create a call graph in DOT format from the provided Intermediate Representation (IR) code, we will analyze the function calls and structure the output accordingly. Below is the DOT representation of the call graph for the functions defined in your IR code.
+
+```dot
+digraph CallGraph {
+    // Node definitions
+    node [shape=box];
+    "main" -> "init2";
+    "main" -> "init";
+    "main" -> "solve";
+    "main" -> "dfsi";
+    "main" -> "ntt";
+    "main" -> "change";
+    "main" -> "dfs";
+    "main" -> "nttPxii";
+
+    "init" -> "llvm.memset.p0i8.i64";
+    "init" -> "llvm.memcpy.p0i8.p0i8.i64";
+    
+    "solve" -> "dfsi";
+    "solve" -> "dfs";
+    
+    "dfs" -> "ntt";
+    "dfs" -> "dfs2";
+
+    "ntt" -> "nttPxii";
+    "ntt" -> "change";
+
+    "dfsi" -> "ntt";
+    "dfsi" -> "solve";
+
+    "init2" -> "nttPxii";
+    "init2" -> "ntt";
+    
+    "change" -> "nttPxii";
+
+    "nttPxii" -> "ntt";
+    
+    "llvm.memset.p0i8.i64" -> "llvm.memcpy.p0i8.p0i8.i64";
+}
+```
+
+### Explanation:
+- Each function is represented as a node in the graph.
+- Directed edges (`->`) represent function calls. For example, `main` calls `init`, `solve`, etc.
+- The nodes are structured to show the relationships between function calls without detailing the contents of each function.
+- The node shapes are set to `box` for better visualization.
+
+This representation can be visualized using Graphviz or similar tools that support the DOT format. Simply copy the DOT code into a `.dot` file and use a Graphviz tool to visualize the call graph.

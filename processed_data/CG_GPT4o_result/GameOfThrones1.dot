@@ -1,0 +1,49 @@
+To construct the call graph from the provided Intermediate Representation (IR) code, we need to identify the functions defined and called within the code. Based on the IR you provided, the relevant functions are:
+
+1. `_ZNSt8ios_base4InitC1Ev` (Constructor for `std::ios_base::Init`)
+2. `_ZNSt8ios_base4InitD1Ev` (Destructor for `std::ios_base::Init`)
+3. `__cxa_atexit` (C++ atexit handler)
+4. `_Z21isAnagramOfPalindromeNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE`
+5. `main`
+6. `freopen`
+7. `_ZStrsIcSt11char_traitsIcESaIcEERSt13basic_istreamIT_T0_ES7_RNSt7__cxx1112basic_stringIS4_S5_T1_EE`
+8. `_ZdlPv` (Deallocate memory)
+9. `_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm`
+10. `_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l`
+
+Now, we can create a dot file that represents the call graph. The nodes in the graph will be the function names, and the edges will represent the calls between these functions.
+
+Here's the dot representation of the call graph:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    _ZNSt8ios_base4InitC1Ev [label="_ZNSt8ios_base4InitC1Ev"];
+    _ZNSt8ios_base4InitD1Ev [label="_ZNSt8ios_base4InitD1Ev"];
+    __cxa_atexit [label="__cxa_atexit"];
+    _Z21isAnagramOfPalindromeNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE [label="_Z21isAnagramOfPalindromeNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE"];
+    main [label="main"];
+    freopen [label="freopen"];
+    _ZStrsIcSt11char_traitsIcESaIcEERSt13basic_istreamIT_T0_ES7_RNSt7__cxx1112basic_stringIS4_S5_T1_EE [label="_ZStrsIcSt11char_traitsIcESaIcEERSt13basic_istreamIT_T0_ES7_RNSt7__cxx1112basic_stringIS4_S5_T1_EE"];
+    _ZdlPv [label="_ZdlPv"];
+    _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm"];
+    _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l [label="_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l"];
+
+    // Edges (function calls)
+    main -> _ZNSt8ios_base4InitC1Ev;
+    main -> __cxa_atexit;
+    main -> _Z21isAnagramOfPalindromeNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE;
+    main -> freopen;
+    main -> _ZStrsIcSt11char_traitsIcESaIcEERSt13basic_istreamIT_T0_ES7_RNSt7__cxx1112basic_stringIS4_S5_T1_EE;
+    main -> _ZdlPv;
+    _Z21isAnagramOfPalindromeNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm;
+    _Z21isAnagramOfPalindromeNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l;
+    _ZNSt8ios_base4InitD1Ev -> _ZdlPv;
+}
+```
+
+In this dot file:
+- Each function is represented as a node.
+- Arrows (`->`) indicate function calls (edges) between the caller and the callee functions. 
+
+You can visualize this graph using graph visualization tools that support the DOT format, such as Graphviz.

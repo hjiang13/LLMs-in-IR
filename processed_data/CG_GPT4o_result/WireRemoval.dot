@@ -1,0 +1,61 @@
+To create a call graph in DOT format from the provided Intermediate Representation (IR) code, we will identify the functions defined in the code and how they call each other. Based on the provided IR code, the relevant functions include:
+
+1. `@main`
+2. `@_Z3dfsiii`
+3. `@_GLOBAL__sub_I_WireRemoval.cpp`
+4. `@__cxa_atexit`
+5. `@freopen`
+6. `@printf`
+7. `@llvm.memmove.p0i8.p0i8.i64`
+8. `@_ZdlPv`
+9. `@_ZSt20__throw_length_errorPKc`
+10. `@llvm.lifetime.start.p0i8`
+11. `@llvm.lifetime.end.p0i8`
+12. `@_ZSt8ios_base4InitC1Ev`
+13. `@_ZSt8ios_base4InitD1Ev`
+14. `@_ZNSt8ios_base15sync_with_stdioEb`
+
+Now, let's construct the DOT representation of the call graph. 
+
+```dot
+digraph CallGraph {
+    // Nodes
+    main [label="@main"];
+    dfs [label="@_Z3dfsiii"];
+    global_init [label="@_GLOBAL__sub_I_WireRemoval.cpp"];
+    cxa_atexit [label="@__cxa_atexit"];
+    freopen [label="@freopen"];
+    printf [label="@printf"];
+    memmove [label="@llvm.memmove.p0i8.p0i8.i64"];
+    delete [label="@_ZdlPv"];
+    throw_length_error [label="@_ZSt20__throw_length_errorPKc"];
+    lifetime_start [label="@llvm.lifetime.start.p0i8"];
+    lifetime_end [label="@llvm.lifetime.end.p0i8"];
+    ios_base_init [label="@_ZSt8ios_base4InitC1Ev"];
+    ios_base_destroy [label="@_ZSt8ios_base4InitD1Ev"];
+    sync_stdio [label="@_ZNSt8ios_base15sync_with_stdioEb"];
+
+    // Edges (function calls)
+    main -> dfs;
+    main -> global_init;
+    main -> printf;
+    main -> lifetime_start;
+    main -> lifetime_end;
+    main -> ios_base_init;
+    main -> ios_base_destroy;
+    
+    dfs -> dfs; // Recursion in dfs function
+    dfs -> cxa_atexit; // Calls __cxa_atexit
+    dfs -> memmove; // Calls llvm.memmove
+    dfs -> delete; // Calls delete operator
+    dfs -> throw_length_error; // Throws length error
+}
+```
+
+### Explanation:
+- The nodes represent the functions in the IR code.
+- The edges represent the calls between the functions.
+- Recursive calls in the `dfs` function are indicated by a self-loop from `dfs` to itself.
+- Other calls are inferred from the `call` instructions in the `main` function and the `dfs` function.
+
+You can visualize this graph using any DOT visualization tool or software that supports the DOT language.

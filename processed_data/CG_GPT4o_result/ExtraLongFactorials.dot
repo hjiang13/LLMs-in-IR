@@ -1,0 +1,53 @@
+To create a call graph in DOT format from the given Intermediate Representation (IR) code, we need to identify the functions defined in the IR and how they call each other. Here's a breakdown of the functions found in the provided IR code:
+
+1. `_GLOBAL__sub_I_ExtraLongFactorials.cpp`
+2. `main`
+3. `fact`
+4. `multi`
+5. `printf`
+6. `__isoc99_scanf`
+7. `__cxa_atexit`
+8. `freopen`
+9. `@_ZNSt8ios_base4InitC1Ev`
+10. `@_ZNSt8ios_base4InitD1Ev`
+
+Next, we will identify the calls between these functions. The relevant calls in the provided IR code include:
+
+- `_GLOBAL__sub_I_ExtraLongFactorials.cpp` calls `@_ZNSt8ios_base4InitC1Ev`
+- `_GLOBAL__sub_I_ExtraLongFactorials.cpp` calls `@__cxa_atexit`
+- `main` calls `freopen`
+- `main` calls `__isoc99_scanf`
+- `main` calls `fact`
+- `fact` calls `multi`
+- `fact` calls `printf`
+
+Based on this analysis, we can structure the call graph in DOT format as follows:
+
+```dot
+digraph CallGraph {
+    node [shape=box];
+
+    // Function nodes
+    _GLOBAL__sub_I_ExtraLongFactorials_cpp;
+    main;
+    fact;
+    multi;
+    printf;
+    __isoc99_scanf;
+    __cxa_atexit;
+    freopen;
+    _ZNSt8ios_base4InitC1Ev;
+    _ZNSt8ios_base4InitD1Ev;
+
+    // Edges representing function calls
+    _GLOBAL__sub_I_ExtraLongFactorials_cpp -> _ZNSt8ios_base4InitC1Ev;
+    _GLOBAL__sub_I_ExtraLongFactorials_cpp -> __cxa_atexit;
+    main -> freopen;
+    main -> __isoc99_scanf;
+    main -> fact;
+    fact -> multi;
+    fact -> printf;
+}
+```
+
+This DOT representation captures the function calls in the provided IR code. You can visualize it using graph visualization tools that support the DOT format, such as Graphviz.

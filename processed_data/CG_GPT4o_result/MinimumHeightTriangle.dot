@@ -1,0 +1,63 @@
+To represent the call graph of the provided IR code in DOT format, we'll identify the function definitions and their calls. The functions defined in the IR are:
+
+1. `_GLOBAL__sub_I_MinimumHeightTriangle.cpp`
+2. `main`
+3. `lowestTriangle`
+4. `__cxa_atexit`
+5. `_ZNSt8ios_base4InitC1Ev`
+6. `_ZNSt8ios_base4InitD1Ev`
+7. `_ZSt16__throw_bad_castv`
+8. `_ZNKSt5ctypeIcE13_M_widen_initEv`
+9. `freopen`
+10. `_ZNSirsERi`
+11. `_ZNSolsEi`
+12. `_ZNSo3putEc`
+13. `_ZNSo5flushEv`
+
+Now, let's identify the function calls within `main` and `lowestTriangle` to build the edges of the call graph:
+
+- `main` calls:
+  - `freopen`
+  - `_ZNSirsERi` (twice)
+  - `lowestTriangle`
+  - `_ZNSolsEi`
+  - `_ZNSo3putEc`
+  - `_ZNSo5flushEv`
+  - `_ZSt16__throw_bad_castv`
+  - `_ZNKSt5ctypeIcE13_M_widen_initEv`
+
+- `lowestTriangle` does not call any other functions.
+
+Now, let's construct the DOT representation of this call graph:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    _GLOBAL__sub_I_MinimumHeightTriangle.cpp;
+    main;
+    lowestTriangle;
+    __cxa_atexit;
+    _ZNSt8ios_base4InitC1Ev;
+    _ZNSt8ios_base4InitD1Ev;
+    _ZSt16__throw_bad_castv;
+    _ZNKSt5ctypeIcE13_M_widen_initEv;
+    freopen;
+    _ZNSirsERi;
+    _ZNSolsEi;
+    _ZNSo3putEc;
+    _ZNSo5flushEv;
+
+    // Edges
+    main -> freopen;
+    main -> _ZNSirsERi;
+    main -> _ZNSirsERi; // second call
+    main -> lowestTriangle;
+    main -> _ZNSolsEi;
+    main -> _ZNSo3putEc;
+    main -> _ZNSo5flushEv;
+    main -> _ZSt16__throw_bad_castv;
+    main -> _ZNKSt5ctypeIcE13_M_widen_initEv;
+}
+```
+
+This DOT representation captures the relationships between the functions in your IR code, where the nodes represent the functions and the directed edges represent the calls made between them.

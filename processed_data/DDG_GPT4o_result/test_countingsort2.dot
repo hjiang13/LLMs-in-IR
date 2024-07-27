@@ -1,0 +1,40 @@
+To create a call graph in DOT format from the provided Intermediate Representation (IR) code, we will identify the functions declared and defined in the code and the call relationships between them. Below is the DOT representation of the call graph based on the analysis of the provided IR code.
+
+```dot
+digraph CallGraph {
+    // Nodes
+    main [label="main()"];
+    _GLOBAL__sub_I_counting_sort2_cpp [label="_GLOBAL__sub_I_counting_sort2.cpp()"];
+    @_ZNSi10_M_extractIjEERSiRT_ [label="@_ZNSi10_M_extractIjEERSiRT_"];
+    @_ZNSo9_M_insertImEERSoT_ [label="@_ZNSo9_M_insertImEERSoT_"];
+    @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l [label="@_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l"];
+    @_ZdaPv [label="@_ZdaPv"];
+    @__cxa_atexit [label="@__cxa_atexit"];
+    @_ZNSt8ios_base4InitC1Ev [label="@_ZNSt8ios_base4InitC1Ev"];
+    @_ZNSt8ios_base4InitD1Ev [label="@_ZNSt8ios_base4InitD1Ev"];
+    @freopen [label="@freopen"];
+    @_Znam [label="@_Znam"];
+    
+    // Edges
+    main -> _GLOBAL__sub_I_counting_sort2_cpp;
+    main -> @__cxa_atexit;
+    main -> @_ZNSt8ios_base4InitC1Ev;
+    main -> @_ZNSt8ios_base4InitD1Ev;
+    main -> @freopen;
+    main -> @_ZNSi10_M_extractIjEERSiRT_;
+    main -> @_ZNSo9_M_insertImEERSoT_;
+    main -> @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l;
+    _GLOBAL__sub_I_counting_sort2_cpp -> @_ZNSt8ios_base4InitC1Ev;
+    _GLOBAL__sub_I_counting_sort2_cpp -> @_ZNSt8ios_base4InitD1Ev;
+    _GLOBAL__sub_I_counting_sort2_cpp -> @__cxa_atexit;
+}
+
+```
+
+### Explanation:
+1. **Nodes**: Each function or global declaration is represented as a node in the graph. The labels are based on the function names.
+2. **Edges**: Directed edges are created from the caller functions to the callee functions, indicating which functions call which.
+3. The main function is linked to various functions it calls directly, including constructors and destructors for class `std::ios_base::Init`, the `freopen` function, and others involved in input/output operations. 
+4. The `@_GLOBAL__sub_I_counting_sort2.cpp` function is included as it is an initialization function that also makes calls to other functions.
+
+This representation will give a clear overview of the function calling relationships in the provided IR code.

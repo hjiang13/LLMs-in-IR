@@ -1,0 +1,35 @@
+To create a call graph from the provided Intermediate Representation (IR) code, we will extract the function calls and their relationships. The output will be formatted in the DOT language, which is used to describe graphs.
+
+Here’s the call graph based on the provided IR code:
+
+```dot
+digraph CallGraph {
+    node [shape=rectangle];
+
+    main -> _GLOBAL__sub_I_StockPortfolio.cpp;
+    main -> __isoc99_scanf;
+    main -> printf;
+    main -> _Z6updatexxxxxx;
+    main -> _Z5queryxxxxx;
+
+    _Z6updatexxxxxx -> _Z6updatexxxxxx;
+
+    _Z5queryxxxxx -> _Z5queryxxxxx;
+
+    _GLOBAL__sub_I_StockPortfolio.cpp -> _ZNSt8ios_base4InitC1Ev;
+    _GLOBAL__sub_I_StockPortfolio.cpp -> __cxa_atexit;
+    _ZNSt8ios_base4InitD1Ev -> @__dso_handle;
+
+    _ZNSt8_Rb_treeISt4pairIS0_IxxExES2_St9_IdentityIS2_ESt4lessIS2_ESaIS2_EED2Ev -> _ZNSt8_Rb_treeISt4pairIS0_IxxExES2_St9_IdentityIS2_ESt4lessIS2_ESaIS2_EE8_M_eraseEPSt13_Rb_tree_nodeIS2_E;
+    _ZNSt8_Rb_treeISt4pairIS0_IxxExES2_St9_IdentityIS2_ESt4lessIS2_ESaIS2_EE8_M_eraseEPSt13_Rb_tree_nodeIS2_E -> _ZNSt8_Rb_treeISt4pairIS0_IxxExES2_St9_IdentityIS2_ESt4lessIS2_ESaIS2_EE16_M_insert_uniqueIS2_EES0_ISt17_Rb_tree_iteratorIS2_EbEOT_;
+}
+```
+
+### Explanation:
+- Each function is represented as a node.
+- Directed edges (`->`) indicate a call from one function to another.
+- The `main` function calls several functions, including `_GLOBAL__sub_I_StockPortfolio.cpp`, `__isoc99_scanf`, `printf`, `_Z6updatexxxxxx`, and `_Z5queryxxxxx`.
+- The recursive calls to `_Z6updatexxxxxx` and `_Z5queryxxxxx` are also represented.
+- The constructor and destructor of `ios_base` are included, along with references to the `Rb_tree` methods.
+
+You can use this DOT representation with Graphviz tools (like `dot` or `neato`) to visualize the call graph.

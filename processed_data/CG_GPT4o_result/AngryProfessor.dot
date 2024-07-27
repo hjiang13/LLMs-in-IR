@@ -1,0 +1,36 @@
+Below is the representation of the call graph in the DOT format. Each function is represented as a node, and the calls between functions are represented as directed edges.
+
+```dot
+digraph CallGraph {
+    // Nodes
+    "main" [label="main"]
+    "_GLOBAL__sub_I_AngryProfessor.cpp" [label="_GLOBAL__sub_I_AngryProfessor.cpp"]
+    "@llvm.lifetime.start.p0i8" [label="@llvm.lifetime.start.p0i8"]
+    "@llvm.lifetime.end.p0i8" [label="@llvm.lifetime.end.p0i8"]
+    "@freopen" [label="@freopen"]
+    "@_ZNSirsERi" [label="@_ZNSirsERi"]
+    "@_ZNSo3putEc" [label="@_ZNSo3putEc"]
+    "@_ZNSo5flushEv" [label="@_ZNSo5flushEv"]
+    "@_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l" [label="@_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l"]
+    "@_ZSt16__throw_bad_castv" [label="@_ZSt16__throw_bad_castv"]
+    "@_ZNKSt5ctypeIcE13_M_widen_initEv" [label="@_ZNKSt5ctypeIcE13_M_widen_initEv"]
+    "@__cxa_atexit" [label="@__cxa_atexit"]
+    "@_ZNSt8ios_base4InitC1Ev" [label="@_ZNSt8ios_base4InitC1Ev"]
+    "@_ZNSt8ios_base4InitD1Ev" [label="@_ZNSt8ios_base4InitD1Ev"]
+
+    // Edges
+    "_GLOBAL__sub_I_AngryProfessor.cpp" -> "@_ZNSt8ios_base4InitC1Ev"
+    "_GLOBAL__sub_I_AngryProfessor.cpp" -> "@__cxa_atexit"
+    "main" -> "@llvm.lifetime.start.p0i8"
+    "main" -> "@llvm.lifetime.end.p0i8"
+    "main" -> "@freopen"
+    "main" -> "@_ZNSirsERi"
+    "main" -> "@_ZNSo3putEc"
+    "main" -> "@_ZNSo5flushEv"
+    "main" -> "@_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l"
+    "main" -> "@_ZSt16__throw_bad_castv"
+    "main" -> "@_ZNKSt5ctypeIcE13_M_widen_initEv"
+}
+```
+
+This representation includes the main function and the constructors/destructors for class `std::ios_base::Init`, as well as any external functions that are called within the `main` function. Each function is represented as a node, and the arrows indicate the calls made from one function to another.

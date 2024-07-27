@@ -1,0 +1,53 @@
+To represent the call graph derived from the provided Intermediate Representation (IR) code, we will extract the functions and their call relationships. Below is the call graph expressed in DOT format, which can be visualized using Graphviz.
+
+```dot
+digraph CallGraph {
+    node [shape=rectangle];
+
+    // Nodes
+    main [label="main()"];
+    _GLOBAL__sub_I_Pairs_cpp [label="_GLOBAL__sub_I_Pairs.cpp()"];
+    _ZNSt8ios_base4InitC1Ev [label="_ZNSt8ios_base4InitC1Ev()"];
+    _ZNSt8ios_base4InitD1Ev [label="_ZNSt8ios_base4InitD1Ev()"];
+    __cxa_atexit [label="__cxa_atexit()"];
+    _ZNSirsERi [label="_ZNSirsERi()"];
+    _ZNSi10_M_extractImEERSiRT_ [label="_ZNSi10_M_extractImEERSiRT_()"];
+    _ZNSi10_M_extractIlEERSiRT_ [label="_ZNSi10_M_extractIlEERSiRT_()"];
+    _ZNSolsEi [label="_ZNSolsEi()"];
+    _ZSt29_Rb_tree_insert_and_rebalancebPSt18_Rb_tree_node_baseS0_RS_ [label="_ZSt29_Rb_tree_insert_and_rebalancebPSt18_Rb_tree_node_baseS0_RS_()"];
+    _ZSt18_Rb_tree_decrementPSt18_Rb_tree_node_base [label="_ZSt18_Rb_tree_decrementPSt18_Rb_tree_node_base()"];
+    _ZNSo3putEc [label="_ZNSo3putEc()"];
+    _ZNSo5flushEv [label="_ZNSo5flushEv()"];
+    _ZSt16__throw_bad_castv [label="_ZSt16__throw_bad_castv()"];
+    _ZNKSt5ctypeIcE13_M_widen_initEv [label="_ZNKSt5ctypeIcE13_M_widen_initEv()"];
+    _ZdlPv [label="_ZdlPv()"];
+    _Znwm [label="_Znwm()"];
+    _ZNSt8_Rb_treeIllSt9_IdentityIlESt4lessIlESaIlEED2Ev [label="_ZNSt8_Rb_treeIllSt9_IdentityIlESt4lessIlESaIlEED2Ev()"];
+    _ZNSt8_Rb_treeIllSt9_IdentityIlESt4lessIlESaIlEE8_M_eraseEPSt13_Rb_tree_nodeIlE [label="_ZNSt8_Rb_treeIllSt9_IdentityIlESt4lessIlESaIlEE8_M_eraseEPSt13_Rb_tree_nodeIlE()"];
+
+    // Edges
+    main -> _GLOBAL__sub_I_Pairs_cpp;
+    _GLOBAL__sub_I_Pairs_cpp -> _ZNSt8ios_base4InitC1Ev;
+    _GLOBAL__sub_I_Pairs_cpp -> __cxa_atexit;
+    main -> _ZNSirsERi;
+    main -> _ZNSi10_M_extractImEERSiRT_;
+    main -> _ZNSi10_M_extractIlEERSiRT_;
+    main -> _ZNSolsEi;
+    main -> _ZSt29_Rb_tree_insert_and_rebalancebPSt18_Rb_tree_node_baseS0_RS_;
+    main -> _ZSt18_Rb_tree_decrementPSt18_Rb_tree_node_base;
+    _ZNSolsEi -> _ZNSo3putEc;
+    _ZNSo3putEc -> _ZNSo5flushEv;
+    _ZNSo3putEc -> _ZSt16__throw_bad_castv;
+    _ZSt16__throw_bad_castv -> _ZNKSt5ctypeIcE13_M_widen_initEv;
+    _ZNSt8_Rb_treeIllSt9_IdentityIlESt4lessIlESaIlEED2Ev -> _ZNSt8_Rb_treeIllSt9_IdentityIlESt4lessIlESaIlEE8_M_eraseEPSt13_Rb_tree_nodeIlE;
+}
+```
+
+**Explanation**:
+
+- Each function in the IR code is represented as a node in the graph.
+- The arrows (edges) show the calls made from one function to another.
+- The main function is the entry point, and it calls several other functions, including constructors and destructors.
+- The internal functions and their relationships are represented, reflecting how they interact, particularly within the context of the `main()` function and the constructs from the C++ Standard Library used in the code. 
+
+You can visualize this graph using Graphviz tools or online graph visualization tools that support the DOT format.

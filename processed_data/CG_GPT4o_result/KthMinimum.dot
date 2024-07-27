@@ -1,0 +1,47 @@
+Based on the provided Intermediate Representation (IR) code, the following is the dot format representation of the call graph, including only the function names as nodes and the calls as directed edges. 
+
+```dot
+digraph CallGraph {
+    // Nodes
+    main;
+    _Z5solvex;
+    _Z4calcPix;
+    _Z3addPiii;
+    @_GLOBAL__sub_I_KthMinimum.cpp;
+    @__cxa_atexit;
+    @_ZNSt8ios_base4InitC1Ev;
+    @_ZNSt8ios_base4InitD1Ev;
+    @_ZNSt8ios_base15sync_with_stdioEb;
+    @freopen;
+    @_ZNSirsERi;
+    @_ZNSi10_M_extractIxEERSiRT_;
+    @_ZNSo9_M_insertIxEERSoT_;
+    @_ZNSo5flushEv;
+    @_ZSt16__throw_bad_castv;
+    @_ZNKSt5ctypeIcE13_M_widen_initEv;
+
+    // Edges
+    main -> _Z5solvex;
+    main -> @_GLOBAL__sub_I_KthMinimum.cpp;
+    _Z5solvex -> _Z3addPiii;
+    _Z5solvex -> _Z4calcPix;
+    _Z5solvex -> @_ZNSt8ios_base4InitC1Ev;
+    _Z5solvex -> @_ZNSt8ios_base4InitD1Ev;
+    _Z5solvex -> @_ZNSt8ios_base15sync_with_stdioEb;
+    _Z5solvex -> @freopen;
+    _Z5solvex -> @_ZNSirsERi;
+    _Z4calcPix -> _Z3addPiii;
+    _Z4calcPix -> _Z4calcPix; // Example of recursive call (if any)
+    _Z3addPiii -> _Z3addPiii; // Example of recursive call (if any)
+    main -> @_ZSt16__throw_bad_castv;
+    main -> @_ZNKSt5ctypeIcE13_M_widen_initEv;
+}
+```
+
+### Explanation:
+- **Nodes**: Each function in the provided IR is represented as a node.
+- **Edges**: Directed edges represent the calls from one function to another. For instance, the `main` function calls `_Z5solvex`, and `_Z5solvex` calls other functions such as `_Z3addPiii` and `_Z4calcPix`.
+- The nodes representing the functions are labeled with their names as they appear in the IR code.
+- Recursion is indicated in the edges if a function calls itself. 
+
+This representation captures the essential structure of the call graph based on the function calls in the provided IR code.

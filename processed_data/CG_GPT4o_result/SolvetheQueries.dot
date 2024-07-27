@@ -1,0 +1,53 @@
+To create a call graph from the provided intermediate representation (IR) code, we will extract the function declarations and definitions, and then represent them as nodes in a directed graph. The edges will represent the calls between these functions.
+
+Here's the call graph in DOT format:
+
+```dot
+digraph CallGraph {
+    // Function Declarations and Definitions
+    main;
+    _Z7fastpowiii;
+    _Z6modifyiiiiiPi;
+    _Z5queryiiiiiPi;
+    _Z5buildiii;
+    _Z4pushiii;
+    _Z7convertiPi;
+    @_ZSt4cout;
+    @_ZSt3cin;
+    @_ZNSolsEi;
+    @_ZNSo3putEc;
+    @_ZNSo5flushEv;
+    @_ZNSt8ios_base4InitC1Ev;
+    @_ZNSt8ios_base4InitD1Ev;
+    @__cxa_atexit;
+
+    // Function Calls
+    main -> _Z6modifyiiiiiPi;
+    main -> _Z5queryiiiiiPi;
+    main -> _Z5buildiii;
+    _Z6modifyiiiiiPi -> _Z5queryiiiiiPi;
+    _Z5queryiiiiiPi -> _Z7convertiPi;
+    _Z5buildiii -> _Z5buildiii; // Recursive Call
+    _Z5buildiii -> _Z4pushiii;
+    _Z7convertiPi -> _Z5buildiii;
+    _Z4pushiii -> _Z5buildiii;
+    _Z7fastpowiii -> _Z7fastpowiii; // Recursive Call
+    _Z7fastpowiii -> _Z6modifyiiiiiPi;
+
+    // Other function calls to external functions
+    main -> @_ZNSolsEi;
+    main -> @_ZNSo3putEc;
+    main -> @_ZNSo5flushEv;
+    _Z5queryiiiiiPi -> @_ZNSolsEi;
+    _Z5queryiiiiiPi -> @_ZNSo3putEc;
+    _Z6modifyiiiiiPi -> @_ZNSo5flushEv;
+}
+```
+
+### Explanation:
+1. **Nodes**: Each function is represented as a node in the graph. The function names are included as node labels.
+2. **Edges**: The directed edges represent function calls:
+   - For example, `main` calls `_Z6modifyiiiiiPi`, which means there's an edge from `main` to `_Z6modifyiiiiiPi`.
+   - Recursive calls are also indicated, such as `_Z5buildiii` calling itself.
+
+This representation allows you to visualize the relationships between the functions in the code. You can use a tool like Graphviz to visualize the DOT format.

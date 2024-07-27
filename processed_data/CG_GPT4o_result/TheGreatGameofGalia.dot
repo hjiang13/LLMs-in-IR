@@ -1,0 +1,35 @@
+To create a call graph from the given Intermediate Representation (IR) code, we will identify the function declarations and definitions, and then outline how they call each other. Below is the call graph in DOT format.
+
+```dot
+digraph CallGraph {
+    // Nodes
+    main [label="main()"];
+    mulxx [label="mulxx(i64, i64)"];
+    __cxa_atexit [label="__cxa_atexit(void (i8*)*, i8*, i8*)"];
+    _ZNSt8ios_base4InitC1Ev [label="_ZNSt8ios_base4InitC1Ev(%"class.std::ios_base::Init"* nonnull)"];
+    _ZNSt8ios_base4InitD1Ev [label="_ZNSt8ios_base4InitD1Ev(%"class.std::ios_base::Init"* nonnull)"];
+    freopen [label="freopen(i8*, i8*, %struct._IO_FILE*)"];
+    _ZNSi10_M_extractIxEERSiRT_ [label="_ZNSi10_M_extractIxEERSiRT_(%"class.std::basic_istream"*, i64*)"];
+    _ZNSo9_M_insertIxEERSoT_ [label="_ZNSo9_M_insertIxEERSoT_(%"class.std::basic_ostream"*, i64)"];
+    _ZSt16__introsort_loopIPxlN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_T0_T1_ [label="_ZSt16__introsort_loopIPxlN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_T0_T1_(i64*, i64*, i64)"];
+    _ZSt22__final_insertion_sortIPxN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_T0_ [label="_ZSt22__final_insertion_sortIPxN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_T0_(i64*, i64*)"];
+    _ZSt11__make_heapIPxN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_RT0_ [label="_ZSt11__make_heapIPxN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_RT0_(i64*, i64*, %"struct.__gnu_cxx::__ops::_Iter_less_iter"* nonnull)"];
+
+    // Edges
+    main -> _ZNSt8ios_base4InitC1Ev;
+    main -> __cxa_atexit;
+    main -> freopen;
+    main -> _ZNSi10_M_extractIxEERSiRT_;
+    main -> _ZNSo9_M_insertIxEERSoT_;
+    main -> _ZSt16__introsort_loopIPxlN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_T0_T1_;
+    main -> _ZSt22__final_insertion_sortIPxN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_T0_;
+    main -> _ZSt11__make_heapIPxN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_RT0_;
+    _ZSt16__introsort_loopIPxlN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_T0_T1_ -> _ZSt22__final_insertion_sortIPxN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_T0_;
+    _ZSt11__make_heapIPxN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_RT0_ -> _ZSt22__final_insertion_sortIPxN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_T0_;
+}
+```
+
+### Explanation:
+- Each function is represented as a node, labeled with the function name and its parameters.
+- The arrows (edges) indicate the calls made from one function to another.
+- For example, `main()` calls several functions like `_ZNSt8ios_base4InitC1Ev()` and `freopen()`, and the sorting functions (`_ZSt16__introsort_loopIPxlN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_T0_T1_`, etc.) also call each other.

@@ -1,0 +1,40 @@
+Based on the provided Intermediate Representation (IR) code, the following is the Call Graph in DOT format. This graph includes nodes representing the functions and edges indicating the calls between them.
+
+```dot
+digraph CallGraph {
+    // Nodes representing functions
+    node [shape=box];
+    main [label="main()"];
+    _GLOBAL__sub_I_counting_sort2_cpp [label="_GLOBAL__sub_I_counting_sort2.cpp()"];
+    _ZNSt8ios_base4InitC1Ev [label="_ZNSt8ios_base4InitC1Ev()"];
+    _ZNSt8ios_base4InitD1Ev [label="_ZNSt8ios_base4InitD1Ev()"];
+    __cxa_atexit [label="__cxa_atexit()"];
+    freopen [label="freopen()"];
+    _Znam [label="_Znam()"];
+    llvm_memset [label="llvm.memset.p0i8.i64()"];
+    llvm_lifetime_start [label="llvm.lifetime.start.p0i8()"];
+    llvm_lifetime_end [label="llvm.lifetime.end.p0i8()"];
+    _ZdaPv [label="_ZdaPv()"];
+    _ZNSi10_M_extractIjEERSiRT_ [label="_ZNSi10_M_extractIjEERSiRT_()"];
+    _ZNSo9_M_insertImEERSoT_ [label="_ZNSo9_M_insertImEERSoT_()"];
+    _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l [label="_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l()"];
+
+    // Edges representing function calls
+    main -> _ZNSi10_M_extractIjEERSiRT_;
+    main -> _ZNSo9_M_insertImEERSoT_;
+    main -> _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l;
+    _GLOBAL__sub_I_counting_sort2_cpp -> _ZNSt8ios_base4InitC1Ev;
+    _GLOBAL__sub_I_counting_sort2_cpp -> __cxa_atexit;
+    _ZNSt8ios_base4InitD1Ev -> __cxa_atexit;
+    main -> freopen;
+    main -> llvm_memset;
+    main -> llvm_lifetime_start;
+    main -> llvm_lifetime_end;
+    main -> _ZdaPv;
+}
+```
+
+### Explanation:
+- Each function in the IR code is represented as a node.
+- The edges indicate which functions call other functions.
+- The labels used for the nodes correspond to the mangled names of the functions, which are common in C++ to represent function overloading and namespaces.

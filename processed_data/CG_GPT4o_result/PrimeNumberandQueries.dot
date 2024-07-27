@@ -1,0 +1,63 @@
+To create a call graph in DOT format based on the provided intermediate representation (IR) code, we focus on the function declarations and calls. The following analysis identifies the functions defined and called in the provided IR. 
+
+### Functions Identified
+1. `@main`
+2. `@__cxa_atexit`
+3. `@freopen`
+4. `_ZNSt8ios_base4InitC1Ev`
+5. `_ZNSt8ios_base4InitD1Ev`
+6. `_ZSt16__throw_bad_castv`
+7. `_ZNKSt5ctypeIcE13_M_widen_initEv`
+8. `_ZNSirsERi`
+9. `_ZNSolsEi`
+10. `_ZNSo3putEc`
+11. `_ZNSo5flushEv`
+12. `_GLOBAL__sub_I_PrimeNumberandQueries.cpp`
+
+### Call Graph Construction
+From the IR code, we identify the call relationships among these functions. The calls made from `@main` and the global constructor are particularly important.
+
+### DOT Format Representation
+Here is the call graph in DOT format:
+
+```dot
+digraph CallGraph {
+    node [shape=ellipse];
+
+    // Nodes
+    main [label="@main"];
+    atexit [label="__cxa_atexit"];
+    freopen [label="freopen"];
+    ios_base_init_ctor [label="_ZNSt8ios_base4InitC1Ev"];
+    ios_base_init_dtor [label="_ZNSt8ios_base4InitD1Ev"];
+    throw_bad_cast [label="_ZSt16__throw_bad_castv"];
+    ctype_widen_init [label="_ZNKSt5ctypeIcE13_M_widen_initEv"];
+    istream [label="_ZNSirsERi"];
+    ostream [label="_ZNSolsEi"];
+    put_char [label="_ZNSo3putEc"];
+    flush [label="_ZNSo5flushEv"];
+    global_ctor [label="_GLOBAL__sub_I_PrimeNumberandQueries.cpp"];
+
+    // Edges
+    main -> atexit;
+    main -> freopen;
+    main -> ios_base_init_ctor;
+    main -> ios_base_init_dtor;
+    global_ctor -> ios_base_init_ctor;
+    global_ctor -> atexit;
+    main -> istream;
+    main -> ostream;
+    istream -> istream;
+    ostream -> put_char;
+    ostream -> flush;
+    main -> throw_bad_cast;
+    main -> ctype_widen_init;
+}
+```
+
+### Explanation of the DOT Code
+- Each function is represented as a node in the graph.
+- Directed edges represent function calls. For instance, `main` calls `__cxa_atexit`, `freopen`, `ios_base_init_ctor`, and others.
+- The labels for the nodes reflect the function names as they appear in the IR.
+
+This representation captures the call relationships among the functions in the IR code, suitable for visualizing through graph tools that support the DOT format.

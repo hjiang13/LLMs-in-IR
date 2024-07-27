@@ -1,0 +1,46 @@
+To create a call graph from the provided Intermediate Representation (IR) code, we will identify the functions declared and defined in the code and their relationships based on the calls made within them.
+
+Here’s the dot file representation of the call graph:
+
+```dot
+digraph CallGraph {
+    // Define nodes for the functions
+    node [shape=box];
+    
+    main [label="main()"];
+    productOfPages [label="productOfPages(int, int, int, int, int, int)"];
+    __cxa_atexit [label="__cxa_atexit(void (*)(void*), void*, void*)"];
+    _GLOBAL__sub_I_LEGOs_cpp [label="_GLOBAL__sub_I_LEGOs.cpp()"];
+    _ZNSt8ios_base4InitC1Ev [label="_ZNSt8ios_base4InitC1Ev(%)"];
+    _ZNSt8ios_base4InitD1Ev [label="_ZNSt8ios_base4InitD1Ev(%)"];
+    _ZNSirsERi [label="_ZNSirsERi(%)"];
+    _ZNSolsEi [label="_ZNSolsEi(%)"];
+    _ZNSo3putEc [label="_ZNSo3putEc(%)"];
+    _ZNSo5flushEv [label="_ZNSo5flushEv(%)"];
+    _ZSt16__throw_bad_castv [label="_ZSt16__throw_bad_castv()"];
+    _ZNKSt5ctypeIcE13_M_widen_initEv [label="_ZNKSt5ctypeIcE13_M_widen_initEv(%)"];
+    freopen [label="freopen(i8*, i8*, %struct._IO_FILE*)"];
+
+    // Define edges based on function calls
+    main -> _GLOBAL__sub_I_LEGOs_cpp;
+    main -> freopen;
+    main -> _ZNSirsERi;
+    main -> _ZNSolsEi;
+    main -> _ZNSo3putEc;
+    main -> _ZNSo5flushEv;
+    main -> _ZSt16__throw_bad_castv;
+    main -> _ZNKSt5ctypeIcE13_M_widen_initEv;
+    _GLOBAL__sub_I_LEGOs_cpp -> _ZNSt8ios_base4InitC1Ev;
+    _GLOBAL__sub_I_LEGOs_cpp -> __cxa_atexit;
+    productOfPages -> main; // assuming productOfPages is called within main
+}
+```
+
+### Explanation:
+- Each function is represented as a node in the graph.
+- The edges represent calls from one function to another.
+- The function names are derived from the IR code, preserving their mangled names.
+- The node labels are set to be more descriptive, showing the function signatures for clarity.
+- The function `productOfPages` is assumed to be called from `main()` based on the context of the code provided, even though we don't see it explicitly called in the snippet. 
+
+This dot file can be used with graph visualization tools like Graphviz to create a visual representation of the call graph.

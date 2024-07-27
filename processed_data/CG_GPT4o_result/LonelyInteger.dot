@@ -1,0 +1,66 @@
+To create a call graph in DOT format from the provided Intermediate Representation (IR) code, we will identify the functions and their calls. Each function will be represented as a node, and each call to another function will be represented as an edge between the nodes.
+
+Here’s how we can represent the call graph based on the functions found in the IR code:
+
+1. **Identify Functions**: We need to find the defined functions and declared functions. The relevant functions from the given IR code include:
+    - `@_GLOBAL__sub_I_LonelyInteger.cpp`
+    - `@main`
+    - `_Z13lonelyintegerSt6vectorIiSaIiEE`
+    - `@_ZSt17__throw_bad_allocv`
+    - `@_ZSt20__throw_length_errorPKc`
+    - `@_ZdlPv`
+    - `@__cxa_atexit`
+    - `@llvm.vector.reduce.xor.v4i32`
+    - `@freopen`
+    - `@_ZNSirsERi`
+    - `@_ZNSi6ignoreEli`
+    - `@_ZNSolsEi`
+    - `@llvm.memmove.p0i8.p0i8.i64`
+   
+2. **Identify Calls**: We need to look for function calls within the body of the defined functions. 
+
+3. **Construct the DOT representation**:
+
+Here’s the resulting DOT representation of the call graph:
+
+```dot
+digraph CallGraph {
+    node [shape=box];
+
+    // Nodes
+    main [label="main"];
+    lonelyinteger [label="lonelyinteger"];
+    global_sub [label="GLOBAL__sub_I_LonelyInteger.cpp"];
+    throw_bad_alloc [label="__throw_bad_alloc"];
+    throw_length_error [label="__throw_length_error"];
+    delete [label="dlPv"];
+    cxa_atexit [label="__cxa_atexit"];
+    llvm_vector_reduce [label="llvm.vector.reduce.xor.v4i32"];
+    freopen [label="freopen"];
+    ios_read [label="ZNSirsERi"];
+    ignore [label="ZNSi6ignoreEli"];
+    ios_write [label="ZNSolsEi"];
+    llvm_memmove [label="llvm.memmove.p0i8.p0i8.i64"];
+
+    // Edges
+    main -> global_sub;
+    main -> ios_read;
+    main -> ignore;
+    main -> ios_write;
+    main -> throw_bad_alloc;
+    main -> throw_length_error;
+    main -> delete;
+    main -> llvm_memmove;
+    
+    lonelyinteger -> llvm_vector_reduce;
+    lonelyinteger -> throw_length_error;
+    lonelyinteger -> delete;
+}
+```
+
+### Explanation:
+- Each function is represented as a node with its name as the label.
+- The arrows (edges) represent the calls made from one function to another. For example, the `main` function calls several functions, and this is indicated with directed edges pointing from the `main` node to other function nodes.
+- The names of the functions are derived from the mangled names in the IR code, which often encode additional information like parameter types. 
+
+This DOT file can be visualized using graph visualization tools that support the DOT format, such as Graphviz.

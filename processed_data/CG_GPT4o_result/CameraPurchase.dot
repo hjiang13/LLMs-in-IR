@@ -1,0 +1,71 @@
+To represent the call graph from the given Intermediate Representation (IR) code in DOT format, we will identify the functions declared and defined in the IR code and the relationships (calls) between them.
+
+Here's a summary of the relevant functions found in the IR code:
+
+1. `@main`
+2. `@_Z2goi(i32)`
+3. `@__cxx_global_array_dtor`
+4. `@_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_`
+5. `@_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_`
+6. `@_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_RT0_`
+7. `@_ZdlPv(i8*)`
+8. `@_ZSt20__throw_length_errorPKc(i8*)`
+9. `@llvm.memmove.p0i8.p0i8.i64`
+10. `@llvm.lifetime.start.p0i8`
+11. `@llvm.lifetime.end.p0i8`
+12. `@freopen(i8*, i8*, %struct._IO_FILE*)`
+13. `@_ZNSirsERi(%"class.std::basic_istream"*, i32*)`
+14. `@_ZNSolsEi(%"class.std::basic_ostream"*, i32)`
+15. `@_ZNSo3putEc(%"class.std::basic_ostream"*, i8 signext)`
+
+Now, we will construct the DOT representation of the call graph. The edges will represent function calls.
+
+```dot
+digraph CallGraph {
+    node [shape=box];
+
+    main [label="@main"];
+    go [label="@_Z2goi(i32)"];
+    dtor [label="@__cxx_global_array_dtor"];
+    introsort_loop [label="@_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_"];
+    final_insertion_sort [label="@_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_"];
+    make_heap [label="@_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_RT0_"];
+    free [label="@_ZdlPv(i8*)"];
+    throw_length_error [label="@_ZSt20__throw_length_errorPKc(i8*)"];
+    memmove [label="@llvm.memmove.p0i8.p0i8.i64"];
+    lifetime_start [label="@llvm.lifetime.start.p0i8"];
+    lifetime_end [label="@llvm.lifetime.end.p0i8"];
+    freopen [label="@freopen(i8*, i8*, %struct._IO_FILE*)"];
+    cin [label="@_ZNSirsERi(%"class.std::basic_istream"*, i32*)"];
+    cout [label="@_ZNSolsEi(%"class.std::basic_ostream"*, i32)"];
+    putc [label="@_ZNSo3putEc(%"class.std::basic_ostream"*, i8 signext)"];
+
+    main -> go;
+    main -> cin;
+    main -> cout;
+    main -> dtor;
+    
+    dtor -> free;
+
+    go -> introsort_loop;
+    go -> final_insertion_sort;
+    go -> make_heap;
+
+    introsort_loop -> memmove;
+    final_insertion_sort -> memmove;
+    make_heap -> memmove;
+
+    cin -> lifetime_start;
+    cout -> putc;
+    cout -> lifetime_end;
+}
+```
+
+### Explanation:
+- Each function is represented as a node in the graph.
+- The arrows (`->`) represent function calls made from one function to another.
+- The labels are simplified and correspond to the function names as they appear in the IR code.
+- The `main` function is the entry point and calls other functions, which is reflected in the graph.
+- The graph includes relationships among functions based on the calls shown in the IR code.
+
+You can visualize this graph using any DOT file renderer, such as Graphviz. Just save the DOT representation to a `.dot` file and run it through Graphviz to generate a visual representation of the call graph.

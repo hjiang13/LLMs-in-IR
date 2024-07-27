@@ -1,0 +1,40 @@
+To create a call graph from the provided Intermediate Representation (IR) code, we will extract the function declarations and definitions, then represent them as nodes in a directed graph. Each call from one function to another will be represented as a directed edge between the corresponding nodes.
+
+Here is the graph in DOT format:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    main [label="main()"];
+    _GLOBAL__sub_I_TriangleNumbers.cpp [label="_GLOBAL__sub_I_TriangleNumbers.cpp()"];
+    @_ZNSt8ios_base4InitC1Ev [label="_ZNSt8ios_base4InitC1Ev()"];
+    @_ZNSt8ios_base4InitD1Ev [label="_ZNSt8ios_base4InitD1Ev()"];
+    @__cxa_atexit [label="__cxa_atexit()"];
+    @freopen [label="freopen()"];
+    @_ZNSirsERi [label="_ZNSirsERi()"];
+    @_ZNSi10_M_extractIxEERSiRT_ [label="_ZNSi10_M_extractIxEERSiRT_()"];
+    @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l [label="_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l()"];
+    @_ZNSo3putEc [label="_ZNSo3putEc()"];
+    @_ZNSo5flushEv [label="_ZNSo5flushEv()"];
+    @_ZSt16__throw_bad_castv [label="_ZSt16__throw_bad_castv()"];
+    @_ZNKSt5ctypeIcE13_M_widen_initEv [label="_ZNKSt5ctypeIcE13_M_widen_initEv()"];
+
+    // Edges (Function Calls)
+    main -> _GLOBAL__sub_I_TriangleNumbers.cpp; // main calls _GLOBAL__sub_I_TriangleNumbers.cpp
+    _GLOBAL__sub_I_TriangleNumbers.cpp -> @_ZNSt8ios_base4InitC1Ev; // _GLOBAL__sub_I_TriangleNumbers.cpp calls _ZNSt8ios_base4InitC1Ev
+    _GLOBAL__sub_I_TriangleNumbers.cpp -> @__cxa_atexit; // _GLOBAL__sub_I_TriangleNumbers.cpp calls __cxa_atexit
+    main -> @freopen; // main calls freopen
+    main -> @_ZNSirsERi; // main calls _ZNSirsERi
+    main -> @_ZNSi10_M_extractIxEERSiRT_; // main calls _ZNSi10_M_extractIxEERSiRT_
+    main -> @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l; // main calls _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l
+    main -> @_ZNSo3putEc; // main calls _ZNSo3putEc
+    main -> @_ZNSo5flushEv; // main calls _ZNSo5flushEv
+    main -> @_ZSt16__throw_bad_castv; // main calls _ZSt16__throw_bad_castv
+    main -> @_ZNKSt5ctypeIcE13_M_widen_initEv; // main calls _ZNKSt5ctypeIcE13_M_widen_initEv
+}
+```
+
+### Explanation:
+- Each function is represented as a node in the graph with a label corresponding to the function name.
+- The directed edges represent function calls, starting from the caller (source node) to the callee (target node).
+- The `main()` function is the entry point, and it calls several other functions, including a global constructor and various standard library functions.

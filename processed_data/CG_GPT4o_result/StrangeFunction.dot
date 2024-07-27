@@ -1,0 +1,50 @@
+Based on the provided Intermediate Representation (IR) code, we can extract the function definitions and their relationships to create a call graph. The call graph will show which functions invoke which other functions. Below is the representation of the call graph in the DOT format.
+
+```dot
+digraph CallGraph {
+    rankdir=LR;
+    node [shape=box];
+
+    main [label="main()"];
+    gcd [label="gcd(int, int)"];
+    getMini [label="getMini(int, int)"];
+    getMax [label="getMax(int, int)"];
+    getGcd [label="getGcd(int, int)"];
+    goLeft [label="goLeft(int, int)"];
+    goRight [label="goRight(int, int)"];
+    Solve [label="Solve(int, int, int)"];
+    __clang_call_terminate [label="__clang_call_terminate()"];
+    __cxa_atexit [label="__cxa_atexit()"];
+    _ZSt4cout [label="_ZSt4cout"];
+    _ZSt16__introsort_loop [label="_ZSt16__introsort_loop()"];
+    _ZSt22__final_insertion_sort [label="_ZSt22__final_insertion_sort()"];
+    _ZSt14__partial_sort [label="_ZSt14__partial_sort()"];
+    _ZSt13__adjust_heap [label="_ZSt13__adjust_heap()"];
+    _ZSt22__move_median_to_first [label="_ZSt22__move_median_to_first()"];
+
+    // Edges
+    main -> gcd;
+    main -> getMini;
+    main -> getMax;
+    main -> getGcd;
+    main -> goLeft;
+    main -> goRight;
+    main -> Solve;
+    gcd -> getGcd;
+    goLeft -> Solve;
+    goRight -> Solve;
+    Solve -> getMini;
+    Solve -> getMax;
+    _ZSt14__partial_sort -> _ZSt16__introsort_loop;
+    _ZSt22__final_insertion_sort -> _ZSt16__introsort_loop;
+    _ZSt14__partial_sort -> _ZSt22__final_insertion_sort;
+}
+```
+
+### Explanation:
+- Each function is represented as a node in the graph with its name.
+- Directed edges are added from calling functions to the functions they invoke.
+- The `main` function serves as the starting point of the program, leading to various helper functions like `gcd`, `getMini`, `getMax`, etc.
+- The sorting related functions are connected as they call each other during their operations.
+
+You can visualize this graph using graph visualization tools that accept DOT format, such as Graphviz.

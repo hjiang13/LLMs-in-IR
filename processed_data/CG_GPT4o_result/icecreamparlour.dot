@@ -1,0 +1,42 @@
+To generate a call graph in DOT format from the provided Intermediate Representation (IR) code, we will identify the functions and their call relationships. Each function will be represented as a node, and a directed edge will indicate a call from one function to another.
+
+Here is the DOT representation of the call graph derived from the provided IR code:
+
+```dot
+digraph CallGraph {
+    // Nodes (functions)
+    node [shape=box];
+    main [label="main()"];
+    _ZSt16__introsort_loopIPilN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_T0_T1_ [label="_ZSt16__introsort_loopIPilN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_T0_T1_"];
+    _ZSt22__final_insertion_sortIPiN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_T0_ [label="_ZSt22__final_insertion_sortIPiN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_T0_"];
+    _ZSt11__make_heapIPiN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_RT0_ [label="_ZSt11__make_heapIPiN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_RT0_"];
+    _ZNSirsERi [label="_ZNSirsERi"];
+    _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l [label="_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l"];
+    _ZNSo3putEc [label="_ZNSo3putEc"];
+    _ZNSo5flushEv [label="_ZNSo5flushEv"];
+    _ZSt16__throw_bad_castv [label="_ZSt16__throw_bad_castv"];
+    @_ZStL8__ioinit [label="@_ZStL8__ioinit"];
+    __cxa_atexit [label="__cxa_atexit"];
+    _ZNSt8ios_base4InitC1Ev [label="_ZNSt8ios_base4InitC1Ev"];
+    _ZNSt8ios_base4InitD1Ev [label="_ZNSt8ios_base4InitD1Ev"];
+    
+    // Edges (calls)
+    main -> _ZNSirsERi;
+    main -> _ZNSo3putEc;
+    main -> _ZNSo5flushEv;
+    main -> _ZNSt8ios_base4InitC1Ev;
+    main -> __cxa_atexit;
+    main -> _ZSt16__throw_bad_castv;
+    main -> _ZSt16__introsort_loopIPilN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_T0_T1_;
+    main -> _ZSt22__final_insertion_sortIPiN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_T0_;
+    main -> _ZSt11__make_heapIPiN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_RT0_;
+}
+```
+
+### Explanation:
+- Each function in the IR code is represented as a node in the graph.
+- Directed edges represent calls made from one function to another.
+- The labels for nodes are derived from the function names in the IR code.
+- The `main` function is the entry point, and it calls several other functions, which are captured in the edges.
+
+You can visualize this graph using tools that support DOT format, such as Graphviz.

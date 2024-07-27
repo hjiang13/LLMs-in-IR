@@ -1,0 +1,48 @@
+To create a call graph from the provided Intermediate Representation (IR) code, we will identify the functions and their respective calls, then represent them in a format that can be used to create a graph in the DOT language.
+
+Here's the DOT representation of the call graph extracted from the provided IR code:
+
+```dot
+digraph call_graph {
+    // Nodes
+    main [label="main()"];
+    update [label="update(int, int)"];
+    get [label="get(int)"];
+    _GLOBAL__sub_I_CardsPermutation_cpp [label="_GLOBAL__sub_I_CardsPermutation.cpp()"];
+    _ZSt20__throw_length_errorPKc [label="__throw_length_error(const char*)"];
+    _ZSt16__throw_bad_castv [label="__throw_bad_cast()"];
+    __isoc99_scanf [label="__isoc99_scanf(char*, ...)"];
+    freopen [label="freopen(char*, char*, FILE*)"];
+    _ZNSo9_M_insertIxEERSoT_ [label="_ZNSt8basic_ostream[_M_insert](long)"];
+    _ZNSo5flushEv [label="_ZNSt8basic_ostream[flush]()"];
+    _ZNSo3putEc [label="_ZNSt8basic_ostream[put](char)"];
+    _Znwm [label="_Znwm(size_t)"];
+    _ZdlPv [label="_ZdlPv(void*)"];
+    llvm_memmove [label="llvm.memmove.p0i8.p0i8.i64(i8*, i8*, i64, i1)"];
+
+    // Edges
+    main -> update;
+    main -> get;
+    main -> _GLOBAL__sub_I_CardsPermutation_cpp;
+    main -> __isoc99_scanf;
+    main -> freopen;
+    main -> _ZNSo9_M_insertIxEERSoT_;
+    main -> _ZNSo5flushEv;
+    main -> _ZNSo3putEc;
+    main -> _Znwm;
+    main -> _ZdlPv;
+    main -> llvm_memmove;
+
+    update -> update; // recursive call
+    get -> get; // recursive call
+    get -> update; // calls update function
+}
+```
+
+### Explanation
+- Each function in the IR code is represented as a node in the graph.
+- The arrows (edges) represent the calls made from one function to another.
+- Recursive calls are indicated by self-referencing edges (e.g., `update -> update`).
+- The graph is directed (`digraph`), meaning the edges have a direction indicating the flow of calls.
+
+You can visualize this graph using tools that support the DOT format, such as Graphviz.

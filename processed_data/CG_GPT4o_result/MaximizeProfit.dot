@@ -1,0 +1,70 @@
+To create a call graph from the given Intermediate Representation (IR) code, we need to identify the functions declared and defined in the code, along with their call relationships. The output will be in the DOT format, which is used for representing graphs.
+
+From the provided IR code, we can identify the following functions and their relationships:
+
+1. **Functions:**
+   - `@main`
+   - `_Z14maximizeProfitSt6vectorIiSaIiEES1_ii`
+   - `@llvm.umax.i64`
+   - `@llvm.vector.reduce.smax.v4i32`
+   - `@__cxa_atexit`
+   - `@_ZSt20__throw_length_errorPKc`
+   - `@_ZSt17__throw_bad_allocv`
+   - `@_ZdlPv`
+   - `@freopen`
+   - `@_ZNSirsERi`
+   - `@_ZNSolsEi`
+   - `@_ZNSo5flushEv`
+   - `@_ZNKSt5ctypeIcE13_M_widen_initEv`
+
+2. **Function Calls:**
+   - `@main` calls:
+     - `@freopen`
+     - `@_ZNSirsERi`
+     - `@_ZNSolsEi`
+     - `@_ZNSo5flushEv`
+     - `@_ZdlPv`
+     - `@_ZSt20__throw_length_errorPKc`
+   - `_Z14maximizeProfitSt6vectorIiSaIiEES1_ii` calls:
+     - `@llvm.umax.i64`
+     - `@llvm.vector.reduce.smax.v4i32`
+   - `@__cxa_atexit` is initialized in `@main`.
+   - Various throw functions are invoked in error conditions.
+
+Now, let's represent this in DOT format:
+
+```dot
+digraph CallGraph {
+    rankdir=LR;
+    
+    // Nodes
+    main [label="@main"];
+    maximizeProfit [label="_Z14maximizeProfitSt6vectorIiSaIiEES1_ii"];
+    llvmUmax [label="@llvm.umax.i64"];
+    llvmVectorReduce [label="@llvm.vector.reduce.smax.v4i32"];
+    cxaAtexit [label="@__cxa_atexit"];
+    throwLengthError [label="@_ZSt20__throw_length_errorPKc"];
+    throwBadAlloc [label="@_ZSt17__throw_bad_allocv"];
+    deletePtr [label="@_ZdlPv"];
+    freopen [label="@freopen"];
+    readInt [label="@_ZNSirsERi"];
+    outputInt [label="@_ZNSolsEi"];
+    flushStream [label="@_ZNSo5flushEv"];
+    widenInit [label="@_ZNKSt5ctypeIcE13_M_widen_initEv"];
+
+    // Edges (function calls)
+    main -> freopen;
+    main -> readInt;
+    main -> outputInt;
+    main -> flushStream;
+    main -> deletePtr;
+    main -> throwLengthError;
+
+    maximizeProfit -> llvmUmax;
+    maximizeProfit -> llvmVectorReduce;
+
+    // Note: Add edges for any additional calls if necessary.
+}
+```
+
+This DOT representation outlines the structure of the call graph, showing the functions as nodes and their call relationships as directed edges. You can visualize this graph using graph visualization tools that support the DOT format, such as Graphviz.

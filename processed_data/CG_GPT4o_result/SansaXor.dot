@@ -1,0 +1,49 @@
+To create a call graph from the provided Intermediate Representation (IR) code, we will identify the functions that are called and the functions that call them. In the dot format, nodes will represent the functions, and directed edges will represent the call relationships.
+
+Here's the extracted call graph in dot format:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    main [label="main()"];
+    _GLOBAL__sub_I_SansaXor.cpp [label="_GLOBAL__sub_I_SansaXor.cpp()"];
+    @_ZNSt8ios_base4InitC1Ev [label="@_ZNSt8ios_base4InitC1Ev()"];
+    @_ZNSt8ios_base4InitD1Ev [label="@_ZNSt8ios_base4InitD1Ev()"];
+    @__cxa_atexit [label="@__cxa_atexit()"];
+    @freopen [label="@freopen()"];
+    @_ZNSirsERi [label="@_ZNSirsERi()"];
+    @_ZNSi10_M_extractIlEERSiRT_ [label="@_ZNSi10_M_extractIlEERSiRT_()"];
+    @_ZNSo9_M_insertIlEERSoT_ [label="@_ZNSo9_M_insertIlEERSoT_()"];
+    @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l [label="@_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l()"];
+    @_ZdaPv [label="@_ZdaPv()"];
+    @_Znam [label="@_Znam()"];
+    @llvm.lifetime.start.p0i8 [label="@llvm.lifetime.start.p0i8()"];
+    @llvm.lifetime.end.p0i8 [label="@llvm.lifetime.end.p0i8()"];
+    @llvm.umul.with.overflow.i64 [label="@llvm.umul.with.overflow.i64()"];
+
+    // Edges
+    main -> @_ZNSt8ios_base4InitC1Ev;
+    main -> @__cxa_atexit;
+    main -> @freopen;
+    main -> @_ZNSirsERi;
+    main -> @_ZNSi10_M_extractIlEERSiRT_;
+    main -> @_ZNSo9_M_insertIlEERSoT_;
+    main -> @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l;
+    main -> @_ZdaPv;
+    main -> @_Znam;
+    main -> @llvm.lifetime.start.p0i8;
+    main -> @llvm.lifetime.end.p0i8;
+    main -> @llvm.umul.with.overflow.i64;
+    _GLOBAL__sub_I_SansaXor.cpp -> @_ZNSt8ios_base4InitC1Ev;
+    _GLOBAL__sub_I_SansaXor.cpp -> @_ZNSt8ios_base4InitD1Ev;
+    _GLOBAL__sub_I_SansaXor.cpp -> @__cxa_atexit;
+}
+```
+
+### Explanation of the Graph
+- Each function is represented as a node in the graph.
+- An edge from one function to another indicates that the first function calls the second function.
+- The `main()` function serves as the entry point and calls several functions, forming the main structure of the call graph.
+- The `_GLOBAL__sub_I_SansaXor.cpp` function is called during initialization and also calls the constructors and destructors for the `ios_base::Init` class.
+
+This representation provides a clear view of the function call relationships in the provided IR code.

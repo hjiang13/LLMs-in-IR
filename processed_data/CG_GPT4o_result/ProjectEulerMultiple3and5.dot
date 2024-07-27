@@ -1,0 +1,39 @@
+To create a call graph in the DOT format from the provided Intermediate Representation (IR) code, we need to analyze the function definitions and function calls within the IR code. The output will consist of nodes representing functions and edges representing calls between those functions.
+
+Below is the generated DOT file format for the call graph:
+
+```dot
+digraph CallGraph {
+    node [shape=rectangle];
+
+    // Nodes
+    main [label="main()"];
+    _GLOBAL__sub_I_ProjectEulerMultiple3and5_cpp [label="_GLOBAL__sub_I_ProjectEulerMultiple3and5.cpp()"];
+    _ZNSi10_M_extractImEERSiRT_ [label="_ZNSi10_M_extractImEERSiRT_()"];
+    _ZNSo9_M_insertImEERSoT_ [label="_ZNSo9_M_insertImEERSoT_()"];
+    _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l [label="_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l()"];
+    @_ZSt8ios_base4InitC1Ev [label="_ZNSt8ios_base4InitC1Ev()"];
+    @_ZSt8ios_base4InitD1Ev [label="_ZNSt8ios_base4InitD1Ev()"];
+    @__cxa_atexit [label="__cxa_atexit()"];
+    @freopen [label="freopen()"];
+    llvm_lifetime_start [label="llvm.lifetime.start.p0i8()"];
+    llvm_lifetime_end [label="llvm.lifetime.end.p0i8()"];
+
+    // Edges
+    _GLOBAL__sub_I_ProjectEulerMultiple3and5_cpp -> @_ZSt8ios_base4InitC1Ev;
+    _GLOBAL__sub_I_ProjectEulerMultiple3and5_cpp -> @__cxa_atexit;
+    main -> @freopen;
+    main -> llvm_lifetime_start;
+    main -> _ZNSi10_M_extractImEERSiRT_;
+    main -> _ZNSo9_M_insertImEERSoT_;
+    main -> _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l;
+    main -> llvm_lifetime_end;
+}
+```
+
+### Explanation:
+1. **Nodes**: Each function is represented as a node in the graph. The label of each node corresponds to the function name.
+2. **Edges**: Each edge represents a call from one function to another. For example, the `main` function calls `freopen`, `llvm.lifetime.start.p0i8`, and several other functions.
+3. **Formatting**: The graph is formatted in DOT language, which can be visualized using graph visualization tools like Graphviz.
+
+You can copy this output into a `.dot` file and visualize it using Graphviz or another compatible tool.

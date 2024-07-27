@@ -1,0 +1,53 @@
+To generate a call graph from the provided Intermediate Representation (IR) code, we will identify the functions defined and declared within the code, and then create edges representing calls between them. Below is the dot file format, which includes nodes for each function and edges for calls between functions.
+
+```dot
+digraph CallGraph {
+    // Nodes
+    node [shape=box];
+
+    main [label="main()"];
+    fwt_add [label="_ZN3fwt3addEii"];
+    fwt_get [label="_ZN3fwt3getEi"];
+    __clang_call_terminate [label="__clang_call_terminate"];
+    __cxa_atexit [label="__cxa_atexit"];
+    printf [label="printf"];
+    __isoc99_scanf [label="__isoc99_scanf"];
+    freopen [label="freopen"];
+    _ZNSt8ios_base4InitC1Ev [label="_ZNSt8ios_base4InitC1Ev"];
+    _ZNSt8ios_base4InitD1Ev [label="_ZNSt8ios_base4InitD1Ev"];
+    _ZNSt8_Rb_treeIiiSt9_IdentityIiESt4lessIiESaIiEE8_M_eraseEPSt13_Rb_tree_nodeIiE [label="_ZNSt8_Rb_treeIiiSt9_IdentityIiESt4lessIiESaIiEE8_M_eraseEPSt13_Rb_tree_nodeIiE"];
+    _ZNSt8_Rb_treeIiiSt9_IdentityIiESt4lessIiESaIiEE5eraseERKi [label="_ZNSt8_Rb_treeIiiSt9_IdentityIiESt4lessIiESaIiEE5eraseERKi"];
+    _ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base [label="_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base"];
+    _ZSt18_Rb_tree_decrementPSt18_Rb_tree_node_base [label="_ZSt18_Rb_tree_decrementPSt18_Rb_tree_node_base"];
+    _ZSt29_Rb_tree_insert_and_rebalancebPSt18_Rb_tree_node_baseS0_RS_ [label="_ZSt29_Rb_tree_insert_and_rebalancebPSt18_Rb_tree_node_baseS0_RS_"];
+    _ZdlPv [label="_ZdlPv"];
+    _ZSt28_Rb_tree_rebalance_for_erasePSt18_Rb_tree_node_baseRS_ [label="_ZSt28_Rb_tree_rebalance_for_erasePSt18_Rb_tree_node_baseRS_"];
+    _ZNSt8_Rb_treeIiiSt9_IdentityIiESt4lessIiESaIiEE5eraseERKi [label="_ZNSt8_Rb_treeIiiSt9_IdentityIiESt4lessIiESaIiEE5eraseERKi"];
+
+    // Edges
+    main -> fwt_add;
+    main -> fwt_get;
+    main -> __isoc99_scanf;
+    main -> printf;
+    main -> freopen;
+    main -> __cxa_atexit;
+    
+    fwt_add -> fwt_add; // Recursive call example
+    fwt_get -> fwt_get; // Recursive call example
+
+    __clang_call_terminate -> _ZNSt8ios_base4InitD1Ev;
+    _ZNSt8ios_base4InitC1Ev -> __clang_call_terminate;
+    
+    _ZNSt8_Rb_treeIiiSt9_IdentityIiESt4lessIiESaIiEE8_M_eraseEPSt13_Rb_tree_nodeIiE -> _ZNSt8_Rb_treeIiiSt9_IdentityIiESt4lessIiESaIiEE5eraseERKi;
+    _ZNSt8_Rb_treeIiiSt9_IdentityIiESt4lessIiESaIiEE5eraseERKi -> _ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base;
+    _ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base -> _ZSt18_Rb_tree_decrementPSt18_Rb_tree_node_base;
+    _ZSt18_Rb_tree_decrementPSt18_Rb_tree_node_base -> _ZSt29_Rb_tree_insert_and_rebalancebPSt18_Rb_tree_node_baseS0_RS_;
+}
+```
+
+### Explanation of the Graph:
+- **Nodes**: Each function in the IR code is represented as a node. The label of each node contains the mangled name of the function, which is standard in C++.
+- **Edges**: Directed edges between nodes indicate a call from one function to another. For example, `main` calls `fwt_add` and `fwt_get`, and also calls `__isoc99_scanf` and `printf`.
+- **Recursive Calls**: The graph indicates recursive calls for `fwt_add` and `fwt_get` as examples.
+
+You can visualize this graph using any graph visualization tool that supports the DOT format, such as Graphviz.

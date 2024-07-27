@@ -1,0 +1,71 @@
+To create a call graph from the provided Intermediate Representation (IR) code, we will identify the functions defined and declared in the IR code and the calls made to these functions. The nodes in the call graph will represent the functions, and the edges will represent the calls between them.
+
+Based on the provided IR code, here are the functions identified:
+
+1. `_GLOBAL__sub_I_closest.cpp`
+2. `@main`
+3. `@llvm.lifetime.start.p0i8`
+4. `@llvm.lifetime.end.p0i8`
+5. `@__cxa_atexit`
+6. `@llvm.abs.i32`
+7. `@llvm.ctlz.i64`
+8. `@llvm.memmove.p0i8.p0i8.i64`
+9. `@_ZNSi10_M_extractIlEERSiRT_`
+10. `@_ZNSi10_M_extractIjEERSiRT_`
+11. `@_ZNSo9_M_insertIlEERSoT_`
+12. `@_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l`
+13. `@_ZSt16__introsort_loopIPllN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_T0_T1_`
+14. `@_ZSt22__final_insertion_sortIPlN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_T0_`
+15. `@_ZSt11__make_heapIPlN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_RT0_`
+16. `@_ZdaPv`
+
+### Call Graph in DOT Format
+
+Here’s the call graph represented in DOT format:
+
+```dot
+digraph CallGraph {
+    node [shape=ellipse];
+
+    // Nodes
+    main [label="main"];
+    global_sub [label="_GLOBAL__sub_I_closest.cpp"];
+    llvm_lifetime_start [label="llvm.lifetime.start.p0i8"];
+    llvm_lifetime_end [label="llvm.lifetime.end.p0i8"];
+    cxa_atexit [label="__cxa_atexit"];
+    llvm_abs [label="llvm.abs.i32"];
+    llvm_ctlz [label="llvm.ctlz.i64"];
+    llvm_memmove [label="llvm.memmove.p0i8.p0i8.i64"];
+    extract_int64 [label="_ZNSi10_M_extractIlEERSiRT_"];
+    extract_int32 [label="_ZNSi10_M_extractIjEERSiRT_"];
+    insert_int64 [label="_ZNSo9_M_insertIlEERSoT_"];
+    ostream_insert [label="_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l"];
+    introsort_loop [label="_ZSt16__introsort_loopIPllN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_T0_T1_"];
+    final_insertion_sort [label="_ZSt22__final_insertion_sortIPlN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_T0_"];
+    make_heap [label="_ZSt11__make_heapIPlN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_RT0_"];
+    daPv [label="_ZdaPv"];
+
+    // Edges
+    global_sub -> llvm_lifetime_start;
+    global_sub -> cxa_atexit;
+    main -> llvm_lifetime_start;
+    main -> llvm_lifetime_end;
+    main -> extract_int64;
+    main -> extract_int32;
+    main -> insert_int64;
+    main -> llvm_abs;
+    main -> llvm_ctlz;
+    main -> llvm_memmove;
+    main -> introsort_loop;
+    main -> final_insertion_sort;
+    main -> make_heap;
+    main -> daPv;
+
+    llvm_memmove -> llvm_memmove; // self-reference to show potential recursion
+}
+```
+
+### Explanation
+- Each function is represented as a node.
+- The edges indicate which functions call which other functions.
+- This structure is useful for analyzing the interdependencies of functions within the code.

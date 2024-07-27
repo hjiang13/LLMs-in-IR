@@ -1,0 +1,49 @@
+Based on the provided Intermediate Representation (IR) code, I will create a call graph in the DOT format. This graph will contain nodes for each function and edges representing the calls between these functions. The nodes will be simplified to just show the function names without detailing the contents of each basic block.
+
+Here's the call graph in DOT format:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    node [shape=box];
+    main [label="main()"];
+    _GLOBAL__sub_I_UtopianTree_cpp [label="_GLOBAL__sub_I_UtopianTree.cpp()"];
+    _ZNSt8ios_base4InitC1Ev [label="_ZNSt8ios_base4InitC1Ev()"];
+    _ZNSt8ios_base4InitD1Ev [label="_ZNSt8ios_base4InitD1Ev()"];
+    __cxa_atexit [label="__cxa_atexit()"];
+    freopen [label="freopen()"];
+    _ZNSirsERs [label="_ZNSirsERs()"];
+    _Znam [label="_Znam()"];
+    _ZNSolsEi [label="_ZNSolsEi()"];
+    _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l [label="_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l()"];
+    _ZdaPv [label="_ZdaPv()"];
+    llvm_lifetime_start [label="llvm.lifetime.start.p0i8()"];
+    llvm_lifetime_end [label="llvm.lifetime.end.p0i8()"];
+    llvm_umul_with_overflow_i64 [label="llvm.umul.with.overflow.i64()"];
+    llvm_memset_p0i8_i64 [label="llvm.memset.p0i8.i64()"];
+
+    // Edges
+    main -> _GLOBAL__sub_I_UtopianTree_cpp;
+    main -> freopen;
+    main -> _ZNSirsERs;
+    main -> _Znam;
+    main -> _ZNSolsEi;
+    main -> _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l;
+    main -> _ZdaPv;
+    main -> llvm_lifetime_start;
+    main -> llvm_lifetime_end;
+    main -> llvm_umul_with_overflow_i64;
+
+    _GLOBAL__sub_I_UtopianTree_cpp -> _ZNSt8ios_base4InitC1Ev;
+    _GLOBAL__sub_I_UtopianTree_cpp -> __cxa_atexit;
+    _GLOBAL__sub_I_UtopianTree_cpp -> _ZNSt8ios_base4InitD1Ev;
+
+    // Additional calls from main to other functions can be added here as needed
+}
+```
+
+### Explanation:
+- **Nodes**: Each function present in the IR code is represented as a node in the graph with its name.
+- **Edges**: Directed edges are established from the calling function to the called function, indicating the flow of control.
+
+You can use a tool like Graphviz to visualize this graph by saving the above content into a file with a `.dot` extension and rendering it with Graphviz commands.

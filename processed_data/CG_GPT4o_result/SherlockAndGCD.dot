@@ -1,0 +1,45 @@
+To create a call graph from the provided Intermediate Representation (IR) code, we will identify the functions and their call relationships. Below is the corresponding DOT representation of the call graph.
+
+```dot
+digraph CallGraph {
+    // Nodes
+    node [shape=box];
+    main [label="main()"];
+    gcd [label="gcd(int, int)"];
+    __cxa_atexit [label="__cxa_atexit(void (i8*)*, i8*, i8*)"];
+    _ZNSt8ios_base4InitC1Ev [label="_ZNSt8ios_base4InitC1Ev()"];
+    _ZNSt8ios_base4InitD1Ev [label="_ZNSt8ios_base4InitD1Ev()"];
+    _GLOBAL__sub_I_SherlockAndGCD_cpp [label="_GLOBAL__sub_I_SherlockAndGCD.cpp()"];
+    freopen [label="freopen(i8*, i8*, %struct._IO_FILE*)"];
+    _ZNSirsERi [label="_ZNSirsERi(%"class.std::basic_istream"*, i32*)"];
+    _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l [label="_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l"];
+    _ZNSo3putEc [label="_ZNSo3putEc(%"class.std::basic_ostream"*, i8)"];
+    _ZNSo5flushEv [label="_ZNSo5flushEv(%"class.std::basic_ostream"*)"];
+    _ZSt16__throw_bad_castv [label="_ZSt16__throw_bad_castv()"];
+    _ZNKSt5ctypeIcE13_M_widen_initEv [label="_ZNKSt5ctypeIcE13_M_widen_initEv(%"class.std::ctype"*)"];
+
+    // Edges
+    main -> gcd;
+    main -> __cxa_atexit;
+    main -> _ZNSt8ios_base4InitC1Ev;
+    main -> _GLOBAL__sub_I_SherlockAndGCD_cpp;
+    main -> freopen;
+    main -> _ZNSirsERi;
+    main -> _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l;
+    main -> _ZNSo3putEc;
+    main -> _ZNSo5flushEv;
+    main -> _ZSt16__throw_bad_castv;
+    main -> _ZNKSt5ctypeIcE13_M_widen_initEv;
+
+    gcd -> gcd; // self-call for recursion
+}
+```
+
+### Explanation:
+- Each function in the IR code is represented as a node in the graph.
+- Edges indicate calls between functions, showing which function calls which.
+- The `gcd` function is shown to call itself, reflecting its recursive nature.
+- Other functions such as `main`, `freopen`, and various `std` methods are included as they are part of the execution flow.
+- The function names are derived directly from the IR code, maintaining their original mangled names for accuracy. 
+
+To visualize this graph, you can use graph visualization tools like Graphviz.

@@ -1,0 +1,69 @@
+To create a call graph in DOT format based on the provided Intermediate Representation (IR) code, we first need to extract the function declarations and their calls. The nodes in the graph will represent the functions, and the edges will represent the calls between these functions.
+
+In the provided IR code, we can identify the following functions:
+
+1. `@main`
+2. `@freopen`
+3. `@llvm.lifetime.start.p0i8`
+4. `@llvm.lifetime.end.p0i8`
+5. `_ZNSirsERi` (C++ stream input operator)
+6. `_ZNSolsEi` (C++ stream output operator)
+7. `_ZNSo3putEc` (C++ stream put character)
+8. `_ZNSo5flushEv` (C++ stream flush)
+9. `_ZdaPv` (C++ delete operator)
+10. `@__cxa_atexit`
+11. `@_ZNSt8ios_base4InitC1Ev`
+12. `@_ZNSt8ios_base4InitD1Ev`
+13. `_ZSt16__throw_bad_castv`
+14. `_ZNKSt5ctypeIcE13_M_widen_initEv`
+
+Next, we identify the calls made within the `@main` function:
+
+- Calls to `@freopen`
+- Calls to `_ZNSirsERi`
+- Calls to `_ZNSolsEi`
+- Calls to `_ZNSo3putEc`
+- Calls to `_ZNSo5flushEv`
+- Calls to `@llvm.lifetime.start.p0i8`
+- Calls to `@llvm.lifetime.end.p0i8`
+- Calls to `_ZdaPv`
+
+With this information, we can construct the DOT format for the call graph as follows:
+
+```dot
+digraph CallGraph {
+    node [shape=box];
+
+    main [label="@main"];
+    freopen [label="@freopen"];
+    llvm_lifetime_start [label="@llvm.lifetime.start.p0i8"];
+    llvm_lifetime_end [label="@llvm.lifetime.end.p0i8"];
+    stream_input [label="_ZNSirsERi"];
+    stream_output [label="_ZNSolsEi"];
+    stream_put [label="_ZNSo3putEc"];
+    stream_flush [label="_ZNSo5flushEv"];
+    delete [label="_ZdaPv"];
+    atexit [label="@__cxa_atexit"];
+    ios_base_init [label="@_ZNSt8ios_base4InitC1Ev"];
+    ios_base_destroy [label="@_ZNSt8ios_base4InitD1Ev"];
+    throw_bad_cast [label="_ZSt16__throw_bad_castv"];
+    widen_init [label="_ZNKSt5ctypeIcE13_M_widen_initEv"];
+
+    // Edges
+    main -> freopen;
+    main -> llvm_lifetime_start;
+    main -> llvm_lifetime_end;
+    main -> stream_input;
+    main -> stream_output;
+    main -> stream_put;
+    main -> stream_flush;
+    main -> delete;
+    main -> atexit;
+    main -> ios_base_init;
+    main -> ios_base_destroy;
+    main -> throw_bad_cast;
+    main -> widen_init;
+}
+```
+
+This DOT representation shows the call graph of the provided IR code, indicating which functions are called by the `@main` function. Each node corresponds to a function, and the directed edges illustrate the relationships of calls. You can visualize this graph using graph visualization tools that support the DOT format.

@@ -1,0 +1,43 @@
+To create a call graph in the DOT format based on the provided Intermediate Representation (IR) code, we need to identify the functions and their relationships (calls) from the code. Below is the DOT representation of the call graph, which includes the function nodes and edges indicating the calls between them.
+
+```dot
+digraph CallGraph {
+    // Function Nodes
+    node [shape=box];
+    main [label="main()"];
+    _GLOBAL__sub_I_SequenceEquation_cpp [label="_GLOBAL__sub_I_SequenceEquation.cpp()"];
+    @_ZNSt8ios_base4InitC1Ev [label="_ZNSt8ios_base4InitC1Ev()"];
+    @_ZNSt8ios_base4InitD1Ev [label="_ZNSt8ios_base4InitD1Ev()"];
+    __cxa_atexit [label="__cxa_atexit()"];
+    @freopen [label="freopen()"];
+    @_ZNSirsERi [label="_ZNSirsERi()"];
+    @_ZNSolsEi [label="_ZNSolsEi()"];
+    @_ZNSo3putEc [label="_ZNSo3putEc()"];
+    @_ZNSo5flushEv [label="_ZNSo5flushEv()"];
+    @_ZSt16__throw_bad_castv [label="_ZSt16__throw_bad_castv()"];
+    @_ZNKSt5ctypeIcE13_M_widen_initEv [label="_ZNKSt5ctypeIcE13_M_widen_initEv()"];
+
+    // Edges representing calls
+    main -> @_ZNSt8ios_base4InitC1Ev;
+    main -> @__cxa_atexit;
+    main -> @freopen;
+    main -> @_ZNSirsERi;
+    main -> @_ZNSolsEi;
+    main -> @_ZNSo3putEc;
+    main -> @_ZNSo5flushEv;
+    _GLOBAL__sub_I_SequenceEquation_cpp -> @_ZNSt8ios_base4InitC1Ev;
+    _GLOBAL__sub_I_SequenceEquation_cpp -> @_ZNSt8ios_base4InitD1Ev;
+
+    // Additional edges based on the function calls identified in the body of main
+    main -> @_ZSt16__throw_bad_castv;
+    main -> @_ZNKSt5ctypeIcE13_M_widen_initEv;
+}
+```
+
+### Explanation:
+- Each function is represented as a node.
+- Edges indicate calls from one function to another.
+- The `main()` function is the entry point and calls various other functions as shown in the IR code.
+- The global constructor `_GLOBAL__sub_I_SequenceEquation.cpp` initializes the IO base class and registers the destructor with `__cxa_atexit`.
+
+This graph can help visualize how the functions interact in this particular program in a structured way.

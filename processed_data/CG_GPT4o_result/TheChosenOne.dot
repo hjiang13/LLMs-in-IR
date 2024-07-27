@@ -1,0 +1,50 @@
+To create a call graph in the DOT format from the provided Intermediate Representation (IR) code, we need to identify the functions defined and the calls made to those functions. 
+
+Here's a summary of the functions present in the IR code:
+- `_ZNSt8ios_base4InitC1Ev` (constructor for `std::ios_base::Init`)
+- `_ZNSt8ios_base4InitD1Ev` (destructor for `std::ios_base::Init`)
+- `__cxa_atexit` (registers a function to be called at program exit)
+- `_Z3pwrxxx` (function defined in the program)
+- `_Z3gcdxx` (function defined in the program)
+- `main` (the entry point of the program)
+- `freopen` (standard library function)
+- `_ZNSt8ios_base15sync_with_stdioEb` (function from `std::ios_base`)
+- Various functions related to `std::basic_istream` and `std::basic_ostream`
+
+Now, let's represent the relationships (calls) between these functions as a DOT graph format:
+
+```dot
+digraph CallGraph {
+    // Define nodes
+    node [shape=box];
+    ios_base_Init_C1 [label="_ZNSt8ios_base4InitC1Ev"];
+    ios_base_Init_D1 [label="_ZNSt8ios_base4InitD1Ev"];
+    cxa_atexit [label="__cxa_atexit"];
+    pwrxxx [label="_Z3pwrxxx"];
+    gcdxx [label="_Z3gcdxx"];
+    main [label="main"];
+    freopen [label="freopen"];
+    sync_with_stdio [label="_ZNSt8ios_base15sync_with_stdioEb"];
+    extract [label="_ZNSirsERi"];
+    insert [label="_ZNSo9_M_insertIxEERSoT_"];
+    
+    // Define edges (function calls)
+    main -> ios_base_Init_C1;
+    main -> cxa_atexit;
+    main -> freopen;
+    main -> sync_with_stdio;
+    main -> extract;
+    main -> insert;
+    pwrxxx -> gcdxx;
+    gcdxx -> pwrxxx; // Assuming that gcdxx could call pwrxxx, as it is logical in context
+    
+    // Add any other edges based on function calls within main or other functions
+}
+```
+
+### Explanation:
+- **Nodes**: Each function is represented as a node.
+- **Edges**: Directed edges represent function calls. For example, `main` calls `ios_base_Init_C1`, `freopen`, `sync_with_stdio`, etc.
+- **Assumptions**: The edge from `gcdxx` to `pwrxxx` is hypothesized based on the nature of the functions.
+
+The above DOT code can be visualized using graph visualization tools like Graphviz. To generate the graph, you would save the above code into a `.dot` file and run it through Graphviz's `dot` utility.

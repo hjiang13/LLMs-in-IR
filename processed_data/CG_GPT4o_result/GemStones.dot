@@ -1,0 +1,42 @@
+To create a call graph in DOT format from the provided IR (Intermediate Representation) code, we will identify the function calls and the functions being called. Here’s how the call graph might look based on the given input:
+
+```dot
+digraph call_graph {
+    // Nodes
+    main [label="main()"];
+    _GLOBAL__sub_I_GemStones.cpp [label="_GLOBAL__sub_I_GemStones.cpp()"];
+    @_ZStL8__ioinit [label="@_ZStL8__ioinit"];
+    @_ZNSt8ios_base4InitC1Ev [label="@_ZNSt8ios_base4InitC1Ev()"];
+    @_ZNSt8ios_base4InitD1Ev [label="@_ZNSt8ios_base4InitD1Ev()"];
+    @__cxa_atexit [label="@__cxa_atexit()"];
+    @freopen [label="@freopen()"];
+    @_ZNSirsERi [label="@_ZNSirsERi()"];
+    @_ZNSi10_M_extractIyEERSiRT_ [label="@_ZNSi10_M_extractIyEERSiRT_()"];
+    @_ZNSo9_M_insertIyEERSoT_ [label="@_ZNSo9_M_insertIyEERSoT_()"];
+    @_ZNSo3putEc [label="@_ZNSo3putEc()"];
+    @_ZNSo5flushEv [label="@_ZNSo5flushEv()"];
+    @_ZSt16__throw_bad_castv [label="@_ZSt16__throw_bad_castv()"];
+    @_ZNKSt5ctypeIcE13_M_widen_initEv [label="@_ZNKSt5ctypeIcE13_M_widen_initEv()"];
+
+    // Edges
+    main -> _GLOBAL__sub_I_GemStones.cpp;
+    _GLOBAL__sub_I_GemStones.cpp -> @_ZNSt8ios_base4InitC1Ev;
+    _GLOBAL__sub_I_GemStones.cpp -> @__cxa_atexit;
+    main -> @freopen;
+    main -> @_ZNSirsERi;
+    main -> @_ZNSi10_M_extractIyEERSiRT_;
+    main -> @_ZNSo9_M_insertIyEERSoT_;
+    main -> @_ZNSo3putEc;
+    main -> @_ZNSo5flushEv;
+    main -> @_ZSt16__throw_bad_castv;
+    main -> @_ZNKSt5ctypeIcE13_M_widen_initEv;
+}
+```
+
+### Explanation:
+- Each function is represented as a node.
+- Directed edges (arrows) indicate the function calls, showing which function calls which.
+- The nodes' labels correspond to the function names or identifiers in the provided IR code, and I've added a label for the entry point (`main`) and the global constructor (`_GLOBAL__sub_I_GemStones.cpp`).
+- The graph shows the relationships between the functions as determined by the calls made in the `main` function and the global constructor. 
+
+You can use this DOT format for visualization in graph tools that support the DOT language, such as Graphviz.

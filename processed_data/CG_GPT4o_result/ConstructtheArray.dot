@@ -1,0 +1,39 @@
+Here is the call graph represented in DOT format based on the provided intermediate representation (IR) code. Each function is represented as a node, and the edges indicate which functions call which others.
+
+```dot
+digraph CallGraph {
+    // Nodes
+    main [label="main()"]
+    _GLOBAL__sub_I_ConstructtheArray_cpp [label="_GLOBAL__sub_I_ConstructtheArray.cpp()"]
+    _ZNSt8ios_base4InitC1Ev [label="_ZNSt8ios_base4InitC1Ev()"]
+    _ZNSt8ios_base4InitD1Ev [label="_ZNSt8ios_base4InitD1Ev()"]
+    __cxa_atexit [label="__cxa_atexit()"]
+    @_ZNSi10_M_extractIxEERSiRT_ [label="_ZNSi10_M_extractIxEERSiRT_()"]
+    @_ZNSo9_M_insertIxEERSoT_ [label="_ZNSo9_M_insertIxEERSoT_()"]
+    @_ZNSo3putEc [label="_ZNSo3putEc()"]
+    @_ZNSo5flushEv [label="_ZNSo5flushEv()"]
+    @_ZSt16__throw_bad_castv [label="_ZSt16__throw_bad_castv()"]
+    @_ZNKSt5ctypeIcE13_M_widen_initEv [label="_ZNKSt5ctypeIcE13_M_widen_initEv()"]
+    @freopen [label="freopen()"]
+    @_ZNSt8ios_base15sync_with_stdioEb [label="_ZNSt8ios_base15sync_with_stdioEb()"]
+
+    // Edges
+    main -> _GLOBAL__sub_I_ConstructtheArray_cpp
+    main -> @_ZNSi10_M_extractIxEERSiRT_
+    main -> @_ZNSo9_M_insertIxEERSoT_
+    main -> @_ZNSo3putEc
+    main -> @_ZNSo5flushEv
+    _GLOBAL__sub_I_ConstructtheArray_cpp -> _ZNSt8ios_base4InitC1Ev
+    _GLOBAL__sub_I_ConstructtheArray_cpp -> __cxa_atexit
+    _ZNSt8ios_base4InitC1Ev -> _ZNSt8ios_base4InitD1Ev
+    main -> @_ZNSt8ios_base15sync_with_stdioEb
+    @_ZNSo9_M_insertIxEERSoT_ -> @_ZNSo3putEc
+    @_ZNSo3putEc -> @_ZNKSt5ctypeIcE13_M_widen_initEv
+    @_ZNKSt5ctypeIcE13_M_widen_initEv -> @_ZSt16__throw_bad_castv
+}
+```
+
+### Explanation:
+- Each function is represented as a node with a label corresponding to its name.
+- The arrows (`->`) represent the calls between functions, showing the direction of the call from the caller to the callee.
+- The call graph captures the relationships between the functions in your IR code, following the structure of the calls as they appear in the code.

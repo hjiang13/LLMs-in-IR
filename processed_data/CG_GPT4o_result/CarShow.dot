@@ -1,0 +1,63 @@
+To create a call graph from the provided intermediate representation (IR) code, we need to identify the functions defined and called in the code. A call graph is a directed graph that represents calling relationships between functions in a program. 
+
+Based on the provided IR code, the functions identified are:
+1. `_Z3Addi(i32)`
+2. `_Z3Remi(i32)`
+3. `@main()`
+4. `_GLOBAL__sub_I_CarShow.cpp()`
+5. `@__cxa_atexit(void (i8*)*, i8*, i8*)`
+6. `@_ZdlPv(i8*)`
+7. `@__isoc99_scanf(i8*, ...)`
+8. `@printf(i8*, ...)`
+9. `@freopen(i8*, i8*, %struct._IO_FILE*)`
+10. `@llvm.memset.p0i8.i64(i8*, i8, i64, i1 immarg)`
+11. `_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPSt4pairIiiESt6vectorIS3_SaIS3_EEEElNS0_5__ops15_Iter_less_iterEEvT_SB_T0_T1_`
+12. `_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPSt4pairIiiESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_less_iterEEvT_SB_T0_`
+13. `_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPSt4pairIiiESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_less_iterEEvT_SB_SB_SB_T0_`
+
+Now, we can create a DOT format representation of the call graph. Each function will be represented as a node, and edges will represent the calls made from one function to another.
+
+Here's how the call graph in DOT format would look:
+
+```dot
+digraph CallGraph {
+    node [shape=box];
+
+    // Define nodes
+    Addi [label="_Z3Addi(i32)"];
+    Remi [label="_Z3Remi(i32)"];
+    Main [label="@main()"];
+    GlobalSub [label="_GLOBAL__sub_I_CarShow.cpp()"];
+    CxaAtexit [label="@__cxa_atexit(void (i8*)*, i8*, i8*)"];
+    DltPv [label="@_ZdlPv(i8*)"];
+    Isoc99ScanF [label="@__isoc99_scanf(i8*, ...)"];
+    PrintF [label="@printf(i8*, ...)"];
+    Freopen [label="@freopen(i8*, i8*, %struct._IO_FILE*)"];
+    Memset [label="@llvm.memset.p0i8.i64(i8*, i8, i64, i1 immarg)"];
+    Introsort [label="_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPSt4pairIiiESt6vectorIS3_SaIS3_EEEElNS0_5__ops15_Iter_less_iterEEvT_SB_T0_T1_"];
+    FinalInsertion [label="_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPSt4pairIiiESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_less_iterEEvT_SB_T0_"];
+    MoveMedian [label="_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPSt4pairIiiESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_less_iterEEvT_SB_SB_SB_T0_"];
+
+    // Define edges (function calls)
+    Main -> Addi;
+    Main -> Remi;
+    Main -> CxaAtexit;
+    Main -> PrintF;
+    Main -> Isoc99ScanF;
+    Main -> Freopen;
+    GlobalSub -> CxaAtexit;
+    GlobalSub -> Addi;
+    GlobalSub -> Remi;
+    DltPv -> MoveMedian;
+    DltPv -> Introsort;
+    DltPv -> FinalInsertion;
+
+    // More edges can be defined based on actual function calls in the IR code
+}
+```
+
+In the above representation:
+- Each function is a node in the graph.
+- Directed edges represent function calls.
+- The `label` attribute is used to identify the function names clearly.
+- You can expand the edges further depending on more precise call relationships found in the IR code.

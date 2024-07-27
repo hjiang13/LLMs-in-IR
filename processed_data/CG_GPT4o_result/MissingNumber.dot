@@ -1,0 +1,44 @@
+To create a call graph in DOT format from the given Intermediate Representation (IR) code, we need to analyze the function calls within the `main` function and any other functions that are called from it. The following nodes will represent the functions in the provided IR code, and the edges will represent the calls between these functions.
+
+Here's a simplified representation of the call graph in DOT format:
+
+```dot
+digraph call_graph {
+    // Nodes
+    main [label="main()"];
+    _ZNSi10_M_extractIjEERSiRT_ [label="_ZNSi10_M_extractIjEERSiRT_"];
+    _Znam [label="_Znam"];
+    _ZNSirsERi [label="_ZNSirsERi"];
+    _ZNSt16__introsort_loopIPilN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_T0_T1_ [label="_ZSt16__introsort_loopIPilN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_T0_T1_"];
+    _ZSt22__final_insertion_sortIPiN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_T0_ [label="_ZSt22__final_insertion_sortIPiN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_T0_"];
+    _ZSt29_Rb_tree_insert_and_rebalancebPSt18_Rb_tree_node_baseS0_RS_ [label="_ZSt29_Rb_tree_insert_and_rebalancebPSt18_Rb_tree_node_baseS0_RS_"];
+    _ZSt18_Rb_tree_decrementPSt18_Rb_tree_node_base [label="_ZSt18_Rb_tree_decrementPSt18_Rb_tree_node_base"];
+    _ZdaPv [label="_ZdaPv"];
+    __cxa_begin_catch [label="__cxa_begin_catch"];
+    __gxx_personality_v0 [label="__gxx_personality_v0"];
+    _ZNSt8ios_base4InitC1Ev [label="_ZNSt8ios_base4InitC1Ev"];
+    _ZNSt8ios_base4InitD1Ev [label="_ZNSt8ios_base4InitD1Ev"];
+    _ZNSt8_Rb_treeIiiSt9_IdentityIiESt4lessIiESaIiEE8_M_eraseEPSt13_Rb_tree_nodeIiE [label="_ZNSt8_Rb_treeIiiSt9_IdentityIiESt4lessIiESaIiEE8_M_eraseEPSt13_Rb_tree_nodeIiE"];
+
+    // Edges
+    main -> _ZNSi10_M_extractIjEERSiRT_;
+    main -> _Znam;
+    main -> _ZNSirsERi;
+    main -> _ZNSt16__introsort_loopIPilN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_T0_T1_;
+    main -> _ZSt22__final_insertion_sortIPiN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_T0_;
+    main -> _ZSt29_Rb_tree_insert_and_rebalancebPSt18_Rb_tree_node_baseS0_RS_;
+    main -> _ZSt18_Rb_tree_decrementPSt18_Rb_tree_node_base;
+    main -> _ZdaPv;
+    main -> _ZNSt8ios_base4InitC1Ev;
+    main -> _ZNSt8ios_base4InitD1Ev;
+    main -> __gxx_personality_v0;
+    main -> __cxa_begin_catch;
+    main -> _ZNSt8_Rb_treeIiiSt9_IdentityIiESt4lessIiESaIiEE8_M_eraseEPSt13_Rb_tree_nodeIiE;
+}
+```
+
+### Explanation:
+1. **Nodes**: Each function that is defined or declared in the IR code is represented as a node. The label for each node is the function name.
+2. **Edges**: The edges in the graph represent the calls made from the `main` function to other functions. For example, `main` calls `_ZNSi10_M_extractIjEERSiRT_`, `_Znam`, etc. 
+
+This representation provides a clear view of the function call relationships in the IR code. You can visualize this graph using any DOT file viewer or online graph visualization tool.

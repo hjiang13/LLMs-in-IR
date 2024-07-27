@@ -1,0 +1,51 @@
+To generate a call graph in the DOT format from the provided Intermediate Representation (IR) code, we need to identify the functions and their calls. The nodes in the graph will represent the functions, and the edges will represent the calls between them.
+
+From the provided IR code, we can identify the following functions:
+
+1. `@_Z4cmp2St6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EES7_`
+2. `@_Z7remove0NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE`
+3. `@_Z4cmp1St6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EES7_`
+4. `@main`
+5. `@_GLOBAL__sub_I_TripleRecursion.cpp`
+6. `@__cxa_atexit`
+7. Various standard library functions such as `@llvm.lifetime.start.p0i8`, `@llvm.lifetime.end.p0i8`, `@memcmp`, `@llvm.stacksave`, `@llvm.stackrestore`, and memory allocation functions.
+
+The calls between these functions can also be inferred from the `call` and `invoke` instructions within their definitions.
+
+Here’s the representation of the call graph in the DOT format:
+
+```dot
+digraph call_graph {
+    // Nodes
+    main [label="main"];
+    cmp1 [label="_Z4cmp1St6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EES7_"];
+    cmp2 [label="_Z4cmp2St6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EES7_"];
+    remove [label="_Z7remove0NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE"];
+    global_sub [label="_GLOBAL__sub_I_TripleRecursion.cpp"];
+    atexit [label="__cxa_atexit"];
+    lifetime_start [label="llvm.lifetime.start.p0i8"];
+    lifetime_end [label="llvm.lifetime.end.p0i8"];
+    memcmp [label="memcmp"];
+    stacksave [label="llvm.stacksave"];
+    stackrestore [label="llvm.stackrestore"];
+
+    // Edges
+    main -> cmp1;
+    main -> cmp2;
+    main -> remove;
+    main -> global_sub;
+    global_sub -> atexit;
+    global_sub -> lifetime_start;
+    global_sub -> lifetime_end;
+    global_sub -> memcmp;
+    global_sub -> stacksave;
+    global_sub -> stackrestore;
+}
+```
+
+### Explanation:
+- Each function is represented as a node in the graph.
+- The arrows (`->`) indicate the function calls, showing which function calls which other function.
+- The labels on the nodes show the name of the functions.
+
+This representation provides a clear visualization of the relationships between the different functions in the program, which can assist in understanding the call structure of the code.

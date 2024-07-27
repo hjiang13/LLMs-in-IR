@@ -1,0 +1,63 @@
+To create a dependency graph in the DOT format from the provided intermediate representation (IR) code, we will focus on the main function and its control flow. Basic blocks will be represented as nodes, and the edges will represent the flow of control between them.
+
+Here is a simplified version of the dependency graph in DOT format:
+
+```dot
+digraph G {
+    // Nodes representing the basic blocks
+    node [shape=box];
+
+    main_start [label="main() Start"];
+    alloc_1 [label="%1 = alloca i32"];
+    alloc_2 [label="%2 = alloca i32"];
+    alloc_set [label="%3 = alloca class.std::set"];
+    load_stdin [label="%4 = load _IO_FILE* @stdin"];
+    call_freopen [label="%5 = call @freopen(...)"];
+    call_scanf_1 [label="%7 = call @__isoc99_scanf(...)"];
+    load_1 [label="%24 = load i32, %1"];
+    sub_1 [label="%25 = add nsw i32 %24, -1"];
+    store_1 [label="store i32 %25, %1"];
+    cmp_1 [label="%26 = icmp eq i32 %24, 0"];
+    br_1 [label="br i1 %26"];
+    block_27 [label="Block 27"];
+    call_scanf_2 [label="%28 = call @__isoc99_scanf(...)"];
+    load_2 [label="%29 = load i32, %2"];
+    cmp_2 [label="%30 = icmp sgt i32 %29, 0"];
+    br_2 [label="br i1 %30"];
+    block_33 [label="Block 33"];
+    block_397 [label="Block 397"];
+    call_puts [label="call @puts(...)"];
+    ret [label="ret i32 0"];
+
+    // Edges representing control flow
+    main_start -> alloc_1;
+    alloc_1 -> alloc_2;
+    alloc_2 -> alloc_set;
+    alloc_set -> load_stdin;
+    load_stdin -> call_freopen;
+    call_freopen -> call_scanf_1;
+    call_scanf_1 -> load_1;
+    load_1 -> sub_1;
+    sub_1 -> store_1;
+    store_1 -> cmp_1;
+    cmp_1 -> br_1;
+    br_1 -> block_27 [label="true"];
+    br_1 -> block_27 [label="false"];
+    block_27 -> call_scanf_2;
+    call_scanf_2 -> load_2;
+    load_2 -> cmp_2;
+    cmp_2 -> br_2;
+    br_2 -> block_33 [label="true"];
+    br_2 -> block_397 [label="false"];
+    block_397 -> call_puts;
+    call_puts -> ret;
+}
+```
+
+### Explanation:
+
+- **Nodes**: Each basic block is represented as a node. The labels indicate the operations or the function calls within those blocks.
+  
+- **Edges**: Directed edges represent the control flow between basic blocks. For example, after allocating variables, the program proceeds to load from `stdin`, followed by function calls and conditional branches.
+
+This graph can be visualized using graph visualization tools that support the DOT language, such as Graphviz.

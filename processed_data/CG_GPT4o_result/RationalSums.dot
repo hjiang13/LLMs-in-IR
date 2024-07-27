@@ -1,0 +1,51 @@
+To create a call graph in DOT format based on the provided Intermediate Representation (IR) code, we will identify the functions and their relationships (i.e., which functions call which other functions). 
+
+Here's the call graph representation in DOT format:
+
+```dot
+digraph CallGraph {
+    rankdir=TB;
+
+    // Nodes for each function
+    main [label="main()"];
+    gcd [label="gcdxx(i64, i64)"];
+    mod_inv [label="mod_invxx(i64, i64)"];
+    egcd [label="egcdxx(i64, i64)"];
+    global_sub [label="_GLOBAL__sub_I_RationalSums.cpp()"];
+    sync_with_stdio [label="_ZNSt8ios_base15sync_with_stdioEb(i1)"];
+    freopen_func [label="freopen(i8*, i8*, _IO_FILE*)"];
+    cin_extract [label="_ZNSi10_M_extractIxEERSiRT_(%"class.std::basic_istream"*, i64*)"];
+    cout_insert [label="_ZNSo9_M_insertIxEERSoT_(%"class.std::basic_ostream"*, i64)"];
+    put_char [label="_ZNSo3putEc(%"class.std::basic_ostream"*, i8)"];
+    flush [label="_ZNSo5flushEv(%"class.std::basic_ostream"*)"];
+    throw_bad_cast [label="_ZSt16__throw_bad_castv()"];
+
+    // Edges to represent function calls
+    main -> global_sub;
+    main -> sync_with_stdio;
+    main -> freopen_func;
+    main -> cin_extract;
+    main -> cout_insert;
+
+    gcd -> egcd;
+    mod_inv -> egcd;
+    mod_inv -> gcd;
+
+    global_sub -> sync_with_stdio;
+    
+    // Additional edges for internal function calls
+    cout_insert -> put_char;
+    cout_insert -> flush;
+    
+    // Bad cast exception
+    cout_insert -> throw_bad_cast;
+}
+```
+
+### Explanation:
+- Each function is represented as a node in the graph.
+- The edges represent the calls made from one function to another. For instance, `main()` calls several functions like `global_sub`, `sync_with_stdio`, etc.
+- The functions `gcd`, `mod_inv`, and `egcd` are linked to show their dynamic calls.
+- I've included function declarations that seem pertinent to the program as nodes, such as `freopen`, `cin_extract`, and `cout_insert`, based on their usage in the `main` function.
+
+You can visualize this DOT code using graph visualization tools like Graphviz. Just save the content in a `.dot` file and render it with Graphviz to see the call graph.

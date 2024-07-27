@@ -1,0 +1,41 @@
+To create a call graph from the provided Intermediate Representation (IR) code, we need to identify the functions that are defined and the calls that they make. Below is the representation of the call graph in DOT format.
+
+### Call Graph in DOT Format
+
+```dot
+digraph CallGraph {
+    node [shape=box];
+
+    // Function Nodes
+    main [label="main"];
+    _GLOBAL__sub_I_MatrixLand_cpp [label="_GLOBAL__sub_I_MatrixLand.cpp"];
+    __cxa_atexit [label="__cxa_atexit"];
+    freopn [label="freopen"];
+    getc [label="getc"];
+    _ZNSolsEi [label="_ZNSolsEi"];
+    _ZNSo3putEc [label="_ZNSo3putEc"];
+    _ZNSo5flushEv [label="_ZNSo5flushEv"];
+    _ZSt16__throw_bad_castv [label="_ZSt16__throw_bad_castv"];
+    _ZNKSt5ctypeIcE13_M_widen_initEv [label="_ZNKSt5ctypeIcE13_M_widen_initEv"];
+    llvm_vector_reduce_smax_v4i32 [label="llvm.vector.reduce.smax.v4i32"];
+
+    // Edges representing function calls
+    main -> freopn;
+    main -> getc;
+    main -> __cxa_atexit;
+    main -> _ZNSolsEi;
+    main -> llvm_vector_reduce_smax_v4i32;
+    _GLOBAL__sub_I_MatrixLand_cpp -> _ZNSt8ios_base4InitC1Ev;
+    _GLOBAL__sub_I_MatrixLand_cpp -> _ZNSt8ios_base4InitD1Ev;
+    main -> _ZNSo5flushEv;
+    main -> _ZNSo3putEc;
+    
+}
+```
+
+### Explanation
+1. **Node Definitions**: Each function is represented as a node, and they are labeled with their names for clarity.
+2. **Edges**: Directed edges indicate function calls. For instance, `main` calls `freopen`, `getc`, and others.
+3. **Function Names**: The names are taken directly from the provided IR code, which includes mangled names for C++ functions.
+
+This representation provides a clear overview of the relationships between different functions in the program, making it easier to analyze the structure of the code.

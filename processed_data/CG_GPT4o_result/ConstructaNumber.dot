@@ -1,0 +1,44 @@
+To create a call graph from the provided Intermediate Representation (IR) code, we need to extract the functions and how they call each other. Based on the IR code you've provided, I will identify the functions and the calls made between them.
+
+Here is the call graph represented in DOT format:
+
+```dot
+digraph CallGraph {
+    // Nodes representing functions
+    main [label="main()"];
+    _GLOBAL__sub_I_ConstructaNumber_cpp [label="_GLOBAL__sub_I_ConstructaNumber.cpp()"];
+    _ZNSt8ios_base4InitC1Ev [label="_ZNSt8ios_base4InitC1Ev()"];
+    _ZNSt8ios_base4InitD1Ev [label="_ZNSt8ios_base4InitD1Ev()"];
+    __cxa_atexit [label="__cxa_atexit()"];
+    @freopen [label="freopen()"];
+    _ZNSirsERi [label="_ZNSirsERi()"];
+    _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l [label="_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l()"];
+    _ZNSo3putEc [label="_ZNSo3putEc()"];
+    _ZNSo5flushEv [label="_ZNSo5flushEv()"];
+    _ZSt16__throw_bad_castv [label="_ZSt16__throw_bad_castv()"];
+    _ZNKSt5ctypeIcE13_M_widen_initEv [label="_ZNKSt5ctypeIcE13_M_widen_initEv()"];
+
+    // Edges representing calls
+    main -> _GLOBAL__sub_I_ConstructaNumber_cpp;
+    main -> _ZNSt8ios_base4InitC1Ev;
+    main -> __cxa_atexit;
+    main -> @freopen;
+    main -> _ZNSirsERi;
+    main -> _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l;
+    main -> _ZNSo3putEc;
+    main -> _ZNSo5flushEv;
+    main -> _ZSt16__throw_bad_castv;
+    main -> _ZNKSt5ctypeIcE13_M_widen_initEv;
+
+    // Constructor call
+    _GLOBAL__sub_I_ConstructaNumber_cpp -> _ZNSt8ios_base4InitC1Ev;
+    _GLOBAL__sub_I_ConstructaNumber_cpp -> _ZNSt8ios_base4InitD1Ev;
+}
+```
+
+### Explanation:
+1. **Nodes**: Each function in the IR is represented as a node in the graph with a label that corresponds to its name.
+2. **Edges**: Directed edges represent the calls made from one function to another. For example, the `main` function calls several other functions, which is represented by arrows pointing from `main` to those functions.
+3. **Special Functions**: Some functions like `_GLOBAL__sub_I_ConstructaNumber_cpp` are special constructors or destructors that manage initialization and cleanup, and they are included in the graph as well.
+
+This graph can be visualized using various graph visualization tools that support the DOT format, such as Graphviz.

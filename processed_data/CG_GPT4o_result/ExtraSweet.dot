@@ -1,0 +1,39 @@
+To construct a call graph from the provided Intermediate Representation (IR) code, we need to identify the functions and their invocations. Below is a simplified representation of the call graph in DOT format, which illustrates the relationships between the functions.
+
+```dot
+digraph CallGraph {
+    // Functions
+    main [label="main()"];
+    _Z6updateii [label="_Z6updateii(int, int)"];
+    _Z4takeii [label="_Z4takeii(int, int)"];
+    _Z14getClosestLefti [label="_Z14getClosestLefti(int)"];
+    _Z15getClosestRighti [label="_Z15getClosestRighti(int)"];
+    _Z4initi [label="_Z4initi(int)"];
+    _ZNSt8_Rb_treeIiSt4pairIKiiESt10_Select1stIS2_ESt4lessIiESaIS2_EE5eraseERS1_ [label="_ZNSt8_Rb_treeIiSt4pairIKiiESt10_Select1stIS2_ESt4lessIiESaIS2_EE5eraseERS1_()"];
+    _ZNSt8_Rb_treeIiSt4pairIKiiESt10_Select1stIS2_ESt4lessIiESaIS2_EE8_M_eraseEPSt13_Rb_tree_nodeIS2_E [label="_ZNSt8_Rb_treeIiSt4pairIKiiESt10_Select1stIS2_ESt4lessIiESaIS2_EE8_M_eraseEPSt13_Rb_tree_nodeIS2_E()"];
+    _Z4takeii [label="_Z4takeii(int, int)"];
+    _ZNSt3mapIiiSt4lessIiESaISt4pairIKiiEEED2Ev [label="_ZNSt3mapIiiSt4lessIiESaISt4pairIKiiEEED2Ev()"];
+    _ZNSt8ios_base4InitC1Ev [label="_ZNSt8ios_base4InitC1Ev()"];
+    __clang_call_terminate [label="__clang_call_terminate()"];
+    __cxa_atexit [label="__cxa_atexit()"];
+    
+    // Edges
+    main -> _Z4takeii;
+    main -> _Z6updateii;
+    _Z4takeii -> _ZNSt8_Rb_treeIiSt4pairIKiiESt10_Select1stIS2_ESt4lessIiESaIS2_EE5eraseERS1_;
+    _Z6updateii -> _ZNSt8_Rb_treeIiSt4pairIKiiESt10_Select1stIS2_ESt4lessIiESaIS2_EE5eraseERS1_;
+    _Z6updateii -> _Z14getClosestLefti;
+    _Z6updateii -> _Z15getClosestRighti;
+    _Z4initi -> _ZNSt8ios_base4InitC1Ev;
+    
+    // etc.
+}
+```
+
+### Explanation:
+- Each function is represented as a node in the graph.
+- Edges (arrows) are directed from a caller function to the called function.
+- The labels of the nodes correspond to the function names, and the edges indicate which functions invoke others.
+
+### Note:
+This is a simplified version of the call graph. Depending on the complexity and size of the actual code, additional nodes and edges may be included for other functions and their relationships, especially for those that are invoked within loops or conditionals.

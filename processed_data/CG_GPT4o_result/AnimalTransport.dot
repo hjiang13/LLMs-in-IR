@@ -1,0 +1,44 @@
+To create a call graph from the provided Intermediate Representation (IR) code, we need to identify the functions that are defined and called within the code. The call graph will consist of nodes representing these functions and directed edges representing calls from one function to another.
+
+Here is the call graph in DOT format, which includes nodes (functions) and edges (function calls):
+
+```dot
+digraph CallGraph {
+    // Nodes
+    node [shape=box];
+    main [label="main()"];
+    _Z9propagateiib [label="_Z9propagateiib(i32, i32, i1)"];
+    _Z5queryiiiiii [label="_Z5queryiiiiii(i32, i32, i32, i32, i32, i32)"];
+    _Z6updateiiiiiii [label="_Z6updateiiiiiii(i32, i32, i32, i32, i32, i32, i32)"];
+    _ZNSt8ios_base4InitC1Ev [label="_ZNSt8ios_base4InitC1Ev()"];
+    _ZNSt8ios_base4InitD1Ev [label="_ZNSt8ios_base4InitD1Ev()"];
+    _ZdlPv [label="_ZdlPv(void*)"];
+    _ZSt20__throw_length_errorPKc [label="_ZSt20__throw_length_errorPKc(char const*)"];
+    _ZSt6vectorIS_IiSaIiEESaIS1_EED2Ev [label="_ZSt6vectorIS_IiSaIiEESaIS1_EED2Ev()"];
+    _ZSt6vectorIS_IiSaIiEESaIS1_EE17_M_default_appendEm [label="_ZSt6vectorIS_IiSaIiEESaIS1_EE17_M_default_appendEm(long long)"];
+    printf [label="printf(i8*)"];
+    __isoc99_scanf [label="__isoc99_scanf(i8*, ...)"];
+    freopen [label="freopen(i8*, i8*, _IO_FILE*)"];
+    
+    // Edges (function calls)
+    main -> freopen;
+    main -> __isoc99_scanf;
+    main -> _Z9propagateiib;
+    main -> _Z5queryiiiiii;
+    main -> _Z6updateiiiiiii;
+  
+    _Z5queryiiiiii -> _Z5queryiiiiii; // recursive call
+    _Z6updateiiiiiii -> _Z6updateiiiiiii; // recursive call
+    _ZNSt8ios_base4InitC1Ev -> _ZNSt8ios_base4InitD1Ev;
+    _ZdlPv -> _ZSt6vectorIS_IiSaIiEESaIS1_EED2Ev; // destructor
+    _ZSt6vectorIS_IiSaIiEESaIS1_EE17_M_default_appendEm -> _ZSt6vectorIS_IiSaIiEESaIS1_EED2Ev; // memory allocation
+}
+```
+
+### Explanation:
+- Each function is represented as a box-shaped node.
+- The edges indicate a function call from one function to another.
+- Recursive calls are also represented with a self-edge on their respective function nodes.
+- The function names are derived from the mangled names found in the IR code, which represent the function signatures.
+
+You can visualize this graph using tools like Graphviz that support the DOT format.

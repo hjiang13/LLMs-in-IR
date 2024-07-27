@@ -1,0 +1,56 @@
+To create a call graph based on the provided Intermediate Representation (IR) code, we can analyze the function calls within the code. Below is the representation of the call graph in DOT format, which includes the nodes (functions) and edges (calls between functions):
+
+```dot
+digraph CallGraph {
+    // Nodes
+    node [shape=box];
+    
+    main;
+    _Z7fastexpxx;
+    _Z3invx;
+    @_ZdlPv;
+    @_ZNSt8ios_base4InitC1Ev;
+    @_ZNSt8ios_base4InitD1Ev;
+    @__cxa_atexit;
+    @_ZNSirsERi;
+    @_ZNSi10_M_extractIxEERSiRT_;
+    @_ZNSolsEi;
+    @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l;
+    @_ZNSo9_M_insertIxEERSoT_;
+    @_ZSt20__throw_length_errorPKc;
+    @freopen;
+    @llvm.memset.p0i8.i64;
+    @llvm.memmove.p0i8.p0i8.i64;
+    @llvm.umax.i64;
+    
+    // Edges
+    main -> @_Z7fastexpxx;
+    main -> @_Z3invx;
+    main -> @_ZNSt8ios_base4InitC1Ev;
+    main -> @__cxa_atexit;
+    main -> @freopen;
+    
+    _Z7fastexpxx -> @_Z7fastexpxx; // tail call
+    _Z7fastexpxx -> @_Z3invx; // tail call
+    
+    _Z3invx -> @_Z7fastexpxx;
+    
+    @_ZNSt8ios_base4InitC1Ev -> @_ZNSt8ios_base4InitD1Ev;
+    
+    @_ZNSirsERi -> @_ZNSolsEi;
+    @_ZNSi10_M_extractIxEERSiRT_ -> @_ZNSolsEi;
+    
+    @_ZNSo9_M_insertIxEERSoT_ -> @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l;
+    
+    @_ZSt20__throw_length_errorPKc -> @__cxa_atexit;
+    @llvm.memset.p0i8.i64 -> @llvm.memmove.p0i8.p0i8.i64;
+}
+```
+
+### Explanation:
+- Each function is represented as a node in the graph.
+- The edges indicate calls to other functions. For instance, `main` calls `_Z7fastexpxx`, `_Z3invx`, and others.
+- The `tail call` indicates that the function calls itself, allowing for recursion.
+- The representation omits the detailed content of each basic block and focuses on the function calls, as requested. 
+
+You can visualize this graph using Graphviz tools or similar software that accepts DOT format.

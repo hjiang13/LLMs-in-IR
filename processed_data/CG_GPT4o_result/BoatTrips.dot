@@ -1,0 +1,37 @@
+Based on the provided Intermediate Representation (IR) code, we can extract the function calls and construct a call graph in the DOT format. The functions referenced in the IR code will be represented as nodes, and edges will indicate the function calls.
+
+Here is the call graph in DOT format:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    main [label="main()"];
+    _GLOBAL__sub_I_BoatTrips_cpp [label="_GLOBAL__sub_I_BoatTrips.cpp()"];
+    _ZNSt8ios_base4InitC1Ev [label="_ZNSt8ios_base4InitC1Ev()"];
+    _ZNSt8ios_base4InitD1Ev [label="_ZNSt8ios_base4InitD1Ev()"];
+    __cxa_atexit [label="__cxa_atexit()"];
+    puts [label="puts()"];
+    freopen [label="freopen()"];
+    _ZNSirsERi [label="_ZNSirsERi()"];
+    llvm_lifetime_start [label="llvm.lifetime.start.p0i8()"];
+    llvm_lifetime_end [label="llvm.lifetime.end.p0i8()"];
+
+    // Edges
+    main -> _GLOBAL__sub_I_BoatTrips_cpp;
+    main -> freopen;
+    main -> _ZNSirsERi;
+    main -> puts;
+    _GLOBAL__sub_I_BoatTrips_cpp -> _ZNSt8ios_base4InitC1Ev;
+    _GLOBAL__sub_I_BoatTrips_cpp -> __cxa_atexit;
+    _ZNSt8ios_base4InitD1Ev -> __cxa_atexit;
+}
+```
+
+### Explanation:
+- Each function is represented as a node in the graph, labeled with its name.
+- The arrows (edges) indicate calls from one function to another.
+- The `main` function is the entry point, which calls the `_GLOBAL__sub_I_BoatTrips.cpp()` function, as well as `freopen`, `_ZNSirsERi`, and `puts`.
+- The `_GLOBAL__sub_I_BoatTrips.cpp()` function initializes `ios_base::Init`, and it also registers a destructor `__cxa_atexit` that is called when the program exits.
+- Lifetime management functions (`llvm.lifetime.start.p0i8` and `llvm.lifetime.end.p0i8`) are used for managing object lifetimes but are not explicitly included in the call graph to keep it concise.
+
+Feel free to modify the labels or structure as per the requirements!

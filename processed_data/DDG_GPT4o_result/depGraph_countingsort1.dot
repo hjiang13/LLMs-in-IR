@@ -1,0 +1,43 @@
+To represent the dependency graph in DOT format, we will extract the relevant functions and their relationships from the given Intermediate Representation (IR) code. The nodes will correspond to the functions and some key variables, while the edges will represent dependencies between them.
+
+Here is the DOT representation of the dependency graph:
+
+```dot
+digraph DependencyGraph {
+    // Nodes
+    node [shape=rectangle];
+    main [label="main"];
+    _GLOBAL__sub_I_counting_sort2_cpp [label="_GLOBAL__sub_I_counting_sort2.cpp"];
+    _ZNSt8ios_base4InitC1Ev [label="_ZNSt8ios_base4InitC1Ev"];
+    _ZNSi10_M_extractIjEERSiRT_ [label="_ZNSi10_M_extractIjEERSiRT_"];
+    _ZNSo9_M_insertImEERSoT_ [label="_ZNSo9_M_insertImEERSoT_"];
+    _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l [label="_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l"];
+    _ZdaPv [label="_ZdaPv"];
+    _Znam [label="_Znam"];
+    @stdin [label="@stdin"];
+    @_ZSt3cin [label="@_ZSt3cin"];
+    @_ZSt4cout [label="@_ZSt4cout"];
+    @freopen [label="@freopen"];
+    @__cxa_atexit [label="@__cxa_atexit"];
+    
+    // Edges
+    main -> _GLOBAL__sub_I_counting_sort2_cpp;
+    main -> _ZNSt8ios_base4InitC1Ev;
+    main -> _ZNSi10_M_extractIjEERSiRT_;
+    main -> _ZNSo9_M_insertImEERSoT_;
+    main -> _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l;
+    _GLOBAL__sub_I_counting_sort2_cpp -> _ZNSt8ios_base4InitC1Ev;
+    _GLOBAL__sub_I_counting_sort2_cpp -> _ZdaPv;
+    _GLOBAL__sub_I_counting_sort2_cpp -> @__cxa_atexit;
+    main -> @stdin;
+    main -> @_ZSt3cin;
+    main -> @_ZSt4cout;
+    main -> @freopen;
+}
+```
+
+### Explanation:
+- **Nodes**: Each function and critical global variable from the IR is represented as a node.
+- **Edges**: The edges indicate which functions are called from within other functions, depicting the dependency flow.
+
+In this graph, you can see which functions depend on others, which helps in visualizing the control flow and data dependencies in the IR code provided.

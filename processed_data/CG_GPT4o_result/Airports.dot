@@ -1,0 +1,65 @@
+To generate the call graph from the provided Intermediate Representation (IR) code, we need to identify the functions and their relationships based on the function calls. The resulting output will be in the DOT format, which is a graph description language.
+
+Here are the identified functions from the IR code:
+
+1. `main`
+2. `_Z4absti`
+3. `_Z5mergeii`
+4. `_Z5splitii`
+5. `_Z4getpii`
+6. `_Z3addi`
+7. `_Z5queryii`
+8. `_Z5clearv`
+9. `_ZNSt8multisetIiSt4lessIiESaIiEED2Ev`
+10. `_ZNSt8_Rb_treeIiiSt9_IdentityIiESt4lessIiESaIiEE8_M_eraseEPSt13_Rb_tree_nodeIiE`
+11. `@__isoc99_scanf`
+12. `@printf`
+13. `@freopen`
+14. `@__clang_call_terminate`
+15. `@__cxa_atexit`
+
+Now, we will represent the call relationships between these functions in a DOT format. 
+
+Here’s the call graph in DOT format:
+
+```dot
+digraph CallGraph {
+    main -> _Z5mergeii;
+    main -> _Z5splitii;
+    main -> _Z4getpii;
+    main -> _Z3addi;
+    main -> _Z5queryii;
+    main -> _Z5clearv;
+    main -> _ZNSt8multisetIiSt4lessIiESaIiEED2Ev;
+    main -> _ZNSt8_Rb_treeIiiSt9_IdentityIiESt4lessIiESaIiEE8_M_eraseEPSt13_Rb_tree_nodeIiE;
+    main -> @__isoc99_scanf;
+    main -> @printf;
+    main -> @freopen;
+    main -> @__clang_call_terminate;
+    main -> @__cxa_atexit;
+
+    _Z5mergeii -> _Z6updatei;
+    _Z5mergeii -> _Z5mergeii; // Recursive call
+    _Z5mergeii -> _Z5splitii;
+
+    _Z5splitii -> _Z6updatei;
+
+    _Z4getpii -> _Z4getpii; // Recursive call
+
+    _Z3addi -> _Z4getpii;
+    _Z3addi -> _Z5mergeii;
+    _Z3addi -> _Z5splitii;
+
+    _Z5queryii -> _Z5splitii;
+    _Z5queryii -> _Z5mergeii;
+}
+
+```
+
+### Explanation:
+- Each function is represented as a node.
+- Directed edges (arrows) indicate which function calls which other function.
+- Recursive calls are indicated where a function calls itself.
+- External functions (like `printf` and `scanf`) are also included to show their relationships.
+
+You can further visualize this call graph using a DOT file viewer or tools like Graphviz.

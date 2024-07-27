@@ -1,0 +1,56 @@
+To generate the call graph in DOT format from the provided Intermediate Representation (IR) code, we need to identify the functions and their relationships based on the function calls present in the code.
+
+Below is the DOT representation of the call graph derived from the provided IR code:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    main [label="main()"];
+    Work [label="Work()"];
+    Init [label="Init()"];
+    build [label="build(int, int, int)"];
+    update_add [label="update_add(int, int, int, int)"];
+    update_div [label="update_div(int, int, int, int)"];
+    query_min [label="query_min(int, int, int)"];
+    query_sum [label="query_sum(int, int, int)"];
+    push_down [label="pushdown(int)"];
+    add [label="add(int, int)"];
+    st [label="st(int, int)"];
+    push_up [label="pushup(int)"];
+    Div [label="Div(int, int)"];
+    updatediv [label="updatediv(int, int, int, int)"];
+    _GLOBAL_init [label="_GLOBAL__sub_I_BoxOperations.cpp"];
+    __isoc99_scanf [label="__isoc99_scanf(char*, ...)"];
+    printf [label="printf(char*, ...)"];
+    _ZNSt8ios_base4InitC1Ev [label="_ZNSt8ios_base4InitC1Ev()"];
+    _ZNSt8ios_base4InitD1Ev [label="_ZNSt8ios_base4InitD1Ev()"];
+    
+    // Edges
+    main -> Work;
+    main -> Init;
+    main -> build;
+    Work -> __isoc99_scanf;
+    Work -> printf;
+    Init -> __isoc99_scanf;
+    build -> update_add;
+    build -> update_div;
+    build -> query_min;
+    build -> query_sum;
+    update_add -> push_down;
+    update_add -> add;
+    update_div -> push_down;
+    update_div -> updatediv;
+    query_min -> push_down;
+    query_min -> query_min;
+    query_sum -> query_sum;
+    push_down -> push_up;
+    _GLOBAL_init -> _ZNSt8ios_base4InitC1Ev;
+    _GLOBAL_init -> _ZNSt8ios_base4InitD1Ev;
+}
+```
+
+### Explanation:
+- **Nodes** represent the functions in the code.
+- **Edges** represent the calling relationships between these functions, indicating which function calls which.
+- Each function is labeled with its name for clarity.
+- This representation does not include the internal workings of each function, as requested, focusing solely on the call relationships.

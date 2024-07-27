@@ -1,0 +1,58 @@
+To create a call graph from the provided Intermediate Representation (IR) code, we need to identify the functions defined in the code and the calls made to them. The call graph will represent functions as nodes and calls as directed edges between those nodes.
+
+Here's a summary of the functions identified in the IR code:
+
+1. `main`
+2. `@_GLOBAL__sub_I_Service_lane.cpp`
+3. `@__cxa_atexit`
+4. `@_ZStL8__ioinit`
+5. `@freopen`
+6. `@_Znam`
+7. `@_ZdaPv`
+8. `@_ZNSi10_M_extractIjEERSiRT_`
+9. `@_ZNSo9_M_insertImEERSoT_`
+10. `@_ZNSo3putEc`
+11. `@_ZNSo5flushEv`
+12. `@_ZSt16__throw_bad_castv`
+13. `@_ZNKSt5ctypeIcE13_M_widen_initEv`
+
+Now, let's represent this as a dot file format to illustrate the call graph:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    node [shape=box];
+    
+    main;
+    _GLOBAL__sub_I_Service_lane.cpp;
+    __cxa_atexit;
+    _ZStL8__ioinit;
+    freopen;
+    _Znam;
+    _ZdaPv;
+    _ZNSi10_M_extractIjEERSiRT_;
+    _ZNSo9_M_insertImEERSoT_;
+    _ZNSo3putEc;
+    _ZNSo5flushEv;
+    _ZSt16__throw_bad_castv;
+    _ZNKSt5ctypeIcE13_M_widen_initEv;
+
+    // Edges
+    main -> _ZNSi10_M_extractIjEERSiRT_;
+    main -> _ZNSo9_M_insertImEERSoT_;
+    main -> _ZNSo3putEc;
+    main -> _ZNSo5flushEv;
+    main -> _ZdaPv;
+    _GLOBAL__sub_I_Service_lane.cpp -> _ZNSt8ios_base4InitC1Ev;
+    _GLOBAL__sub_I_Service_lane.cpp -> __cxa_atexit;
+    _GLOBAL__sub_I_Service_lane.cpp -> _ZStL8__ioinit;
+    _ZNSi10_M_extractIjEERSiRT_ -> _ZStL8__ioinit;
+    _ZNKSt5ctypeIcE13_M_widen_initEv -> _ZNSo5flushEv;
+}
+```
+
+### Explanation:
+- Each function is represented as a node in the graph.
+- The arrows (edges) indicate calls from one function to another.
+- The `node [shape=box];` line specifies the shape of the nodes in the graph visualization.
+- You can visualize this graph using tools like Graphviz to see the relationships more clearly.

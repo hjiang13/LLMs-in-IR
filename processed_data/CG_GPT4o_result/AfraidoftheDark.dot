@@ -1,0 +1,59 @@
+To create a call graph in DOT format from the provided Intermediate Representation (IR) code, we need to identify the functions and their relationships based on function calls. 
+
+From the IR code, the functions defined are:
+1. `main()`
+2. `_Z4sizeiii(i32, i32, i32)`
+3. `_Z5solveiii(i32, i32, i32)`
+4. `_ZNSt6vectorIS_ISt4pairIiiESaIS1_EESaIS3_EED2Ev()`
+5. `_GLOBAL__sub_I_AfraidoftheDark.cpp()`
+6. Various external functions such as `@__cxa_atexit`, `@freopen`, `_ZNSirsERi`, `_ZNSolsEi`, etc.
+
+Here’s the call graph in DOT format, showing the functions as nodes and their calls as edges:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    main [label="main()"];
+    size [label="_Z4sizeiii(i32, i32, i32)"];
+    solve [label="_Z5solveiii(i32, i32, i32)"];
+    vector_destructor [label="_ZNSt6vectorIS_ISt4pairIiiESaIS1_EESaIS3_EED2Ev()"];
+    global_sub [label="_GLOBAL__sub_I_AfraidoftheDark.cpp()"];
+    atexit [label="__cxa_atexit"];
+    freopen [label="freopen"];
+    cin [label="_ZNSirsERi"];
+    cout [label="_ZNSolsEi"];
+    throw_length_error [label="_ZSt20__throw_length_errorPKc"];
+    new [label="_Znwm"];
+    memset [label="llvm.memset.p0i8.i64"];
+
+    // Edges
+    main -> size;
+    main -> solve;
+    main -> vector_destructor;
+    main -> global_sub;
+    main -> atexit;
+    main -> freopen;
+    main -> cin;
+    main -> cout;
+    
+    solve -> solve; // recursive call
+    solve -> size;
+
+    global_sub -> vector_destructor;
+    global_sub -> atexit;
+
+    // Other external calls
+    size -> throw_length_error;
+    size -> new;
+    solve -> throw_length_error;
+    solve -> new;
+}
+```
+
+### Explanation:
+- Each function is represented as a node in the graph.
+- Directed edges represent calls made from one function to another.
+- Recursive calls are also represented as edges pointing back to the same function.
+- External functions that are called within the defined functions are included as nodes with edges from the calling function.
+
+This representation gives a clear overview of how functions interact with each other in the given IR code.

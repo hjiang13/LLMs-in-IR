@@ -1,0 +1,45 @@
+To generate a call graph in DOT format from the provided intermediate representation (IR) code, we need to identify the functions and the calls made to them. In the provided IR code, the main functions identified are:
+
+1. `main`
+2. `solve`
+3. `_GLOBAL__sub_I_StockPurchaseDay.cpp`
+4. `@__isoc99_scanf`
+5. `@printf`
+6. `@freopen`
+7. `@__cxa_atexit`
+8. `_ZNSt8ios_base4InitC1Ev`
+9. `_ZNSt8ios_base4InitD1Ev`
+
+The calls made in the `main` and `solve` functions need to be represented in the DOT format. Below is the corresponding DOT representation of the call graph:
+
+```dot
+digraph CallGraph {
+    // Function nodes
+    main;
+    solve;
+    _GLOBAL__sub_I_StockPurchaseDay.cpp;
+    @__isoc99_scanf;
+    @printf;
+    @freopen;
+    @__cxa_atexit;
+    _ZNSt8ios_base4InitC1Ev;
+    _ZNSt8ios_base4InitD1Ev;
+
+    // Function calls
+    main -> _GLOBAL__sub_I_StockPurchaseDay.cpp;
+    main -> @freopen;
+    main -> @__isoc99_scanf;
+    main -> @__isoc99_scanf; // Called twice in the main function
+    main -> @printf;
+    
+    solve -> @__isoc99_scanf; // Implicit call through logic in solve
+}
+```
+
+### Explanation:
+- Each function is represented as a node.
+- The arrows (`->`) represent calls from one function to another.
+- The `main` function calls `_GLOBAL__sub_I_StockPurchaseDay.cpp`, `@freopen`, and `@__isoc99_scanf` and `@printf`.
+- The `solve` function makes indirect calls to `@__isoc99_scanf` as it processes data from the `main` function.
+
+This simplified representation captures the relationships between the functions based on the provided IR code. You can visualize this DOT format using any graph visualization tool that supports the DOT language, such as Graphviz.

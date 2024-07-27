@@ -1,0 +1,40 @@
+To create a call graph based on the provided Intermediate Representation (IR) code, we will identify the functions and their calls within the code. The output will be structured in the DOT format, which can be visualized using tools like Graphviz.
+
+Here's the call graph extracted from the provided IR code:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    main [label="main()"];
+    _Z2sii [label="_Z2sii(i32)"];
+    _Z5solveNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEii [label="_Z5solveNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEii(%"class.std::__cxx11::basic_string", i32, i32)"];
+    _ZdlPv [label="_ZdlPv(i8*)"];
+    _ZNSt8ios_base4InitC1Ev [label="_ZNSt8ios_base4InitC1Ev()"];
+    _ZNSt8ios_base4InitD1Ev [label="_ZNSt8ios_base4InitD1Ev()"];
+    _ZStrsIcSt11char_traitsIcESaIcEERSt13basic_istreamIT_T0_ES7_RNSt7__cxx1112basic_stringIS4_S5_T1_EE [label="_ZStrsIcSt11char_traitsIcESaIcEERSt13basic_istreamIT_T0_ES7_RNSt7__cxx1112basic_stringIS4_S5_T1_EE()"];
+    _ZNSolsEi [label="_ZNSolsEi(%"class.std::basic_ostream", i32)"];
+    _ZSt20__throw_length_errorPKc [label="_ZSt20__throw_length_errorPKc(i8*)"];
+    __cxa_atexit [label="__cxa_atexit(void (i8*)*, i8*, i8*)"];
+    _GLOBAL__sub_I_SuffixRotation_cpp [label="_GLOBAL__sub_I_SuffixRotation.cpp()"];
+    _ZdlPv [label="_ZdlPv(i8*)"];
+    
+    // Edges (Function Calls)
+    main -> _Z5solveNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEii;
+    main -> _ZNSt8ios_base4InitC1Ev;
+    main -> _ZNSt8ios_base4InitD1Ev;
+    main -> __cxa_atexit;
+    main -> _ZStrsIcSt11char_traitsIcESaIcEERSt13basic_istreamIT_T0_ES7_RNSt7__cxx1112basic_stringIS4_S5_T1_EE;
+    main -> _ZNSolsEi;
+    _GLOBAL__sub_I_SuffixRotation_cpp -> _ZNSt8ios_base4InitC1Ev;
+    _GLOBAL__sub_I_SuffixRotation_cpp -> __cxa_atexit;
+
+    // Additional calls can be added based on further analysis of the IR code.
+}
+```
+
+### Explanation:
+- **Nodes**: Each function is represented as a node with a label indicating its name. 
+- **Edges**: Directed edges indicate which functions call which other functions.
+- **Function Names**: The mangled function names are used as provided in the IR code, and they are labeled for clarity.
+
+You can visualize this graph using Graphviz or any other suitable tool that supports the DOT format.

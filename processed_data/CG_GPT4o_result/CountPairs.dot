@@ -1,0 +1,50 @@
+To create a call graph from the provided Intermediate Representation (IR) code, we will extract the function declarations and definitions, and then establish edges based on function calls. The output will be formatted in the DOT language.
+
+Here’s the call graph in DOT format based on the provided IR code:
+
+```dot
+digraph CallGraph {
+    // Function Nodes
+    node [shape=box];
+    main [label="main()"];
+    _GLOBAL__sub_I_CountPairs_cpp [label="_GLOBAL__sub_I_CountPairs.cpp()"];
+    @_ZSt8ios_base4InitC1Ev [label="_ZNSt8ios_base4InitC1Ev()"];
+    @_ZSt8ios_base4InitD1Ev [label="_ZNSt8ios_base4InitD1Ev()"];
+    @__cxa_atexit [label="__cxa_atexit()"];
+    @llvm.umin.i32 [label="llvm.umin.i32()"];
+    @llvm.smax.i32 [label="llvm.smax.i32()"];
+    @llvm.memcpy.p0i8.p0i8.i64 [label="llvm.memcpy.p0i8.p0i8.i64()"];
+    @llvm.lifetime.start.p0i8 [label="llvm.lifetime.start.p0i8()"];
+    @llvm.lifetime.end.p0i8 [label="llvm.lifetime.end.p0i8()"];
+    @_ZdlPv [label="_ZdlPv()"];
+    @_ZNSo9_M_insertIxEERSoT_ [label="_ZNSo9_M_insertIxEERSoT_()"];
+    @_ZNSo3putEc [label="_ZNSo3putEc()"];
+    @_ZNSo5flushEv [label="_ZNSo5flushEv()"];
+    @_ZSt16__throw_bad_castv [label="_ZSt16__throw_bad_castv()"];
+    @_ZNKSt5ctypeIcE13_M_widen_initEv [label="_ZNKSt5ctypeIcE13_M_widen_initEv()"];
+
+    // Edges (Function Calls)
+    main -> @_ZSt8ios_base4InitC1Ev;
+    main -> @__cxa_atexit;
+    _GLOBAL__sub_I_CountPairs_cpp -> @_ZSt8ios_base4InitC1Ev;
+    _GLOBAL__sub_I_CountPairs_cpp -> @__cxa_atexit;
+    main -> @llvm.umin.i32;
+    main -> @llvm.smax.i32;
+    main -> @llvm.memcpy.p0i8.p0i8.i64;
+    main -> @llvm.lifetime.start.p0i8;
+    main -> @llvm.lifetime.end.p0i8;
+    main -> @_ZdlPv;
+    main -> @_ZNSo9_M_insertIxEERSoT_;
+    main -> @_ZNSo3putEc;
+    main -> @_ZNSo5flushEv;
+    main -> @_ZSt16__throw_bad_castv;
+    main -> @_ZNKSt5ctypeIcE13_M_widen_initEv;
+}
+```
+
+### Explanation:
+- Each function is represented as a node in the graph.
+- The function calls in the IR code are represented as directed edges between the nodes.
+- The labels of the nodes are derived from the function names, while the edges indicate the calling relationships.
+
+You can visualize this DOT graph using graph visualization tools like Graphviz.

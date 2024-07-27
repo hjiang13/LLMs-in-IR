@@ -1,0 +1,50 @@
+Based on the provided Intermediate Representation (IR) code, I can extract the function calls to create a call graph in DOT format. The nodes will represent the functions, and the edges will represent the calls between them.
+
+Here is the corresponding DOT format representation of the call graph:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    node [shape=box];
+    _GLOBAL__sub_I_MaxTransform.cpp;
+    @_ZSt8ios_base4InitC1Ev;
+    @_ZSt8ios_base4InitD1Ev;
+    @__cxa_atexit;
+    @__cxx_global_array_dtor;
+    @_Z2gfi;
+    @_Z5mergeii;
+    @_Z3addi;
+    @main;
+    @freopen;
+    @__isoc99_scanf;
+    @printf;
+    @_ZdlPv;
+    @_ZSt20__throw_length_errorPKc;
+    @_Znwm;
+
+    // Edges
+    _GLOBAL__sub_I_MaxTransform.cpp -> @_ZSt8ios_base4InitC1Ev;
+    _GLOBAL__sub_I_MaxTransform.cpp -> @__cxa_atexit;
+    _GLOBAL__sub_I_MaxTransform.cpp -> @_ZdlPv;
+    _GLOBAL__sub_I_MaxTransform.cpp -> @__cxx_global_array_dtor;
+    
+    @__cxx_global_array_dtor -> @_ZdlPv;
+    
+    @main -> @freopen;
+    @main -> @__isoc99_scanf;
+    @main -> @_Z3addi;
+    @main -> @_Z5mergeii;
+    @main -> @_Z2gfi;
+
+    @_Z3addi -> @_Z2gfi;
+    @_Z5mergeii -> @_Z2gfi;
+}
+```
+
+### Explanation:
+- Each function is represented as a node.
+- The edges indicate which functions call which others.
+- The main function (`@main`) calls several functions, including `@freopen`, `@__isoc99_scanf`, `@_Z3addi`, `@_Z5mergeii`, and `@_Z2gfi`.
+- The `@__cxx_global_array_dtor` and `_GLOBAL__sub_I_MaxTransform.cpp` functions also have calls to other functions such as `@_ZdlPv`.
+
+Feel free to modify or expand upon this representation as needed!

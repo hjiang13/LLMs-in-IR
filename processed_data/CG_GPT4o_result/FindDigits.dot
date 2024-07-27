@@ -1,0 +1,81 @@
+To create a call graph from the provided Intermediate Representation (IR) code, we'll identify the functions defined and declared within the code and represent their relationships (calls) using a directed graph format (DOT format).
+
+### Identified Functions
+From the provided IR, the following functions can be identified:
+1. `_ZNSt8ios_base4InitC1Ev`
+2. `_ZNSt8ios_base4InitD1Ev`
+3. `__cxa_atexit`
+4. `_Z23printAllDivisibleDigitsm`
+5. `main`
+6. `freopen`
+7. `_ZNSirsERs`
+8. `_ZNSo3putEc`
+9. `_ZNSo5flushEv`
+10. `_ZSt16__throw_bad_castv`
+11. `_ZNKSt5ctypeIcE13_M_widen_initEv`
+12. `_ZNSi10_M_extractImEERSiRT_`
+13. `_GLOBAL__sub_I_FindDigits.cpp`
+
+### Call Relationships
+Next, we will identify the calls between these functions to understand the structure of the call graph:
+- `main` calls:
+  - `freopen`
+  - `_ZNSirsERs`
+  - `_Z23printAllDivisibleDigitsm`
+  - `llvm.lifetime.start.p0i8` (not included in the graph as it’s not a user-defined function)
+  - `llvm.lifetime.end.p0i8` (not included in the graph as it’s not a user-defined function)
+  
+- `_GLOBAL__sub_I_FindDigits.cpp` calls:
+  - `_ZNSt8ios_base4InitC1Ev`
+  - `__cxa_atexit`
+  
+- `_Z23printAllDivisibleDigitsm` calls:
+  - `_ZNSolsEi`
+  - `_ZSt16__throw_bad_castv`
+  - `_ZNKSt5ctypeIcE13_M_widen_initEv`
+  - `_ZNSo3putEc`
+  - `_ZNSo5flushEv`
+
+### DOT Format Output
+Here’s how we can represent the identified functions and their relationships in DOT format:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    main;
+    _Z23printAllDivisibleDigitsm;
+    _ZNSt8ios_base4InitC1Ev;
+    _ZNSt8ios_base4InitD1Ev;
+    __cxa_atexit;
+    _GLOBAL__sub_I_FindDigits.cpp;
+    _ZNSirsERs;
+    _ZNSo3putEc;
+    _ZNSo5flushEv;
+    _ZSt16__throw_bad_castv;
+    _ZNKSt5ctypeIcE13_M_widen_initEv;
+    _ZNSolsEi;
+    freopen;
+    _ZNSi10_M_extractImEERSiRT_;
+
+    // Edges
+    main -> freopen;
+    main -> _ZNSirsERs;
+    main -> _Z23printAllDivisibleDigitsm;
+
+    _GLOBAL__sub_I_FindDigits.cpp -> _ZNSt8ios_base4InitC1Ev;
+    _GLOBAL__sub_I_FindDigits.cpp -> __cxa_atexit;
+
+    _Z23printAllDivisibleDigitsm -> _ZNSolsEi;
+    _Z23printAllDivisibleDigitsm -> _ZSt16__throw_bad_castv;
+    _Z23printAllDivisibleDigitsm -> _ZNKSt5ctypeIcE13_M_widen_initEv;
+    _Z23printAllDivisibleDigitsm -> _ZNSo3putEc;
+    _Z23printAllDivisibleDigitsm -> _ZNSo5flushEv;
+}
+```
+
+### Explanation
+- Each function is represented as a node in the graph.
+- Directed edges represent function calls, indicating that the function at the tail calls the function at the head.
+- Functions that are not user-defined, such as lifetime management functions, are omitted from the graph.
+
+You can visualize this DOT representation using graph visualization tools that support the DOT format, such as Graphviz.

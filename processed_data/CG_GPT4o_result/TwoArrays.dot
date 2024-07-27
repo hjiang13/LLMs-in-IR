@@ -1,0 +1,37 @@
+To create a call graph in DOT format from the provided Intermediate Representation (IR) code, we need to identify the functions defined in the code and how they call each other. Below is the representation of the call graph in DOT format, focusing on the function names as nodes:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    main [label="main"];
+    _ZSt16__introsort_loopIPllN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_T0_T1_ [label="_ZSt16__introsort_loopIPllN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_T0_T1_"];
+    _ZSt22__final_insertion_sortIPlN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_T0_ [label="_ZSt22__final_insertion_sortIPlN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_T0_"];
+    _ZSt11__make_heapIPlN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_RT0_ [label="_ZSt11__make_heapIPlN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_RT0_"];
+    _ZNSi10_M_extractIlEERSiRT_ [label="_ZNSi10_M_extractIlEERSiRT_"];
+    @llvm.ctlz.i64 [label="@llvm.ctlz.i64"];
+    @llvm.memmove.p0i8.p0i8.i64 [label="@llvm.memmove.p0i8.p0i8.i64"];
+    @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l [label="Stream Output"];
+    @_ZNSt8ios_base4InitC1Ev [label="Init Constructor"];
+    @_ZNSt8ios_base4InitD1Ev [label="Init Destructor"];
+    @__cxa_atexit [label="__cxa_atexit"];
+
+    // Edges
+    main -> _ZNSi10_M_extractIlEERSiRT_;
+    main -> _ZSt16__introsort_loopIPllN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_T0_T1_;
+    main -> _ZSt22__final_insertion_sortIPlN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_T0_;
+    main -> _ZSt11__make_heapIPlN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S4_RT0_;
+    main -> @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l;
+    main -> @llvm.memmove.p0i8.p0i8.i64;
+    main -> @llvm.ctlz.i64;
+
+    // Global constructors/destructors
+    @_GLOBAL__sub_I_TwoArrays.cpp -> @_ZNSt8ios_base4InitC1Ev;
+    @_GLOBAL__sub_I_TwoArrays.cpp -> @__cxa_atexit;
+}
+```
+
+### Explanation:
+- Each function is represented as a node in the graph, with its mangled name as the label for clarity.
+- The edges represent calls made from one function to another.
+- The global constructor and destructor functions are also included, showing their relationships to the initialization and cleanup routines.
+- This representation allows you to visualize the call relationships between the functions in the program.

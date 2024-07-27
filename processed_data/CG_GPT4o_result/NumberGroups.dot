@@ -1,0 +1,40 @@
+To create a call graph from the provided Intermediate Representation (IR) code, we'll identify the functions and their relationships (calls) within the code. The focus will be on the function names and their call relationships, without delving into the specifics of each function's implementation.
+
+Here's how we can format the call graph in DOT format:
+
+```dot
+digraph CallGraph {
+    // Define the nodes
+    main [label="main()"];
+    _GLOBAL__sub_I_NumberGroups_cpp [label="_GLOBAL__sub_I_NumberGroups.cpp()"];
+    _ZNSt8ios_base4InitC1Ev [label="_ZNSt8ios_base4InitC1Ev()"];
+    _ZNSt8ios_base4InitD1Ev [label="_ZNSt8ios_base4InitD1Ev()"];
+    __cxa_atexit [label="__cxa_atexit()"];
+    @freopen [label="freopen()"];
+    _ZNSt8ios_base15sync_with_stdioEb [label="_ZNSt8ios_base15sync_with_stdioEb()"];
+    _ZNSi10_M_extractIxEERSiRT_ [label="_ZNSi10_M_extractIxEERSiRT_()"];
+    _ZNSo9_M_insertIxEERSoT_ [label="_ZNSo9_M_insertIxEERSoT_()"];
+    _ZNSo3putEc [label="_ZNSo3putEc()"];
+    _ZNSo5flushEv [label="_ZNSo5flushEv()"];
+    _ZSt16__throw_bad_castv [label="_ZSt16__throw_bad_castv()"];
+    _ZNKSt5ctypeIcE13_M_widen_initEv [label="_ZNKSt5ctypeIcE13_M_widen_initEv()"];
+
+    // Define the edges (calls)
+    _GLOBAL__sub_I_NumberGroups_cpp -> _ZNSt8ios_base4InitC1Ev;
+    _GLOBAL__sub_I_NumberGroups_cpp -> __cxa_atexit;
+    main -> @freopen;
+    main -> _ZNSt8ios_base15sync_with_stdioEb;
+    main -> _ZNSi10_M_extractIxEERSiRT_;
+    main -> _ZNSo9_M_insertIxEERSoT_;
+    main -> _ZNSo3putEc;
+    main -> _ZNSo5flushEv;
+    main -> _ZSt16__throw_bad_castv;
+    main -> _ZNKSt5ctypeIcE13_M_widen_initEv;
+}
+```
+
+### Explanation of the Graph:
+- **Nodes**: Each node represents a function in the IR code. The function names are derived from the IR declaration and definition.
+- **Edges**: Directed edges are used to represent function calls. For example, `main()` calls `freopen()`, `_ZNSt8ios_base15sync_with_stdioEb()`, and so forth.
+
+In this DOT representation, you can visualize the call relationships between the various functions in the IR code using graph visualization tools that support the DOT format.

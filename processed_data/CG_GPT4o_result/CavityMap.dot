@@ -1,0 +1,46 @@
+To create a call graph from the provided Intermediate Representation (IR) code, we will identify the functions and their call relationships. The output will be in the DOT format, which is a plain text graph description language.
+
+Here is the representation of the call graph based on the IR code you provided:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    main [label="main"];
+    _GLOBAL__sub_I_CavityMap_cpp [label="_GLOBAL__sub_I_CavityMap.cpp"];
+    _ZNSt8ios_base4InitC1Ev [label="_ZNSt8ios_base4InitC1Ev"];
+    _ZNSt8ios_base4InitD1Ev [label="_ZNSt8ios_base4InitD1Ev"];
+    __cxa_atexit [label="__cxa_atexit"];
+    _ZNSirsERi [label="_ZNSirsERi"];
+    _ZStrsIcSt11char_traitsIcEERSt13basic_istreamIT_T0_ES6_RS3_ [label="_ZStrsIcSt11char_traitsIcEERSt13basic_istreamIT_T0_ES6_RS3_"];
+    _ZSt20__throw_length_errorPKc [label="_ZSt20__throw_length_errorPKc"];
+    _Znwm [label="_Znwm"];
+    _ZdlPv [label="_ZdlPv"];
+    @_ZSt4cout [label="@_ZSt4cout"];
+    @_ZSt3cin [label="@_ZSt3cin"];
+    _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l [label="_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l"];
+    _ZNSo3putEc [label="_ZNSo3putEc"];
+    _ZNSo5flushEv [label="_ZNSo5flushEv"];
+    @freopen [label="@freopen"];
+    
+    // Edges
+    main -> _GLOBAL__sub_I_CavityMap_cpp;
+    _GLOBAL__sub_I_CavityMap_cpp -> _ZNSt8ios_base4InitC1Ev;
+    _GLOBAL__sub_I_CavityMap_cpp -> __cxa_atexit;
+    main -> @freopen;
+    main -> _ZNSirsERi;
+    main -> _ZStrsIcSt11char_traitsIcEERSt13basic_istreamIT_T0_ES6_RS3_;
+    main -> _ZSt20__throw_length_errorPKc;
+    main -> _Znwm;
+    main -> _ZdlPv;
+    main -> _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l;
+    main -> _ZNSo3putEc;
+    main -> _ZNSo5flushEv;
+}
+```
+
+### Explanation:
+- Each function is represented as a node in the graph, identified by its name.
+- The edges represent the calling relationships between the functions. For example, the `main` function calls `_GLOBAL__sub_I_CavityMap.cpp`, `@freopen`, and several other functions.
+- The labels of the nodes are taken from the function names, as specified in the IR code. 
+
+You can visualize this graph using any DOT format visualizer, such as Graphviz.

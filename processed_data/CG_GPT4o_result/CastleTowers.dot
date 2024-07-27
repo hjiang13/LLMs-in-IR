@@ -1,0 +1,52 @@
+To construct a call graph in DOT format from the provided Intermediate Representation (IR) code, we will identify the functions and their relationships based on the calls made within those functions.
+
+Here’s a simplified call graph based on the given IR code:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    "main" [label="main"];
+    "_Z12castleTowersiSt6vectorIiSaIiEE" [label="_Z12castleTowersiSt6vectorIiSaIiEE"];
+    "@__cxa_atexit" [label="__cxa_atexit"];
+    "@llvm.vector.reduce.smax.v4i32" [label="llvm.vector.reduce.smax.v4i32"];
+    "@llvm.vector.reduce.add.v4i32" [label="llvm.vector.reduce.add.v4i32"];
+    "_ZNSirsERi" [label="_ZNSirsERi"];
+    "_ZSt20__throw_length_errorPKc" [label="_ZSt20__throw_length_errorPKc"];
+    "_ZSt17__throw_bad_allocv" [label="_ZSt17__throw_bad_allocv"];
+    "_Znwm" [label="_Znwm"];
+    "_ZdlPv" [label="_ZdlPv"];
+    "_ZNSolsEi" [label="_ZNSolsEi"];
+    "_ZNSo5flushEv" [label="_ZNSo5flushEv"];
+    "_ZNKSt5ctypeIcE13_M_widen_initEv" [label="_ZNKSt5ctypeIcE13_M_widen_initEv"];
+    "_ZNSo3putEc" [label="_ZNSo3putEc"];
+    "_ZSt16__throw_bad_castv" [label="_ZSt16__throw_bad_castv"];
+    "_GLOBAL__sub_I_CastleTowers.cpp" [label="_GLOBAL__sub_I_CastleTowers.cpp"];
+    "_ZNSt8ios_base4InitC1Ev" [label="_ZNSt8ios_base4InitC1Ev"];
+    "_ZNSt8ios_base4InitD1Ev" [label="_ZNSt8ios_base4InitD1Ev"];
+    "freopen" [label="freopen"];
+
+    // Edges
+    "main" -> "_Z12castleTowersiSt6vectorIiSaIiEE";
+    "main" -> "_ZNSt8ios_base4InitC1Ev";
+    "main" -> "@__cxa_atexit";
+    "_Z12castleTowersiSt6vectorIiSaIiEE" -> "@llvm.vector.reduce.smax.v4i32";
+    "_Z12castleTowersiSt6vectorIiSaIiEE" -> "@llvm.vector.reduce.add.v4i32";
+    "_ZNSirsERi" -> "_ZSt20__throw_length_errorPKc";
+    "_ZNSirsERi" -> "_ZSt17__throw_bad_allocv";
+    "_ZdlPv" -> "_ZNSo3putEc";
+    "_ZdlPv" -> "_ZNSo5flushEv";
+    "_ZNSo3putEc" -> "_ZNKSt5ctypeIcE13_M_widen_initEv";
+    "_ZNSo5flushEv" -> "_ZSt16__throw_bad_castv";
+    "_GLOBAL__sub_I_CastleTowers.cpp" -> "_ZNSt8ios_base4InitC1Ev";
+    "_GLOBAL__sub_I_CastleTowers.cpp" -> "_ZNSt8ios_base4InitD1Ev";
+}
+```
+
+### Explanation:
+- Each function is represented as a node in the graph.
+- The edges represent calls from one function to another.
+- The labels provide a human-readable title for each node, showing the function names as specified in the IR code.
+- The `main` function calls `_Z12castleTowersiSt6vectorIiSaIiEE` and initializes `ios_base`.
+- The `_Z12castleTowersiSt6vectorIiSaIiEE` function makes calls to vector reduction functions and others as seen in the IR code. 
+
+You can visualize this graph using any DOT-compatible graph visualization tool, such as Graphviz.

@@ -1,0 +1,53 @@
+To create a call graph in DOT format from the provided Intermediate Representation (IR) code, we will extract function declarations and definitions, identifying the relationships between them based on the calls made within those functions.
+
+Here is the DOT representation of the call graph:
+
+```dot
+digraph CallGraph {
+    node [shape=box];
+
+    main [label="main()"];
+    _GLOBAL__sub_I_FunnyString_cpp [label="_GLOBAL__sub_I_FunnyString.cpp()"];
+    _ZNSt8ios_base4InitC1Ev [label="_ZNSt8ios_base4InitC1Ev()"];
+    _ZNSt8ios_base4InitD1Ev [label="_ZNSt8ios_base4InitD1Ev()"];
+    __cxa_atexit [label="__cxa_atexit()"];
+    _ZNSirsERi [label="_ZNSirsERi()"];
+    _ZStrsIcSt11char_traitsIcESaIcEERSt13basic_istreamIT_T0_ES7_RNSt7__cxx1112basic_stringIS4_S5_T1_EE [label="_ZStrsIcSt11char_traitsIcESaIcEERSt13basic_istreamIT_T0_ES7_RNSt7__cxx1112basic_stringIS4_S5_T1_EE()"];
+    _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l [label="_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l()"];
+    _ZNSo3putEc [label="_ZNSo3putEc()"];
+    _ZNSo5flushEv [label="_ZNSo5flushEv()"];
+    _ZdlPv [label="_ZdlPv()"];
+    _ZSt16__throw_bad_castv [label="_ZSt16__throw_bad_castv()"];
+    _ZNKSt5ctypeIcE13_M_widen_initEv [label="_ZNKSt5ctypeIcE13_M_widen_initEv()"];
+    llvm_abs_i32 [label="llvm.abs.i32()"];
+    freopen [label="freopen()"];
+    llvm_lifetime_start_p0i8 [label="llvm.lifetime.start.p0i8()"];
+    llvm_lifetime_end_p0i8 [label="llvm.lifetime.end.p0i8()"];
+
+    // Edges representing function calls
+    main -> _GLOBAL__sub_I_FunnyString_cpp;
+    _GLOBAL__sub_I_FunnyString_cpp -> _ZNSt8ios_base4InitC1Ev;
+    _GLOBAL__sub_I_FunnyString_cpp -> __cxa_atexit;
+    main -> _ZNSirsERi;
+    main -> _ZStrsIcSt11char_traitsIcESaIcEERSt13basic_istreamIT_T0_ES7_RNSt7__cxx1112basic_stringIS4_S5_T1_EE;
+    main -> _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l;
+    main -> _ZNSo3putEc;
+    main -> _ZNSo5flushEv;
+    main -> _ZdlPv;
+    main -> _ZSt16__throw_bad_castv;
+    main -> _ZNKSt5ctypeIcE13_M_widen_initEv;
+    main -> llvm_abs_i32;
+    main -> freopen;
+    main -> llvm_lifetime_start_p0i8;
+    main -> llvm_lifetime_end_p0i8;
+    _ZNSt8ios_base4InitD1Ev -> _ZNSt8ios_base4InitD1Ev;
+}
+```
+
+### Explanation:
+- Each function is represented as a node in the graph, with its mangled name as the label.
+- The edges represent calls from one function to another based on the IR code.
+- The `main()` function has multiple outgoing edges to the functions it calls directly.
+- Each function that is called is linked back to the calling function, creating a directed graph that shows the relationships between the functions.
+
+This representation allows visualization of how functions in the code interact, helping with understanding the flow of the program.

@@ -1,0 +1,69 @@
+To create a call graph from the provided Intermediate Representation (IR) code, we will identify the function declarations and definitions, and then determine the call relationships between them. Below is the dot representation of the call graph based on the provided IR code:
+
+```dot
+digraph call_graph {
+    rankdir=LR;
+    node [shape=rectangle];
+
+    // Nodes representing functions
+    main [label="main()"];
+    dist [label="dist(double, double, double, double)"];
+    aread [label="aread(double, double, double, double, double, double)"];
+    score [label="score(double, double, vector<double>, vector<double>)"];
+    sqrt [label="sqrt(double)"];
+    atan2 [label="atan2(double, double)"];
+    tan [label="tan(double)"];
+    acos [label="acos(double)"];
+    __introsort_loop_pairIdS2_IddEE [label="__introsort_loop(pair<double, double>)"];
+    __adjust_heap_pairIdS2_IddEE [label="__adjust_heap(pair<double, double>)"];
+    __move_median_to_first_pairIdS2_IddEE [label="__move_median_to_first(pair<double, double>)"];
+    __insertion_sort_pairIdS2_IddEE [label="__insertion_sort(pair<double, double>)"];
+    __final_insertion_sort_pairIdS2_IddEE [label="__final_insertion_sort(pair<double, double>)"];
+    __introsort_loop_pairIdIdE [label="__introsort_loop(pair<double, double>)"];
+    __adjust_heap_pairIdIdE [label="__adjust_heap(pair<double, double>)"];
+    __move_median_to_first_pairIdIdE [label="__move_median_to_first(pair<double, double>)"];
+    __insertion_sort_pairIdIdE [label="__insertion_sort(pair<double, double>)"];
+    __final_insertion_sort_pairIdIdE [label="__final_insertion_sort(pair<double, double>)"];
+    
+    // Edges representing function calls
+    main -> dist;
+    main -> aread;
+    main -> score;
+    score -> sqrt;
+    score -> atan2;
+    score -> sqrt; // for different calls in score
+    dist -> sqrt;
+    aread -> sqrt;
+
+    // Introsort functions
+    score -> __introsort_loop_pairIdS2_IddEE;
+    score -> __insertion_sort_pairIdS2_IddEE;
+    score -> __final_insertion_sort_pairIdS2_IddEE;
+
+    // Pair sorting functions
+    __introsort_loop_pairIdIdE -> __adjust_heap_pairIdIdE;
+    __introsort_loop_pairIdIdE -> __move_median_to_first_pairIdIdE;
+    __introsort_loop_pairIdIdE -> __insertion_sort_pairIdIdE;
+    __introsort_loop_pairIdIdE -> __final_insertion_sort_pairIdIdE;
+
+    // More introsort functions
+    __adjust_heap_pairIdIdE -> __move_median_to_first_pairIdIdE;
+    __move_median_to_first_pairIdIdE -> __insertion_sort_pairIdIdE;
+
+    // Linking sorting functions
+    __insertion_sort_pairIdIdE -> __final_insertion_sort_pairIdIdE;
+}
+```
+
+### Explanation:
+- Each function is represented as a node in the call graph with its name as the label.
+- The edges (arrows) indicate the calling relationships between functions. For instance, `main` calls `dist`, `aread`, and `score`.
+- The sorting functions represented by `__introsort_loop`, `__adjust_heap`, and others are also included to depict their relationships in the sorting process.
+- The format is suitable for visualization tools that can parse dot files, such as Graphviz.
+
+You can visualize this call graph using tools like Graphviz by saving the dot representation into a file (for example, `call_graph.dot`) and then running the command:
+```bash
+dot -Tpng call_graph.dot -o call_graph.png
+```
+
+This will create an image of the call graph.

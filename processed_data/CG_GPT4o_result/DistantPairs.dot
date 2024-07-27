@@ -1,0 +1,47 @@
+To generate the call graph in DOT format from the provided Intermediate Representation (IR) code, we will identify the functions and their calls from the IR. The nodes will represent the functions, and the edges will represent the calls between them.
+
+Here's the call graph in DOT format:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    main;
+    _Z5solvev;
+    _Z2scii;
+    @_ZNSirsERi;
+    @_ZNSolsEi;
+    @_ZdlPv;
+    @srand;
+    @clock;
+    @_ZNSt8ios_base4InitC1Ev;
+    @_ZNSt8ios_base4InitD1Ev;
+    @__cxa_atexit;
+    @_ZSt6__sortIPSt4pairIiiEN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S6_T0_;
+    @_ZSt16__introsort_loopIPSt4pairIiiElN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S6_T0_T1_;
+    @_ZSt22__move_median_to_firstIPSt4pairIiiEN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S6_S6_S6_T0_;
+    @_ZSt20__throw_length_errorPKc;
+    @_ZSt16__throw_bad_castv;
+    @__gxx_personality_v0;
+
+    // Edges
+    main -> _Z5solvev;
+    _Z5solvev -> @_ZNSirsERi;
+    _Z5solvev -> @_ZNSolsEi;
+    _Z5solvev -> @_ZSt6__sortIPSt4pairIiiEN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S6_T0_;
+    _Z5solvev -> @_ZSt16__introsort_loopIPSt4pairIiiElN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S6_T0_T1_;
+    _Z5solvev -> @_ZSt22__move_median_to_firstIPSt4pairIiiEN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S6_S6_S6_T0_;
+    main -> @_ZNSt8ios_base4InitC1Ev;
+    main -> @srand;
+    main -> @clock;
+    main -> @_ZdlPv;
+    main -> @__cxa_atexit;
+}
+```
+
+### Explanation:
+- Each function is listed as a node in the graph.
+- The arrows (edges) represent calls between functions.
+- The names used for the nodes correspond to the mangled names of the functions as specified in the IR code.
+- The `main` function calls several other functions, including `_Z5solvev`, which is the main logic function, and functions for input/output operations.
+
+You can visualize this DOT graph using tools like Graphviz.

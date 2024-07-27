@@ -1,0 +1,52 @@
+To create a call graph in DOT format from the provided Intermediate Representation (IR) code, we need to identify the functions defined and called within the code. Based on the provided IR code, the relevant functions are:
+
+1. `_Z5powerxi(i64, i32)`
+2. `_Z9seg_mergeRSt4pairIxxES1_(%"struct.std::pair", %"struct.std::pair")`
+3. `_Z3queiiiii(i32, i32, i32, i32, i32)`
+4. `main()`
+5. `@__isoc99_scanf(i8*, ...)`
+6. `@puts(i8*)`
+7. `@freopen(i8*, i8*, %struct._IO_FILE*)`
+8. `@__cxa_atexit(void (i8*)*)`
+9. `@_ZNSt8ios_base4InitC1Ev(%"class.std::ios_base::Init")`
+10. `@_ZNSt8ios_base4InitD1Ev(%"class.std::ios_base::Init")`
+11. `@_GLOBAL__sub_I_PolynomialDivision.cpp`
+
+In the provided code, here are the function calls:
+- `main()` calls:
+  - `@__isoc99_scanf`
+  - `_Z5powerxi`
+  - `_Z3queiiiii`
+  - `@puts`
+- `_Z3queiiiii` calls:
+  - `_Z5powerxi`
+- `_Z9seg_mergeRSt4pairIxxES1_` calls:
+  - `_Z5powerxi`
+
+Now, we can create a DOT representation of the call graph. Here is the output in DOT format:
+
+```dot
+digraph CallGraph {
+    node [shape=box];
+
+    main -> @__isoc99_scanf;
+    main -> _Z5powerxi;
+    main -> _Z3queiiiii;
+    main -> @puts;
+
+    _Z3queiiiii -> _Z5powerxi;
+
+    _Z9seg_mergeRSt4pairIxxES1_ -> _Z5powerxi;
+
+    // External functions
+    @__isoc99_scanf;
+    @puts;
+    @freopen;
+    @__cxa_atexit;
+    @_ZNSt8ios_base4InitC1Ev;
+    @_ZNSt8ios_base4InitD1Ev;
+    @_GLOBAL__sub_I_PolynomialDivision.cpp;
+}
+```
+
+This DOT file describes the call relationships between the functions present in the provided IR code. Each node represents a function, and directed edges indicate calls from one function to another. You can visualize this graph using various graph visualization tools that support the DOT format, such as Graphviz.

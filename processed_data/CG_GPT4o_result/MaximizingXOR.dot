@@ -1,0 +1,59 @@
+To create a call graph from the provided Intermediate Representation (IR) code, we need to identify the functions and their relationships based on the function calls made within the code. 
+
+In the given IR code, we can identify the following functions:
+
+1. `_ZNSt8ios_base4InitC1Ev`
+2. `_ZNSt8ios_base4InitD1Ev`
+3. `__cxa_atexit`
+4. `maxXor`
+5. `main`
+6. `freopen`
+7. `_ZNSirsERi`
+8. `_ZNSolsEi`
+9. `_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l`
+10. `ldexp`
+11. `_GLOBAL__sub_I_MaximizingXOR.cpp`
+
+Now, we need to identify the call relationships between these functions based on the calls made within their definitions.
+
+Here’s how the call relationships can be summarized:
+
+- `main` calls:
+  - `freopen`
+  - `_ZNSirsERi` (twice)
+  - `ldexp`
+  - `_ZNSolsEi`
+  - `_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l`
+  - `llvm.lifetime.start.p0i8` (twice)
+  
+- `maxXor` calls:
+  - `ldexp`
+
+- `_GLOBAL__sub_I_MaximizingXOR.cpp` calls:
+  - `_ZNSt8ios_base4InitC1Ev`
+  - `__cxa_atexit` (with a callback to `_ZNSt8ios_base4InitD1Ev`)
+
+Now, we can represent the relationships in DOT format:
+
+```dot
+digraph CallGraph {
+    node [shape=rectangle];
+    
+    "main" -> "freopen";
+    "main" -> "_ZNSirsERi";
+    "main" -> "_ZNSirsERi";
+    "main" -> "ldexp";
+    "main" -> "_ZNSolsEi";
+    "main" -> "_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l";
+    "main" -> "llvm.lifetime.start.p0i8";
+    "main" -> "llvm.lifetime.start.p0i8";
+    
+    "maxXor" -> "ldexp";
+    
+    "_GLOBAL__sub_I_MaximizingXOR.cpp" -> "_ZNSt8ios_base4InitC1Ev";
+    "_GLOBAL__sub_I_MaximizingXOR.cpp" -> "__cxa_atexit";
+    "__cxa_atexit" -> "_ZNSt8ios_base4InitD1Ev";
+}
+```
+
+This DOT representation describes the call graph of the functions in the provided IR code. Each node represents a function, and each directed edge indicates a call from one function to another.

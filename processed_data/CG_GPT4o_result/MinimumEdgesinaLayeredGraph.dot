@@ -1,0 +1,47 @@
+To create a call graph from the provided Intermediate Representation (IR) code, we need to analyze the function calls and their relationships. The nodes in the graph will represent the functions, and the edges will represent calls between these functions.
+
+Based on the provided IR code, here are the functions identified:
+
+1. `@main`
+2. `@freopen`
+3. `_ZNSt8ios_base4InitC1Ev`
+4. `_ZNSt8ios_base4InitD1Ev`
+5. `@__cxa_atexit`
+6. `@llvm.vector.reduce.smin.v4i32`
+7. `@_GLOBAL__sub_I_MinimumEdgesinaLayeredGraph.cpp`
+8. `@_ZNSirsERi`
+9. `@_ZNSolsEi`
+
+Now, let's represent this information in dot format:
+
+```dot
+digraph CallGraph {
+    node [shape=rectangle];
+
+    main [label="@main"];
+    freopen [label="@freopen"];
+    ios_base_init_ctor [label="_ZNSt8ios_base4InitC1Ev"];
+    ios_base_init_dtor [label="_ZNSt8ios_base4InitD1Ev"];
+    cxa_atexit [label="@__cxa_atexit"];
+    llvm_vector_reduce [label="@llvm.vector.reduce.smin.v4i32"];
+    global_sub [label="@_GLOBAL__sub_I_MinimumEdgesinaLayeredGraph.cpp"];
+    basic_istream [label="@_ZNSirsERi"];
+    basic_ostream [label="@_ZNSolsEi"];
+
+    // Define edges based on function calls
+    global_sub -> ios_base_init_ctor;
+    global_sub -> cxa_atexit;
+    main -> freopen;
+    main -> basic_istream;
+    main -> basic_ostream;
+    main -> ios_base_init_ctor;
+    main -> llvm_vector_reduce;
+}
+```
+
+### Explanation:
+- Each function is represented as a node labeled with its name.
+- The edges indicate which function calls which other function. For example, `@main` calls `@freopen`, `@_ZNSirsERi`, `@_ZNSolsEi`, and others.
+- The `@_GLOBAL__sub_I_MinimumEdgesinaLayeredGraph.cpp` function is called during the initialization (global constructor) and thus has edges to the constructors and destructors.
+
+You can render this dot graph using Graphviz tools, which will help visualize the relationships between functions in the program.

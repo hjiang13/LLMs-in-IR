@@ -1,0 +1,60 @@
+To create a call graph from the provided Intermediate Representation (IR) code, we need to identify the functions declared and defined within the code, as well as the calls made between these functions. 
+
+Here's a simplified breakdown of the functions found in the provided IR code:
+
+1. `@main`
+2. `@_Z5solvev`
+3. `@llvm.lifetime.start.p0i8`
+4. `@llvm.lifetime.end.p0i8`
+5. `@__cxa_atexit`
+6. `@_ZSt8ios_base4InitC1Ev`
+7. `@_ZSt8ios_base4InitD1Ev`
+8. `@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev`
+9. `@_ZNSirsERi`
+10. `@_ZStrsIcSt11char_traitsIcESaIcEERSt13basic_istreamIT_T0_ES7_RNSt7__cxx1112basic_stringIS4_S5_T1_EE`
+11. `@_ZdlPv`
+12. `@_ZSt20__throw_length_errorPKc`
+13. `@llvm.vector.reduce.add.v4i32`
+14. `@_ZNSt8ios_base15sync_with_stdioEb`
+
+With these functions identified, we can build the call graph in the DOT format. Here is the representation:
+
+```dot
+digraph CallGraph {
+    node [shape=box];
+
+    "main" -> "solve";
+    "main" -> "llvm.lifetime.start.p0i8";
+    "main" -> "llvm.lifetime.end.p0i8";
+    "main" -> "__cxa_atexit";
+    "main" -> "_ZSt8ios_base4InitC1Ev";
+    "main" -> "_ZSt8ios_base4InitD1Ev";
+    "main" -> "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev";
+    "main" -> "_ZNSirsERi";
+    "main" -> "_ZStrsIcSt11char_traitsIcESaIcEERSt13basic_istreamIT_T0_ES7_RNSt7__cxx1112basic_stringIS4_S5_T1_EE";
+    "main" -> "_ZdlPv";
+    "main" -> "_ZSt20__throw_length_errorPKc";
+    "main" -> "llvm.vector.reduce.add.v4i32";
+    "main" -> "_ZNSt8ios_base15sync_with_stdioEb";
+    
+    "solve" -> "llvm.lifetime.start.p0i8";
+    "solve" -> "llvm.lifetime.end.p0i8";
+    "solve" -> "__cxa_atexit";
+    "solve" -> "_ZSt8ios_base4InitC1Ev";
+    "solve" -> "_ZSt8ios_base4InitD1Ev";
+    "solve" -> "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev";
+    "solve" -> "_ZNSirsERi";
+    "solve" -> "_ZStrsIcSt11char_traitsIcESaIcEERSt13basic_istreamIT_T0_ES7_RNSt7__cxx1112basic_stringIS4_S5_T1_EE";
+    "solve" -> "_ZdlPv";
+    "solve" -> "_ZSt20__throw_length_errorPKc";
+    "solve" -> "llvm.vector.reduce.add.v4i32";
+    "solve" -> "_ZNSt8ios_base15sync_with_stdioEb";
+}
+```
+
+### Explanation:
+- Each function is represented as a node in the graph.
+- Directed edges (`->`) indicate function calls.
+- The graph is structured in a way that shows which functions call others, thus forming a call hierarchy. 
+
+You can visualize this DOT representation using graph visualization tools such as Graphviz.

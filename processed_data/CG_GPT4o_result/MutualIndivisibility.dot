@@ -1,0 +1,51 @@
+To create a call graph in DOT format from the provided Intermediate Representation (IR) code, we need to identify the functions and their calls. The functions in this IR code are:
+
+1. `main`
+2. `@freopen`
+3. `@__isoc99_scanf`
+4. `@printf`
+5. `@putc`
+6. `@llvm.lifetime.start.p0i8`
+7. `@llvm.lifetime.end.p0i8`
+8. `@_ZNSt8ios_base4InitC1Ev`
+9. `@_ZNSt8ios_base4InitD1Ev`
+10. `@__cxa_atexit`
+11. `@_GLOBAL__sub_I_MutualIndivisibility.cpp`
+
+The function `main` calls the following functions:
+- `@freopen`
+- `@__isoc99_scanf`
+- `@printf`
+- `@putc`
+- `@llvm.lifetime.start.p0i8`
+- `@llvm.lifetime.end.p0i8`
+- `@_ZNSt8ios_base4InitC1Ev`
+- `@_ZNSt8ios_base4InitD1Ev`
+- `@__cxa_atexit`
+
+The `_GLOBAL__sub_I_MutualIndivisibility.cpp` function calls:
+- `@_ZNSt8ios_base4InitC1Ev`
+- `@__cxa_atexit`
+
+Based on this analysis, here's the DOT representation of the call graph:
+
+```dot
+digraph CallGraph {
+    main -> @freopen;
+    main -> @__isoc99_scanf;
+    main -> @printf;
+    main -> @putc;
+    main -> @llvm.lifetime.start.p0i8;
+    main -> @llvm.lifetime.end.p0i8;
+    main -> @_ZNSt8ios_base4InitC1Ev;
+    main -> @_ZNSt8ios_base4InitD1Ev;
+    main -> @__cxa_atexit;
+
+    _GLOBAL__sub_I_MutualIndivisibility.cpp -> @_ZNSt8ios_base4InitC1Ev;
+    _GLOBAL__sub_I_MutualIndivisibility.cpp -> @__cxa_atexit;
+}
+```
+
+In this representation:
+- Each function is a node.
+- An arrow from one function to another indicates that the first function calls the second function.
