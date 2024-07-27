@@ -22,7 +22,8 @@ def decompiling_ir1(file_content):
                 "content": prompt,
             }
         ],
-        model="gpt-4o-mini",
+        #model="gpt-4o-mini",
+        model="gpt-3.5-turbo",
         #max_tokens=4096,
         temperature=0.7
             )
@@ -70,7 +71,7 @@ def read_and_process_all_directories(root_dir, output_dir):
 root_directory = "/Users/jianfengzhu/Desktop/LLMs-in-IR/processed_data/CFG"
 #for test directory
 #root_directory = "/Users/jianfengzhu/Desktop/LLMs-in-IR/processed_data/CFG_LLM/counting_sort2"
-output_directory = "/Users/jianfengzhu/Desktop/LLMs-in-IR/processed_data/CG_GPT4o_result"
+output_directory = "/Users/jianfengzhu/Desktop/LLMs-in-IR/processed_data/CG_GPT3.5_result"
 # Ensure the output directory exists
 os.makedirs(output_directory, exist_ok=True)
 
@@ -91,6 +92,6 @@ if failed_files > 0:
     for file in failed_file_names:
         print(file)
 # Save the DataFrame to a CSV file
-csv_output_path = "/Users/jianfengzhu/Desktop/LLMs-in-IR/processed_data/CG_GPT4o_result/processed_files_statistics.csv"
+csv_output_path = "/Users/jianfengzhu/Desktop/LLMs-in-IR/processed_data/CG_GPT3.5_result/processed_files_statistics.csv"
 df.to_csv(csv_output_path, index=False)
 print(f"DataFrame saved to {csv_output_path}")

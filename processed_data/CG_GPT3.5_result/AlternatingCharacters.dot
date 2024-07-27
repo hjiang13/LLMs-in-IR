@@ -1,0 +1,56 @@
+To generate the Call Graph from the given IR code program, we first need to extract the function names and their corresponding calls from the IR code. Then we can represent this information in a Call Graph format using nodes and edges.
+
+Here is the Call Graph in dot file format:
+
+```
+digraph CallGraph {
+    main
+    GetRequiredDel
+    llvm.vector.reduce.add.v4i32
+    _GLOBAL__sub_I_AlternatingCharacters.cpp
+    _ZNSt8ios_base4InitC1Ev
+    _ZNSt8ios_base4InitD1Ev
+    __cxa_atexit
+    _ZStL8__ioinit
+    _ZNSirsERi
+    _ZNSi6ignoreEv
+    _ZNKSt5ctypeIcE13_M_widen_initEv
+    _ZSt7getlineIcSt11char_traitsIcESaIcEERSt13basic_istreamIT_T0_ES7_RNSt7__cxx1112basic_stringIS4_S5_T1_EES4_
+    _ZNSolsEi
+    _ZNSo3putEc
+    _ZNSo5flushEv
+    _ZdlPv
+    _ZSt16__throw_bad_castv
+    llvm.lifetime.start.p0i8
+    llvm.lifetime.end.p0i8
+    llvm.vector.reduce.add.v4i32
+
+    main -> GetRequiredDel
+    main -> freopen
+    main -> _GLOBAL__sub_I_AlternatingCharacters.cpp
+    _GLOBAL__sub_I_AlternatingCharacters.cpp -> _ZNSt8ios_base4InitC1Ev
+    _GLOBAL__sub_I_AlternatingCharacters.cpp -> __cxa_atexit
+    GetRequiredDel -> llvm.vector.reduce.add.v4i32
+    GetRequiredDel -> llvm.lifetime.start.p0i8
+    GetRequiredDel -> llvm.lifetime.end.p0i8
+    llvm.vector.reduce.add.v4i32 -> llvm.vector.reduce.add.v4i32
+    _ZNSt8ios_base4InitC1Ev -> _ZNSt8ios_base4InitD1Ev
+    _ZNSt8ios_base4InitD1Ev -> __cxa_atexit
+    __cxa_atexit -> __cxa_atexit
+    _ZStL8__ioinit -> _ZNSt8ios_base4InitC1Ev
+    _ZNSirsERi -> _ZNSirsERi
+    _ZNSi6ignoreEv -> _ZNSi6ignoreEv
+    _ZNKSt5ctypeIcE13_M_widen_initEv -> _ZSt16__throw_bad_castv
+    _ZSt7getlineIcSt11char_traitsIcESaIcEERSt13basic_istreamIT_T0_ES7_RNSt7__cxx1112basic_stringIS4_S5_T1_EES4_ -> _ZSt16__throw_bad_castv
+    _ZNSolsEi -> llvm.vector.reduce.add.v4i32
+    _ZNSo3putEc -> _ZNKSt5ctypeIcE13_M_widen_initEv
+    _ZNSo5flushEv -> _ZNSo5flushEv
+    _ZdlPv -> _ZdlPv
+    _ZSt16__throw_bad_castv -> _ZSt16__throw_bad_castv
+    llvm.lifetime.start.p0i8 -> llvm.lifetime.start.p0i8
+    llvm.lifetime.end.p0i8 -> llvm.lifetime.end.p0i8
+    llvm.vector.reduce.add.v4i32 -> llvm.vector.reduce.add.v4i32
+}
+```
+
+This dot file represents the Call Graph with nodes representing functions and edges representing function calls. Each function is connected to the functions it calls within the code.
