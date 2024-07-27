@@ -1,0 +1,45 @@
+To create a control flow graph (CFG) in the DOT format from the provided intermediate representation (IR) code, we'll identify the basic blocks and the control flow between them by extracting relevant information such as branch statements and function calls.
+
+The following is a simplified representation of the control flow graph in the DOT format based on the provided IR code:
+
+```dot
+digraph CFG {
+    // Nodes
+    node [shape=box];
+
+    Entry [label="Entry"];
+    main [label="main()"];
+    propagate [label="propagate(int, int, bool)"];
+    query [label="query(int, int, int, int, int, int)"];
+    update [label="update(int, int, int, int, int, int, int)"];
+    vectorDestructor [label="vector::~vector()"];
+    vectorDefaultAppend [label="vector::_M_default_append(long)"];
+    globalSub [label="_GLOBAL__sub_I_AnimalTransport.cpp()"];
+    
+    // Other nodes can be added based on the functions and blocks encountered
+    // This is just a high-level representation
+
+    // Edges
+    Entry -> main;
+    main -> globalSub;
+    main -> propagate;
+    main -> query;
+    main -> update;
+    main -> vectorDestructor;
+    propagate -> query;
+    propagate -> update;
+    update -> query;
+    // Additional edges based on the flow of control
+}
+```
+
+### Explanation:
+1. **Nodes**: Each node represents a function or entry point in the control flow. You can expand the nodes based on the specific basic blocks that are created in the IR code.
+
+2. **Edges**: The directed edges represent the flow of control from one node (function or entry point) to another.
+
+3. **Labels**: Each node label corresponds to a function or a significant point in the program, which makes it easier to trace the execution path.
+
+### Note:
+- The above representation is a high-level overview. In a complete CFG, you would typically include more detail, breaking down each function into multiple basic blocks, representing each instruction, and showing all possible paths through the program, including loops and conditions.
+- The actual control flow graph would be more complex, reflecting the structure of your program, including all branches and loops. This representation serves as a foundational starting point based on the IR you provided.

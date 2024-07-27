@@ -1,0 +1,66 @@
+To generate a control flow graph (CFG) in DOT format from the provided Intermediate Representation (IR) code, we will extract the function names and their corresponding basic blocks, along with the control flow edges between them.
+
+Below is the control flow graph in DOT format based on the provided IR code:
+
+```dot
+digraph CFG {
+    node [shape=box];
+
+    // Function: gcd
+    start_gcd [label="gcd()"];
+    block_3 [label="3"];
+    block_4 [label="4"];
+    block_9 [label="9"];
+
+    start_gcd -> block_3;
+    block_3 -> block_4;
+    block_4 -> block_9;
+    block_4 -> block_4; // Loop back
+    block_9 -> block_9; // Exit from loop
+
+    // Function: main
+    start_main [label="main()"];
+    block_1 [label="1"];
+    block_2 [label="2"];
+    block_3_main [label="3"];
+    block_13 [label="13"];
+    block_17 [label="17"];
+    block_19 [label="19"];
+    block_25 [label="25"];
+    block_30 [label="30"];
+    block_35 [label="35"];
+    block_37 [label="37"];
+    block_39 [label="39"];
+    block_70 [label="70"];
+
+    start_main -> block_1;
+    block_1 -> block_2;
+    block_2 -> block_3_main;
+    block_3_main -> block_13;
+    block_13 -> block_17;
+    block_13 -> block_30; // Conditional split
+    block_17 -> block_35; // Conditional split
+    block_17 -> block_37; // Conditional split
+    block_19 -> block_25; // Loop
+    block_25 -> block_30; // Loop
+    block_30 -> block_19; // Loop back
+    block_35 -> block_39;
+    block_37 -> block_39;
+    block_39 -> block_70;
+    block_70 -> end;
+
+    // End of main function
+    end [label="End", shape=ellipse];
+    
+    // Connect main and gcd
+    start_main -> start_gcd;
+}
+```
+
+### Explanation:
+- **Nodes**: Each node represents either the entry point of a function or a basic block. The nodes for basic blocks are labeled with their respective block numbers.
+- **Edges**: Directed edges represent the flow of control from one block to another. For example, if a block can branch to another block based on a condition, there is an edge pointing to that block.
+- **Function Entry Points**: The entry points for the functions `gcd()` and `main()` are clearly defined.
+- **End Node**: An end node is included to signify the termination of the program flow.
+
+You can visualize this DOT representation using tools like Graphviz to see the control flow graph.

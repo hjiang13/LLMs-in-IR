@@ -1,0 +1,37 @@
+To represent the control flow graph (CFG) in DOT format based on the provided IR code, we need to identify the basic blocks and their connections (edges) based on the control flow instructions (like branches and invokes). Below is a simplified representation in DOT format. The nodes are labeled with their titles (usually derived from the basic block labels in the IR).
+
+```dot
+digraph CFG {
+    node [shape=box];
+
+    // Nodes representing basic blocks
+    start [label="start"];
+    main [label="main"];
+    convertstring [label="convertstring"];
+    if_block [label="if_block"];
+    else_block [label="else_block"];
+    invoke_block [label="invoke_block"];
+    landingpad_block [label="landingpad"];
+    cleanup_block [label="cleanup"];
+    end [label="end"];
+
+    // Edges representing control flow
+    start -> main;
+    main -> convertstring;
+    convertstring -> if_block;
+    if_block -> else_block [label="condition false"];
+    if_block -> invoke_block [label="condition true"];
+    invoke_block -> landingpad_block;
+    landingpad_block -> cleanup_block;
+    cleanup_block -> end;
+    else_block -> end;
+
+    // Additional edges can be added based on further analysis of the IR
+}
+```
+
+### Explanation:
+- Each `label` corresponds to the title of a basic block in your IR code.
+- The arrows (`->`) represent the control flow from one block to another.
+- Branching conditions (like `if` statements) are indicated with labels on the edges.
+- This is a high-level overview of the CFG. You may need to add more nodes and edges based on the specific details and flow of your IR if you want a more accurate representation. The actual structure would be more complex based on the detailed branching and invoke patterns in the IR code.

@@ -1,0 +1,35 @@
+To represent the control flow graph (CFG) for the provided Intermediate Representation (IR) code in the DOT format, we need to identify the basic blocks and the control flow between them.
+
+Here's a simplified representation in DOT format, where each node corresponds to a basic block identified in the IR code, and the edges represent the control flow between these blocks:
+
+```dot
+digraph CFG {
+    // Nodes
+    start [label="start"];
+    add [label="add"];
+    get [label="get"];
+    main [label="main"];
+    if_cond [label="if_cond"];
+    loop_1 [label="loop_1"];
+    loop_2 [label="loop_2"];
+    loop_exit [label="loop_exit"];
+    end [label="end"];
+
+    // Edges
+    start -> main;
+    main -> if_cond;
+    if_cond -> loop_1 [label="true"];
+    if_cond -> loop_exit [label="false"];
+    loop_1 -> loop_1 [label="continue"];
+    loop_1 -> loop_exit [label="exit"];
+    loop_exit -> get;
+    get -> add;
+    add -> end;
+}
+```
+
+### Explanation:
+- **Nodes**: Each node represents a basic block. The labels are simplified titles for illustrative purposes.
+- **Edges**: The edges indicate the flow of control from one block to another. For example, the edge from `if_cond` to `loop_1` indicates that if the condition at `if_cond` is true, the program will enter the `loop_1`. The edge back to `loop_1` indicates that the loop can continue.
+
+This representation is abstract, and the actual control flow in a complex IR like the provided one will involve many more nodes and edges, depending on the specific logic and branches in the original code. This is a simplified version to illustrate the format. You would need to adapt it to include all the actual basic blocks and control flow as necessary for your specific analysis.

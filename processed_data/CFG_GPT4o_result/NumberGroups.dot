@@ -1,0 +1,90 @@
+Based on the provided Intermediate Representation (IR) code, I will generate a control flow graph (CFG) in DOT format, which includes nodes and edges representing the flow of control through the program.
+
+Here's the DOT representation of the control flow graph:
+
+```dot
+digraph CFG {
+    rankdir=TB;
+
+    // Nodes
+    node [shape=box];
+    start [label="Start"];
+    load_stdin [label="load %struct._IO_FILE*, %struct._IO_FILE** @stdin"];
+    call_freopen [label="call @freopen"];
+    call_sync_with_stdio [label="call @_ZNSt8ios_base15sync_with_stdioEb"];
+    call_extract [label="call @_ZNSi10_M_extractIxEERSiRT_"];
+    load_x [label="load i64, i64* @x"];
+    mul1 [label="mul nsw i64 %5, %5"];
+    mul2 [label="mul nsw i64 %6, %5"];
+    call_insert [label="call @_ZNSo9_M_insertIxEERSoT_"];
+    bitcast_to_i8 [label="bitcast to i8**"];
+    load_i8_ptr [label="load i8*, i8** %9"];
+    getelementptr1 [label="getelementptr i8, i8* %10, i64 -24"];
+    bitcast_to_i64 [label="bitcast i8* %11 to i64*"];
+    load_i64 [label="load i64, i64* %12"];
+    bitcast_to_i8 [label="bitcast %"class.std::basic_ostream"* %8 to i8*"];
+    add [label="add nsw i64 %13, 240"];
+    getelementptr2 [label="getelementptr inbounds i8, i8* %14, i64 %15"];
+    bitcast_to_ctype [label="bitcast i8* %16 to %"class.std::ctype"**"];
+    load_ctype [label="load %"class.std::ctype"*, %"class.std::ctype"** %17"];
+    icmp_eq_null [label="icmp eq %"class.std::ctype"* %18, null"];
+    branch_if_null [label="br i1 %19"];
+    throw_bad_cast [label="call @_ZSt16__throw_bad_castv()"];
+    unreachable [label="unreachable"];
+    getelementptr3 [label="getelementptr inbounds %"class.std::ctype", %"class.std::ctype"* %18, i64 0, i32 8"];
+    load_i8_1 [label="load i8, i8* %22"];
+    icmp_eq_zero [label="icmp eq i8 %23, 0"];
+    branch_if_zero [label="br i1 %24"];
+    getelementptr4 [label="getelementptr inbounds %"class.std::ctype", %"class.std::ctype"* %18, i64 0, i32 9, i64 10"];
+    load_i8_2 [label="load i8, i8* %26"];
+    goto_end [label="goto %34"];
+    call_widen_init [label="call @_ZNKSt5ctypeIcE13_M_widen_initEv"];
+    load_func_ptr [label="load i8 (%"class.std::ctype"*, i8)**"];
+    getelementptr5 [label="getelementptr inbounds i8 (%"class.std::ctype"*, i8)*, i8 (%"class.std::ctype"*, i8)** %30, i64 6"];
+    load_i8_3 [label="load i8 (%"class.std::ctype"*, i8)*"];
+    call_put [label="call @_ZNSo3putEc"];
+    call_flush [label="call @_ZNSo5flushEv"];
+    ret [label="ret i32 0"];
+    
+    // Edges
+    start -> load_stdin;
+    load_stdin -> call_freopen;
+    call_freopen -> call_sync_with_stdio;
+    call_sync_with_stdio -> call_extract;
+    call_extract -> load_x;
+    load_x -> mul1;
+    mul1 -> mul2;
+    mul2 -> call_insert;
+    call_insert -> bitcast_to_i8;
+    bitcast_to_i8 -> load_i8_ptr;
+    load_i8_ptr -> getelementptr1;
+    getelementptr1 -> bitcast_to_i64;
+    bitcast_to_i64 -> load_i64;
+    load_i64 -> bitcast_to_i8;
+    bitcast_to_i8 -> add;
+    add -> getelementptr2;
+    getelementptr2 -> bitcast_to_ctype;
+    bitcast_to_ctype -> load_ctype;
+    load_ctype -> icmp_eq_null;
+    icmp_eq_null -> branch_if_null;
+    branch_if_null -> throw_bad_cast [label="true"];
+    branch_if_null -> getelementptr3 [label="false"];
+    throw_bad_cast -> unreachable;
+    getelementptr3 -> load_i8_1;
+    load_i8_1 -> icmp_eq_zero;
+    icmp_eq_zero -> branch_if_zero;
+    branch_if_zero -> getelementptr4 [label="false"];
+    branch_if_zero -> goto_end [label="true"];
+    getelementptr4 -> load_i8_2;
+    load_i8_2 -> goto_end;
+    goto_end -> call_widen_init;
+    call_widen_init -> load_func_ptr;
+    load_func_ptr -> getelementptr5;
+    getelementptr5 -> load_i8_3;
+    load_i8_3 -> call_put;
+    call_put -> call_flush;
+    call_flush -> ret;
+}
+```
+
+This representation includes nodes for each key point in the program's control flow, such as function calls, branches, and the return statement. The edges indicate the possible transitions between these points in the program.

@@ -1,0 +1,65 @@
+To represent the control flow graph (CFG) of the provided Intermediate Representation (IR) code in DOT format, we need to identify the basic blocks and their connections based on the branching instructions (like `br`, `switch`, etc.). Below is the DOT representation, where each basic block is a node, and the edges represent control flow between them.
+
+```dot
+digraph CFG {
+    // Function: fit
+    2 [label="entry"];
+    3 [label="if"];
+    4 [label="block 4"];
+    11 [label="block 11"];
+    17 [label="exit fit"];
+
+    2 -> 3;
+    3 -> 4 [label="true"];
+    3 -> 17 [label="false"];
+    4 -> 11;
+    11 -> 17;
+
+    // Function: main
+    entry_main [label="entry main"];
+    alloc_1 [label="alloca 1"];
+    alloc_2 [label="alloca 2"];
+    alloc_3 [label="alloca 3"];
+    block_4 [label="block 4 (freopen)"];
+    block_5 [label="block 5 (sync_with_stdio)"];
+    block_6 [label="block 6 (cin)"];
+    block_7 [label="switch"];
+    case_e [label="case e"];
+    case_s [label="case s"];
+    case_w [label="case w"];
+    default_case [label="default case"];
+    block_20 [label="block 20"];
+    block_21 [label="block 21"];
+    block_22 [label="exit main"];
+
+    entry_main -> alloc_1;
+    alloc_1 -> alloc_2;
+    alloc_2 -> alloc_3;
+    alloc_3 -> block_4;
+    block_4 -> block_5;
+    block_5 -> block_6;
+    block_6 -> block_7;
+    block_7 -> case_e [label="e"];
+    block_7 -> case_s [label="s"];
+    block_7 -> case_w [label="w"];
+    block_7 -> default_case;
+
+    case_e -> block_20;
+    case_s -> block_20;
+    case_w -> block_20;
+    default_case -> block_20;
+
+    block_20 -> block_21;
+    block_21 -> block_22;
+
+    // Additional control flow for the main function
+    block_20 -> block_5 [label="loop"];
+}
+```
+
+### Explanation:
+- Each node in the graph represents a basic block or a significant point in the flow of control.
+- Edges indicate the flow of control between basic blocks, with labels indicating the conditions under which the flow occurs (for example, in the case of a conditional branch).
+- The function names and the significant blocks (like entry, exit, and branching) are labeled accordingly.
+
+This representation preserves the structure of the control flow without detailing the contents of each block.

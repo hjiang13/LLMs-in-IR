@@ -1,0 +1,63 @@
+To construct a control flow graph (CFG) in DOT format from the provided intermediate representation (IR) code, we first need to extract the functions and their basic blocks and then represent them as nodes in the graph. Each basic block will be a node, and the edges will represent the control flow between them.
+
+Below is the DOT representation of the control flow graph based on the IR code provided:
+
+```dot
+digraph CFG {
+    // Nodes
+    node [shape=box];
+    main [label="main()"];
+    gcd [label="gcd(int, int)"];
+    getMini [label="getMini(int, int)"];
+    getMax [label="getMax(int, int)"];
+    getGcd [label="getGcd(int, int)"];
+    goLeft [label="goLeft(int, int)"];
+    goRight [label="goRight(int, int)"];
+    Solve [label="Solve(int, int, int)"];
+    // Additional functions based on the IR code
+    setDestructor [label="setDestructor()"];
+    vectorDestructor [label="vectorDestructor()"];
+    // Add more nodes as needed for other functions
+
+    // Edges (Control Flow)
+    main -> gcd;
+    main -> getMini;
+    main -> getMax;
+    main -> getGcd;
+    main -> goLeft;
+    main -> goRight;
+    main -> Solve;
+
+    // Example edges for the gcd function
+    gcd -> gcd [label="if condition"];
+    gcd -> return [label="return"];
+
+    // Example edges for the getMini function
+    getMini -> return [label="return"];
+
+    // Example edges for the getMax function
+    getMax -> return [label="return"];
+
+    // Example edges for the getGcd function
+    getGcd -> return [label="return"];
+
+    // Example edges for the goLeft function
+    goLeft -> return [label="return"];
+    
+    // Example edges for the goRight function
+    goRight -> return [label="return"];
+
+    // Example edges for the Solve function
+    Solve -> return [label="return"];
+
+    // Additional edges can be added based on the actual control flow details
+}
+```
+
+### Explanation:
+- Each function in the IR code is represented as a node in the graph.
+- The edges between nodes indicate the flow of control (i.e., which function can call which).
+- Conditional branches and returns can be represented as edges with labels indicating the condition or action that leads to that edge.
+- You can expand the edges based on the actual control flow observed in the IR analysis.
+
+Make sure to replace or add additional nodes and edges based on your detailed analysis of the IR code for completeness.

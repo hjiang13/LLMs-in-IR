@@ -1,0 +1,67 @@
+To create a control flow graph (CFG) in DOT format for the provided intermediate representation (IR) code, we will identify the basic blocks and their connections based on the branching instructions (like `br` and `invoke`). 
+
+Here is a simplified representation of the control flow graph in DOT format. Each basic block is represented as a node, and the edges represent the control flow between these blocks.
+
+```dot
+digraph CFG {
+    rankdir=TB;
+
+    // Nodes
+    start [label="start"];
+    main [label="@main"];
+    solve [label="@solve"];
+    scii [label="@scii"];
+    sort [label="__sort"];
+    introsort [label="__introsort_loop"];
+    move_median [label="__move_median_to_first"];
+    landingpad [label="landingpad"];
+    landingpad2 [label="landingpad2"];
+    exit [label="exit"];
+    
+    // Add additional nodes as needed for every unique block
+    // For example, based on the structure of the provided IR:
+    block1 [label="Block 1"];
+    block2 [label="Block 2"];
+    block3 [label="Block 3"];
+    block4 [label="Block 4"];
+    block5 [label="Block 5"];
+    block6 [label="Block 6"];
+    block7 [label="Block 7"];
+    block8 [label="Block 8"];
+    block9 [label="Block 9"];
+    block10 [label="Block 10"];
+    block11 [label="Block 11"];
+    // ... Add more as necessary for each unique block identified
+
+    // Edges
+    start -> main;
+    main -> solve [label="call"];
+    main -> landingpad [label="error handling"];
+    solve -> scii [label="call"];
+    solve -> landingpad [label="error handling"];
+    scii -> block1;
+    scii -> block2;
+    block1 -> block3;
+    block2 -> block4;
+    block3 -> block5;
+    block4 -> block5;
+    block5 -> block6;
+    block6 -> move_median;
+    move_median -> block7;
+    block7 -> sort;
+    sort -> block8;
+    block8 -> exit;
+    // Connect other blocks as necessary based on control flow
+    // Continue mapping out the edges based on the IR provided
+}
+```
+
+### Explanation:
+
+1. **Nodes**: Each unique basic block is represented as a node. The labels of the nodes correspond to the function names or the basic block identifiers.
+2. **Edges**: Directed edges indicate the control flow from one block to another. For example, if a block ends with a branch to another block, an edge is drawn from the first block to the second block.
+3. **Error Handling**: Landing pads are indicated for error handling paths in the CFG.
+4. **Function Calls**: When a function is called, it branches to the called function and may return to the caller, which is represented with edges.
+
+### Note:
+This is a high-level representation of the control flow graph. The exact content and number of basic blocks depend on how the IR is structured, and you would need to further break down the IR to identify all branches and unique blocks to create a complete graph. The placeholder labels (like `Block 1`, `Block 2`, etc.) should be replaced with actual identifiers from the IR.

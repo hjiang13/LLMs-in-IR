@@ -1,0 +1,44 @@
+To represent the control flow graph (CFG) of the provided Intermediate Representation (IR) code in the DOT format, we need to identify the basic blocks and the control flow between them.
+
+In the provided IR code, we can find two main functions: `_Z6maxXorii` and `@main()`. Each function contains various basic blocks, which we can label according to their entry points.
+
+Here’s the control flow graph in DOT format:
+
+```dot
+digraph CFG {
+    // Nodes
+    node [shape=rectangle];
+    entry [label="entry"];
+    block_0 [label="block_0"];
+    block_2 [label="block_2"];
+    block_3 [label="block_3"];
+    block_5 [label="block_5"];
+    block_11 [label="block_11"];
+    block_13 [label="block_13"];
+    block_19 [label="block_19"];
+    block_end [label="block_end"];
+
+    // Edges
+    entry -> block_0;
+    block_0 -> block_2; // Entry of @main()
+    block_2 -> block_3; // Load stdin and freopen
+    block_3 -> block_5; // Check condition with icmp (sgt)
+    
+    block_5 -> block_11; // True branch
+    block_5 -> block_2;  // False branch (back to start)
+    
+    block_11 -> block_2; // Back to check condition in loop
+    block_11 -> block_5; // Loop continuation
+
+    block_13 -> block_19; // True branch from main
+    block_19 -> block_end; // End of main
+    block_19 -> block_13; // Loop back to block_13
+}
+```
+
+### Explanation:
+1. **Nodes**: Each basic block has been labeled appropriately (e.g., `block_0`, `block_2`, etc.), and they represent the different control points in the functions.
+2. **Edges**: Directed edges indicate the flow of control between the blocks. For example, the control flow from `entry` to `block_0`, and from `block_2` to `block_3`, reflecting the sequence of operations and branches based on conditions evaluated in the code.
+3. **Loops and Branches**: The edges represent branches based on conditional checks (e.g., `icmp sgt`, `icmp ult`) which lead to different blocks depending on the evaluation of the conditions.
+
+This representation can be visualized using graph visualization tools that support the DOT language.

@@ -1,0 +1,62 @@
+Sure! Based on the provided Intermediate Representation (IR) code, I will construct a control flow graph (CFG) in DOT format. The nodes will represent the basic blocks, and the edges will represent the control flow between these blocks.
+
+Here's the control flow graph in DOT format:
+
+```dot
+digraph CFG {
+    rankdir=LR;
+
+    // Nodes
+    node [shape=box];
+    entry [label="entry"];
+    block1 [label="4"];
+    block2 [label="22"];
+    block3 [label="6"];
+    block4 [label="106"];
+    block5 [label="11"];
+    block6 [label="17"];
+    block7 [label="21"];
+    block8 [label="45"];
+    block9 [label="58"];
+    block10 [label="63"];
+    block11 [label="101"];
+    block12 [label="103"];
+    block13 [label="119"];
+    block14 [label="114"];
+    block15 [label="138"];
+    block16 [label="156"];
+    block17 [label="162"];
+
+    // Edges
+    entry -> block1;
+    block1 -> block2; // %3 (slt) true
+    block1 -> block3; // %3 (slt) false
+    block3 -> block4; // %5 (phi)
+    block4 -> block2; // %21 (icmp)
+    block4 -> block5; // %21 (icmp) false
+    block5 -> block6; // %16 (gt)
+    block6 -> block7; // %20 (ult)
+    block7 -> block8; // %21 (icmp)
+    block8 -> block9; // %57 (and)
+    block9 -> block10; // %100 (eq)
+    block9 -> block12; // %121 (gt)
+    block10 -> block11; // %12 (sext)
+    block11 -> block5; // back to %11
+    block11 -> block14; // exit from %11
+    block12 -> block13; // %102 (eq)
+    block12 -> block14; // %102 (not eq)
+    block13 -> block16; // %161 (eq)
+    block16 -> block17; // exit
+    block14 -> block15; // %137 (slt)
+    block15 -> block15; // back to %138
+    block15 -> block16; // exit from %138
+}
+```
+
+### Explanation:
+- The nodes represent basic blocks, each labeled with the block's identifier (like `4`, `22`, etc.).
+- The edges represent the flow from one block to another based on the conditions evaluated in the IR code.
+- The `entry` node is the starting point of the execution, leading to the first basic block.
+- The structure follows the flow of control as inferred from the branching statements (`br`, `icmp`, etc.) in the IR code.
+
+You can visualize this in a graph visualization tool that supports the DOT format, such as Graphviz.

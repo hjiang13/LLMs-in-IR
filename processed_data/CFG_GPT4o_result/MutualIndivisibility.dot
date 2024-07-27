@@ -1,0 +1,42 @@
+To represent the control flow graph (CFG) of the provided Intermediate Representation (IR) code, we can identify the basic blocks and their connections based on the branching instructions (like `br`, `icmp`, etc.). Below is the DOT format representation, which includes nodes and edges:
+
+```dot
+digraph CFG {
+    // Nodes
+    node [shape=box];
+    entry [label="Entry"];
+    bb_0 [label="%0"];
+    bb_15 [label="%15"];
+    bb_27 [label="%27"];
+    bb_29 [label="%29"];
+    bb_33 [label="%33"];
+    bb_36 [label="%36"];
+    bb_46 [label="%46"];
+    bb_48 [label="%48"];
+    bb_52 [label="%52"];
+
+    // Edges
+    entry -> bb_0;
+    bb_0 -> bb_15;
+    bb_15 -> bb_27;
+    bb_15 -> bb_46;
+    bb_27 -> bb_29;
+    bb_27 -> bb_33;
+    bb_29 -> bb_33;
+    bb_29 -> bb_36;
+    bb_36 -> bb_36;
+    bb_36 -> bb_33;
+    bb_46 -> bb_48;
+    bb_33 -> bb_48;
+    bb_48 -> bb_52;
+    bb_48 -> bb_15;
+    bb_52 -> entry;
+}
+```
+
+### Explanation:
+- **Nodes** correspond to basic blocks, identified by their labels (like `%0`, `%15`, `%27`, etc.).
+- **Edges** represent the flow of control from one block to another based on the branching instructions in the IR code.
+- The `entry` node represents the starting point of the program.
+
+This representation captures the control flow without detailing the contents of each basic block, as per your request.

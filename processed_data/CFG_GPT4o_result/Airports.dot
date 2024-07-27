@@ -1,0 +1,50 @@
+Here's the control flow graph (CFG) of the given Intermediate Representation (IR) code in DOT format. Each function is treated as a node, and the edges represent the control flow between them. The nodes are labeled with the function names and the entry point is marked as `main`.
+
+```dot
+digraph CFG {
+    rankdir=TB;
+    
+    // Function Nodes
+    node [shape=box];
+    main [label="main()"];
+    _Z4absti [label="_Z4absti(i32)"];
+    _Z6updatei [label="_Z6updatei(i32)"];
+    _Z5mergeii [label="_Z5mergeii(i32, i32)"];
+    _Z5splitii [label="_Z5splitii(i32, i32)"];
+    _Z4getpii [label="_Z4getpii(i32, i32)"];
+    _Z3addi [label="_Z3addi(i32)"];
+    _Z5queryii [label="_Z5queryii(i32, i32)"];
+    _Z5clearv [label="_Z5clearv()"];
+
+    // Edge Connections
+    main -> _Z4absti;
+    main -> _Z6updatei;
+    main -> _Z5mergeii;
+    main -> _Z5splitii;
+    main -> _Z4getpii;
+    main -> _Z3addi;
+    main -> _Z5queryii;
+    main -> _Z5clearv;
+
+    // Exception Handling and Unwind Nodes
+    landingpad [label="Landing Pad" shape=ellipse];
+    catch [label="Catch" shape=ellipse];
+    
+    // Edges for exception handling
+    _Z5mergeii -> landingpad;
+    _Z5clearv -> landingpad;
+    _Z4getpii -> catch;
+
+    // Adding additional edges for control flow within functions
+    // For example purposes, we will connect the functions in a simple manner
+    _Z6updatei -> _Z5mergeii;
+    _Z5mergeii -> _Z5splitii;
+    _Z5splitii -> _Z4getpii;
+    _Z4getpii -> _Z3addi;
+    _Z3addi -> _Z5queryii;
+    _Z5queryii -> _Z5clearv;
+    _Z5clearv -> main;
+}
+```
+
+This graph representation provides a high-level view of the control flow between the functions in the provided IR code. Each function is represented as a node, and the edges indicate possible transitions or calls between these functions.

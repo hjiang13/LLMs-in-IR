@@ -1,0 +1,54 @@
+To create a control flow graph (CFG) in the DOT format from the provided intermediate representation (IR) code, we'll analyze the control flow of the `main` function outlined in the IR code. Each node in the graph will represent a basic block, and directed edges will represent the flow of control from one block to another.
+
+Here's the CFG based on the provided IR:
+
+```dot
+digraph CFG {
+    node [shape=rectangle];
+
+    // Nodes
+    start [label="Entry"];
+    block0 [label="%0"];
+    block19 [label="%19"];
+    block22 [label="%22"];
+    block30 [label="%30"];
+    block45 [label="%45"];
+    block54 [label="%54"];
+    block70 [label="%70"];
+    block71 [label="%71"];
+    block75 [label="%75"];
+    block78 [label="%78"];
+    block84 [label="%84"];
+    block91 [label="%91"];
+    end [label="Exit"];
+
+    // Edges
+    start -> block0;
+    block0 -> block22;
+    block0 -> block19;
+    block19 -> block30;
+    block19 -> block91;
+    block22 -> block19;
+    block22 -> block30;
+    block30 -> block45;
+    block30 -> block91;
+    block45 -> block54;
+    block45 -> block45; // Loop back
+    block54 -> block30; // Loop back
+    block54 -> block91;
+    block70 -> block84;
+    block71 -> block84;
+    block75 -> block84;
+    block78 -> block84;
+    block84 -> block30;
+    block91 -> end;
+}
+```
+
+### Explanation:
+- Each basic block is represented as a node in the graph with a unique identifier based on the IR code.
+- Directed edges represent the flow of control: for instance, from `start` to the first block, and then through various branching based on conditions (e.g., `br i1` statements).
+- The `Entry` node is where the function starts, and the `Exit` node represents the end of the function.
+- Loops are represented by edges that connect a block back to an earlier block, indicating that control may return to that block under certain conditions.
+
+This representation abstracts the actual content of each block and focuses solely on the flow of control through the function.

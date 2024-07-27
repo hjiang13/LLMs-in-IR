@@ -1,0 +1,62 @@
+To generate the control flow graph (CFG) in DOT format from the provided Intermediate Representation (IR) code, we will identify the basic blocks and their connections based on the control transfer instructions (like `br`, `call`, etc.). Here’s the DOT representation of the control flow graph:
+
+```dot
+digraph CFG {
+    // Nodes
+    0 [label="main"];
+    1 [label="alloca"];
+    2 [label="llvm.lifetime.start"];
+    3 [label="cin"];
+    4 [label="load"];
+    5 [label="icmp eq"];
+    6 [label="branch to 8"];
+    7 [label="branch to 133"];
+    8 [label="zext"];
+    9 [label="shl"];
+    10 [label="malloc"];
+    11 [label="bitcast to i64*"];
+    12 [label="icmp eq"];
+    13 [label="branch to 14"];
+    14 [label="free"];
+    15 [label="load"];
+    16 [label="call to cout"];
+    17 [label="branch to 133"];
+    18 [label="loop start"];
+    19 [label="loop body"];
+    20 [label="conditional branch"];
+    21 [label="final branch"];
+    22 [label="return"];
+    23 [label="cleanup"];
+
+    // Edges
+    0 -> 1;
+    1 -> 2;
+    2 -> 3;
+    3 -> 4;
+    4 -> 5;
+    5 -> 6;
+    6 -> 8;
+    6 -> 7;
+    8 -> 9;
+    9 -> 10;
+    10 -> 11;
+    11 -> 12;
+    12 -> 13;
+    13 -> 14;
+    14 -> 17;
+    17 -> 133;
+    18 -> 19;
+    19 -> 20;
+    20 -> 21;
+    21 -> 22;
+    22 -> 23;
+    23 -> 133;
+    133 -> 2;
+}
+```
+
+In this representation:
+- Each node corresponds to a basic block (the label describes the main action or result of that block).
+- Directed edges (`->`) indicate the flow of control between these blocks. For example, from the `main` function to the first block of code (alloca), then to the `llvm.lifetime.start`, and so forth.
+
+You can visualize this graph using Graphviz or any tool that supports the DOT format. It will give you a clear representation of the control flow within the IR code provided.

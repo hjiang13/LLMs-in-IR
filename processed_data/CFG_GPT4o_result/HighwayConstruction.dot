@@ -1,0 +1,42 @@
+To represent the control flow graph (CFG) in the DOT format based on the provided intermediate representation (IR) code, we will identify the basic blocks and their connections. Each node will represent a basic block, and directed edges will represent the control flow from one block to another.
+
+Here is the control flow graph in DOT format:
+
+```dot
+digraph CFG {
+    // Basic Blocks
+    node [shape=box];
+
+    // Defining nodes (basic blocks)
+    BB_0 [label="0: main() entry"];
+    BB_1 [label="1: Load stdin"];
+    BB_2 [label="2: Check condition"];
+    BB_3 [label="3: Handle case 0"];
+    BB_4 [label="4: Handle case 1"];
+    BB_5 [label="5: Handle case 2"];
+    BB_6 [label="6: Return"];
+    BB_7 [label="7: Call function"];
+    BB_8 [label="8: Perform operation"];
+    BB_9 [label="9: End"];
+
+    // Connecting edges
+    BB_0 -> BB_1;   // Start of main
+    BB_1 -> BB_2;   // Load stdin
+    BB_2 -> BB_3 [label="if true"];  // Conditional branch
+    BB_2 -> BB_4 [label="if false"]; // Conditional branch
+    BB_3 -> BB_5;   // Handle case 0
+    BB_4 -> BB_5;   // Handle case 1
+    BB_5 -> BB_6;   // End of handling
+    BB_6 -> BB_7;   // Call function
+    BB_7 -> BB_8;   // Perform operation
+    BB_8 -> BB_9;   // End of function
+    BB_9 -> BB_0;   // Exit main
+}
+```
+
+### Explanation:
+- The nodes (BB_0 to BB_9) represent distinct basic blocks in the function `main()` and other key parts of the code.
+- The edges between nodes represent the flow of control, indicating where execution can jump based on conditions or function calls.
+- The `label` attribute is used to denote the purpose of each block in a human-readable format. 
+
+You can visualize this graph using tools that support the DOT format, such as Graphviz.

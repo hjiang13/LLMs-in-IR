@@ -1,0 +1,55 @@
+To represent the control flow graph (CFG) of the provided intermediate representation (IR) code in a DOT format, we will outline the basic blocks as nodes and the branches as edges. 
+
+Here’s the CFG in DOT format based on the provided IR code:
+
+```dot
+digraph CFG {
+    node [shape=box];
+
+    entry [label="entry"];
+    main [label="main"];
+    power [label="powerxi"];
+    seg_merge [label="seg_merge"];
+    que [label="que"];
+    cond1 [label="if (i32 > 0)"];
+    cond2 [label="if (i32 < 3)"];
+    cond3 [label="if (i32 == 0)"];
+    cond4 [label="if (i32 == 1)"];
+    cond5 [label="if (i32 == 2)"];
+    ret0 [label="return 0"];
+    ret1 [label="return 1"];
+    ret2 [label="return 2"];
+    ret3 [label="return 3"];
+
+    // Edges
+    entry -> main;
+    main -> power;
+    main -> seg_merge;
+    main -> que;
+    power -> cond1;
+    seg_merge -> cond2;
+    que -> cond3;
+    cond1 -> ret0; // if true
+    cond1 -> ret1; // if false
+    cond2 -> ret2; // if true
+    cond2 -> ret3; // if false
+    cond3 -> ret0; // if true
+    cond3 -> ret1; // if false
+    cond4 -> ret2; // if true
+    cond4 -> ret3; // if false
+    cond5 -> ret0; // if true
+    cond5 -> ret1; // if false
+
+    // Additional edges based on the structure of the functions
+    power -> main; // return to main from power
+    seg_merge -> main; // return to main from seg_merge
+    que -> main; // return to main from que
+}
+```
+
+### Explanation:
+1. **Nodes**: Each function and significant conditional check in the flow is represented as a node. The nodes are named accordingly to indicate their function or condition.
+2. **Edges**: Directed edges represent the flow from one node to another, especially the branches that lead to different outcomes based on conditional checks.
+3. **Entry and Return Nodes**: The graph starts at an "entry" node and has return nodes labeled based on their return values or flow back to the `main` function.
+
+This structure captures the essence of the control flow in the provided IR code. You can visualize this graph using tools compatible with the DOT format, such as Graphviz.

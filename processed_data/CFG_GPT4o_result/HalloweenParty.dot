@@ -1,0 +1,47 @@
+To represent the control flow graph (CFG) of the provided Intermediate Representation (IR) code in the DOT format, we will extract the relevant basic blocks and their connections (edges). Below is the CFG in DOT format based on the IR code:
+
+```dot
+digraph CFG {
+    node [shape=rectangle];
+
+    // Basic Block Nodes
+    Entry [label="Entry"];
+    Entry -> Block_0;
+    Block_0 [label="Block 0"];
+    Block_0 -> Block_10;
+    Block_0 -> Block_49;
+
+    Block_10 [label="Block 10"];
+    Block_10 -> Block_28;
+    Block_10 -> Block_29;
+
+    Block_49 [label="Block 49"];
+    Block_49 -> Exit;
+
+    Block_28 [label="Block 28"];
+    Block_28 -> Exit [label="unreachable"];
+
+    Block_29 [label="Block 29"];
+    Block_29 -> Block_33;
+    Block_29 -> Block_36;
+
+    Block_36 [label="Block 36"];
+    Block_36 -> Block_42;
+
+    Block_33 [label="Block 33"];
+    Block_33 -> Block_42;
+
+    Block_42 [label="Block 42"];
+    Block_42 -> Block_10;
+    Block_42 -> Block_49;
+
+    Exit [label="Exit"];
+}
+```
+
+### Explanation:
+- Each block is represented as a node in the graph. The label of each node indicates its basic block title.
+- The edges represent the flow of control from one block to another. For example, from `Block 0` it can go to either `Block 10` or `Block 49` based on the condition.
+- `Entry` is the starting point of the function, and `Exit` represents the end of the function.
+
+This representation captures the basic structure of the control flow graph without detailing the contents of each basic block, as requested.

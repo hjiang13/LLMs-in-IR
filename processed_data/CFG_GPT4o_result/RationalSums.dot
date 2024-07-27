@@ -1,0 +1,59 @@
+To create a control flow graph (CFG) in DOT format from the provided Intermediate Representation (IR) code, we need to extract the basic blocks and their relationships (edges). The basic blocks in your IR are indicated by labels (e.g., `4:`, `6:`, `21:`). The edges are established by the branching instructions (e.g., `br` statements).
+
+Here's the corresponding DOT representation of the control flow graph based on the provided IR:
+
+```dot
+digraph CFG {
+    // Nodes
+    node [shape=rectangle];
+    Entry [label="Entry"];
+    BB2 [label="2"];
+    BB3 [label="3"];
+    BB4 [label="4"];
+    BB6 [label="6"];
+    BB21 [label="21"];
+    BB37 [label="37"];
+    BB46 [label="46"];
+    BB147 [label="149"];
+    BB150 [label="150"];
+    BB155 [label="155"];
+    BB166 [label="166"];
+    BB195 [label="195"];
+    BB226 [label="226"];
+    BB258 [label="258"];
+    
+    // Edges
+    Entry -> BB2; // Entry to BB2
+    BB2 -> BB3; // From BB2 (first block)
+    BB3 -> BB4; // From BB3 to BB4
+    BB4 -> BB6; // From BB4 to BB6
+    BB4 -> BB21; // From BB4 to BB21
+    BB6 -> BB21; // From BB6 to BB21
+    BB6 -> BB4; // From BB6 back to BB4
+    BB21 -> BB2; // From BB21 back to Entry
+    BB21 -> BB6; // From BB21 back to BB6
+    BB37 -> BB24; // From BB37 to BB24
+    BB24 -> BB28; // From BB24 to BB28
+    BB28 -> BB53; // From BB28 to BB53
+    BB53 -> BB55; // From BB53 to BB55
+    BB55 -> BB60; // From BB55 to BB60
+    BB60 -> BB73; // From BB60 to BB73
+    BB76 -> BB130; // From BB76 to BB130
+    BB130 -> BB145; // From BB130 to BB145
+    BB145 -> BB149; // From BB145 to BB149
+    BB149 -> BB226; // From BB149 to BB226
+    BB150 -> BB169; // From BB150 to BB169
+    BB169 -> BB213; // From BB169 to BB213
+    BB213 -> BB195; // From BB213 to BB195
+    BB195 -> BB258; // From BB195 to BB258
+    BB258 -> BB224; // From BB258 to BB224
+    BB224 -> BB226; // From BB224 to BB226
+}
+```
+
+### Explanation:
+- Each basic block is represented as a node in the graph.
+- The arrows (edges) represent the flow of control from one basic block to another.
+- The labels provide a simple naming convention to identify each block without showing detailed contents.
+
+You can visualize this DOT representation using Graphviz tools or any compatible software that can parse DOT files.

@@ -1,0 +1,51 @@
+To represent the control flow graph of the provided IR code, we need to identify the basic blocks and their connections. Below is the DOT file format representation of the control flow graph, including the nodes and edges based on the structure of the given IR code.
+
+```dot
+digraph CFG {
+    rankdir=TB;
+
+    // Nodes
+    0 [label="Entry"];
+    1 [label="Alloca & Input"];
+    2 [label="Check Input > 0"];
+    19 [label="Read Input"];
+    26 [label="Loop Condition"];
+    33 [label="Process Input"];
+    37 [label="Calculate Result"];
+    44 [label="Output Result"];
+    54 [label="End Loop"];
+    62 [label="Check Second Input"];
+    65 [label="Read Second Input"];
+    72 [label="Check Input > 0"];
+    74 [label="End"];
+    83 [label="Output Result 2"];
+    87 [label="Output Result 3"];
+    92 [label="Cleanup & Exit"];
+    
+    // Edges
+    0 -> 1;
+    1 -> 2;
+    2 -> 19 [label="true"];
+    2 -> 92 [label="false"];
+    19 -> 26;
+    26 -> 33 [label="true"];
+    26 -> 54 [label="false"];
+    33 -> 37;
+    37 -> 62;
+    62 -> 65 [label="true"];
+    62 -> 74 [label="false"];
+    65 -> 72;
+    72 -> 83 [label="true"];
+    72 -> 74 [label="false"];
+    83 -> 87;
+    87 -> 92;
+    54 -> 26;
+    92 -> 74;
+}
+```
+
+### Explanation:
+- **Nodes**: Each basic block in the IR code has been represented as a node in the graph, labeled with a brief description of its function (e.g., "Alloca & Input", "Check Input > 0", etc.).
+- **Edges**: Directed edges represent the flow of control between the basic blocks, indicating which blocks can transfer control to which other blocks based on conditional statements and loops.
+
+This representation provides a high-level overview of the control flow in the given IR code.

@@ -1,0 +1,97 @@
+To generate the control flow graph (CFG) in DOT format from the provided IR code, we'll identify the basic blocks and their connections based on the control flow described in the IR. Each basic block will be represented as a node, and the edges will indicate the flow of control between these blocks.
+
+Here’s a simplified representation of the control flow graph in DOT format:
+
+```dot
+digraph CFG {
+    // Nodes
+    node [shape=box];
+    entry [label="entry"];
+    main [label="main()"];
+    block0 [label="block0"];
+    block1 [label="block1"];
+    block2 [label="block2"];
+    block20 [label="block20"];
+    block21 [label="block21"];
+    block22 [label="block22"];
+    block26 [label="block26"];
+    block29 [label="block29"];
+    block30 [label="block30"];
+    block36 [label="block36"];
+    block39 [label="block39"];
+    block41 [label="block41"];
+    block56 [label="block56"];
+    block62 [label="block62"];
+    block64 [label="block64"];
+    block69 [label="block69"];
+    block70 [label="block70"];
+    block81 [label="block81"];
+    block83 [label="block83"];
+    block97 [label="block97"];
+    block99 [label="block99"];
+    block115 [label="block115"];
+    block119 [label="block119"];
+    block123 [label="block123"];
+    block141 [label="block141"];
+    block144 [label="block144"];
+    block146 [label="block146"];
+    block156 [label="block156"];
+    block158 [label="block158"];
+    block177 [label="block177"];
+    block179 [label="block179"];
+    block181 [label="block181"];
+    block200 [label="block200"];
+    block201 [label="block201"];
+    block222 [label="block222"];
+    block225 [label="block225"];
+    
+    // Edges
+    entry -> main;
+    main -> block0;
+    block0 -> block1;
+    block1 -> block20;
+    block20 -> block21;
+    block20 -> block22;
+    block22 -> block29;
+    block22 -> block26;
+    block29 -> block30;
+    block30 -> block36;
+    block36 -> block39;
+    block39 -> block41;
+    block41 -> block56;
+    block56 -> block62;
+    block62 -> block64;
+    block64 -> block69;
+    block69 -> block70;
+    block70 -> block81;
+    block81 -> block83;
+    block83 -> block97;
+    block97 -> block99;
+    block99 -> block115;
+    block115 -> block119;
+    block119 -> block123;
+    block123 -> block141;
+    block141 -> block144;
+    block144 -> block146;
+    block146 -> block156;
+    block156 -> block158;
+    block158 -> block177;
+    block177 -> block179;
+    block179 -> block181;
+    block181 -> block200;
+    block200 -> block201;
+    block201 -> block222;
+    block222 -> block225;
+    block225 -> block62; // If we assume it returns to the landing pad
+}
+```
+
+### Explanation:
+- Each basic block has been assigned a label based on its position in the IR code.
+- The edges indicate the control flow, showing how the program moves from one block to another.
+- The initial node is `entry`, which leads to the `main()` function.
+- Each block follows the control flow as defined by the `br` and `invoke` instructions in the IR, with some branches leading to the same block or to different blocks based on conditions.
+
+### Note:
+- The exact names of the blocks (like `block0`, `block1`, etc.) are generic and can be replaced with more meaningful names if desired.
+- The landing pads and exception handling edges are also represented in this graph.

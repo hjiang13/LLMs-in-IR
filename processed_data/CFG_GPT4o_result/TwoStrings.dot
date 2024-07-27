@@ -1,0 +1,121 @@
+To generate a control flow graph (CFG) in DOT format from the provided Intermediate Representation (IR) code, we will identify the basic blocks and their connections based on the control flow statements (branches, function calls, returns, etc.) present in the code.
+
+Here's the control flow graph in the DOT format based on the given IR code:
+
+```dot
+digraph CFG {
+    node [shape=rectangle];
+
+    start [label="Entry"];
+    main [label="main()"];
+    block0 [label="Block 0"];
+    block1 [label="Block 1"];
+    block33 [label="Block 33"];
+    block35 [label="Block 35"];
+    block240 [label="Block 240"];
+    block45 [label="Block 45"];
+    block46 [label="Block 46"];
+    block47 [label="Block 47"];
+    block51 [label="Block 51"];
+    block54 [label="Block 54"];
+    block61 [label="Block 61"];
+    block64 [label="Block 64"];
+    block74 [label="Block 74"];
+    block76 [label="Block 76"];
+    block80 [label="Block 80"];
+    block90 [label="Block 90"];
+    block93 [label="Block 93"];
+    block98 [label="Block 98"];
+    block102 [label="Block 102"];
+    block108 [label="Block 108"];
+    block111 [label="Block 111"];
+    block119 [label="Block 119"];
+    block124 [label="Block 124"];
+    block126 [label="Block 126"];
+    block147 [label="Block 147"];
+    block149 [label="Block 149"];
+    block159 [label="Block 159"];
+    block166 [label="Block 166"];
+    block170 [label="Block 170"];
+    block182 [label="Block 182"];
+    block184 [label="Block 184"];
+    block191 [label="Block 191"];
+    block198 [label="Block 198"];
+    block203 [label="Block 203"];
+    block208 [label="Block 208"];
+    block209 [label="Block 209"];
+    block212 [label="Block 212"];
+    block213 [label="Block 213"];
+    block217 [label="Block 217"];
+    block220 [label="Block 220"];
+    block224 [label="Block 224"];
+    block228 [label="Block 228"];
+    block230 [label="Block 230"];
+    block234 [label="Block 234"];
+    block239 [label="Block 239"];
+
+    start -> main;
+    main -> block0;
+    block0 -> block1;
+    block1 -> block33;
+    block33 -> block35;
+    block35 -> block240;
+    block35 -> block45;
+    block45 -> block46;
+    block46 -> block106; // Unwind
+    block35 -> block47;
+    block47 -> block51;
+    block47 -> block54;
+    block54 -> block55;
+    block51 -> block61;
+    block61 -> block64;
+    block64 -> block74;
+    block64 -> block76;
+    block76 -> block80;
+    block80 -> block90;
+    block90 -> block93;
+    block93 -> block98;
+    block98 -> block102;
+    block102 -> block108;
+    block108 -> block111;
+    block111 -> block119;
+    block119 -> block124;
+    block119 -> block126;
+    block126 -> block147;
+    block147 -> block149;
+    block149 -> block159;
+    block159 -> block166;
+    block166 -> block170;
+    block170 -> block182;
+    block182 -> block183; // Unwind
+    block184 -> block191;
+    block191 -> block198;
+    block198 -> block203;
+    block203 -> block208;
+    block208 -> block209;
+    block209 -> block212;
+    block212 -> block213;
+    block213 -> block217;
+    block217 -> block220;
+    block220 -> block224;
+    block224 -> block228;
+    block224 -> block230;
+    block230 -> block234;
+    block230 -> block239;
+    block240 -> block230;
+
+    // Unwind edges
+    block106 -> block230;
+    block164 -> block224;
+    block222 -> block224;
+}
+```
+
+### Explanation:
+- Each block is represented as a node in the graph.
+- The edges represent the flow from one block to another based on branch instructions and function calls.
+- The graph starts from the `main` function and connects through various blocks until reaching the end (block `240` and others).
+- In the case of exception handling, unwind edges are indicated.
+- Each node is labeled with the block identifier for clarity. 
+
+This representation captures the control flow structure of the provided IR code in a visual format suitable for tools that can interpret DOT files.

@@ -1,0 +1,91 @@
+To create a control flow graph (CFG) in the DOT format from the provided Intermediate Representation (IR) code, we will identify the basic blocks and their connections based on the control flow constructs (like branches, switches, and function calls).
+
+Here’s the representation of the control flow graph based on your provided IR code:
+
+```dot
+digraph CFG {
+    node [shape=rectangle];
+
+    // Basic blocks
+    start [label="Entry"];
+    block1 [label="1"];
+    block10 [label="10"];
+    block12 [label="12"];
+    block15 [label="15"];
+    block18 [label="18"];
+    block27 [label="27"];
+    block29 [label="29"];
+    block73 [label="73"];
+    block80 [label="80"];
+    block97 [label="97"];
+    block103 [label="103"];
+    block106 [label="106"];
+    block114 [label="114"];
+    block19 [label="19"];
+    block22 [label="22"];
+    block24 [label="24"];
+    block26 [label="26"];
+    block32 [label="32"];
+    block34 [label="34"];
+    block36 [label="36"];
+    block42 [label="42"];
+    block44 [label="44"];
+    block58 [label="58"];
+    block66 [label="66"];
+    block70 [label="70"];
+    block72 [label="72"];
+    block80_b [label="80 (landing pad)"];
+    block201 [label="201"];
+    block207 [label="207"];
+    block199 [label="199"];
+
+    // Edges
+    start -> block1;
+    block1 -> block10; // If condition
+    block1 -> block12; // Else condition
+    block10 -> block114; // Branch to end
+    block12 -> block15; // If condition
+    block15 -> block18; // True branch
+    block15 -> block114; // False branch
+    block18 -> block27; // Intermediate processing
+    block27 -> block29; // Loop processing
+    block29 -> block73; // Loop continuation
+    block29 -> block18; // Back to loop
+    block73 -> block80; // Check condition
+    block80 -> block97; // If condition
+    block80 -> block103; // Else condition
+    block103 -> block106; // Process results
+    block106 -> block114; // Return processing
+    block12 -> block19; // Check for allocation
+    block19 -> block22; // Throw bad alloc
+    block19 -> block24; // Allocation block
+    block22 -> block23; // Unreachable
+    block24 -> block26; // Allocation check
+    block26 -> block32; // Load input
+    block32 -> block34; // Check condition
+    block34 -> block36; // Check pointers
+    block36 -> block42; // Throw length error
+    block42 -> block43; // Unreachable
+    block44 -> block58; // Handle memory
+    block58 -> block66; // Check pointers
+    block66 -> block70; // Cleanup
+    block70 -> block72; // Continue processing
+    block72 -> block80; // Loop back
+    block80_b -> block201; // Landing pad
+    block201 -> block207; // Cleanup
+    block207 -> block199; // Resume
+    block199 -> block191; // Return path
+    block191 -> block194; // Cleanup
+    block194 -> block198; // Final cleanup
+    block198 -> block199; // Handle exceptions
+}
+```
+
+### Explanation:
+- Each block is represented as a node with a label showing the block number.
+- The edges between blocks represent the flow of control.
+- The `start` node denotes the entry point of the function.
+- The control flow is determined by branches, conditional statements, and function calls within the IR code.
+- The `landing pad` blocks (like `block80 (landing pad)`) are included to represent exception handling.
+
+This DOT format can be processed by graph visualization tools like Graphviz to generate a visual representation of the control flow graph.

@@ -1,0 +1,40 @@
+To create a control flow graph (CFG) from the provided Intermediate Representation (IR) code, we will identify the basic blocks and their connections based on the branching instructions (like `br` and `icmp`). Below is the representation in the DOT format:
+
+```dot
+digraph CFG {
+    rankdir=TB;
+
+    // Define nodes
+    0 [label="Entry"];
+    1 [label="Block 1"];
+    10 [label="Block 10"];
+    12 [label="Block 12"];
+    15 [label="Block 15"];
+    25 [label="Block 25"];
+    29 [label="Block 29"];
+    38 [label="Block 38"];
+    48 [label="Exit"];
+
+    // Define edges
+    0 -> 1;
+    1 -> 10;
+    1 -> 12;
+    10 -> 48;
+    12 -> 15;
+    12 -> 25;
+    15 -> 48;
+    25 -> 29;
+    25 -> 38;
+    29 -> 48;
+    38 -> 48;
+}
+```
+
+### Explanation:
+- Each node represents a basic block or a point in the flow of control.
+- The entries and exits of each block are represented by directed edges.
+- The labels on the nodes (`Block N`) represent the basic blocks where the actual code processing occurs.
+- The `Entry` node represents where the control flow starts, and the `Exit` node represents where it terminates.
+- The edges illustrate the flow from one block to another based on conditional and unconditional branches. 
+
+Adjustments can be made to the labels or structure depending on specific requirements or additional context from the provided IR code.

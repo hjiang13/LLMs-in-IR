@@ -1,0 +1,56 @@
+To construct a control flow graph (CFG) in DOT format from the provided Intermediate Representation (IR) code, we identify the basic blocks and their connections based on the control flow statements (like branches and function calls). Below is a simplified representation of the control flow graph in DOT format for the given IR code.
+
+```dot
+digraph ControlFlowGraph {
+    // Define the nodes
+    node [shape=box];
+    entry [label="Entry"];
+    block3 [label="Block 3"];
+    block14 [label="Block 14"];
+    block24 [label="Block 24"];
+    block22 [label="Block 22"];
+    block85 [label="Block 85"];
+    block25 [label="Block 25"];
+    block48 [label="Block 48"];
+    block52 [label="Block 52"];
+    block54 [label="Block 54"];
+    block63 [label="Block 63"];
+    block82 [label="Block 82"];
+    block89 [label="Block 89"];
+    block91 [label="Block 91"];
+    block97 [label="Block 97"];
+    block99 [label="Block 99"];
+    block110 [label="Block 110"];
+    block113 [label="Block 113"];
+
+    // Define the edges
+    entry -> block3;
+    block3 -> block14;
+    block3 -> block24;
+    block14 -> block14; // loop back
+    block14 -> block24; // exit from loop
+    block24 -> block85;
+    block85 -> block25;
+    block25 -> block22;
+    block25 -> block48;
+    block48 -> block52;
+    block52 -> block54;
+    block54 -> block63;
+    block54 -> block82;
+    block82 -> block85; // loop back
+    block82 -> block89;
+    block89 -> block91;
+    block91 -> block97;
+    block97 -> block99;
+    block99 -> block110;
+    block110 -> block113;
+    block82 -> block110; // exception handling path
+}
+```
+
+### Explanation:
+1. **Nodes**: Each block is represented as a node in the graph. The nodes are labeled with identifiers corresponding to their basic block numbers or descriptive titles.
+2. **Edges**: Directed edges connect nodes based on the control flow. For example, an edge from `entry` to `block3` indicates that execution starts at `block3` after entering the program. Similarly, loops and branches are represented with edges connecting back to the appropriate blocks.
+3. **Control Flow**: The CFG captures the flow of control through the program, including loops and branching decisions.
+
+This representation is simplified and may not capture every nuance of the original IR code; however, it provides a high-level overview of the program's flow. You can visualize this using any Graphviz-compatible tool by saving it as a `.dot` file and running the Graphviz tools to generate images or further analyses.

@@ -1,0 +1,69 @@
+To produce a control flow graph (CFG) in DOT format from the provided intermediate representation (IR) code, we need to identify the basic blocks and the control flow between them. The basic blocks are typically defined by labels in the IR code, and the edges are defined by branch instructions (`br`, `br i1`, `invoke`, etc.).
+
+Here is a simplified version of the control flow graph based on the given IR code:
+
+```dot
+digraph CFG {
+    rankdir=TB;
+
+    // Nodes for each basic block
+    0 [label="Entry"];
+    1 [label="Block 1"];
+    24 [label="Block 24"];
+    27 [label="Block 27"];
+    29 [label="Block 29"];
+    32 [label="Block 32"];
+    39 [label="Block 39"];
+    41 [label="Block 41"];
+    43 [label="Block 43"];
+    45 [label="Block 45"];
+    51 [label="Block 51"];
+    52 [label="Block 52"];
+    62 [label="Block 62"];
+    63 [label="Block 63"];
+    65 [label="Block 65"];
+    69 [label="Block 69"];
+    70 [label="Block 70"];
+    74 [label="Block 74"];
+    80 [label="Block 80"];
+    83 [label="Block 83"];
+    89 [label="Block 89"];
+    91 [label="Block 91"];
+    97 [label="Block 97"];
+    
+    // Edges between the nodes
+    0 -> 1;
+    1 -> 24;
+    24 -> 27;
+    27 -> 29;
+    29 -> 32;
+    32 -> 39;
+    32 -> 43;
+    32 -> 45;
+    39 -> 45;
+    41 -> 74;
+    43 -> 45;
+    45 -> 51;
+    51 -> 52;
+    52 -> 62;
+    62 -> 65;
+    65 -> 69;
+    65 -> 70;
+    69 -> 70;
+    70 -> 80;
+    80 -> 89;
+    89 -> 91;
+    91 -> 97;
+    83 -> 87;
+    87 -> 97;
+    74 -> 79;
+    79 -> 97;
+}
+```
+
+### Explanation:
+- Each node in the graph represents a basic block, labeled with a unique identifier or block number.
+- The edges represent the flow of control between these blocks, which can be due to direct branches, conditionals, or function calls as observed in the IR.
+- The `rankdir=TB` directive specifies that the graph should be directed from top to bottom.
+
+This representation captures the control flow structure without delving into the specifics of each block's content, as per your request.

@@ -1,0 +1,45 @@
+To create a control flow graph (CFG) from the given IR code, we will extract the basic blocks and their connections (edges). Each basic block will be represented as a node, and the control flow between them will be represented as directed edges.
+
+Here is the CFG in DOT format:
+
+```dot
+digraph CFG {
+    // Nodes for basic blocks
+    0 [label="Entry"];
+    1 [label="Block 1"];
+    15 [label="Block 15"];
+    24 [label="Block 24"];
+    31 [label="Block 31"];
+    45 [label="Block 45"];
+    46 [label="Block 46"];
+    50 [label="Block 50"];
+    53 [label="Block 53"];
+    59 [label="Block 59"];
+    66 [label="Block 66"];
+    
+    // Edges
+    0 -> 1;
+    1 -> 15;
+    15 -> 24;
+    15 -> 66;
+    24 -> 31;
+    24 -> 24; // Loop back from Block 24 to Block 24
+    31 -> 45;
+    31 -> 46;
+    46 -> 50;
+    46 -> 53;
+    50 -> 59;
+    53 -> 59;
+    59 -> 15;
+    59 -> 66;
+}
+```
+
+### Explanation:
+- Each basic block is represented by a node with a unique label.
+- The edges represent the control flow between the blocks.
+- The entry point of the function is labeled as `Entry`, which transitions into `Block 1`.
+- The blocks are connected based on the flow of control observed in the IR code.
+- The loop structure is indicated by the edge from `Block 24` back to itself, representing a loop. 
+
+You can visualize this graph using any DOT viewer or graph visualization tool that supports the DOT format.
