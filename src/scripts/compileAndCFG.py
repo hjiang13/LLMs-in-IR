@@ -3,8 +3,8 @@ import os
 import subprocess
 
 # Define paths
-benchmarks_dir = "../../Benchmarks"
-processed_data_dir = "../../processed_data"
+benchmarks_dir = "../../Human_xBenchmarks"
+processed_data_dir = "../../processed_data/Human_x"
 scripts_dir = "."
 
 # Function to compile and generate CFG
