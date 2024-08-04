@@ -1,0 +1,32 @@
+Here is the Call Graph in dot file format:
+
+```
+digraph CallGraph {
+    node [shape=rectangle]
+
+    "_Z8find_maxSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE" [label="_Z8find_maxSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE"]
+    "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm" [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm"]
+    "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc" [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc"]
+    "memcmp" [label="memcmp"]
+    "_ZdlPv" [label="_ZdlPv"]
+    "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_" [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_"]
+    "llvm.memcpy.p0i8.p0i8.i64" [label="llvm.memcpy.p0i8.p0i8.i64"]
+    "llvm.experimental.noalias.scope.decl" [label="llvm.experimental.noalias.scope.decl"]
+    "llvm.lifetime.start.p0i8" [label="llvm.lifetime.start.p0i8"]
+    "llvm.lifetime.end.p0i8" [label="llvm.lifetime.end.p0i8"]
+    "__gxx_personality_v0" [label="__gxx_personality_v0"]
+
+    "_Z8find_maxSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE" -> "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm"
+    "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm" -> "llvm.lifetime.start.p0i8"
+    "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm" -> "llvm.memcpy.p0i8.p0i8.i64"
+    "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm" -> "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc"
+    "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc" -> "memcmp"
+    "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc" -> "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_"
+    "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_" -> "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc"
+    "llvm.memcpy.p0i8.p0i8.i64" -> "llvm.lifetime.start.p0i8"
+    "llvm.lifetime.end.p0i8" -> "llvm.experimental.noalias.scope.decl"
+    "llvm.experimental.noalias.scope.decl" -> "llvm.lifetime.start.p0i8"
+    "_ZdlPv" -> "llvm.lifetime.end.p0i8"
+    "__gxx_personality_v0" -> "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm"
+}
+```
