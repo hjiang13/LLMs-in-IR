@@ -1,0 +1,26 @@
+I've analyzed the provided IR code and extracted the call graph. Here is the call graph in dot file format:
+
+```dot
+digraph call_graph {
+    node[shape=box];
+    edge[dir=back];
+
+    _Z7hex_keyNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE[label="_Z7hex_keyNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE"];
+    llvm_lifetime_start_p0i8[label="llvm_lifetime_start_p0i8"];
+    llvm_memcpy_p0i8_p0i8_i64[label="llvm_memcpy_p0i8_p0i8_i64"];
+    llvm_lifetime_end_p0i8[label="llvm_lifetime_end_p0i8"];
+
+    _Z7hex_keyNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> llvm_lifetime_start_p0i8;
+    _Z7hex_keyNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> llvm_memcpy_p0i8_p0i8_i64;
+    _Z7hex_keyNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> llvm_lifetime_end_p0i8;
+}
+```
+
+In this call graph, we have four nodes:
+
+* `_Z7hex_keyNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE`: the main function
+* `llvm_lifetime_start_p0i8`: a function called by the main function
+* `llvm_memcpy_p0i8_p0i8_i64`: a function called by the main function
+* `llvm_lifetime_end_p0i8`: a function called by the main function
+
+The edges represent the call relationships between these functions. The main function calls the other three functions.

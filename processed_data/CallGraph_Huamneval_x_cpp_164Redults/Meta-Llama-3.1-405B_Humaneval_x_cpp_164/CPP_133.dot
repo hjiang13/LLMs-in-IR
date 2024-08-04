@@ -1,0 +1,26 @@
+After analyzing the provided IR code, I've constructed the call graph in the dot file format. Here is the output:
+
+```
+digraph call_graph {
+    node[shape=box, style=filled];
+
+    label="Call Graph";
+
+    node1[label="_Z11sum_squaresSt6vectorIfSaIfEE"];
+    node2[label="llvm.ceil.f32"];
+    node3[label="llvm.umax.i64"];
+
+    node1 -> node2[label=""];
+    node1 -> node3[label=""];
+    node1 -> node1[label=""];
+
+}
+```
+
+In this call graph:
+
+*   `_Z11sum_squaresSt6vectorIfSaIfEE` is the main function.
+*   `llvm.ceil.f32` and `llvm.umax.i64` are external functions called by the main function.
+*   The self-loop on `_Z11sum_squaresSt6vectorIfSaIfEE` represents a recursive call or a loop within the function.
+
+Please note that this graph only shows the function call relationships and does not include the basic block details. If you need further analysis or have specific questions about the IR code, feel free to ask!

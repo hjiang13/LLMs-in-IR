@@ -1,0 +1,24 @@
+After analyzing the provided IR code, I extracted the call graph and represented it in the dot file format. Here is the result:
+
+```
+digraph call_graph {
+    node[shape=box];
+    "_Z17generate_integersii"[label="_Z17generate_integersii"];
+    "_ZSt20__throw_length_errorPKc"[label="_ZSt20__throw_length_errorPKc"];
+    "_Znwm"[label="_Znwm"];
+    "_ZdlPv"[label="_ZdlPv"];
+    "_Z17generate_integersii" -> "_ZSt20__throw_length_errorPKc"[label=""];
+    "_Z17generate_integersii" -> "_Znwm"[label=""];
+    "_Z17generate_integersii" -> "_ZdlPv"[label=""];
+    "_Z17generate_integersii" -> "_Z17generate_integersii"[label=""];
+}
+```
+
+This call graph shows the following nodes:
+
+* `_Z17generate_integersii`: The main function in the IR code.
+* `_ZSt20__throw_length_errorPKc`: A function called by `_Z17generate_integersii` to throw a length error.
+* `_Znwm`: A function called by `_Z17generate_integersii` to allocate memory.
+* `_ZdlPv`: A function called by `_Z17generate_integersii` to deallocate memory.
+
+The edges represent the calls between these functions. The self-loop on `_Z17generate_integersii` indicates that the function calls itself recursively.

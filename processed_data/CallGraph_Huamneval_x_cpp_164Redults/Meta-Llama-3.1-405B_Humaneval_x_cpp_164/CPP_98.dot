@@ -1,0 +1,18 @@
+After analyzing the provided IR code, I extracted the call graph and represented it in the dot file format. Here is the output:
+
+```
+digraph call_graph {
+    node[shape=box];
+    "_Z11count_upperNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE" [label="count_upper"];
+    "llvm.lifetime.start.p0i8" [label="llvm.lifetime.start.p0i8"];
+    "llvm.memcpy.p0i8.p0i8.i64" [label="llvm.memcpy.p0i8.p0i8.i64"];
+    "llvm.lifetime.end.p0i8" [label="llvm.lifetime.end.p0i8"];
+    "_Z11count_upperNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE" -> "llvm.lifetime.start.p0i8";
+    "_Z11count_upperNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE" -> "llvm.memcpy.p0i8.p0i8.i64";
+    "_Z11count_upperNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE" -> "llvm.lifetime.end.p0i8";
+}
+```
+
+In this graph, each node represents a function, and the edges represent the call relationships between them. The `count_upper` function calls `llvm.lifetime.start.p0i8`, `llvm.memcpy.p0i8.p0i8.i64`, and `llvm.lifetime.end.p0i8`.
+
+Note that I did not include the basic block content in the graph, as per your request. The graph only shows the title of each node, which corresponds to the function name.

@@ -1,0 +1,28 @@
+After analyzing the provided IR code, I extracted the call graph and represented it in the dot file format. Here is the result:
+
+```
+digraph call_graph {
+    node[shape=box, style=filled];
+
+    label="Call Graph";
+
+    Node1[label="get_positive"];
+    Node2[label="llvm.memset.p0i8.i64"];
+    Node3[label="llvm.memmove.p0i8.p0i8.i64"];
+    Node4[label="_ZSt20__throw_length_errorPKc"];
+    Node5[label="_Znwm"];
+    Node6[label="_ZdlPv"];
+
+    Node1 -> Node2;
+    Node1 -> Node3;
+    Node1 -> Node4;
+    Node1 -> Node5;
+    Node1 -> Node6;
+    Node4 -> Node6;
+    Node5 -> Node6;
+}
+```
+
+This dot file represents the call graph, where each node corresponds to a function, and the edges represent the calls between them. The `get_positive` function is the entry point, and it calls the other functions.
+
+Note that I did not include the basic block details, as per your request. If you need any further assistance or have questions, feel free to ask!

@@ -1,0 +1,22 @@
+After analyzing the provided IR code, I extracted the call graph and represented it in the dot file format. Here is the output:
+
+```
+digraph call_graph {
+    node[shape=box, style=filled];
+
+    "_Z4fib4i" [label="_Z4fib4i"];
+    "llvm.lifetime.start.p0i8" [label="llvm.lifetime.start.p0i8"];
+    "llvm.lifetime.end.p0i8" [label="llvm.lifetime.end.p0i8"];
+
+    "_Z4fib4i" -> "llvm.lifetime.start.p0i8";
+    "_Z4fib4i" -> "llvm.lifetime.end.p0i8";
+}
+```
+
+In this call graph, we have three nodes:
+
+* `_Z4fib4i`: The `fib` function.
+* `llvm.lifetime.start.p0i8`: The `llvm.lifetime.start` intrinsic function.
+* `llvm.lifetime.end.p0i8`: The `llvm.lifetime.end` intrinsic function.
+
+The edges represent the calls between these functions. The `fib` function calls both `llvm.lifetime.start` and `llvm.lifetime.end`. Note that there are no other function calls in the provided IR code, so the call graph is relatively simple.

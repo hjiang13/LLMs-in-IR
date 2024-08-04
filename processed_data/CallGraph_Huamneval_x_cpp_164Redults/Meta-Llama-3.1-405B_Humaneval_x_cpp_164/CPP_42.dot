@@ -1,0 +1,51 @@
+After analyzing the provided IR code, I've extracted the call graph in the dot file format. Here it is:
+
+```
+digraph call_graph {
+    node[shape=box, style=filled];
+
+    label="Call Graph";
+
+    EntryPoint[label="incr_list"];
+    llvm_umax_i64[label="llvm.umax.i64"];
+    llvm_memset_p0i8_i64[label="llvm.memset.p0i8.i64"];
+
+    EntryPoint -> llvm_umax_i64;
+    EntryPoint -> llvm_memset_p0i8_i64;
+
+    BB2[label="BB2"];
+    BB11[label="BB11"];
+    BB15[label="BB15"];
+    BB22[label="BB22"];
+    BB24[label="BB24"];
+    BB51[label="BB51"];
+    BB54[label="BB54"];
+    BB65[label="BB65"];
+    BB67[label="BB67"];
+    BB69[label="BB69"];
+    BB76[label="BB76"];
+
+    EntryPoint -> BB2;
+    BB2 -> BB11;
+    BB2 -> BB69;
+    BB11 -> BB15;
+    BB11 -> BB67;
+    BB15 -> BB22;
+    BB15 -> BB51;
+    BB22 -> BB24;
+    BB24 -> BB24;
+    BB24 -> BB51;
+    BB51 -> BB54;
+    BB51 -> BB65;
+    BB54 -> BB65;
+    BB65 -> BB69;
+    BB65 -> BB67;
+    BB67 -> BB76;
+    BB76 -> BB76;
+    BB76 -> BB69;
+}
+```
+
+Please note that I've only included the basic block titles as nodes, without listing their contents. The edges represent the control flow between the basic blocks. The `llvm.umax.i64` and `llvm.memset.p0i8.i64` nodes represent the external function calls.
+
+You can render this dot file using Graphviz to visualize the call graph.

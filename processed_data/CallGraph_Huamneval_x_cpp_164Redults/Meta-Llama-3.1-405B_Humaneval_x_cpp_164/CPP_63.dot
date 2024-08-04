@@ -1,0 +1,27 @@
+After analyzing the provided IR code, I've generated the call graph in the dot file format. Here's the output:
+
+```
+digraph call_graph {
+    node[shape=box, style=filled];
+
+    _Z6fibfibi[label="_Z6fibfibi"];
+    llvm_lifetime_start_p0i8[label="llvm.lifetime.start.p0i8"];
+    llvm_lifetime_end_p0i8[label="llvm.lifetime.end.p0i8"];
+
+    _Z6fibfibi -> llvm_lifetime_start_p0i8;
+    _Z6fibfibi -> llvm_lifetime_end_p0i8;
+    _Z6fibfibi -> _Z6fibfibi[label="recursive call"];
+
+    label="Call Graph";
+}
+```
+
+In this call graph:
+
+*   `_Z6fibfibi` represents the `fib` function.
+*   `llvm_lifetime_start_p0i8` and `llvm_lifetime_end_p0i8` represent the `llvm.lifetime.start.p0i8` and `llvm.lifetime.end.p0i8` functions, respectively.
+*   The edges indicate the function calls between these nodes. The `_Z6fibfibi` function calls `llvm_lifetime_start_p0i8` and `llvm_lifetime_end_p0i8`. Additionally, `_Z6fibfibi` has a recursive call to itself.
+
+To visualize the call graph, you can save this output to a file with a `.dot` extension and use a tool like Graphviz to render it as an image.
+
+Note: The basic blocks within the `_Z6fibfibi` function are not explicitly represented in this call graph. If you need to visualize the control flow within the function, I can provide the control flow graph in a separate output.

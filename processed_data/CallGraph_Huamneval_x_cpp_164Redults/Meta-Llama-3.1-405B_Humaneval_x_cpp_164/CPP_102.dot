@@ -1,0 +1,30 @@
+After analyzing the provided IR code, I extracted the call graph and represented it in the dot file format. Here is the output:
+
+```
+digraph call_graph {
+    node[shape=box, style=filled];
+    "_Z10choose_numii"[label="_Z10choose_numii"];
+    "4"[label="4"];
+    "9"[label="9"];
+    "12"[label="12"];
+
+    "_Z10choose_numii" -> "4"[label=""];
+    "4" -> "9"[label=""];
+    "4" -> "12"[label=""];
+    "9" -> "12"[label=""];
+}
+```
+
+In this call graph, each node represents a basic block or a function, and the edges represent the control flow between them. The node labels are the titles of each basic block or function.
+
+Here's a brief explanation of the nodes and edges:
+
+* `_Z10choose_numii` is the function node.
+* `4`, `9`, and `12` are basic block nodes within the `_Z10choose_numii` function.
+* The edges represent the control flow between the basic blocks:
+	+ `_Z10choose_numii` -> `4`: The function entry point jumps to basic block `4`.
+	+ `4` -> `9`: Basic block `4` branches to basic block `9`.
+	+ `4` -> `12`: Basic block `4` also branches to basic block `12`.
+	+ `9` -> `12`: Basic block `9` branches to basic block `12`.
+
+Note that this call graph only shows the control flow within the `_Z10choose_numii` function, as there are no external function calls in the provided IR code.

@@ -1,0 +1,30 @@
+After analyzing the provided IR code, I generated the call graph in the dot file format. Here is the output:
+
+```
+digraph call_graph {
+    node[shape=box, style=filled];
+    edge[dir=back];
+
+    _Z23greatest_common_divisorii[label="_Z23greatest_common_divisorii"];
+    3[label="3"];
+    11[label="11"];
+
+    _Z23greatest_common_divisorii -> 3;
+    3 -> 3[label="loop"];
+    3 -> 11;
+}
+```
+
+In this call graph, we have three nodes:
+
+* `_Z23greatest_common_divisorii`: the function node
+* `3`: the basic block node (loop header)
+* `11`: the basic block node (exit block)
+
+The edges represent the control flow between the nodes:
+
+* `_Z23greatest_common_divisorii` calls `3` (the loop header)
+* `3` has a self-loop (representing the loop)
+* `3` calls `11` (the exit block)
+
+Note that the label "loop" on the self-loop edge is just a notation to indicate that it's a loop, not an actual label in the IR code.

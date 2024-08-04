@@ -1,0 +1,24 @@
+After analyzing the provided IR code, I generated the call graph in the dot file format. Here is the result:
+
+```
+digraph call_graph {
+    node[shape=box];
+    edge[dir=back];
+
+    label="Call Graph";
+
+    node1[label="llvm.umax.i64"];
+    node2[label="_Z10count_numsSt6vectorIiSaIiEE"];
+
+    node2 -> node1[label="calls"];
+}
+```
+
+In this call graph, we have two nodes:
+
+1. `llvm.umax.i64`: This is a declared function in the IR code, which is a part of the LLVM standard library.
+2. `_Z10count_numsSt6vectorIiSaIiEE`: This is the defined function in the IR code, which is the main function of interest.
+
+There is one edge between these two nodes, indicating that `_Z10count_numsSt6vectorIiSaIiEE` calls `llvm.umax.i64`.
+
+Please note that this call graph only includes the functions present in the provided IR code. If there are other functions called by `_Z10count_numsSt6vectorIiSaIiEE` that are not defined in this IR code, they will not be included in this call graph.

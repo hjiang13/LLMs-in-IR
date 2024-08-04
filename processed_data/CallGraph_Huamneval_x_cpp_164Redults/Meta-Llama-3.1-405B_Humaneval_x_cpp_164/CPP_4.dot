@@ -1,0 +1,27 @@
+After analyzing the provided IR code, I extracted the call graph and represented it in the dot file format. Here is the output:
+
+```
+digraph call_graph {
+    node[shape=box, style=filled];
+
+    label="Call Graph";
+
+    Node1[label="mean_absolute_deviation"];
+    Node2[label="llvm.umax.i64"];
+    Node3[label="llvm.fabs.f32"];
+
+    Node1 -> Node2;
+    Node1 -> Node3;
+    Node1 -> Node1[style=dashed, label="self-loop"];
+}
+```
+
+In this call graph:
+
+*   `Node1` represents the function `mean_absolute_deviation`.
+*   `Node2` represents the function `llvm.umax.i64`.
+*   `Node3` represents the function `llvm.fabs.f32`.
+*   The solid edges (`->`) represent the call relationships between functions.
+*   The dashed edge (`->`) with the label "self-loop" indicates that `mean_absolute_deviation` has a self-loop, meaning it calls itself recursively.
+
+You can visualize this call graph using tools like Graphviz.

@@ -1,0 +1,23 @@
+After analyzing the provided IR code, I've constructed the call graph in the dot file format. Here is the output:
+
+```
+digraph call_graph {
+    node[shape=box];
+    "_Z3fibi"[label="_Z3fibi"];
+    "llvm.lifetime.start.p0i8"[label="llvm.lifetime.start.p0i8"];
+    "llvm.lifetime.end.p0i8"[label="llvm.lifetime.end.p0i8"];
+    
+    "_Z3fibi" -> "llvm.lifetime.start.p0i8"[label=""];
+    "_Z3fibi" -> "llvm.lifetime.end.p0i8"[label=""];
+    "_Z3fibi" -> "_Z3fibi"[label=""];
+}
+```
+
+In this call graph:
+
+*   `_Z3fibi` represents the function `fibi`.
+*   `llvm.lifetime.start.p0i8` and `llvm.lifetime.end.p0i8` are intrinsic functions for lifetime management.
+
+The graph shows that `fibi` calls `llvm.lifetime.start.p0i8` and `llvm.lifetime.end.p0i8`, and there is a self-loop on `fibi` indicating a recursive call.
+
+Note that the graph does not include any basic block information, as per your request. The focus is solely on the function-level call relationships.

@@ -1,0 +1,33 @@
+After analyzing the provided IR code, I extracted the call graph and represented it in the dot file format. Here is the output:
+
+```
+digraph call_graph {
+    node[shape=box];
+    "_Z11make_a_pilei"[label="_Z11make_a_pilei"];
+    "_Znwm"[label="_Znwm"];
+    "_ZSt20__throw_length_errorPKc"[label="_ZSt20__throw_length_errorPKc"];
+    "_ZdlPv"[label="_ZdlPv"];
+    "llvm.memmove.p0i8.p0i8.i64"[label="llvm.memmove.p0i8.p0i8.i64"];
+    "llvm.memset.p0i8.i64"[label="llvm.memset.p0i8.i64"];
+
+    "_Z11make_a_pilei" -> "_Znwm"[label=""];
+    "_Z11make_a_pilei" -> "_ZSt20__throw_length_errorPKc"[label=""];
+    "_Z11make_a_pilei" -> "_ZdlPv"[label=""];
+    "_Z11make_a_pilei" -> "llvm.memmove.p0i8.p0i8.i64"[label=""];
+    "_Z11make_a_pilei" -> "llvm.memset.p0i8.i64"[label=""];
+}
+```
+
+In this graph, each node represents a function, and the edges represent the calls between functions. The labels on the edges are empty, as there is no specific information about the call sites.
+
+Note that this graph only includes the functions that are directly called by the `_Z11make_a_pilei` function. If you want to include all the functions in the IR code, you can modify the graph accordingly.
+
+Here is a brief explanation of each node:
+
+* `_Z11make_a_pilei`: The main function that creates a pile.
+* `_Znwm`: A function that allocates memory.
+* `_ZSt20__throw_length_errorPKc`: A function that throws a length error.
+* `_ZdlPv`: A function that deletes memory.
+* `llvm.memmove.p0i8.p0i8.i64` and `llvm.memset.p0i8.i64`: LLVM intrinsic functions for memory movement and setting.
+
+Please let me know if you need any further clarification!

@@ -1,0 +1,20 @@
+After analyzing the provided IR code, I extracted the call graph and represented it in the dot file format. Here is the output:
+
+```
+digraph call_graph {
+    node[shape=box];
+    "_Z10string_xorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_"[label="_Z10string_xorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_"];
+    "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_mutateEmmPKcm"[label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_mutateEmmPKcm"];
+    "_ZdlPv"[label="_ZdlPv"];
+    "_Z10string_xorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_" -> "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_mutateEmmPKcm"[label="calls"];
+    "_Z10string_xorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_" -> "_ZdlPv"[label="calls"];
+}
+```
+
+This dot file represents the call graph with three nodes:
+
+* `_Z10string_xorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_` (the main function)
+* `_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_mutateEmmPKcm` (a function called by the main function)
+* `_ZdlPv` (another function called by the main function)
+
+The edges represent the calls between these functions. The main function calls both `_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_mutateEmmPKcm` and `_ZdlPv`.

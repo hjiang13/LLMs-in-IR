@@ -1,0 +1,32 @@
+After analyzing the provided IR code, I extracted the call graph and represented it in the dot file format. Here is the output:
+
+```
+digraph call_graph {
+    node[shape=box, style=filled];
+
+    label="Call Graph";
+
+    node1[label="_Z21double_the_differenceSt6vectorIfSaIfEE"];
+    node2[label="llvm.round.f32"];
+    node3[label="llvm.umax.i64"];
+
+    node1 -> node2[label=""];
+    node1 -> node3[label=""];
+    node1 -> node1[label=""];
+
+}
+```
+
+In this call graph:
+
+*   `node1` represents the function `_Z21double_the_differenceSt6vectorIfSaIfEE`.
+*   `node2` represents the function `llvm.round.f32`.
+*   `node3` represents the function `llvm.umax.i64`.
+
+The edges represent the calls between these functions:
+
+*   `_Z21double_the_differenceSt6vectorIfSaIfEE` calls `llvm.round.f32`.
+*   `_Z21double_the_differenceSt6vectorIfSaIfEE` calls `llvm.umax.i64`.
+*   `_Z21double_the_differenceSt6vectorIfSaIfEE` has a self-loop, indicating a recursive call or a loop within the function.
+
+Note that the labels on the edges are empty, as there is no specific information about the call sites in the provided IR code. If you need more detailed information, please provide the relevant data.

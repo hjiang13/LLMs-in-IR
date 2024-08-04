@@ -1,0 +1,33 @@
+After analyzing the provided IR code, I generated the call graph in the dot file format. Here it is:
+
+```
+digraph call_graph {
+    node[shape=box];
+    "_Z9is_sortedSt6vectorIiSaIiEE"[label="_Z9is_sortedSt6vectorIiSaIiEE"];
+    "1"[label="1"];
+    "11"[label="11"];
+    "13"[label="13"];
+    "19"[label="19"];
+    "23"[label="23"];
+    "29"[label="29"];
+    "32"[label="32"];
+
+    "_Z9is_sortedSt6vectorIiSaIiEE" -> "1"[label=""];
+    "1" -> "11"[label=""];
+    "1" -> "32"[label=""];
+    "11" -> "13"[label=""];
+    "13" -> "19"[label=""];
+    "13" -> "13"[label=""];
+    "13" -> "32"[label=""];
+    "19" -> "23"[label=""];
+    "19" -> "29"[label=""];
+    "23" -> "32"[label=""];
+    "23" -> "29"[label=""];
+    "29" -> "13"[label=""];
+    "29" -> "32"[label=""];
+}
+```
+
+This call graph represents the control flow of the provided IR code. Each node represents a basic block, and the edges represent the control flow between them. Note that this graph does not include the contents of each basic block, only their titles.
+
+To render this graph, you can use tools like Graphviz. Save this code in a file with a `.dot` extension (e.g., `call_graph.dot`) and run the command `dot -Tpng call_graph.dot -o call_graph.png` to generate an image of the graph.

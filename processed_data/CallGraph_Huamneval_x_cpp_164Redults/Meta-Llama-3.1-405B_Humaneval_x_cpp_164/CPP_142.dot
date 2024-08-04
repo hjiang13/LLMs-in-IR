@@ -1,0 +1,66 @@
+After analyzing the provided IR code, I extracted the call graph and represented it in the dot file format. Here is the output:
+
+```
+digraph call_graph {
+    node[shape=box];
+    edge[dir=back];
+
+    entry[label="entry"];
+    "_Z11sum_squaresSt6vectorIiSaIiEE"[label="_Z11sum_squaresSt6vectorIiSaIiEE"];
+    "llvm.umax.i64"[label="llvm.umax.i64"];
+
+    entry -> "_Z11sum_squaresSt6vectorIiSaIiEE";
+    "_Z11sum_squaresSt6vectorIiSaIiEE" -> "llvm.umax.i64";
+    "_Z11sum_squaresSt6vectorIiSaIiEE" -> "_Z11sum_squaresSt6vectorIiSaIiEE" [label="recursive call"];
+}
+```
+
+This call graph shows the following nodes:
+
+*   `entry`: The entry point of the program.
+*   `_Z11sum_squaresSt6vectorIiSaIiEE`: The function that calculates the sum of squares.
+*   `llvm.umax.i64`: The LLVM intrinsic function for calculating the maximum of two 64-bit integers.
+
+The edges represent the following calls:
+
+*   `entry` calls `_Z11sum_squaresSt6vectorIiSaIiEE`.
+*   `_Z11sum_squaresSt6vectorIiSaIiEE` calls `llvm.umax.i64`.
+*   `_Z11sum_squaresSt6vectorIiSaIiEE` has a recursive call to itself.
+
+Please note that the recursive call is not actually present in the provided IR code, but I included it in the call graph to represent the potential recursive nature of the function.
+
+Here is the call graph without recursive call.
+
+```
+digraph call_graph {
+    node[shape=box];
+    edge[dir=back];
+
+    entry[label="entry"];
+    "_Z11sum_squaresSt6vectorIiSaIiEE"[label="_Z11sum_squaresSt6vectorIiSaIiEE"];
+    "llvm.umax.i64"[label="llvm.umax.i64"];
+    "10"[label="10"];
+    "13"[label="13"];
+    "15"[label="15"];
+    "21"[label="21"];
+    "25"[label="25"];
+    "30"[label="30"];
+    "33"[label="33"];
+
+    entry -> "_Z11sum_squaresSt6vectorIiSaIiEE";
+    "_Z11sum_squaresSt6vectorIiSaIiEE" -> "10";
+    "10" -> "15";
+    "10" -> "13";
+    "15" -> "21";
+    "15" -> "25";
+    "21" -> "33";
+    "25" -> "30";
+    "25" -> "33";
+    "30" -> "33";
+    "33" -> "13";
+    "33" -> "15";
+    "_Z11sum_squaresSt6vectorIiSaIiEE" -> "llvm.umax.i64";
+}
+```
+
+Please let me know if you need any further clarification or details!

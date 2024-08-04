@@ -1,0 +1,31 @@
+After analyzing the provided IR code, I've constructed the call graph in the dot file format. Since there's only one function in the IR code, the call graph is quite simple. Here's the output:
+
+```
+digraph call_graph {
+    node[shape=box];
+    "_Z15largest_divisori" [label="_Z15largest_divisori"];
+    "_Z15largest_divisori" -> "_Z15largest_divisori" [label=" recursive call (not present)"];
+}
+```
+
+However, please note that the function `_Z15largest_divisori` does not make any calls to other functions, nor does it call itself recursively (contrary to what the label might suggest). The `norecurse` attribute in the IR code explicitly indicates that the function does not call itself. Therefore, the graph does not contain any edges.
+
+If you'd like to visualize the control flow graph (CFG) within the function, I can provide that as well. The CFG would show the basic blocks and their connections. Let me know if you're interested! 
+
+Here is the CFG in dot file format:
+```
+digraph cfg {
+    node[shape=box];
+    "1" [label="entry"];
+    "3" [label="while.body"];
+    "8" [label="while.body2"];
+    "12" [label="exit"];
+    "1" -> "3" [label=""];
+    "1" -> "12" [label=""];
+    "3" -> "8" [label=""];
+    "3" -> "12" [label=""];
+    "8" -> "3" [label=""];
+    "8" -> "12" [label=""];
+}
+```
+Please note that the labels for the basic blocks are arbitrary and only used for identification purposes. The actual content of each basic block is not included in the graph.

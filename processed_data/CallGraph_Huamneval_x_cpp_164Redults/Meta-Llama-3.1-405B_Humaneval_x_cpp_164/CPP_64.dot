@@ -1,0 +1,22 @@
+After analyzing the provided IR code, I extracted the call graph and represented it in the dot file format. Here is the output:
+
+```dot
+digraph call_graph {
+    node[shape=box];
+
+    _Z12vowels_countNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE[label="_Z12vowels_countNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE"];
+    llvm_lifetime_start_p0i8[label="llvm_lifetime_start_p0i8"];
+    llvm_memcpy_p0i8_p0i8_i64[label="llvm_memcpy_p0i8_p0i8_i64"];
+    llvm_lifetime_end_p0i8[label="llvm_lifetime_end_p0i8"];
+
+    _Z12vowels_countNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> llvm_lifetime_start_p0i8;
+    _Z12vowels_countNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> llvm_memcpy_p0i8_p0i8_i64;
+    _Z12vowels_countNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> llvm_lifetime_end_p0i8;
+}
+```
+
+In this dot file, each node represents a function, and the edges represent the call relationships between them. The `_Z12vowels_countNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE` node is the main function, which calls the `llvm_lifetime_start_p0i8`, `llvm_memcpy_p0i8_p0i8_i64`, and `llvm_lifetime_end_p0i8` functions.
+
+Note that the `__gxx_personality_v0` function is not included in the call graph as it is not directly called by any other function in the provided IR code.
+
+You can use a tool like Graphviz to visualize the call graph represented in this dot file.

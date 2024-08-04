@@ -1,0 +1,24 @@
+After analyzing the provided IR code, I extracted the call graph and represented it in the dot file format. Here is the output:
+
+```
+digraph call_graph {
+    node[shape=box, style=filled];
+
+    _Z15is_simple_powerii[label="_Z15is_simple_powerii"];
+    2[label="2"];
+    5[label="5"];
+    16[label="16"];
+
+    _Z15is_simple_powerii -> 2;
+    2 -> 5;
+    5 -> 16;
+    5 -> 5[label="loop"];
+    16 -> _Z15is_simple_powerii;
+}
+```
+
+In this representation, each node corresponds to a basic block or a function. The edges represent the control flow between the nodes. Note that the edge from node `5` to itself represents the loop.
+
+To render this graph, you can use a tool like Graphviz. Save the above code in a file with a `.dot` extension and run `dot -Tpng -o output.png input.dot` to generate a PNG image of the call graph.
+
+Let me know if you have any further questions or if there's anything else I can help you with!

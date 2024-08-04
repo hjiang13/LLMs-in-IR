@@ -1,0 +1,27 @@
+After analyzing the provided IR code, I've generated the call graph in the dot file format. Here it is:
+
+```
+digraph call_graph {
+    node[shape=box, style=filled];
+
+    "_Z10prod_signsSt6vectorIiSaIiEE" [label="_Z10prod_signsSt6vectorIiSaIiEE"];
+    "llvm.abs.i32" [label="llvm.abs.i32"];
+    "llvm.umax.i64" [label="llvm.umax.i64"];
+
+    "_Z10prod_signsSt6vectorIiSaIiEE" -> "llvm.abs.i32" [label=""];
+    "_Z10prod_signsSt6vectorIiSaIiEE" -> "llvm.umax.i64" [label=""];
+    "_Z10prod_signsSt6vectorIiSaIiEE" -> "_Z10prod_signsSt6vectorIiSaIiEE" [label=""];
+
+    label="Call Graph";
+}
+```
+
+This dot file describes the call graph with three nodes: `_Z10prod_signsSt6vectorIiSaIiEE`, `llvm.abs.i32`, and `llvm.umax.i64`. The edges represent the call relationships between these functions.
+
+Here's a brief explanation of each node:
+
+*   `_Z10prod_signsSt6vectorIiSaIiEE`: This is the main function in the provided IR code.
+*   `llvm.abs.i32`: This is a utility function for calculating the absolute value of a 32-bit integer.
+*   `llvm.umax.i64`: This is a utility function for calculating the maximum value between two 64-bit integers.
+
+You can use a tool like Graphviz to visualize the call graph. Just save the above dot file to a file (e.g., `call_graph.dot`) and run the command `dot -Tpng call_graph.dot -o call_graph.png` to generate a PNG image representing the call graph.

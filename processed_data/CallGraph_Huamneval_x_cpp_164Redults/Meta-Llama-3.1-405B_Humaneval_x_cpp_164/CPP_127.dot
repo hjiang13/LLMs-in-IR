@@ -1,0 +1,24 @@
+After analyzing the provided IR code, I extracted the call graph and represented it in the dot file format. Here is the output:
+
+```
+digraph call_graph {
+    node[shape=box, style=filled];
+
+    label="Call Graph";
+
+    Node1[label="_Z12intersectionB5cxx11St6vectorIiSaIiEES1_"];
+    Node2[label="llvm.memcpy.p0i8.p0i8.i64"];
+    Node3[label="__gxx_personality_v0"];
+
+    Node1 -> Node2;
+    Node1 -> Node3;
+}
+```
+
+In this call graph:
+
+*   Node1 represents the function `_Z12intersectionB5cxx11St6vectorIiSaIiEES1_`, which is the main function in the provided IR code.
+*   Node2 represents the function `llvm.memcpy.p0i8.p0i8.i64`, which is called by the main function.
+*   Node3 represents the function `__gxx_personality_v0`, which is also called by the main function.
+
+The edges in the graph represent the call relationships between these functions. The main function calls both `llvm.memcpy.p0i8.p0i8.i64` and `__gxx_personality_v0`.

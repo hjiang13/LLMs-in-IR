@@ -1,0 +1,25 @@
+After analyzing the provided IR code, I extracted the call graph and represented it in the DOT format. Here is the result:
+
+```
+digraph call_graph {
+    node[shape=box,stile=filled];
+
+    "_Z3eatiii"[label="_Z3eatiii"];
+    "_Z DWC _ZNwm"[label="_Znwm"];
+    "_Z__gxx_personality_v0"[label="_Z__gxx_personality_v0"];
+    "llvm.memset.p0i8.i64"[label="llvm.memset.p0i8.i64"];
+
+    "_Z3eatiii" -> "_Znwm"[label=""];
+    "_Z3eatiii" -> "llvm.memset.p0i8.i64"[label=""];
+    "_Z3eatiii" -> "_Z__gxx_personality_v0"[label=""];
+}
+```
+
+In this call graph:
+
+*   `_Z3eatiii` is the main function.
+*   `_Znwm` is the memory allocation function (new).
+*   `llvm.memset.p0i8.i64` is the memset function.
+*   `_Z__gxx_personality_v0` is the personality function for exception handling.
+
+The edges represent the calls between functions.

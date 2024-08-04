@@ -1,0 +1,45 @@
+After analyzing the provided IR code, I've extracted the call graph and represented it in the dot file format. Here is the output:
+
+```
+digraph call_graph {
+    node[shape=box, style=filled];
+
+    label="Call Graph";
+
+    Node2[label="bb2"];
+    Node4[label="bb4"];
+    Node9[label="bb9"];
+    Node16[label="bb16"];
+    Node18[label="bb18"];
+    Node55[label="bb55"];
+    Node62[label="bb62"];
+    Node77[label="bb77"];
+    Node83[label="bb83"];
+    Node86[label="bb86"];
+    Node88[label="bb88"];
+
+    Node2 -> Node4[label=""];
+    Node2 -> Node86[label=""];
+    Node4 -> Node9[label=""];
+    Node4 -> Node83[label=""];
+    Node9 -> Node16[label=""];
+    Node9 -> Node55[label=""];
+    Node16 -> Node18[label=""];
+    Node18 -> Node18[label=""];
+    Node18 -> Node55[label=""];
+    Node55 -> Node62[label=""];
+    Node55 -> Node77[label=""];
+    Node62 -> Node77[label=""];
+    Node77 -> Node83[label=""];
+    Node77 -> Node86[label=""];
+    Node83 -> Node88[label=""];
+    Node86 -> Node88[label=""];
+    Node88 -> Node86[label=""];
+    Node88 -> Node88[label=""];
+
+    llvm_vector_reduce_add_v4i32[label="llvm.vector.reduce.add.v4i32"];
+    Node77 -> llvm_vector_reduce_add_v4i32[label=""];
+}
+```
+
+This dot file represents the call graph, where each node corresponds to a basic block in the IR code. The edges represent the control flow between the basic blocks. Note that I've only shown the title of each node, without including the content of each basic block. The `llvm_vector_reduce_add_v4i32` node represents the external function call.

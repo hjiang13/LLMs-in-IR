@@ -1,0 +1,25 @@
+After analyzing the IR code, I've generated the call graph in the dot file format. Here it is:
+
+```
+digraph call_graph {
+    node[shape=box, style=filled];
+
+    "_Z15closest_integerNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE" [label="closest_integer"];
+    "strtod" [label="strtod"];
+    "llvm.round.f64" [label="llvm.round.f64"];
+    "__gxx_personality_v0" [label="__gxx_personality_v0"];
+
+    "_Z15closest_integerNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE" -> "strtod";
+    "_Z15closest_integerNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE" -> "llvm.round.f64";
+}
+```
+
+In this call graph:
+
+*   Each node represents a function.
+*   The edges represent the call relationships between functions.
+*   `_Z15closest_integerNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE` is the `closest_integer` function.
+*   `strtod` and `llvm.round.f64` are called by `closest_integer`.
+*   `__gxx_personality_v0` is not called by any function in this IR code, so it has no incoming edges.
+
+Note that this call graph only shows the functions present in the provided IR code and their call relationships. It does not include any other functions that may be called indirectly or any other parts of the program.

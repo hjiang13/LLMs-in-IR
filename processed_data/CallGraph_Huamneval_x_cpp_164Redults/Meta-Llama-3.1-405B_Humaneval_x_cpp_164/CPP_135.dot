@@ -1,0 +1,39 @@
+After analyzing the provided IR code, I extracted the call graph and represented it in the dot file format. Here is the output:
+
+```
+digraph call_graph {
+    node[shape=box, style=filled];
+
+    label="Call Graph";
+
+    Node1[label="%1"];
+    Node10[label="%10"];
+    Node16[label="%16"];
+    Node18[label="%18"];
+    Node23[label="%23"];
+    Node36[label="%36"];
+    Node38[label="%38"];
+    llvm_umax_i64[label="llvm.umax.i64"];
+
+    Node1 -> Node10;
+    Node10 -> Node16;
+    Node10 -> Node18;
+    Node16 -> Node38;
+    Node18 -> Node23;
+    Node18 -> Node36;
+    Node23 -> Node23;
+    Node23 -> Node36;
+    Node36 -> Node1;
+    Node38 -> Node18;
+    Node38 -> Node38;
+    Node10 -> llvm_umax_i64;
+}
+```
+
+In this graph:
+
+*   Each node represents a basic block in the IR code.
+*   The edges represent the control flow between the basic blocks.
+*   The `llvm_umax_i64` node represents the external function call.
+
+Note that this graph does not include the contents of each basic block, only the control flow between them.
