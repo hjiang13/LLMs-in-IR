@@ -1,0 +1,44 @@
+To create a call graph from the provided Intermediate Representation (IR) code, we need to analyze the function calls made within the code and represent them as nodes and edges in a DOT format. Below is the call graph represented in DOT format:
+
+```dot
+digraph CallGraph {
+    // Nodes representing the functions
+    node [shape=box];
+    
+    _Z13encode_cyclicNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE [label="_Z13encode_cyclicNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE"];
+    _Z13decode_cyclicNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE [label="_Z13decode_cyclicNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE"];
+    @_ZdlPv [label="@_ZdlPv"];
+    @_ZSt24__throw_out_of_range_fmtPKcz [label="@_ZSt24__throw_out_of_range_fmtPKcz"];
+    @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm [label="@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm"];
+    @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc [label="@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc"];
+    @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm [label="@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm"];
+    llvm.lifetime.start.p0i8 [label="llvm.lifetime.start.p0i8"];
+    llvm.lifetime.end.p0i8 [label="llvm.lifetime.end.p0i8"];
+    llvm.memcpy.p0i8.p0i8.i64 [label="llvm.memcpy.p0i8.p0i8.i64"];
+    llvm.experimental.noalias.scope.decl [label="llvm.experimental.noalias.scope.decl"];
+
+    // Edges representing function calls
+    _Z13encode_cyclicNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> llvm.lifetime.start.p0i8;
+    _Z13encode_cyclicNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> llvm.lifetime.end.p0i8;
+    _Z13encode_cyclicNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> _ZdlPv;
+    _Z13encode_cyclicNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> _ZSt24__throw_out_of_range_fmtPKcz;
+    _Z13encode_cyclicNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm;
+    _Z13encode_cyclicNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc;
+    _Z13encode_cyclicNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm;
+    _Z13decode_cyclicNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> llvm.lifetime.start.p0i8;
+    _Z13decode_cyclicNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> llvm.lifetime.end.p0i8;
+    _Z13decode_cyclicNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> _ZdlPv;
+    _Z13decode_cyclicNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> _ZSt24__throw_out_of_range_fmtPKcz;
+    _Z13decode_cyclicNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm;
+    _Z13decode_cyclicNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc;
+    _Z13decode_cyclicNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm;
+}
+```
+
+### Explanation:
+- The `digraph` keyword indicates that we are creating a directed graph.
+- Each function is represented as a node using the `label` attribute to display its name.
+- The edges (`->`) represent function calls from one function to another.
+- Functions like `llvm.lifetime.start.p0i8` and `llvm.lifetime.end.p0i8` are also included in the call graph as they are called within the defined functions.
+
+This representation can be visualized using graph visualization tools that support DOT format, such as Graphviz.

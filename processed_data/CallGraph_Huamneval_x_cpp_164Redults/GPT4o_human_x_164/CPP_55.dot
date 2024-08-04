@@ -1,0 +1,25 @@
+Based on the provided Intermediate Representation (IR) code, we can extract the call graph. The graph will consist of nodes representing functions and edges representing calls between those functions.
+
+In your IR code, we have the function `_Z3fibi` defined, which makes calls to the functions `@llvm.lifetime.start.p0i8` and `@llvm.lifetime.end.p0i8`. 
+
+Here's the output in the DOT format:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    node [shape=ellipse];
+    fibi [label="_Z3fibi(i32)"];
+    llvm_lifetime_start [label="@llvm.lifetime.start.p0i8(i64, i8*)"];
+    llvm_lifetime_end [label="@llvm.lifetime.end.p0i8(i64, i8*)"];
+
+    // Edges
+    fibi -> llvm_lifetime_start;
+    fibi -> llvm_lifetime_end;
+}
+```
+
+### Explanation:
+- **Nodes**: Each function is represented as a node in the graph. The label of the node corresponds to the function signature.
+- **Edges**: Directed edges indicate calls from one function to another. In this case, `_Z3fibi` calls both `@llvm.lifetime.start.p0i8` and `@llvm.lifetime.end.p0i8`. 
+
+You can visualize this DOT representation using graph visualization tools like Graphviz.

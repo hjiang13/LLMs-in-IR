@@ -1,0 +1,31 @@
+Based on the provided Intermediate Representation (IR) code, we can extract the function calls to construct a call graph. Below is the representation of the call graph in DOT format, which includes the nodes representing the functions and directed edges representing the calls between them.
+
+```dot
+digraph CallGraph {
+    // Nodes
+    node [shape=box];
+    _Z13next_smallestSt6vectorIiSaIiEE;
+    _ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_;
+    _ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_;
+    _ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_RT0_;
+    @llvm.ctlz.i64;
+    @llvm.lifetime.start.p0i8;
+    @llvm.lifetime.end.p0i8;
+    @llvm.memmove.p0i8.p0i8.i64;
+
+    // Edges
+    _Z13next_smallestSt6vectorIiSaIiEE -> _ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_;
+    _Z13next_smallestSt6vectorIiSaIiEE -> _ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_;
+    _ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_ -> @llvm.lifetime.start.p0i8;
+    _ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_ -> @llvm.lifetime.end.p0i8;
+    _ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_ -> _ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_RT0_;
+    _ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_ -> @llvm.lifetime.start.p0i8;
+    _ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_ -> @llvm.lifetime.end.p0i8;
+}
+```
+
+### Explanation:
+- Each function defined in the IR code is represented as a node in the graph.
+- Directed edges indicate that one function calls another, reflecting the control flow.
+- Helper functions like `@llvm.ctlz.i64`, `@llvm.lifetime.start.p0i8`, and `@llvm.lifetime.end.p0i8` are also included since they are invoked in the main function and other functions.
+- The names are extracted from the IR function definitions and the calls made within the body of the functions.

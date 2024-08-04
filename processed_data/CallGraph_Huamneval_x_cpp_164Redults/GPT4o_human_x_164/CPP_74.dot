@@ -1,0 +1,23 @@
+Based on the provided Intermediate Representation (IR) code, we can analyze the function calls and construct a call graph in the DOT format. The main function we can identify is `_Z11total_matchSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EES7_`, and it also makes calls to the function `@llvm.umax.i64` and `@llvm.memset.p0i8.i64`. 
+
+Here is the call graph represented in DOT format:
+
+```dot
+digraph CallGraph {
+    // Define the nodes
+    node [shape=rectangle];
+    total_match [label="_Z11total_matchSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EES7_"];
+    llvm_umax [label="@llvm.umax.i64"];
+    llvm_memset [label="@llvm.memset.p0i8.i64"];
+
+    // Define the edges
+    total_match -> llvm_umax;
+    total_match -> llvm_memset;
+}
+```
+
+### Explanation:
+- **Nodes**: Each function is represented as a node. The names are derived from the mangled names in the IR.
+- **Edges**: Directed edges indicate the calls made from one function to another. In this case, `total_match` calls `llvm.umax.i64` and `llvm.memset.p0i8.i64`.
+
+If there are more functions or additional calls in a larger IR code, those would be added similarly by creating new nodes and edges following the same structure.

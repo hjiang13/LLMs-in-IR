@@ -1,0 +1,34 @@
+To create a call graph from the provided Intermediate Representation (IR) code, we will extract the function definitions and their calls to produce a dot file representation. The nodes will represent the functions, and the edges will represent the calls between those functions.
+
+Here's the call graph based on the provided IR code:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    node [shape=box];
+
+    _Z6encodeNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE;
+    @llvm.lifetime.start.p0i8;
+    @llvm.lifetime.end.p0i8;
+    @_ZdlPv;
+    @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm;
+    @llvm.memcpy.p0i8.p0i8.i64;
+    @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc;
+    @llvm.experimental.noalias.scope.decl;
+
+    // Edges
+    _Z6encodeNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> @llvm.lifetime.start.p0i8;
+    _Z6encodeNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> @llvm.lifetime.end.p0i8;
+    _Z6encodeNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> @_ZdlPv;
+    _Z6encodeNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm;
+    _Z6encodeNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> @llvm.memcpy.p0i8.p0i8.i64;
+    _Z6encodeNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc;
+    _Z6encodeNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> @llvm.experimental.noalias.scope.decl;
+}
+```
+
+### Explanation:
+- **Nodes**: Each function defined or declared in the IR is treated as a node in the graph. The function name is inferred from the mangled names.
+- **Edges**: An edge is created from the function `_Z6encodeNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE` (the main function defined in the IR) to each of the functions it calls, indicating the call relationships.
+
+This representation can be used with graph visualization tools to visualize the call graph of the program.

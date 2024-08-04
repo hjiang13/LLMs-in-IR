@@ -1,0 +1,29 @@
+To create a call graph from the provided Intermediate Representation (IR) code, we will identify the functions and the calls made between them. Below is the representation of the call graph in dot format:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    node [shape=box];
+    _Z1fi [label="_Z1fi"];
+    llvm_memset [label="llvm.memset.p0i8.i64"];
+    __gxx_personality_v0 [label="__gxx_personality_v0"];
+    _ZdlPv [label="_ZdlPv"];
+    _ZSt20__throw_length_errorPKc [label="_ZSt20__throw_length_errorPKc"];
+    _Znwm [label="_Znwm"];
+    llvm_memmove [label="llvm.memmove.p0i8.p0i8.i64"];
+
+    // Edges
+    _Z1fi -> llvm_memset;
+    _Z1fi -> _ZSt20__throw_length_errorPKc;
+    _Z1fi -> _Znwm;
+    _Z1fi -> llvm_memmove;
+    _Z1fi -> _ZdlPv;
+}
+```
+
+### Explanation:
+- Each function from the IR code is represented as a node in the graph. The names of these functions (mangled names) are used as node labels.
+- Directed edges represent calls from one function to another. For example, `_Z1fi` calls `llvm_memset`, so there is an edge from `_Z1fi` to `llvm_memset`.
+- Functions like `__gxx_personality_v0`, `_ZdlPv`, `_ZSt20__throw_length_errorPKc`, and `_Znwm` are included as they are declared and are called within the `_Z1fi` function.
+
+This dot format can be used with graph visualization tools such as Graphviz to create a visual representation of the call graph.

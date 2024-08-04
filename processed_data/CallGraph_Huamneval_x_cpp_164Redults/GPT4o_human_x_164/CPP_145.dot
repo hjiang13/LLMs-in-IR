@@ -1,0 +1,36 @@
+Based on the provided Intermediate Representation (IR) code, we can extract the functions defined and invoked within the code to generate a call graph in DOT format. Below is the call graph representing the functions as nodes and their calls as edges:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    _Z15order_by_pointsSt6vectorIiSaIiEE;
+    @_ZN9__gnu_cxx12__to_xstringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEET_PFiPT0_mPKS8_P13__va_list_tagEmSB_z;
+    @llvm.abs.i32;
+    @llvm.vector.reduce.add.v4i32;
+    @llvm.memset.p0i8.i64;
+    @llvm.memmove.p0i8.p0i8.i64;
+    @llvm.lifetime.start.p0i8;
+    @llvm.lifetime.end.p0i8;
+    @_ZdlPv;
+    @_ZSt20__throw_length_errorPKc;
+    @_Znwm;
+    @vsnprintf;
+
+    // Edges
+    _Z15order_by_pointsSt6vectorIiSaIiEE -> @_ZN9__gnu_cxx12__to_xstringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEET_PFiPT0_mPKS8_P13__va_list_tagEmSB_z;
+    _Z15order_by_pointsSt6vectorIiSaIiEE -> @llvm.abs.i32;
+    _Z15order_by_pointsSt6vectorIiSaIiEE -> @llvm.vector.reduce.add.v4i32;
+    _Z15order_by_pointsSt6vectorIiSaIiEE -> @llvm.lifetime.start.p0i8;
+    _Z15order_by_pointsSt6vectorIiSaIiEE -> @llvm.lifetime.end.p0i8;
+    _Z15order_by_pointsSt6vectorIiSaIiEE -> @_ZdlPv;
+    _Z15order_by_pointsSt6vectorIiSaIiEE -> @_ZSt20__throw_length_errorPKc;
+    _Z15order_by_pointsSt6vectorIiSaIiEE -> @_Znwm;
+    _Z15order_by_pointsSt6vectorIiSaIiEE -> @vsnprintf;
+}
+```
+
+### Explanation:
+- Each function is represented as a node in the graph.
+- The arrows (`->`) indicate a calling relationship from one function to another.
+- The function `_Z15order_by_pointsSt6vectorIiSaIiEE` is the main function in this context and calls several other functions, including `@__gnu_cxx::__to_xstring`, `llvm.abs.i32`, `llvm.vector.reduce.add.v4i32`, and others.
+- The rest of the functions are invoked within the main function.

@@ -1,0 +1,39 @@
+To generate a call graph from the provided Intermediate Representation (IR) code, we need to identify the functions defined in the code and the functions they call. 
+
+In the provided IR code, we have the following relevant function:
+
+- **Function Defined:** 
+  - `_Z11count_upperNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE`
+
+- **Functions Called:**
+  - `@llvm.lifetime.start.p0i8`
+  - `@llvm.lifetime.end.p0i8`
+  - `@llvm.memcpy.p0i8.p0i8.i64`
+  - `@__gxx_personality_v0`
+
+Here's the representation in the DOT format for the call graph:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    node [shape=box];
+    count_upper [label="_Z11count_upperNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE"];
+    llvm_lifetime_start [label="llvm.lifetime.start.p0i8"];
+    llvm_lifetime_end [label="llvm.lifetime.end.p0i8"];
+    llvm_memcpy [label="llvm.memcpy.p0i8.p0i8.i64"];
+    gxx_personality [label="__gxx_personality_v0"];
+
+    // Edges
+    count_upper -> llvm_lifetime_start;
+    count_upper -> llvm_lifetime_end;
+    count_upper -> llvm_memcpy;
+    count_upper -> gxx_personality;
+}
+```
+
+### Explanation:
+- Nodes represent the functions:
+  - The function `_Z11count_upperNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE` is the main function defined in the code.
+  - The other nodes represent the library functions that are called within the main function.
+  
+- Edges indicate the calls made from the `count_upper` function to the other functions.

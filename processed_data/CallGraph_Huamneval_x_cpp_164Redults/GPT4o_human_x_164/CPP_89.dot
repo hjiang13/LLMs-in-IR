@@ -1,0 +1,33 @@
+Based on the provided Intermediate Representation (IR) code, we can extract the function calls and construct a call graph in the DOT format. The main function defined in the code is `@_Z7encryptNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE`, and it contains calls to other functions, such as `@llvm.lifetime.start.p0i8`, `@llvm.lifetime.end.p0i8`, `@__gxx_personality_v0`, `@_ZdlPv`, `@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm`, `@llvm.memcpy.p0i8.p0i8.i64`, and `@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc`.
+
+Here’s the DOT representation of the call graph:
+
+```dot
+digraph CallGraph {
+    node [shape=box];
+
+    // Nodes
+    encrypt [label="encrypt"];
+    llvm_lifetime_start [label="llvm.lifetime.start.p0i8"];
+    llvm_lifetime_end [label="llvm.lifetime.end.p0i8"];
+    gxx_personality [label="__gxx_personality_v0"];
+    operator_delete [label="_ZdlPv"];
+    basic_string_create [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm"];
+    memcpy [label="llvm.memcpy.p0i8.p0i8.i64"];
+    basic_string_replace [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc"];
+
+    // Edges
+    encrypt -> llvm_lifetime_start;
+    encrypt -> llvm_lifetime_end;
+    encrypt -> gxx_personality;
+    encrypt -> operator_delete;
+    encrypt -> basic_string_create;
+    encrypt -> memcpy;
+    encrypt -> basic_string_replace;
+}
+```
+
+### Explanation:
+- Each node in the graph represents a function.
+- The edges represent the calls between these functions, with the main function `encrypt` calling several other functions.
+- The labels in the nodes are derived from the function names in the IR code.

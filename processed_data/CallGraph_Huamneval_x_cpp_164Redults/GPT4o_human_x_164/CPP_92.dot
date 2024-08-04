@@ -1,0 +1,27 @@
+Based on the provided IR code, the call graph can be constructed by analyzing the function definitions and the function calls within them. Here is the corresponding DOT format representation of the call graph:
+
+```dot
+digraph CallGraph {
+    // Function nodes
+    node [shape=box];
+    any_intfff [label="_Z7any_intfff"];
+
+    // External function nodes
+    llvm_round_f32 [label="llvm.round.f32"];
+
+    // Edges representing function calls
+    any_intfff -> llvm_round_f32;
+    any_intfff -> llvm_round_f32;
+    any_intfff -> llvm_round_f32;
+}
+```
+
+### Explanation:
+- **Nodes**: Each function is represented as a node. 
+  - `_Z7any_intfff` is the name of the defined function.
+  - `llvm.round.f32` is the external function that is called three times within `any_intfff`.
+
+- **Edges**: Directed edges represent calls from one function to another. 
+  - `any_intfff` calls `llvm.round.f32` three times, hence three edges from `any_intfff` to `llvm.round.f32`.
+
+This representation provides a clear view of the call relationships between the functions in the provided IR code.

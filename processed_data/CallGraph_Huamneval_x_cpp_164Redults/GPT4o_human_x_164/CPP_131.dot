@@ -1,0 +1,38 @@
+Based on the provided Intermediate Representation (IR) code, we can analyze the call graph and represent it in the DOT format. The functions in the IR code can be identified, and the calls made between them can be depicted as edges in the call graph.
+
+Here's the extracted call graph in DOT format:
+
+```dot
+digraph CallGraph {
+    // Nodes (functions)
+    node [shape=ellipse];
+    _Z6digitsi;
+    @_ZN9__gnu_cxx12__to_xstringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEET_PFiPT0_mPKS8_P13__va_list_tagEmSB_z;
+    @llvm.lifetime.start.p0i8;
+    @__gxx_personality_v0;
+    @llvm.lifetime.end.p0i8;
+    @vsnprintf;
+    @llvm.va_start;
+    @llvm.va.end;
+    @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm;
+    @llvm.memcpy.p0i8.p0i8.i64;
+    @_ZdlPv;
+
+    // Edges (calls)
+    _Z6digitsi -> @_ZN9__gnu_cxx12__to_xstringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEET_PFiPT0_mPKS8_P13__va_list_tagEmSB_z;
+    _Z6digitsi -> @llvm.lifetime.start.p0i8;
+    _Z6digitsi -> @llvm.lifetime.end.p0i8;
+    _Z6digitsi -> @vsnprintf;
+    @_ZN9__gnu_cxx12__to_xstringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEET_PFiPT0_mPKS8_P13__va_list_tagEmSB_z -> @llvm.va_start;
+    @_ZN9__gnu_cxx12__to_xstringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEET_PFiPT0_mPKS8_P13__va_list_tagEmSB_z -> @llvm.va.end;
+    @_ZN9__gnu_cxx12__to_xstringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEET_PFiPT0_mPKS8_P13__va_list_tagEmSB_z -> @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm;
+    @_ZN9__gnu_cxx12__to_xstringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEET_PFiPT0_mPKS8_P13__va_list_tagEmSB_z -> @llvm.memcpy.p0i8.p0i8.i64;
+    @_ZdlPv -> @_Z6digitsi;
+}
+```
+
+### Explanation:
+- **Nodes**: Each function in the IR code is represented as a node in the graph. The function names have been extracted from the IR and formatted accordingly.
+- **Edges**: The edges show the calls between the functions. For instance, `_Z6digitsi` calls several functions, including `@vsnprintf` and `@llvm.lifetime.start.p0i8`.
+
+This representation gives a visual structure of function calls, which can be rendered using a graph visualization tool that supports the DOT format.

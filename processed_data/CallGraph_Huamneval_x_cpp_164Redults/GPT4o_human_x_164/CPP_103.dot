@@ -1,0 +1,36 @@
+To create a call graph from the provided Intermediate Representation (IR) code, we need to identify the functions and their call relationships. Based on the provided IR, we can extract the function definitions and the calls made to each function.
+
+Here's a dot file representation of the call graph based on the provided IR code:
+
+```dot
+digraph CallGraph {
+    // Function nodes
+    node [shape=ellipse];
+    rounded_avg [label="_Z11rounded_avgB5cxx11ii"];
+    to_xstring [label="_ZN9__gnu_cxx12__to_xstringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEET_PFiPT0_mPKS8_P13__va_list_tagEmSB_z"];
+    vsnprintf [label="vsnprintf"];
+    mem_copy [label="llvm.memcpy.p0i8.p0i8.i64"];
+    malloc [label="_ZdlPv"];
+    append [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm"];
+    va_start [label="llvm.va_start"];
+    va_end [label="llvm.va_end"];
+    
+    // Edges representing function calls
+    rounded_avg -> to_xstring;
+    rounded_avg -> vsnprintf;
+    rounded_avg -> mem_copy;
+    rounded_avg -> malloc;
+    rounded_avg -> append;
+    rounded_avg -> va_start;
+    rounded_avg -> va_end;
+}
+```
+
+### Explanation:
+1. **Function Nodes**: Each function is represented as a node in the graph.
+   - The function names are mangled C++ names, which are represented in a human-readable format in the `label` attribute for clarity.
+
+2. **Edges**: Directed edges represent calls from one function to another.
+   - For example, `rounded_avg` calls `to_xstring`, `vsnprintf`, and other functions, which are represented by the directed edges from the `rounded_avg` node to the other function nodes.
+
+This graph can be visualized using tools that support the DOT format, such as Graphviz.

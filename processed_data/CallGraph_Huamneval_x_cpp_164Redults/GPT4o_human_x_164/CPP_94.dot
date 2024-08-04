@@ -1,0 +1,39 @@
+To generate the call graph in the DOT format based on the provided Intermediate Representation (IR) code, we need to identify the function definitions and their calls. Here's the call graph derived from the provided IR:
+
+```dot
+digraph CallGraph {
+    // Function definitions
+    node [shape=box];
+    _Z9skjkasdkdSt6vectorIiSaIiEE;
+    _ZN9__gnu_cxx12__to_xstringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEET_PFiPT0_mPKS8_P13__va_list_tagEmSB_z;
+    @__gxx_personality_v0;
+    llvm.umax.i64;
+    llvm.vector.reduce.add.v4i32;
+    _ZdlPv;
+    vsnprintf;
+    llvm.lifetime.start.p0i8;
+    llvm.lifetime.end.p0i8;
+    llvm.va_start;
+    llvm.va_end;
+    llvm.memcpy.p0i8.p0i8.i64;
+
+    // Edges representing function calls
+    _Z9skjkasdkdSt6vectorIiSaIiEE -> _ZN9__gnu_cxx12__to_xstringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEET_PFiPT0_mPKS8_P13__va_list_tagEmSB_z;
+    _Z9skjkasdkdSt6vectorIiSaIiEE -> llvm.umax.i64;
+    _Z9skjkasdkdSt6vectorIiSaIiEE -> llvm.lifetime.start.p0i8;
+    _Z9skjkasdkdSt6vectorIiSaIiEE -> llvm.lifetime.end.p0i8;
+    _Z9skjkasdkdSt6vectorIiSaIiEE -> _ZdlPv;
+    _Z9skjkasdkdSt6vectorIiSaIiEE -> vsnprintf;
+    _ZN9__gnu_cxx12__to_xstringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEET_PFiPT0_mPKS8_P13__va_list_tagEmSB_z -> llvm.va_start;
+    _ZN9__gnu_cxx12__to_xstringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEET_PFiPT0_mPKS8_P13__va_list_tagEmSB_z -> llvm.va_end;
+}
+```
+
+### Explanation:
+
+- Each function is represented as a node in the graph.
+- The arrows (edges) indicate calls between functions.
+- The function names are extracted from the provided IR code, and the corresponding calls are noted to create the edges.
+- The `node [shape=box];` statement ensures that the nodes are represented as boxes in the generated graph. 
+
+You can visualize this graph using any DOT file viewer or graph visualization tool.

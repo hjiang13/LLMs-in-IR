@@ -1,0 +1,32 @@
+Based on the provided IR code, the call graph can be extracted. Here is the output in DOT format:
+
+```dot
+digraph call_graph {
+    rankdir=TB;
+    node [shape=rectangle];
+
+    // Functions as nodes
+    _Z11split_wordsNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE;
+    _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev;
+    _ZN9__gnu_cxx12__to_xstringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEET_PFiPT0_mPKS8_P13__va_list_tagEmSB_z;
+    @_ZdlPv;
+    _ZSt20__throw_length_errorPKc;
+    _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm;
+    _ZNSt20__uninitialized_copyILb0EE13__uninit_copyIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPS7_EET0_T_SC_SB_;
+    @llvm.memset.p0i8.p0i8.i64;
+    @llvm.lifetime.start.p0i8;
+    @llvm.lifetime.end.p0i8;
+    @llvm.experimental.noalias.scope.decl;
+    @llvm.va_start;
+    @llvm.va_end;
+
+    // Function calls as edges
+    _Z11split_wordsNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev;
+    _Z11split_wordsNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> _ZN9__gnu_cxx12__to_xstringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEET_PFiPT0_mPKS8_P13__va_list_tagEmSB_z;
+    _Z11split_wordsNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> @_ZdlPv;
+    _ZN9__gnu_cxx12__to_xstringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEET_PFiPT0_mPKS8_P13__va_list_tagEmSB_z -> _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm;
+    _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev -> _ZNSt20__uninitialized_copyILb0EE13__uninit_copyIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPS7_EET0_T_SC_SB_;
+}
+```
+
+This DOT representation includes nodes for each function defined in the IR code and directed edges representing calls between them. Each node is represented by the function's mangled name as it appears in the IR. You can visualize this graph using Graphviz or similar tools that accept DOT format.

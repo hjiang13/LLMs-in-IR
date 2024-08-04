@@ -1,0 +1,24 @@
+Based on the provided Intermediate Representation (IR) code, we can construct a call graph in the DOT format. The graph will include nodes representing functions and edges representing calls between those functions.
+
+Here is the DOT representation of the call graph:
+
+```dot
+digraph call_graph {
+    // Nodes
+    "main" [label="main"];
+    "_Z23mean_absolute_deviationSt6vectorIfSaIfEE" [label="_Z23mean_absolute_deviationSt6vectorIfSaIfEE"];
+    "llvm.fabs.f32" [label="llvm.fabs.f32"];
+    "llvm.umax.i64" [label="llvm.umax.i64"];
+
+    // Edges
+    "_Z23mean_absolute_deviationSt6vectorIfSaIfEE" -> "llvm.umax.i64";
+    "_Z23mean_absolute_deviationSt6vectorIfSaIfEE" -> "llvm.fabs.f32";
+}
+```
+
+### Explanation:
+- The node `_Z23mean_absolute_deviationSt6vectorIfSaIfEE` represents the function defined in the IR code.
+- The nodes `llvm.fabs.f32` and `llvm.umax.i64` represent the external functions that are called within the `_Z23mean_absolute_deviationSt6vectorIfSaIfEE` function.
+- The edges indicate that `_Z23mean_absolute_deviationSt6vectorIfSaIfEE` calls `llvm.umax.i64` and `llvm.fabs.f32`.
+
+Note: The `main` node is included for completeness as a standard entry point in many C++ programs. If there are other functions in your IR that were not included due to lack of visibility, please let me know!

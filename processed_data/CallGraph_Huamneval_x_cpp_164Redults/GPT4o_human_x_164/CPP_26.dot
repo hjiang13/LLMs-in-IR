@@ -1,0 +1,33 @@
+To generate a call graph from the provided Intermediate Representation (IR) code, we need to identify the function calls and their relationships. In the given IR code, there is one defined function (`_Z17remove_duplicatesSt6vectorIiSaIiEE`) and several declared functions. The calls to other functions can be highlighted as edges in the graph.
+
+Here’s the representation of the call graph in the DOT format:
+
+```dot
+digraph CallGraph {
+    node [shape=box];
+
+    // Function Definitions
+    remove_duplicates [label="_Z17remove_duplicatesSt6vectorIiSaIiEE"];
+
+    // Function Declarations
+    memmove [label="llvm.memmove.p0i8.p0i8.i64"];
+    memset [label="llvm.memset.p0i8.i64"];
+    delete [label="_ZdlPv"];
+    throw_length_error [label="_ZSt20__throw_length_errorPKc"];
+    new [label="_Znwm"];
+
+    // Edges (function calls)
+    remove_duplicates -> memset;
+    remove_duplicates -> memmove;
+    remove_duplicates -> delete;
+    remove_duplicates -> throw_length_error;
+    remove_duplicates -> new;
+}
+```
+
+### Explanation:
+1. **Nodes**: Each unique function is represented as a node in the graph.
+2. **Edges**: Directed edges indicate calls from one function to another. 
+   - The function `remove_duplicates` calls `llvm.memset.p0i8.i64`, `llvm.memmove.p0i8.p0i8.i64`, `_ZdlPv`, `_ZSt20__throw_length_errorPKc`, and `_Znwm`.
+
+You can use this DOT format to visualize the call graph using graph visualization tools like Graphviz.

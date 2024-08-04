@@ -1,0 +1,28 @@
+Based on the given Intermediate Representation (IR) code, we can extract the functions and their call relationships to create a call graph in DOT format. The IR specifies two main functions:
+
+1. `_Z5solveB5cxx11i`
+2. `_ZN9__gnu_cxx12__to_xstringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEET_PFiPT0_mPKS8_P13__va_list_tagEmSB_z`
+
+The `_Z5solveB5cxx11i` function invokes the `_ZN9__gnu_cxx12__to_xstringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEET_PFiPT0_mPKS8_P13__va_list_tagEmSB_z` function and also calls `@llvm.lifetime.start.p0i8`, `@llvm.lifetime.end.p0i8`, `@llvm.memcpy.p0i8.p0i8.i64`, and `@__gxx_personality_v0` (though these are not user-defined functions, they are part of the LLVM runtime).
+
+Here's the DOT representation of the call graph based on the functions identified:
+
+```dot
+digraph CallGraph {
+    node [shape=box];
+
+    // Define nodes for each function
+    _Z5solveB5cxx11i [label="_Z5solveB5cxx11i"];
+    _ZN9__gnu_cxx12__to_xstringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEET_PFiPT0_mPKS8_P13__va_list_tagEmSB_z [label="_ZN9__gnu_cxx12__to_xstringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEET_PFiPT0_mPKS8_P13__va_list_tagEmSB_z"];
+
+    // Define edges for function calls
+    _Z5solveB5cxx11i -> _ZN9__gnu_cxx12__to_xstringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEET_PFiPT0_mPKS8_P13__va_list_tagEmSB_z;
+}
+```
+
+### Explanation:
+- The `node` section sets the shape of the nodes to be box-shaped for better visualization.
+- Each function is represented as a node, and the label corresponds to the mangled name of the function.
+- The edge from `_Z5solveB5cxx11i` to `_ZN9__gnu_cxx12__to_xstringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEET_PFiPT0_mPKS8_P13__va_list_tagEmSB_z` indicates that the first function calls the second one.
+
+This output captures the essential call relationships in the provided IR code.

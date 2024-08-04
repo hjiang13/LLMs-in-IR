@@ -1,0 +1,27 @@
+Based on the provided Intermediate Representation (IR) code, we can analyze the call graph. The primary function defined in the IR is `@_Z12add_elementsSt6vectorIiSaIiEEi` which makes a call to `@llvm.vector.reduce.add.v4i32`.
+
+Here’s the call graph in DOT format:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    node [shape=ellipse];
+    main [label="main"];
+    add_elements [label="_Z12add_elementsSt6vectorIiSaIiEEi"];
+    llv_vector_reduce_add [label="llvm.vector.reduce.add.v4i32"];
+
+    // Edges
+    add_elements -> llv_vector_reduce_add;
+}
+```
+
+### Explanation:
+- **Nodes**:
+  - `main`: This represents the main function of the program (though it's not explicitly defined in the provided IR code, it's a common convention).
+  - `add_elements`: This node represents the function `_Z12add_elementsSt6vectorIiSaIiEEi`, which is the main function of the provided IR code.
+  - `llvm_vector_reduce_add`: This node represents the function `llvm.vector.reduce.add.v4i32`, which is called within `add_elements`.
+
+- **Edges**:
+  - There is a directed edge from `add_elements` to `llvm_vector_reduce_add` indicating that `add_elements` calls `llvm_vector_reduce_add`.
+
+This structure provides a clear representation of the function calls made in the IR code. If there were more functions defined and called, additional nodes and edges would be included accordingly.

@@ -1,0 +1,42 @@
+Based on the provided Intermediate Representation (IR) code, we can derive the call graph that maps the functions and their calls. Here’s how the call graph can be represented in the DOT format, which is commonly used for graph visualization:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    node [shape=box]; // Optional styling for node shape
+    search [label="_Z6searchSt6vectorIiSaIiEE"];
+    vectorDestructor [label="_ZNSt6vectorIS_IiSaIiEESaIS1_EED2Ev"];
+    reallocInsert [label="_ZNSt6vectorIS_IiSaIiEESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_"];
+    delete [label="_ZdlPv"];
+    throwLengthError [label="_ZSt20__throw_length_errorPKc"];
+    allocate [label="_Znwm"];
+    llvmUmax [label="llvm.umax.i64"];
+    lifetimeStart [label="llvm.lifetime.start.p0i8"];
+    lifetimeEnd [label="llvm.lifetime.end.p0i8"];
+    memset [label="llvm.memset.p0i8.i64"];
+
+    // Edges
+    search -> lifetimeStart;
+    search -> delete;
+    search -> reallocInsert;
+    search -> vectorDestructor;
+    search -> llvmUmax;
+    search -> memset;
+
+    vectorDestructor -> delete;
+    vectorDestructor -> lifetimeEnd;
+
+    reallocInsert -> allocate;
+    reallocInsert -> throwLengthError;
+
+    allocate -> delete;
+
+    // Add more edges according to the functions' calls as needed
+}
+```
+
+### Explanation:
+- **Nodes**: Each function in the IR is represented as a node, with its name (or mangled name) as the label.
+- **Edges**: The directed edges indicate function calls. For example, the `search` function calls `lifetime.start`, `delete`, `reallocInsert`, and others, which are represented as directed edges from `search` to each of these functions.
+
+This format can be used with graph visualization tools like Graphviz to create a visual representation of the call graph. You can expand and refine the edges based on further analysis of the IR for all function calls.

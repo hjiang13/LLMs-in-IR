@@ -1,0 +1,38 @@
+To represent the call graph of the provided intermediate representation (IR) code in a DOT format, we will extract the function definitions and declarations, as well as the calls made to these functions. Based on the provided IR code, we can identify the following functions:
+
+1. `_Z11sum_productSt6vectorIiSaIiEE` (this is the main function in your code)
+2. `@llvm.umax.i64`
+3. `@llvm.vector.reduce.mul.v4i32`
+4. `@llvm.vector.reduce.add.v4i32`
+5. `@llvm.memset.p0i8.i64`
+6. `_Znwm`
+
+### DOT Format for Call Graph
+
+```dot
+digraph CallGraph {
+    // Nodes
+    node [shape=rectangle];
+    sum_product [label="_Z11sum_productSt6vectorIiSaIiEE"];
+    llvm_umax [label="@llvm.umax.i64"];
+    llvm_reduce_mul [label="@llvm.vector.reduce.mul.v4i32"];
+    llvm_reduce_add [label="@llvm.vector.reduce.add.v4i32"];
+    llvm_memset [label="@llvm.memset.p0i8.i64"];
+    new_alloc [label="_Znwm"];
+
+    // Edges
+    sum_product -> llvm_umax;
+    sum_product -> llvm_reduce_mul;
+    sum_product -> llvm_reduce_add;
+    sum_product -> llvm_memset;
+    sum_product -> new_alloc;
+}
+```
+
+### Explanation
+
+- Each function is represented as a node in the graph, with its mangled name as the label.
+- The edges represent the calls from the main function (`_Z11sum_productSt6vectorIiSaIiEE`) to the respective functions it invokes. 
+- The `@llvm.umax.i64`, `@llvm.vector.reduce.mul.v4i32`, `@llvm.vector.reduce.add.v4i32`, `@llvm.memset.p0i8.i64`, and `_Znwm` functions are called within the `sum_product` function.
+
+You can visualize this graph using tools that support the DOT format, such as Graphviz.

@@ -1,0 +1,22 @@
+Based on the provided Intermediate Representation (IR) code, we can identify the function calls and create a call graph. The functions defined in the code are `_Z18has_close_elementsSt6vectorIfSaIfEEf`, `@llvm.fabs.f32`, and `@llvm.umax.i64`.
+
+Here is the call graph in DOT format:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    _Z18has_close_elementsSt6vectorIfSaIfEEf [label="has_close_elements(std::vector<float>, float)"];
+    llvm_fabs_f32 [label="llvm.fabs.f32(float)"];
+    llvm_umax_i64 [label="llvm.umax.i64(i64, i64)"];
+
+    // Edges
+    _Z18has_close_elementsSt6vectorIfSaIfEEf -> llvm_fabs_f32;
+    _Z18has_close_elementsSt6vectorIfSaIfEEf -> llvm_umax_i64;
+}
+```
+
+### Explanation:
+- **Nodes**: Each of the functions is represented as a node. The node names are derived from the function signatures, and I've added labels for clarity.
+- **Edges**: The edges represent the calls made within the function `has_close_elements`. It calls `llvm.fabs.f32` and `llvm.umax.i64`.
+
+This dot format can be rendered using graph visualization tools that support the DOT language, such as Graphviz.

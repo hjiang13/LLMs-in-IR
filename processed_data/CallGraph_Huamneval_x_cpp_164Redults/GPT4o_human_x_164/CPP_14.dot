@@ -1,0 +1,43 @@
+Based on the provided Intermediate Representation (IR) code, I will extract the function definitions and their calls to construct a call graph in the DOT format. The functions that are defined and called within the provided IR include:
+
+1. `_Z12all_prefixes`
+2. `@llvm.lifetime.start.p0i8`
+3. `@llvm.lifetime.end.p0i8`
+4. `_ZdlPv`
+5. `_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm`
+6. `_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc`
+7. `_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE17_M_realloc_insertIJRKS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_`
+8. `__clang_call_terminate`
+
+Here is the DOT representation of the call graph:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    node [shape=box];
+    A [_label="_Z12all_prefixes"];
+    B [_label="@llvm.lifetime.start.p0i8"];
+    C [_label="@llvm.lifetime.end.p0i8"];
+    D [_label="_ZdlPv"];
+    E [_label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm"];
+    F [_label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc"];
+    G [_label="_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE17_M_realloc_insertIJRKS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_"];
+    H [_label="__clang_call_terminate"];
+
+    // Edges (function calls)
+    A -> B;
+    A -> C;
+    A -> D;
+    A -> E;
+    A -> F;
+    A -> G;
+    A -> H;
+
+    // Additional edges can be added based on other calls from functions
+}
+```
+
+In this graph:
+- Each function is represented as a node.
+- The directed edges represent the calls made from one function to another.
+- You can extend this graph by adding edges based on the function call relationships defined in the IR code.

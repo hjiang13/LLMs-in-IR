@@ -1,0 +1,29 @@
+To generate a call graph in DOT format from the provided intermediate representation (IR) code, we'll extract the function definitions and the calls made to other functions. Below is the corresponding DOT representation of the call graph based on the given IR code.
+
+```dot
+digraph CallGraph {
+    // Nodes
+    node [shape=box];
+    is_palindrome;
+    __gxx_personality_v0;
+    llvm_lifetime_start_p0i8;
+    llvm_lifetime_end_p0i8;
+    _ZdlPv;
+    _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm;
+    bcmp;
+
+    // Edges
+    is_palindrome -> __gxx_personality_v0;
+    is_palindrome -> llvm_lifetime_start_p0i8;
+    is_palindrome -> llvm_lifetime_end_p0i8;
+    is_palindrome -> _ZdlPv;
+    is_palindrome -> _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm;
+    is_palindrome -> bcmp;
+}
+```
+
+### Explanation:
+- **Nodes**: Each function is represented as a node in the graph. The node names correspond to the function names.
+- **Edges**: An edge from one node to another indicates a function call. For instance, `is_palindrome` calls several functions, which are represented as outgoing edges from the `is_palindrome` node.
+
+This representation provides a clear view of how functions interact with each other within the provided IR code.

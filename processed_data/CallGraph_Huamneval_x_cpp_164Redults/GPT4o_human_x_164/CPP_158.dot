@@ -1,0 +1,35 @@
+Based on the provided Intermediate Representation (IR) code, we can analyze the function calls made within the code to construct a call graph. Below is the output formatted as a DOT file, which includes nodes (functions) and edges (function calls).
+
+```dot
+digraph CallGraph {
+    // Nodes
+    node [shape=box];
+    find_max [label="_Z8find_maxSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE"];
+    memcmp [label="memcmp"];
+    _ZdlPv [label="_ZdlPv"];
+    _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm"];
+    llvm_memcpy [label="llvm.memcpy.p0i8.p0i8.i64"];
+    _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc"];
+    _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_ [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_"];
+    llvm_lifetime_start [label="llvm.lifetime.start.p0i8"];
+    llvm_lifetime_end [label="llvm.lifetime.end.p0i8"];
+    llvm_experimental_noalias_scope_decl [label="llvm.experimental.noalias.scope.decl"];
+
+    // Edges
+    find_max -> llvm_lifetime_start;
+    find_max -> llvm_experimental_noalias_scope_decl;
+    find_max -> llvm_lifetime_end;
+    find_max -> memcmp;
+    find_max -> _ZdlPv;
+    find_max -> _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm;
+    find_max -> llvm_memcpy;
+    find_max -> _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc;
+    find_max -> _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_;
+}
+```
+
+### Explanation:
+- Each function is represented as a node in the graph.
+- The edges represent calls from one function to another.
+- The names of the functions have been kept as per their mangled names as provided in the IR code.
+- This graph illustrates the relationships between the functions defined in the IR code, showing where calls are made within `find_max`.

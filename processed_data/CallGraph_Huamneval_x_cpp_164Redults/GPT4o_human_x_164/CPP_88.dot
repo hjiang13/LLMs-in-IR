@@ -1,0 +1,48 @@
+Based on the provided Intermediate Representation (IR) code, we can extract the function calls and create a call graph in DOT format. The call graph will consist of nodes representing functions and directed edges representing calls from one function to another.
+
+Here is the call graph in DOT format:
+
+```dot
+digraph CallGraph {
+    // Nodes representing functions
+    node [shape=box];
+    
+    // Functions
+    sort_array;
+    __introsort_loop;
+    __final_insertion_sort;
+    __make_heap;
+    llvm_memset;
+    llvm_ctlz;
+    llvm_memmove;
+    __gxx_personality_v0;
+    __throw_length_error;
+    operator_new;
+    operator_delete;
+
+    // Edges representing function calls
+    sort_array -> __introsort_loop;
+    sort_array -> __final_insertion_sort;
+    sort_array -> llvm_memset;
+    sort_array -> llvm_ctlz;
+
+    __introsort_loop -> __make_heap;
+    __introsort_loop -> __final_insertion_sort;
+
+    __final_insertion_sort -> __introsort_loop;
+
+    // Declarations for external calls
+    llvm_memset -> llvm_memset;
+    llvm_ctlz -> llvm_ctlz;
+    llvm_memmove -> llvm_memmove;
+    operator_new -> operator_new;
+    operator_delete -> operator_delete;
+}
+```
+
+### Explanation:
+- Each function is represented as a node in the graph, with the function names derived from the mangled names in the IR code.
+- Directed edges represent calls between functions. For example, `sort_array` calls `__introsort_loop` and `__final_insertion_sort`.
+- The formatting adheres to the DOT graph description language, which can be visualized with graphing tools like Graphviz.
+
+Feel free to modify or extend this graph based on further requirements or specific visualization needs!

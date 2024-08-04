@@ -1,0 +1,37 @@
+To create a call graph from the provided Intermediate Representation (IR) code, we analyze the function definitions and the call instructions within the code. Here, we will identify the functions, their relationships, and represent them in the DOT format.
+
+In the provided IR, we can identify the following functions:
+
+1. `_Z8exchangeB5cxx11St6vectorIiSaIiEES1_`
+2. `@llvm.umax.i64`
+3. `@llvm.vector.reduce.add.v4i32`
+4. `@llvm.memcpy.p0i8.p0i8.i64`
+5. `@__gxx_personality_v0`
+
+Based on these functions, we will create nodes for each function and edges for the call relationships.
+
+Here is the DOT representation:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    node [shape=box];
+    ExchangeFunction [label="_Z8exchangeB5cxx11St6vectorIiSaIiEES1_" shape=rect];
+    UmaxFunction [label="@llvm.umax.i64" shape=rect];
+    VectorReduceFunction [label="@llvm.vector.reduce.add.v4i32" shape=rect];
+    MemcpyFunction [label="@llvm.memcpy.p0i8.p0i8.i64" shape=rect];
+    PersonalityFunction [label="@__gxx_personality_v0" shape=rect];
+    
+    // Edges (calls)
+    ExchangeFunction -> UmaxFunction;
+    ExchangeFunction -> VectorReduceFunction;
+    ExchangeFunction -> MemcpyFunction;
+    ExchangeFunction -> PersonalityFunction;
+}
+```
+
+### Explanation:
+- **Nodes**: Each function is represented as a node in the graph.
+- **Edges**: The arrows indicate which functions are called by the `exchange` function. In the provided IR, the function `_Z8exchangeB5cxx11St6vectorIiSaIiEES1_` calls `@llvm.umax.i64`, `@llvm.vector.reduce.add.v4i32`, `@llvm.memcpy.p0i8.p0i8.i64`, and `@__gxx_personality_v0`.
+
+This representation can be visualized using Graphviz tools to see the call graph structure more clearly.

@@ -1,0 +1,47 @@
+Based on the provided Intermediate Representation (IR) code, we can derive the call graph by identifying the functions and their calls to each other. The main functions in the provided IR are:
+
+1. `_Z4polySt6vectorIdSaIdEEd`
+2. `_Z9find_zeroSt6vectorIdSaIdEE`
+3. `@pow`
+4. `@llvm.fabs.f64`
+5. `@__gxx_personality_v0`
+6. `@_ZSt17__throw_bad_allocv`
+7. `@_Znwm`
+8. `@llvm.memmove.p0i8.p0i8.i64`
+9. `@_ZdlPv`
+10. `@llvm.umax.i64`
+
+Now, let's generate the call graph in DOT format:
+
+```dot
+digraph CallGraph {
+    // Function nodes
+    node [shape=ellipse];
+    poly [label="_Z4polySt6vectorIdSaIdEEd"];
+    find_zero [label="_Z9find_zeroSt6vectorIdSaIdEE"];
+    pow [label="@pow"];
+    fabs [label="@llvm.fabs.f64"];
+    personality [label="@__gxx_personality_v0"];
+    throw_bad_alloc [label="@_ZSt17__throw_bad_allocv"];
+    malloc [label="@_Znwm"];
+    memmove [label="@llvm.memmove.p0i8.p0i8.i64"];
+    free [label="@_ZdlPv"];
+    umax [label="@llvm.umax.i64"];
+
+    // Function calls (edges)
+    poly -> pow;
+    poly -> fabs;
+    find_zero -> throw_bad_alloc;
+    find_zero -> malloc;
+    find_zero -> memmove;
+    find_zero -> free;
+    find_zero -> pow;
+    find_zero -> fabs;
+}
+```
+
+In this DOT representation:
+- Each function is represented as a node.
+- The arrows (`->`) represent calls from one function to another. For example, `poly` calls `pow` and `fabs`, while `find_zero` calls several functions including `throw_bad_alloc`, `malloc`, `memmove`, `free`, `pow`, and `fabs`. 
+
+You can visualize this graph using a tool that supports DOT files, such as Graphviz.

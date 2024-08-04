@@ -1,0 +1,36 @@
+To create a call graph from the given IR code, we need to identify the functions and their relationships based on the calls made within the code. The output format is a dot file representation, which includes nodes for each function and edges to represent the calls between them.
+
+Here's the call graph based on your provided IR code:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    node [shape=box];
+    _Z5pluckSt6vectorIiSaIiEE;
+    @llvm.memset.p0i8.i64;
+    @llvm.lifetime.start.p0i8;
+    @__gxx_personality_v0;
+    @llvm.lifetime.end.p0i8;
+    @_ZdlPv;
+    @_Znwm;
+    @llvm.memmove.p0i8.p0i8.i64;
+    @llvm.memcpy.p0i8.p0i8.i64;
+
+    // Edges
+    _Z5pluckSt6vectorIiSaIiEE -> @llvm.memset.p0i8.i64;
+    _Z5pluckSt6vectorIiSaIiEE -> @llvm.lifetime.start.p0i8;
+    _Z5pluckSt6vectorIiSaIiEE -> @llvm.lifetime.end.p0i8;
+    _Z5pluckSt6vectorIiSaIiEE -> @_ZdlPv;
+    _Z5pluckSt6vectorIiSaIiEE -> @_Znwm;
+    _Z5pluckSt6vectorIiSaIiEE -> @llvm.memmove.p0i8.p0i8.i64;
+    _Z5pluckSt6vectorIiSaIiEE -> @llvm.memcpy.p0i8.p0i8.i64;
+}
+```
+
+### Explanation:
+- Each function in the IR code is represented as a node.
+- The arrows (edges) indicate function calls, showing which function calls which.
+- The function `_Z5pluckSt6vectorIiSaIiEE` is the main function defined in your IR code, and it makes calls to several other functions (like memory management and lifetime functions).
+- The functions that are declared but not defined in the provided IR code (like `@__gxx_personality_v0`) are also included as nodes in the graph.
+
+You can use this dot representation to visualize the call graph using tools that support the Graphviz dot format.

@@ -1,0 +1,32 @@
+Based on the provided Intermediate Representation (IR) code, we can analyze the function calls and create a call graph in the DOT format.
+
+Here's a simplified representation of the call graph in DOT format:
+
+```dot
+digraph CallGraph {
+    // Nodes representing functions
+    node [shape=box];
+    _Z12anti_shuffleNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE;
+    _ZdlPv;
+    @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm;
+    @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc;
+    @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEElNS0_5__ops15_Iter_less_iterEEvT_SC_T0_T1_;
+    @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEENS0_5__ops15_Iter_less_iterEEvT_SC_T0_;
+    @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm;
+
+    // Edges representing function calls
+    _Z12anti_shuffleNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm;
+    _Z12anti_shuffleNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc;
+    _Z12anti_shuffleNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEElNS0_5__ops15_Iter_less_iterEEvT_SC_T0_T1_;
+    _Z12anti_shuffleNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEENS0_5__ops15_Iter_less_iterEEvT_SC_T0_;
+    _ZdlPv -> _Z12anti_shuffleNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE; // Example of deallocation
+}
+```
+
+### Explanation:
+- Each function is represented as a node in the graph.
+- The edges indicate the calls made between functions.
+- The node names correspond to the mangled names of the functions as provided in the IR code.
+- Note that some functions, such as `@llvm.lifetime.start.p0i8` and `@llvm.lifetime.end.p0i8`, are not included in this simple representation because they typically represent internal LLVM functions that manage memory but do not represent user-defined function calls.
+
+This structure provides a high-level overview of the call relationships within the IR.

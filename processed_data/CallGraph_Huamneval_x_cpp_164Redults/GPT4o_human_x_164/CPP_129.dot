@@ -1,0 +1,38 @@
+To generate a call graph from the provided Intermediate Representation (IR) code, we need to identify the functions and their dependencies based on the function calls. The relevant functions in the provided IR are:
+
+1. `_Z7minPathSt6vectorIS_IiSaIiEESaIS1_EEi` (which is defined in the provided IR code)
+2. `@llvm.umax.i64` (which is called in the function)
+3. `@llvm.memset.p0i8.i64` (which is called in the function)
+4. `@llvm.memmove.p0i8.p0i8.i64` (which is called in the function)
+5. `_ZSt20__throw_length_errorPKc` (which is called in the function)
+6. `_ZdlPv` (which is called in the function)
+7. `_Znwm` (which is called in the function)
+
+Here is the corresponding dot format representation of the call graph:
+
+```dot
+digraph CallGraph {
+    // Function nodes
+    node [shape=box];
+    minPath [label="_Z7minPathSt6vectorIS_IiSaIiEESaIS1_EEi"];
+    llvmUmax [label="@llvm.umax.i64"];
+    llvmMemset [label="@llvm.memset.p0i8.i64"];
+    llvmMemmove [label="@llvm.memmove.p0i8.p0i8.i64"];
+    throwLengthError [label="_ZSt20__throw_length_errorPKc"];
+    delete [label="_ZdlPv"];
+    new [label="_Znwm"];
+
+    // Edges (function calls)
+    minPath -> llvmUmax;
+    minPath -> llvmMemset;
+    minPath -> llvmMemmove;
+    minPath -> throwLengthError;
+    minPath -> delete;
+    minPath -> new;
+}
+```
+
+In this graph:
+- Each function is represented as a node with its name.
+- Directed edges represent calls from one function to another.
+- The `minPath` function calls several other functions, which are represented by edges pointing from it to the other nodes.

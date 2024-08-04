@@ -1,0 +1,26 @@
+To create a call graph from the provided Intermediate Representation (IR) code, we need to identify the functions and their calls within the code. Here's the dot format representation of the call graph based on the provided IR code:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    "_Z3trii" [label="_Z3trii"];
+    "_Znwm" [label="_Znwm"];
+    "_ZSt20__throw_length_errorPKc" [label="_ZSt20__throw_length_errorPKc"];
+    "@llvm.memmove.p0i8.p0i8.i64" [label="@llvm.memmove.p0i8.p0i8.i64"];
+    "_ZdlPv" [label="_ZdlPv"];
+    "@llvm.memset.p0i8.i64" [label="@llvm.memset.p0i8.i64"];
+
+    // Edges
+    "_Z3trii" -> "_Znwm";
+    "_Z3trii" -> "_ZSt20__throw_length_errorPKc";
+    "_Z3trii" -> "@llvm.memset.p0i8.i64";
+    "_Z3trii" -> "_ZdlPv";
+    "_Z3trii" -> "@llvm.memmove.p0i8.p0i8.i64";
+}
+```
+
+### Explanation:
+- Each function defined in the IR code is represented as a node in the graph.
+- The edges represent the calls made from one function to another.
+- The node labels are the mangled names of the functions as they appear in the IR code.
+- The graph does not include the content of the basic blocks, as requested, only the titles (names) of each function are included.

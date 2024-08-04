@@ -1,0 +1,34 @@
+Based on the provided Intermediate Representation (IR) code, I will generate a call graph in the DOT format. The nodes in the graph will represent the functions, and the edges will represent the calls between these functions.
+
+Here's the call graph in DOT format:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    node [shape=box];
+    _Z2bfNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_ [label="_Z2bfNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_"];
+    _ZNSt20__uninitialized_copyILb0EE13__uninit_copyIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPS7_EET0_T_SC_SB_ [label="_ZNSt20__uninitialized_copyILb0EE13__uninit_copyIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPS7_EET0_T_SC_SB_"];
+    _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE17_M_realloc_insertIJRKS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_ [label="_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE17_M_realloc_insertIJRKS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_"];
+    _ZdlPv [label="_ZdlPv"];
+    _Znwm [label="_Znwm"];
+    _ZSt20__throw_length_errorPKc [label="_ZSt20__throw_length_errorPKc"];
+    __clang_call_terminate [label="__clang_call_terminate"];
+    _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev [label="_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev"];
+    _ZSt9terminatev [label="_ZSt9terminatev"];
+    _ZSt20__throw_length_errorPKc [label="_ZSt20__throw_length_errorPKc"];
+
+    // Edges
+    _Z2bfNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_ -> _ZNSt20__uninitialized_copyILb0EE13__uninit_copyIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPS7_EET0_T_SC_SB_;
+    _Z2bfNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_ -> _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE17_M_realloc_insertIJRKS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_;
+    _Z2bfNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_ -> _ZdlPv;
+    _Z2bfNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_ -> _Znwm;
+    _Z2bfNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_ -> _ZSt20__throw_length_errorPKc;
+    _Z2bfNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_ -> __clang_call_terminate;
+    _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev -> _ZdlPv;
+}
+```
+
+### Explanation:
+- Each function is represented as a node in the graph.
+- The edges indicate the calling relationships between functions. For instance, `_Z2bfNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_` calls `_ZNSt20__uninitialized_copyILb0EE13__uninit_copyIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPS7_EET0_T_SC_SB_` and so forth.
+- Function names are mangled C++ names, which may need to be demangled for better readability in some contexts.

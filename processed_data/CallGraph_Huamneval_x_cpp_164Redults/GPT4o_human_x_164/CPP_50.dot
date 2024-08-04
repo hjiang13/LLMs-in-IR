@@ -1,0 +1,45 @@
+Based on the provided Intermediate Representation (IR) code, a call graph can be constructed showing the functions and their call relationships. Below is the representation of the call graph in the Dot format:
+
+```dot
+digraph call_graph {
+    // Define the nodes
+    node [shape=box];
+
+    // Function nodes
+    encode_shift [label="_Z12encode_shiftNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE"];
+    decode_shift [label="_Z12decode_shiftNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE"];
+    malloc [label="_ZdlPv"];
+    create [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm"];
+    replace [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc"];
+    memcpy [label="llvm.memcpy.p0i8.p0i8.i64"];
+    lifetime_start [label="llvm.lifetime.start.p0i8"];
+    lifetime_end [label="llvm.lifetime.end.p0i8"];
+    noalias_scope [label="llvm.experimental.noalias.scope.decl"];
+
+    // Define the edges (calls)
+    encode_shift -> lifetime_start;
+    encode_shift -> lifetime_end;
+    encode_shift -> noalias_scope;
+    encode_shift -> malloc;
+    encode_shift -> create;
+    encode_shift -> replace;
+    encode_shift -> memcpy;
+    
+    decode_shift -> lifetime_start;
+    decode_shift -> lifetime_end;
+    decode_shift -> noalias_scope;
+    decode_shift -> malloc;
+    decode_shift -> create;
+    decode_shift -> replace;
+    decode_shift -> memcpy;
+}
+```
+
+### Explanation:
+- Each function is represented as a node in the graph.
+- The edges represent calls made from one function to another.
+- The labels in the nodes provide a clear understanding of which function each node corresponds to.
+- The nodes `lifetime_start`, `lifetime_end`, and `noalias_scope` represent calls to LLVM intrinsic functions that are not user-defined but are part of the generated intermediate code.
+- `malloc`, `_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm`, and `_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc` are specific operations related to memory management and string operations in C++. 
+
+You can visualize this Dot representation using tools like Graphviz to generate the actual call graph diagram.

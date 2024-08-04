@@ -1,0 +1,56 @@
+To create a call graph from the provided IR code, we'll identify the functions and their calls to each other. In the given IR code, we can see the following function definitions and declarations:
+
+1. **Function Definitions:**
+   - `@_Z10sort_arraySt6vectorIiSaIiEE`
+
+2. **Function Declarations:**
+   - `@llvm.memset.p0i8.i64`
+   - `@__gxx_personality_v0`
+   - `@_ZdlPv`
+   - `@_ZSt20__throw_length_errorPKc`
+   - `@_Znwm`
+   - `@llvm.memmove.p0i8.p0i8.i64`
+   - `@llvm.abs.i32`
+
+3. **Function Calls:**
+   - Inside `@_Z10sort_arraySt6vectorIiSaIiEE`, we have calls to:
+     - `@llvm.abs.i32`
+     - `@llvm.memset.p0i8.i64`
+     - `@llvm.memmove.p0i8.p0i8.i64`
+     - `@_ZdlPv`
+     - `@_ZSt20__throw_length_errorPKc`
+     - `@_Znwm`
+
+Now, let's represent this in a DOT format, which is used for graph description. Here’s how the call graph looks in DOT format:
+
+```dot
+digraph CallGraph {
+    // Function Definitions
+    node [shape=box];
+    sort_array [label="_Z10sort_arraySt6vectorIiSaIiEE"];
+    
+    // Function Declarations
+    llvm_memset [label="llvm.memset.p0i8.i64"];
+    gxx_personality [label="__gxx_personality_v0"];
+    delete [label="_ZdlPv"];
+    throw_length_error [label="_ZSt20__throw_length_errorPKc"];
+    new [label="_Znwm"];
+    memmove [label="llvm.memmove.p0i8.p0i8.i64"];
+    abs [label="llvm.abs.i32"];
+
+    // Edges representing function calls
+    sort_array -> abs;
+    sort_array -> llvm_memset;
+    sort_array -> memmove;
+    sort_array -> delete;
+    sort_array -> throw_length_error;
+    sort_array -> new;
+}
+```
+
+This DOT representation includes:
+- A node for the main function (`_Z10sort_arraySt6vectorIiSaIiEE`).
+- Nodes for each of the declared functions that it calls.
+- Directed edges from the `sort_array` function to each of the called functions, indicating the flow of calls. 
+
+You can visualize this graph using Graphviz or any other tool that supports DOT format.

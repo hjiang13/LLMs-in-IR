@@ -1,0 +1,35 @@
+Based on the provided Intermediate Representation (IR) code, we can extract the function calls and represent them in a call graph format using DOT notation. The key function defined in the provided code is `_Z8simplifyNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_`, and it calls several other functions. 
+
+Here's the call graph in DOT format:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    node [shape=box];
+    func_simplify [label="_Z8simplifyNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_"];
+    func_strtol [label="strtol"];
+    func_new_string_create [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm"];
+    func_memcpy [label="llvm.memcpy.p0i8.p0i8.i64"];
+    func_lifetime_start [label="llvm.lifetime.start.p0i8"];
+    func_lifetime_end [label="llvm.lifetime.end.p0i8"];
+    func_throw_out_of_range [label="_ZSt24__throw_out_of_range_fmtPKcz"];
+    func_delete [label="_ZdlPv"];
+    func_noalias_scope_decl [label="llvm.experimental.noalias.scope.decl"];
+
+    // Edges (function calls)
+    func_simplify -> func_strtol;
+    func_simplify -> func_new_string_create;
+    func_simplify -> func_memcpy;
+    func_simplify -> func_lifetime_start;
+    func_simplify -> func_lifetime_end;
+    func_simplify -> func_throw_out_of_range;
+    func_simplify -> func_delete;
+    func_simplify -> func_noalias_scope_decl;
+}
+```
+
+### Explanation:
+1. **Nodes**: Each node represents a function. The label of each node is the mangled name of the function, which is often used in C++.
+2. **Edges**: A directed edge from one function to another indicates that the first function calls the second function. 
+
+This representation captures the calling relationships in the specified IR code. If additional functions are present in the IR code that are not listed here, they can be added similarly.

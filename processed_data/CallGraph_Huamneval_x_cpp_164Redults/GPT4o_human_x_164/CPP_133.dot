@@ -1,0 +1,27 @@
+Based on the provided Intermediate Representation (IR) code, we can extract the function calls to construct the call graph. Here’s the call graph in DOT format, which includes nodes for each function and edges showing the calls between them:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    node [shape=box];
+    sum_squares [label="_Z11sum_squaresSt6vectorIfSaIfEE"];
+    llvm_ceil_f32 [label="llvm.ceil.f32"];
+    llvm_umax_i64 [label="llvm.umax.i64"];
+
+    // Edges
+    sum_squares -> llvm_ceil_f32;
+    sum_squares -> llvm_umax_i64;
+}
+```
+
+### Explanation:
+- **Nodes**:
+  - `sum_squares`: Represents the function `_Z11sum_squaresSt6vectorIfSaIfEE`.
+  - `llvm_ceil_f32`: Represents the function `llvm.ceil.f32`.
+  - `llvm_umax_i64`: Represents the function `llvm.umax.i64`.
+
+- **Edges**:
+  - There is an edge from `sum_squares` to `llvm_ceil_f32`, indicating that the `sum_squares` function calls `llvm.ceil.f32`.
+  - There is an edge from `sum_squares` to `llvm_umax_i64`, indicating that the `sum_squares` function calls `llvm.umax.i64`.
+
+This representation shows the hierarchical relationships between the functions in terms of calls.

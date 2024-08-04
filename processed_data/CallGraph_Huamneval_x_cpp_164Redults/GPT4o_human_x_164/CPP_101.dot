@@ -1,0 +1,39 @@
+Based on the provided Intermediate Representation (IR) code, we can construct a call graph in the DOT format. The nodes represent functions, and the edges represent calls between those functions. Below is the call graph representing the functions that are defined and called in your IR code.
+
+```dot
+digraph CallGraph {
+    // Nodes
+    node [shape=box];
+    words_string [label="_Z12words_stringNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE"];
+    clang_call_terminate [label="__clang_call_terminate"];
+    vector_dtor [label="_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev"];
+    malloc [label="_Znwm"];
+    string_create [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm"];
+    string_replace_aux [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc"];
+    string_replace [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm"];
+    vector_realloc_insert [label="_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE17_M_realloc_insertIJRKS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_"];
+    vector_create [label="_ZdlPv"];
+    terminate [label="_ZSt9terminatev"];
+    throw_length_error [label="_ZSt20__throw_length_errorPKc"];
+    
+    // Edges
+    words_string -> vector_realloc_insert;
+    words_string -> string_create;
+    words_string -> string_replace_aux;
+    words_string -> vector_dtor;
+    vector_realloc_insert -> string_replace;
+    vector_realloc_insert -> string_create;
+    vector_realloc_insert -> vector_dtor;
+    string_create -> malloc;
+    string_replace_aux -> string_replace;
+    
+    // Termination functions
+    clang_call_terminate -> terminate;
+    clang_call_terminate -> throw_length_error;
+}
+```
+
+### Explanation:
+- Each function is represented as a node, and the edges represent the calls between them.
+- The function names are mangled C++ names, which identify the specific functions in the IR.
+- The graph contains edges showing which functions call other functions, providing a clear overview of the call relationships within the provided code.

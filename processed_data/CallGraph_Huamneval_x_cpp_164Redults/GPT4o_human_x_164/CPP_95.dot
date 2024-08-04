@@ -1,0 +1,29 @@
+To represent the call graph based on the provided Intermediate Representation (IR) code, we will extract the function declarations and calls, creating nodes for each function and edges for each call between functions. Here’s how the call graph would look in DOT format:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    node [shape=box];
+    check_dict_case [label="_Z15check_dict_caseSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_St4lessIS5_ESaISt4pairIKS5_S5_EEE"];
+    llvm_lifetime_start [label="llvm.lifetime.start.p0i8"];
+    llvm_memcpy [label="llvm.memcpy.p0i8.p0i8.i64"];
+    llvm_lifetime_end [label="llvm.lifetime.end.p0i8"];
+    delete [label="_ZdlPv"];
+    rb_tree_increment [label="_ZSt18_Rb_tree_incrementPSt18_Rb_tree_node_base"];
+    basic_string_create [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm"];
+
+    // Edges
+    check_dict_case -> llvm_lifetime_start;
+    check_dict_case -> llvm_memcpy;
+    check_dict_case -> llvm_lifetime_end;
+    check_dict_case -> delete;
+    check_dict_case -> rb_tree_increment;
+    check_dict_case -> basic_string_create;
+}
+```
+
+### Explanation:
+- Each function is represented as a node.
+- The edges indicate calls made from the function `check_dict_case` to the other functions (lifetime management functions, memory copying, deletion, etc.).
+- The labels of the nodes correspond to the mangled names of C++ functions as seen in the IR code.
+- The graph structure is directed, indicating the flow of calls from one function to another.

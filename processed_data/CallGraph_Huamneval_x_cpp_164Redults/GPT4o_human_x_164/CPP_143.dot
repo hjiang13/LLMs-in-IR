@@ -1,0 +1,39 @@
+To represent the call graph derived from the given Intermediate Representation (IR) code, we can identify the functions declared and defined in the code and show the relationships between them. 
+
+Here's the dot format for the call graph, which includes the main function and the functions that it calls, as well as any other functions that are invoked:
+
+```dot
+digraph CallGraph {
+    // Nodes representing functions
+    node [shape=box];
+    words_in_sentence;
+    _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm;
+    _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc;
+    _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm;
+    _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm;
+    _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_eraseEmm;
+    _ZdlPv;
+    __cxa_begin_catch;
+    __gxx_personality_v0;
+    _ZSt9terminatev;
+    
+    // Edges representing function calls
+    words_in_sentence -> _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm;
+    words_in_sentence -> _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc;
+    words_in_sentence -> _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm;
+    words_in_sentence -> _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm;
+    words_in_sentence -> _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_eraseEmm;
+    words_in_sentence -> _ZdlPv;
+    words_in_sentence -> __cxa_begin_catch;
+    words_in_sentence -> __gxx_personality_v0;
+    words_in_sentence -> _ZSt9terminatev;
+}
+```
+
+### Explanation:
+- Each function is represented as a node in the graph.
+- Directed edges represent the calls made from one function to another.
+- The main function in this case is `words_in_sentence`, which calls several other functions.
+- Functions from the C++ Standard Library and LLVM intrinsics are included based on their usage in the IR code.
+
+You can visualize this graph using graph visualization tools that support the DOT format, such as Graphviz.

@@ -1,0 +1,26 @@
+Based on the provided Intermediate Representation (IR) code, we can analyze the call graph and represent it in the DOT format. The main function defined in the code is `_Z3eatiii`, which calls other functions such as `@llvm.memset.p0i8.i64` and `_Znwm`. The `@__gxx_personality_v0` function is declared but not called in the given IR code.
+
+Here is the corresponding DOT representation of the call graph:
+
+```dot
+digraph CallGraph {
+    node [shape=rectangle];
+
+    // Nodes
+    _Z3eatiii [label="_Z3eatiii"];
+    llvm_memset [label="llvm.memset.p0i8.i64"];
+    _Znwm [label="_Znwm"];
+    __gxx_personality_v0 [label="__gxx_personality_v0"];
+
+    // Edges
+    _Z3eatiii -> llvm_memset;
+    _Z3eatiii -> _Znwm;
+}
+```
+
+### Explanation:
+- Each function is represented as a node.
+- The edges represent the calls made from the function `_Z3eatiii` to the other functions it calls (`llvm.memset.p0i8.i64` and `_Znwm`).
+- The `__gxx_personality_v0` function is declared but not included in the edges since it is not called within the provided IR code. If it were called, an edge would be added from `_Z3eatiii` to `__gxx_personality_v0`. 
+
+This representation provides a clear hierarchical view of the calling relationships between functions in the program.

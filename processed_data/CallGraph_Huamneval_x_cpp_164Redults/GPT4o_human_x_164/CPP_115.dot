@@ -1,0 +1,30 @@
+To represent the call graph based on the provided Intermediate Representation (IR) code, we will identify the functions and the relationships between them. The relevant functions from the given IR code are:
+
+1. `_Z8max_fillSt6vectorIS_IiSaIiEESaIS1_EEi` (the main function defined in the IR)
+2. `@llvm.umax.i64` (a declaration for a function called within the main function)
+3. `@llvm.vector.reduce.add.v4i32` (another function called within the main function)
+
+Based on this analysis, we can represent the call graph in the DOT format, which describes nodes and edges between them.
+
+Here is the DOT representation of the call graph:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    node [shape=rectangle];
+    max_fill [label="_Z8max_fillSt6vectorIS_IiSaIiEESaIS1_EEi"];
+    llvm_umax [label="@llvm.umax.i64"];
+    llvm_vector_reduce [label="@llvm.vector.reduce.add.v4i32"];
+
+    // Edges
+    max_fill -> llvm_umax;
+    max_fill -> llvm_vector_reduce;
+}
+```
+
+In this representation:
+
+- Each function is represented as a node.
+- Directed edges indicate the calls from one function to another, showing that `max_fill` calls `llvm_umax` and `llvm_vector_reduce`. 
+
+You can visualize this graph using graph visualization tools that support the DOT format.

@@ -1,0 +1,27 @@
+Based on the provided IR code input, we can extract the function definitions and the calls made within those functions to construct a call graph. The relevant function in this case is `_Z7hex_keyNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE`, which makes calls to several LLVM intrinsic functions.
+
+Here's the call graph in DOT format:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    node [shape=box];
+    hex_key [label="_Z7hex_keyNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE"];
+    llvm_lifetime_start [label="llvm.lifetime.start.p0i8"];
+    llvm_lifetime_end [label="llvm.lifetime.end.p0i8"];
+    llvm_memcpy [label="llvm.memcpy.p0i8.p0i8.i64"];
+    __gxx_personality_v0 [label="__gxx_personality_v0"];
+
+    // Edges
+    hex_key -> llvm_lifetime_start;
+    hex_key -> llvm_memcpy;
+    hex_key -> llvm_lifetime_end;
+    hex_key -> __gxx_personality_v0;
+}
+```
+
+### Explanation:
+- **Nodes**: Each node represents a function defined or declared in the provided IR code. The main function `_Z7hex_keyNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE` is the entry point of the program, while the other nodes represent the functions that it calls.
+- **Edges**: Directed edges indicate the calls made by the `hex_key` function to the other functions.
+
+This representation captures the relationships between the function calls in a simple and clear manner suitable for visualizing the call graph.

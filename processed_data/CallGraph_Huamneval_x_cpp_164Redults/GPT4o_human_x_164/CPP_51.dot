@@ -1,0 +1,35 @@
+Based on the provided Intermediate Representation (IR) code, I will extract the function calls and generate a call graph in DOT format. The functions are represented as nodes, and the calls between them are represented as directed edges.
+
+Here is the call graph in DOT format:
+
+```dot
+digraph CallGraph {
+    // Function nodes
+    node [shape=box];
+    "_Z13remove_vowelsNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE" [label="_Z13remove_vowelsNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE"];
+    "@llvm.lifetime.start.p0i8" [label="@llvm.lifetime.start.p0i8"];
+    "@llvm.lifetime.end.p0i8" [label="@llvm.lifetime.end.p0i8"];
+    "_ZdlPv" [label="_ZdlPv"];
+    "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm" [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm"];
+    "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc" [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc"];
+    "llvm.memcpy.p0i8.p0i8.i64" [label="llvm.memcpy.p0i8.p0i8.i64"];
+    "@llvm.experimental.noalias.scope.decl" [label="@llvm.experimental.noalias.scope.decl"];
+    
+    // Function calls as edges
+    "_Z13remove_vowelsNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE" -> "@llvm.lifetime.start.p0i8";
+    "_Z13remove_vowelsNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE" -> "@llvm.lifetime.end.p0i8";
+    "_Z13remove_vowelsNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE" -> "_ZdlPv";
+    "_Z13remove_vowelsNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE" -> "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm";
+    "_Z13remove_vowelsNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE" -> "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc";
+    "_Z13remove_vowelsNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE" -> "llvm.memcpy.p0i8.p0i8.i64";
+    "_Z13remove_vowelsNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE" -> "@llvm.experimental.noalias.scope.decl";
+}
+```
+
+### Explanation:
+- The vertices (nodes) represent the functions defined and declared in the provided IR code.
+- The directed edges (`->`) represent the calls from one function to another.
+- Each function name is stored in a variable format, and the labels in the graph are set to improve readability.
+- The graph structure uses a directed graph to show the flow of function calls.
+
+You can visualize this DOT representation using Graphviz or any compatible tool to get a graphical representation of the call graph.

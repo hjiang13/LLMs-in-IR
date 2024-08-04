@@ -1,0 +1,31 @@
+Based on the provided Intermediate Representation (IR) code, the following call graph can be generated. The nodes represent the functions defined or declared in the IR code, and the edges represent calls made between these functions.
+
+Here is the dot representation of the call graph:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    node [shape=box];
+    string_xor [label="_Z10string_xorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_"];
+    gxx_personality [label="__gxx_personality_v0"];
+    delete [label="_ZdlPv"];
+    mutate [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_mutateEmmPKcm"];
+    
+    // Edges
+    string_xor -> mutate [label="invoke"];
+    string_xor -> delete [label="invoke"];
+    string_xor -> gxx_personality [label="invoke"];
+}
+```
+
+### Explanation:
+- **Nodes**:
+  - **string_xor**: This is the main function defined in the IR code.
+  - **gxx_personality**: This is a personality function used for exception handling in C++.
+  - **delete**: This function is used for memory deallocation.
+  - **mutate**: This function is used to modify the contents of a `std::basic_string`.
+
+- **Edges**:
+  - The edges denote calls made from the `string_xor` function to the other functions (`mutate`, `delete`, and `gxx_personality`).
+
+You can visualize this graph using Graphviz or any other tool that can process dot files.

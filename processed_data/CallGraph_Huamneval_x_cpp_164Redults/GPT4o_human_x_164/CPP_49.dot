@@ -1,0 +1,40 @@
+Based on the provided Intermediate Representation (IR) code, we can analyze the function and its control flow to construct a call graph in DOT format. The function defined in the IR code is `_Z4modpii`, which has various branching and conditional paths, but no other function calls are indicated within the provided code. Therefore, it will mainly consist of the entry point and the basic blocks with their corresponding edges.
+
+Here's the DOT representation of the call graph:
+
+```dot
+digraph CallGraph {
+    // Node for the function
+    node [shape=box];
+    func_modpii [label="_Z4modpii"];
+
+    // Basic blocks
+    block_2 [label="%2"];
+    block_4 [label="%4"];
+    block_8 [label="%8"];
+    block_10 [label="%10"];
+    block_14 [label="%14"];
+    block_21 [label="%21"];
+    block_23 [label="%23"];
+
+    // Edges for control flow
+    func_modpii -> block_2;
+    block_2 -> block_4;
+    block_4 -> block_8;
+    block_4 -> block_10;
+    block_10 -> block_14;
+    block_10 -> block_21;
+    block_14 -> block_14; // Loop back
+    block_14 -> block_21;
+    block_8 -> block_23;
+    block_23 -> block_23; // Loop back
+    block_23 -> block_10;
+    block_23 -> block_21;
+}
+```
+
+### Explanation:
+- **Nodes**: Each node corresponds to a function or a basic block within the function. The function `_Z4modpii` serves as the root node, and each basic block (e.g., `%2`, `%4`, `%8`, etc.) is represented as a separate node.
+- **Edges**: Directed edges indicate the control flow between the nodes, showing how the execution can transition from one block to another based on conditional branches and loops.
+
+This representation captures the structure of the function and the flow of control between its components without detailing the internal instructions of each block.

@@ -1,0 +1,20 @@
+Based on the provided Intermediate Representation (IR) code, we can extract the function calls to construct a call graph. Below is the representation in the DOT format, which includes nodes for each function and edges representing calls between them.
+
+```dot
+digraph CallGraph {
+    // Nodes
+    node [shape=box];
+    _Z10prod_signsSt6vectorIiSaIiEE [label="_Z10prod_signsSt6vectorIiSaIiEE"];
+    llvm_abs_i32 [label="llvm.abs.i32"];
+    llvm_umax_i64 [label="llvm.umax.i64"];
+
+    // Edges
+    _Z10prod_signsSt6vectorIiSaIiEE -> llvm_abs_i32;
+    _Z10prod_signsSt6vectorIiSaIiEE -> llvm_umax_i64;
+}
+```
+
+### Explanation:
+- The node `_Z10prod_signsSt6vectorIiSaIiEE` represents the main function defined in the IR code.
+- The nodes `llvm.abs.i32` and `llvm.umax.i64` represent the external functions called within `prod_signs`.
+- The edges indicate the function calls; for example, `prod_signs` calls `llvm.abs.i32` and `llvm.umax.i64`.

@@ -1,0 +1,49 @@
+To generate a call graph from the given Intermediate Representation (IR) code, we will extract the function definitions and their call relationships. The output will be in the DOT format, which can be used to visualize the call graph.
+
+Here's the DOT format representation:
+
+```dot
+digraph CallGraph {
+    // Node definitions
+    "sort_numbers";
+    "__gxx_personality_v0";
+    "llvm.lifetime.start.p0i8";
+    "llvm.lifetime.end.p0i8";
+    "llvm.memcpy.p0i8.p0i8.i64";
+    "_ZdlPv";  // This function is called numerous times, it's a deallocation function.
+    "_ZNSt8_Rb_treeIiSt4pairIKiNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEESt10_Select1stIS8_ESt4lessIiESaIS8_EE17_M_construct_nodeIJRKS8_EEEvPSt13_Rb_tree_nodeIS8_EDpOT_";
+    "_ZNSt8_Rb_treeIiSt4pairIKiNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEESt10_Select1stIS8_ESt4lessIiESaIS8_EE8_M_eraseEPSt13_Rb_tree_nodeIS8_E";
+    "_ZNSt8_Rb_treeIiSt4pairIKiNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEESt10_Select1stIS8_ESt4lessIiESaIS8_EE12_M_drop_nodeEPSt13_Rb_tree_nodeIS8_E";
+    "_ZNSt8_Rb_treeIiSt4pairIKiNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEESt10_Select1stIS8_ESt4lessIiESaIS8_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorIS8_ERS1_";
+    "_ZNSt8_Rb_treeIiSt4pairIKiNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEESt10_Select1stIS8_ESt4lessIiESaIS8_EE10_M_insert_IRKS8_NSE_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS8_EPSt18_Rb_tree_node_baseSM_OT_RT0_";
+    "_ZNSt8_Rb_treeIiSt4pairIKiNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEESt10_Select1stIS8_ESt4lessIiESaIS8_EE24_M_get_insert_unique_posERS1_";
+    "_ZSt18_Rb_tree_incrementPSt18_Rb_tree_node_base";
+    "_ZSt18_Rb_tree_decrementPSt18_Rb_tree_node_base";
+    "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm";
+    "_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_iESt10_Select1stIS8_ESt4lessIS5_ESaIS8_EE12_M_drop_nodeEPSt13_Rb_tree_nodeIS8_E";
+    // Add more nodes based on the calls present in the provided IR
+
+    // Edge definitions
+    "sort_numbers" -> "__gxx_personality_v0";
+    "sort_numbers" -> "llvm.lifetime.start.p0i8";
+    "sort_numbers" -> "llvm.lifetime.end.p0i8";
+    "sort_numbers" -> "_ZdlPv";
+    "sort_numbers" -> "_ZNSt8_Rb_treeIiSt4pairIKiNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEESt10_Select1stIS8_ESt4lessIiESaIS8_EE17_M_construct_nodeIJRKS8_EEEvPSt13_Rb_tree_nodeIS8_EDpOT_";
+    "sort_numbers" -> "_ZNSt8_Rb_treeIiSt4pairIKiNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEESt10_Select1stIS8_ESt4lessIiESaIS8_EE8_M_eraseEPSt13_Rb_tree_nodeIS8_E";
+    "sort_numbers" -> "_ZNSt8_Rb_treeIiSt4pairIKiNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEESt10_Select1stIS8_ESt4lessIiESaIS8_EE12_M_drop_nodeEPSt13_Rb_tree_nodeIS8_E";
+    "sort_numbers" -> "_ZNSt8_Rb_treeIiSt4pairIKiNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEESt10_Select1stIS8_ESt4lessIiESaIS8_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorIS8_ERS1_";
+    "sort_numbers" -> "_ZNSt8_Rb_treeIiSt4pairIKiNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEESt10_Select1stIS8_ESt4lessIiESaIS8_EE10_M_insert_IRKS8_NSE_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS8_EPSt18_Rb_tree_node_baseSM_OT_RT0_";
+    "sort_numbers" -> "_ZNSt8_Rb_treeIiSt4pairIKiNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEESt10_Select1stIS8_ESt4lessIiESaIS8_EE24_M_get_insert_unique_posERS1_";
+    "sort_numbers" -> "_ZSt18_Rb_tree_incrementPSt18_Rb_tree_node_base";
+    "sort_numbers" -> "_ZSt18_Rb_tree_decrementPSt18_Rb_tree_node_base";
+    "sort_numbers" -> "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm";
+}
+```
+
+### Notes:
+1. Each function defined in the IR code has been added as a node in the graph.
+2. The edges indicate which functions call which other functions.
+3. The actual function names and their calling relationships are inferred from the IR code structure provided.
+4. Additional nodes and edges may be added based on the full analysis of the code, particularly if there are more function calls or definitions that are not explicitly shown in the truncated IR code provided.
+
+You can visualize this DOT representation using graph visualization tools like Graphviz.

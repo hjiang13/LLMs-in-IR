@@ -1,0 +1,21 @@
+Based on the provided Intermediate Representation (IR) code, we can determine the structure of the call graph. In this case, the function `_Z4fib4i` (which appears to be a Fibonacci function based on the name) makes calls to two functions: `@llvm.lifetime.start.p0i8` and `@llvm.lifetime.end.p0i8`. These are lifetime management functions typically used in LLVM IR.
+
+Here's the dot file representation of the call graph based on the provided IR code:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    _Z4fib4i [label="_Z4fib4i"];
+    @llvm.lifetime.start.p0i8 [label="@llvm.lifetime.start.p0i8"];
+    @llvm.lifetime.end.p0i8 [label="@llvm.lifetime.end.p0i8"];
+
+    // Edges
+    _Z4fib4i -> @llvm.lifetime.start.p0i8;
+    _Z4fib4i -> @llvm.lifetime.end.p0i8;
+}
+```
+
+### Explanation:
+- Each function in the IR code is represented as a node.
+- The edges represent the calls made from one function to another.
+- In this case, the `@llvm.lifetime.start.p0i8` and `@llvm.lifetime.end.p0i8` are called by `_Z4fib4i`, which is the only user-defined function in the provided IR code.

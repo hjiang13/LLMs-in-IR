@@ -1,0 +1,32 @@
+Based on the provided Intermediate Representation (IR) code, we can extract the function definitions and the calls made between them to create a call graph in DOT format. The code includes one defined function, `_Z11count_up_toi`, and several declared functions that it interacts with.
+
+Here’s the call graph represented in DOT format:
+
+```dot
+digraph CallGraph {
+    node [shape=rectangle];
+
+    // Nodes
+    _Z11count_up_toi [label="_Z11count_up_toi"];
+    llvm_memset [label="llvm.memset.p0i8.i64"];
+    __gxx_personality_v0 [label="__gxx_personality_v0"];
+    _ZdlPv [label="_ZdlPv"];
+    _ZSt20__throw_length_errorPKc [label="_ZSt20__throw_length_errorPKc"];
+    _Znwm [label="_Znwm"];
+    llvm_memmove [label="llvm.memmove.p0i8.p0i8.i64"];
+
+    // Edges
+    _Z11count_up_toi -> llvm_memset;
+    _Z11count_up_toi -> _Znwm;
+    _Z11count_up_toi -> _ZdlPv;
+    _Z11count_up_toi -> _ZSt20__throw_length_errorPKc;
+    _Z11count_up_toi -> __gxx_personality_v0;
+    _Z11count_up_toi -> llvm_memmove;
+}
+```
+
+### Explanation:
+- **Nodes**: Each function is represented as a node. The label of each node is the mangled name of the function.
+- **Edges**: Directed edges represent calls from one function to another. For example, `_Z11count_up_toi` calls `llvm_memset`, `_Znwm`, `_ZdlPv`, `_ZSt20__throw_length_errorPKc`, `__gxx_personality_v0`, and `llvm_memmove`.
+
+This representation provides a clear overview of the function calls in the provided IR code.

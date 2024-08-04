@@ -1,0 +1,26 @@
+Based on the provided Intermediate Representation (IR) code, we can analyze the function calls and construct a call graph. The call graph will show the relationships between functions, including calls to external functions.
+
+Here is the call graph in DOT format:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    fibfibi [label="_Z6fibfibi"];
+    llvm_lifetime_start [label="llvm.lifetime.start.p0i8"];
+    llvm_lifetime_end [label="llvm.lifetime.end.p0i8"];
+
+    // Edges
+    fibfibi -> llvm_lifetime_start;
+    fibfibi -> llvm_lifetime_end;
+}
+```
+
+### Explanation:
+- **Nodes**: Each node corresponds to a function in the IR code. In this case, we have:
+  - `fibfibi`: The main function defined in the IR.
+  - `llvm.lifetime.start.p0i8`: An external function called to start lifetime tracking.
+  - `llvm.lifetime.end.p0i8`: An external function called to end lifetime tracking.
+
+- **Edges**: The directed edges represent the calls made by the `fibfibi` function to the other functions. Thus, we see `fibfibi` calling both `llvm.lifetime.start.p0i8` and `llvm.lifetime.end.p0i8`.
+
+You can use this DOT representation with graph visualization tools to visualize the call graph.
