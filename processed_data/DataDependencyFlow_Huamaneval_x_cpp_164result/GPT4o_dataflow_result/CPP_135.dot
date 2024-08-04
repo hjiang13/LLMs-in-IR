@@ -1,0 +1,110 @@
+To generate a data flow graph (DFG) from the provided intermediate representation (IR) code, we need to identify the key nodes (variables and operations) and the edges that represent the data dependencies between them. Below is a detailed outline of the nodes and edges, followed by a dot file format that can be used to visualize the DFG.
+
+### Nodes
+1. **Input Node**
+   - `Input_Vector`: Represents the input vector passed to the function `can_arrange`.
+
+2. **GEP Operations**
+   - `GEP_1`: getelementptr operation to get the address of the vector's internal data.
+   - `GEP_2`: getelementptr operation to get the address of the vector's size or capacity.
+
+3. **Load Operations**
+   - `Load_Data_Ptr`: Load operation retrieving the pointer to the vector's data.
+   - `Load_Capacity`: Load operation retrieving the capacity of the vector.
+
+4. **Pointer to Integer Conversions**
+   - `PtrToInt_Data`: Pointer to integer conversion of the data pointer.
+   - `PtrToInt_Capacity`: Pointer to integer conversion of the capacity pointer.
+
+5. **Arithmetic Operations**
+   - `Subtraction`: Subtracting the two pointer values.
+   - `RightShift`: Arithmetic right shift operation.
+   - `Add`: Addition operation for adjusting indices.
+   - `And`: Bitwise AND operation.
+
+6. **Comparisons**
+   - `Comparison_Zero`: Comparison to check if the subtraction result is zero.
+   - `Comparison_Less`: Comparison to check if one index is less than another.
+
+7. **Control Flow Nodes**
+   - `Branch_Zero`: Branching based on the result of the zero comparison.
+   - `Branch_Less`: Branching based on the result of the less comparison.
+
+8. **Phi Nodes**
+   - `Phi_Value1`: Phi node for aggregating values from different branches.
+   - `Phi_Index`: Phi node for aggregating indices.
+
+9. **Return Node**
+   - `Return_Value`: Represents the return value of the function.
+
+### Edges
+- `Input_Vector` → `GEP_1`
+- `Input_Vector` → `GEP_2`
+- `GEP_1` → `Load_Data_Ptr`
+- `GEP_2` → `Load_Capacity`
+- `Load_Data_Ptr` → `PtrToInt_Data`
+- `Load_Capacity` → `PtrToInt_Capacity`
+- `PtrToInt_Data` → `Subtraction`
+- `PtrToInt_Capacity` → `Subtraction`
+- `Subtraction` → `Comparison_Zero`
+- `RightShift` → `Add`
+- `Add` → `Comparison_Less`
+- `Comparison_Zero` → `Branch_Zero`
+- `Comparison_Less` → `Branch_Less`
+- `Phi_Value1` → `Return_Value`
+- `Phi_Index` → `Return_Value`
+- Various branches leading into `Phi_Value1` and `Phi_Index` for control flow merging.
+
+### Dot File Representation
+Here’s how this can be represented in a dot file format:
+
+```dot
+digraph DataFlowGraph {
+    rankdir=LR;
+
+    // Nodes
+    Input_Vector [label="Input_Vector"];
+    GEP_1 [label="GEP_1"];
+    GEP_2 [label="GEP_2"];
+    Load_Data_Ptr [label="Load_Data_Ptr"];
+    Load_Capacity [label="Load_Capacity"];
+    PtrToInt_Data [label="PtrToInt_Data"];
+    PtrToInt_Capacity [label="PtrToInt_Capacity"];
+    Subtraction [label="Subtraction"];
+    RightShift [label="RightShift"];
+    Add [label="Add"];
+    And [label="And"];
+    Comparison_Zero [label="Comparison_Zero"];
+    Comparison_Less [label="Comparison_Less"];
+    Branch_Zero [label="Branch_Zero"];
+    Branch_Less [label="Branch_Less"];
+    Phi_Value1 [label="Phi_Value1"];
+    Phi_Index [label="Phi_Index"];
+    Return_Value [label="Return_Value"];
+
+    // Edges
+    Input_Vector -> GEP_1;
+    Input_Vector -> GEP_2;
+    GEP_1 -> Load_Data_Ptr;
+    GEP_2 -> Load_Capacity;
+    Load_Data_Ptr -> PtrToInt_Data;
+    Load_Capacity -> PtrToInt_Capacity;
+    PtrToInt_Data -> Subtraction;
+    PtrToInt_Capacity -> Subtraction;
+    Subtraction -> Comparison_Zero;
+    RightShift -> Add;
+    Add -> Comparison_Less;
+    Comparison_Zero -> Branch_Zero;
+    Comparison_Less -> Branch_Less;
+    Phi_Value1 -> Return_Value;
+    Phi_Index -> Return_Value;
+}
+```
+
+### Visualization Suggestions
+- The graph can be visualized using graph visualization tools such as Graphviz, which can render the dot file into a graphical format (e.g., PNG, PDF).
+- Each node can be represented as a circle or rectangle, with arrows indicating the flow of data.
+- Use different colors for different types of nodes (e.g., input/output, operations, comparisons) to enhance readability.
+- Annotate control flow nodes (branches) with their conditions to clarify decision points in the flow. 
+
+This structure provides a clear representation of how data flows through the IR code, highlighting dependencies and control structures.

@@ -1,0 +1,86 @@
+To create a data flow graph based on the provided Intermediate Representation (IR) code, we can outline the nodes and edges to represent the flow of data through various operations, along with function calls and control flow structures. Below is a textual representation of the data flow graph, followed by a suggestion for visualizing it diagrammatically in DOT format.
+
+### Nodes and Edges Description
+1. **Nodes (Variables and Operations)**:
+   - **Function Entry**: `@_Z6encodeNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE`
+   - **Allocations**: 
+     - `%3` (alloca for `i64`)
+     - `%4` (alloca for `basic_string`)
+     - `%5` (alloca for another `basic_string`)
+   - **Constants**: `@.str` (constant string "aeiouAEIOU")
+   - **Function Calls**:
+     - `@llvm.lifetime.start.p0i8`
+     - `@llvm.memcpy.p0i8.p0i8.i64`
+     - `@llvm.experimental.noalias.scope.decl`
+     - `@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm`
+     - `@llvm.lifetime.end.p0i8`
+   - **Control Flow**:
+     - `br i1 %30`
+     - `phi i64`
+     - `switch i64`
+     - `landingpad`
+     - `resume`
+   - **Loads and Stores**:
+     - Operations involving `%11`, `%17`, `%18`, `%29`, `%30`, etc.
+
+2. **Edges (Data Dependencies)**:
+   - From `@.str` to `@llvm.memcpy.p0i8.p0i8.i64` (data being copied)
+   - From `%0`, `%1` to `%4`, `%5` (data dependency for basic string operations)
+   - From `%3` to various loads and stores (indicates dependencies on the allocated memory)
+   - From conditional branches (e.g., `br i1 %30`) to their respective true/false blocks.
+   - From `phi` nodes indicating the joining of control flow paths.
+
+### Suggested Visualization Diagrammatically (DOT Format)
+Here’s how we can represent the nodes and edges in the DOT format:
+
+```dot
+digraph DataFlowGraph {
+    // Function entry
+    entry [label="@_Z6encodeNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE", shape=box];
+
+    // Allocations
+    alloc_i64 [label="%3", shape=ellipse];
+    alloc_str1 [label="%4", shape=ellipse];
+    alloc_str2 [label="%5", shape=ellipse];
+
+    // Constants
+    const_str [label="@.str", shape=plaintext];
+
+    // Function calls
+    func_lifetime_start [label="@llvm.lifetime.start.p0i8", shape=box];
+    func_memcpy [label="@llvm.memcpy.p0i8.p0i8.i64", shape=box];
+    func_create [label="@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm", shape=box];
+    func_lifetime_end [label="@llvm.lifetime.end.p0i8", shape=box];
+
+    // Control Flow
+    br_cond [label="br i1 %30", shape=diamond];
+
+    // Load and Store operations
+    load_op [label="Load Operations", shape=ellipse];
+    store_op [label="Store Operations", shape=ellipse];
+
+    // Edges indicating data flow
+    entry -> alloc_i64;
+    entry -> alloc_str1;
+    entry -> alloc_str2;
+    entry -> const_str;
+    entry -> func_lifetime_start;
+    alloc_str1 -> func_memcpy;
+    alloc_str2 -> func_create;
+    alloc_i64 -> load_op;
+    load_op -> store_op;
+    store_op -> func_lifetime_end;
+    br_cond -> store_op;
+}
+```
+
+### Visualization Suggestions
+Using a tool that can interpret DOT files, such as Graphviz, you can visualize the graph as follows:
+1. Save the above DOT content into a file, e.g., `data_flow_graph.dot`.
+2. Run Graphviz with a command like:
+   ```bash
+   dot -Tpng data_flow_graph.dot -o data_flow_graph.png
+   ```
+3. Open the resulting image file to view the data flow graph.
+
+This approach allows for a high-level understanding of the data dependencies and control flow in the given IR code.

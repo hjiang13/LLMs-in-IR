@@ -1,0 +1,166 @@
+To create a data flow graph (DFG) from the provided IR code, we will outline the nodes (which represent variables, operations, and control flow) and the edges (which represent dependencies between these nodes). The graph can be visualized using Graphviz, where each node corresponds to an operation or variable, and directed edges indicate the flow of data between them.
+
+### DFG Nodes and Edges
+
+Here is a breakdown of the nodes and edges in the DFG:
+
+#### Nodes
+1. **Function Call**: `_Z9is_nested(...)`
+2. **Load**: `%3` - loads the length of the string
+3. **Comparison**: `%4` - compares the length to 0
+4. **Branch**: `%5` - first branch based on `%4`
+5. **Load**: `%7` - loads the character pointer from the string
+6. **Load**: `%8` - loads the character at the pointer
+7. **Comparison**: `%9` - checks if character is '['
+8. **Zero Extension**: `%10` - zero extends the result of `%9`
+9. **Comparison**: `%11` - checks if character is ']'
+10. **Sign Extension**: `%12` - sign extends the result of `%11`
+11. **Addition**: `%13` - adds `%10` and `%12`
+12. **Comparison**: `%14` - checks if the sum is greater than 0
+13. **Select**: `%15` - selects between the sum and 0
+14. **Branch**: `%16` - control flow to the next block
+15. **Phi Nodes**: `%17`, `%18`, `%19` - for merging data from different predecessors
+16. **Comparison**: `%20` - checks if `%17` equals `%3`
+17. **Branch**: `%21` - control flow to the next block
+18. **Load**: `%22` - loads the character at the current index
+19. **Comparison**: `%24` - checks if character is '['
+20. **Zero Extension**: `%25` - zero extends the result of `%24`
+21. **Addition**: `%26` - adds `%19` and `%25`
+22. **Comparison**: `%27` - checks if character is ']'
+23. **Sign Extension**: `%28` - sign extends the result of `%27`
+24. **Addition**: `%29` - adds the results of `%26` and `%28`
+25. **Comparison**: `%30` - checks if the new sum is greater than 0
+26. **Select**: `%31` - selects between the new sum and the previous result
+27. **Comparison**: `%32` - compares new sum with `%18`
+28. **Select**: `%33` - selects between the new sum and `%18`
+29. **Addition**: `%34` - adjusts the final count
+30. **Comparison**: `%35` - checks conditions for looping
+31. **Increment**: `%36` - increments the counter
+32. **Comparison**: `%38` - checks if `%3` is greater than `%17`
+33. **Return**: `%40` - returns the final boolean result
+
+#### Edges
+- Edge from `%0` to `%2` (passing the input string)
+- Edge from `%2` to `%3` (loading the length)
+- Edge from `%3` to `%4` (comparing length)
+- Edge from `%4` to `%5` (branching based on length)
+- Edge from `%5` to `%6` (loading character pointer)
+- Edge from `%6` to `%7` (loading character)
+- Edge from `%7` to `%8` (checking character)
+- Edges from `%8` to `%9`, `%10`, and `%11` (various operations)
+- Edge from `%12` to `%13` (addition of results)
+- Edge from `%13` to `%14` (comparison)
+- Edge from `%14` to `%15` (selecting result)
+- Edge from `%15` to `%16` (branching)
+- Edge from `%16` to `%17`, `%18`, `%19` (phi nodes)
+- Edge from `%17` to `%20` (comparison)
+- Edge from `%20` to `%21` (branching)
+- Edge from `%21` to `%22` (loading character)
+- Edge from `%22` to `%23` (comparison)
+- Edge from `%23` to `%24`, `%25` (operations)
+- Edge from `%26` to `%27` (addition)
+- Edge from `%28` to `%29` (selecting results)
+- Edge from `%29` to `%30` (comparison)
+- Edge from `%30` to `%31` (selecting results)
+- Edge from `%32` to `%33` (selecting results)
+- Edge from `%34` to `%35` (checking conditions)
+- Edge from `%36` to `%37` (increment)
+- Edge from `%3` to `%38` (final comparison)
+- Edge from `%38` to `%39` (returning result)
+
+### DOT Representation
+
+Here is a basic representation of the data flow graph in the DOT format:
+
+```dot
+digraph DFG {
+    rankdir=LR;
+    
+    // Nodes
+    func_call [label="_Z9is_nested(...)"];
+    load_length [label="%3: load length"];
+    comparison_length [label="%4: compare length"];
+    branch_1 [label="%5: branch"];
+    load_char_ptr [label="%7: load char pointer"];
+    load_char [label="%8: load char"];
+    is_open_bracket [label="%9: is open bracket"];
+    zero_ext_1 [label="%10: zero extend"];
+    is_close_bracket [label="%11: is close bracket"];
+    sign_ext_1 [label="%12: sign extend"];
+    add_1 [label="%13: add"];
+    comparison_gt_zero [label="%14: compare > 0"];
+    select_1 [label="%15: select"];
+    branch_2 [label="%16: branch"];
+    phi_1 [label="%17: phi"];
+    phi_2 [label="%18: phi"];
+    phi_3 [label="%19: phi"];
+    comparison_eq [label="%20: compare"];
+    branch_3 [label="%21: branch"];
+    load_next_char [label="%22: load next char"];
+    is_open_bracket_2 [label="%24: is open bracket"];
+    zero_ext_2 [label="%25: zero extend"];
+    add_2 [label="%26: add"];
+    is_close_bracket_2 [label="%27: is close bracket"];
+    sign_ext_2 [label="%28: sign extend"];
+    add_3 [label="%29: add"];
+    comparison_gt_zero_2 [label="%30: compare > 0"];
+    select_2 [label="%31: select"];
+    comparison_gt [label="%32: compare"];
+    select_3 [label="%33: select"];
+    adjust_count [label="%34: adjust count"];
+    comparison_loop [label="%35: loop check"];
+    increment [label="%36: increment"];
+    comparison_final [label="%38: final compare"];
+    return_value [label="%40: return value"];
+
+    // Edges
+    func_call -> load_length;
+    load_length -> comparison_length;
+    comparison_length -> branch_1;
+    branch_1 -> load_char_ptr;
+    load_char_ptr -> load_char;
+    load_char -> is_open_bracket;
+    load_char -> zero_ext_1;
+    load_char -> is_close_bracket;
+    is_open_bracket -> zero_ext_1;
+    is_close_bracket -> sign_ext_1;
+    zero_ext_1 -> add_1;
+    sign_ext_1 -> add_1;
+    add_1 -> comparison_gt_zero;
+    comparison_gt_zero -> select_1;
+    select_1 -> branch_2;
+    branch_2 -> phi_1;
+    branch_2 -> phi_2;
+    branch_2 -> phi_3;
+    phi_1 -> comparison_eq;
+    comparison_eq -> branch_3;
+    branch_3 -> load_next_char;
+    load_next_char -> is_open_bracket_2;
+    load_next_char -> zero_ext_2;
+    load_next_char -> is_close_bracket_2;
+    is_open_bracket_2 -> zero_ext_2;
+    is_close_bracket_2 -> sign_ext_2;
+    zero_ext_2 -> add_2;
+    sign_ext_2 -> add_2;
+    add_2 -> comparison_gt_zero_2;
+    comparison_gt_zero_2 -> select_2;
+    select_2 -> comparison_gt;
+    comparison_gt -> select_3;
+    select_3 -> adjust_count;
+    adjust_count -> comparison_loop;
+    comparison_loop -> increment;
+    increment -> comparison_final;
+    comparison_final -> return_value;
+}
+```
+
+### Visualization Suggestions
+
+- You can visualize this graph using Graphviz by saving the DOT representation into a `.dot` file and using the command:
+  ```
+  dot -Tpng yourfile.dot -o output.png
+  ```
+- This will generate a PNG image of the data flow graph that you can view or include in reports.
+- Consider using different colors or shapes for nodes representing different types of operations (e.g., computations, comparisons, branches) for better visualization clarity.
+
+This DFG captures the flow of data through the operations in the provided IR code, allowing for analysis of dependencies and control flow structures.

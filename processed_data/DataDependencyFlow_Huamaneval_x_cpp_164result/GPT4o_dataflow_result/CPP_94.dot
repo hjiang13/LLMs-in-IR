@@ -1,0 +1,108 @@
+To create a data flow graph (DFG) from the provided Intermediate Representation (IR) code, we will outline the nodes (representing variables, operations, and function calls) and edges (indicating data dependencies) in a structured manner.
+
+### Nodes
+1. **Function Entry**: `_Z9skjkasdkdSt6vectorIiSaIiEE`
+2. **Allocations**:
+   - `%2`: `alloca %"class.std::__cxx11::basic_string"`
+   - `%3`: `alloca %"class.std::__cxx11::basic_string"`
+3. **Load Operations**:
+   - `%5`: `load i32* from vector`
+   - `%7`: `load i32* from vector`
+   - `%26`: `load i32 from array`
+   - `%27`: `load i32 from array`
+   - `%50`: `load i8* from string`
+   - `%52`: `load i8* from string`
+4. **Arithmetic Operations**:
+   - `%8`: `ptrtoint i32* %5`
+   - `%9`: `ptrtoint i32* %7`
+   - `%10`: `sub i64 %8, %9`
+   - `%13`: `ashr exact i64 %10, 2`
+   - `%14`: `call @llvm.umax.i64`
+   - `%24`: `phi i64`
+   - `%25`: `phi i32`
+5. **Comparison Operations**:
+   - `%11`: `icmp eq i64 %10, 0`
+   - `%28`: `icmp sgt i32 %27, %25`
+   - `%30`: `icmp slt i32 %27, 4`
+   - `%40`: `icmp eq i32 %39, 0`
+6. **Function Calls**:
+   - Call to `@llvm.umax.i64`
+   - Call to `@vsnprintf`
+   - Call to `@llvm.lifetime.start.p0i8`
+   - Call to `@llvm.lifetime.end.p0i8`
+   - Call to `@_ZdlPv`
+7. **Control Flow**:
+   - **Branches**: `br i1 %11`, `br i1 %28`, `br i1 %30`, etc.
+   - **Phis**: `%16`, `%24`, `%25`, `%46`, etc.
+
+### Edges
+1. **Data Dependencies**:
+   - From `%0` (input vector) to `%5` and `%7` (loads from vector).
+   - From `%5` and `%7` to `%8`, `%9` (pointer to integer conversions).
+   - From `%10` to `%11` (comparison).
+   - From `%10` to `%13` (arithmetic operation).
+   - From `%10` to `%14` (function call).
+   - From `%14` to `%23` (control flow).
+   - From `%24` and `%25` to `%26` (uses for further calculations).
+   - From `%50` and `%52` to the `@vsnprintf` call (string processing).
+   - From `%2` and `%3` for storage and memory management.
+
+### Visualization
+To visualize this DFG, you can use the DOT language to generate a graph representation. Below is a simple representation in DOT format:
+
+```dot
+digraph DFG {
+    rankdir=LR;
+
+    // Function Entry
+    Entry [label="_Z9skjkasdkdSt6vectorIiSaIiEE" shape=circle];
+
+    // Allocations
+    Alloc1 [label="%2 (alloca std::string)" shape=circle];
+    Alloc2 [label="%3 (alloca std::string)" shape=circle];
+
+    // Load Operations
+    Load1 [label="%5 (load from vector)" shape=circle];
+    Load2 [label="%7 (load from vector)" shape=circle];
+
+    // Arithmetic Operations
+    Arith1 [label="%8 (ptrtoint)" shape=circle];
+    Arith2 [label="%9 (ptrtoint)" shape=circle];
+    Arith3 [label="%10 (sub)" shape=circle];
+
+    // Comparison Operations
+    Comp1 [label="%11 (icmp eq)" shape=circle];
+    Comp2 [label="%28 (icmp sgt)" shape=circle];
+
+    // Function Calls
+    Func1 [label="@llvm.umax.i64" shape=circle];
+    Func2 [label="@vsnprintf" shape=circle];
+
+    // Control Flow Branches
+    Branch1 [label="br i1 %11" shape=circle];
+    Branch2 [label="br i1 %28" shape=circle];
+
+    // Connections
+    Entry -> Alloc1;
+    Entry -> Alloc2;
+    Alloc1 -> Load1;
+    Alloc2 -> Load2;
+    Load1 -> Arith1;
+    Load2 -> Arith2;
+    Arith1 -> Arith3;
+    Arith2 -> Comp1;
+    Arith3 -> Comp2;
+    Comp1 -> Branch1;
+    Comp2 -> Branch2;
+    Func1 -> Func2;
+
+    // Additional connections can be added based on the flow
+}
+```
+
+### Summary
+In this DFG:
+- **Nodes** represent various operations, variables, and function calls.
+- **Edges** indicate the flow of data between these nodes, showing dependencies.
+
+This graphical representation allows for a clear understanding of how data flows through the IR code, highlighting dependencies and control flow structures in a concise manner. You can use a graph visualization tool, such as Graphviz, to render this DOT representation into a visual format.

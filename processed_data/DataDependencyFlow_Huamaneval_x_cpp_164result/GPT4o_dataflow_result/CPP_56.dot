@@ -1,0 +1,133 @@
+To create a data flow graph (DFG) from the provided intermediate representation (IR) code, we will outline the nodes and edges that represent the flow of data through the program. Each node will represent a variable, operation, or basic block, while edges will indicate dependencies and data flow between these nodes.
+
+### Nodes
+1. **Function: `_Z18correct_bracketing`**
+   - Entry point of the function.
+
+2. **Basic Block 1: `entry`**
+   - Represents the entry of the function where the first operations occur.
+   
+3. **Load Operation: `%3`**
+   - The result of loading an i64 value from `%2`.
+
+4. **Comparison: `%4`**
+   - The result of `icmp eq i64 %3, 0`.
+
+5. **Basic Block 2: `true_branch` (label %25)**
+   - Represents the block executed when `%4` is true.
+
+6. **Basic Block 3: `false_branch` (label %5)**
+   - Represents the block executed when `%4` is false.
+
+7. **Load Operation: `%7`**
+   - The result of loading an i8* pointer from `%6`.
+
+8. **Basic Block 4: `loop_header` (label %10)**
+   - Represents the loop header that will be processed if the loop condition is met.
+
+9. **Phi Nodes: `%11` and `%12`**
+   - `%11`: Represents the current index in the string.
+   - `%12`: Represents the count of certain characters observed.
+
+10. **Load Operation: `%14`**
+    - The result of loading an i8 value from `%13`.
+
+11. **Comparison: `%15`**
+    - The result of `icmp eq i8 %14, 60` (checking for '<').
+
+12. **Addition: `%17`**
+    - The result of adding `%12` and the result of `%15`.
+
+13. **Comparison: `%18`**
+    - The result of `icmp eq i8 %14, 62` (checking for '>').
+
+14. **Addition: `%20`**
+    - The result of adding `%17` and the result of `%19`.
+
+15. **Comparison: `%21`**
+    - The result of `icmp slt i32 %20, 0`.
+
+16. **Increment: `%22`**
+    - The result of incrementing `%11`.
+
+17. **Basic Block 5: `exit` (label %25)**
+    - Represents the exit point of the function.
+
+18. **Return Value: `%26`**
+    - The final result returned by the function.
+
+### Edges
+- From `entry` to `%3`.
+- From `%3` to `%4`.
+- From `%4` to `true_branch` (label %25) and to `false_branch` (label %5).
+- From `false_branch` to `%6`.
+- From `%6` to `%7`.
+- From `%5` to `loop_header` (label %10).
+- From `loop_header` to `%11` and `%12`.
+- From `%11` to `%13`.
+- From `%13` to `%14`.
+- From `%14` to `%15` and `%18`.
+- From `%12` to `%17`.
+- From `%17` to `%20`.
+- From `%20` to `%21`.
+- From `%11` to `%22`.
+- From `loop_header` back to `loop_header` via the loop condition.
+- From `true_branch` and `false_branch` to `exit`.
+- From `%24` to `%26` (final return value).
+
+### Visualization in DOT Format
+Here's a representation of the data flow graph in DOT format:
+
+```dot
+digraph DataFlowGraph {
+    rankdir=TB;
+    
+    // Nodes
+    entry [label="Function: _Z18correct_bracketing"];
+    block1 [label="Basic Block 1: entry"];
+    load3 [label="Load: %3"];
+    cmp4 [label="Comparison: %4"];
+    block2 [label="Basic Block 2: true_branch"];
+    block3 [label="Basic Block 3: false_branch"];
+    load7 [label="Load: %7"];
+    block4 [label="Basic Block 4: loop_header"];
+    phi11 [label="Phi Node: %11"];
+    phi12 [label="Phi Node: %12"];
+    load14 [label="Load: %14"];
+    cmp15 [label="Comparison: %15"];
+    add17 [label="Addition: %17"];
+    cmp18 [label="Comparison: %18"];
+    add20 [label="Addition: %20"];
+    cmp21 [label="Comparison: %21"];
+    inc22 [label="Increment: %22"];
+    block5 [label="Basic Block 5: exit"];
+    ret26 [label="Return Value: %26"];
+    
+    // Edges
+    entry -> block1;
+    block1 -> load3;
+    load3 -> cmp4;
+    cmp4 -> block2;
+    cmp4 -> block3;
+    block3 -> load7;
+    block3 -> block4;
+    block4 -> phi11;
+    block4 -> phi12;
+    phi11 -> load14;
+    load14 -> cmp15;
+    phi12 -> add17;
+    add17 -> cmp18;
+    cmp15 -> add20;
+    cmp18 -> add20;
+    add20 -> cmp21;
+    phi11 -> inc22;
+    block2 -> block5;
+    block3 -> block5;
+    inc22 -> block4;
+    cmp21 -> block2;
+    cmp21 -> block4;
+}
+```
+
+### Diagrammatic Visualization
+To visualize this data flow graph, you can use tools like Graphviz, which can render the DOT format into graphical representations. You can paste the above DOT code into a Graphviz-compatible tool or online editor to visualize the nodes and edges, which will help you see how data flows through the program and how variables interact with one another.

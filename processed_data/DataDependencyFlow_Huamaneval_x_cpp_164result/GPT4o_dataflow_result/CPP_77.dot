@@ -1,0 +1,66 @@
+To generate a data flow graph from the given intermediate representation (IR) code, we'll identify the main variables, operations, and control flow structures, then define the nodes and edges that represent the flow of data.
+
+### Nodes
+1. **Entry:** The entry point of the function (`_Z7iscuberi`).
+2. **Abs Call:** Represents the call to the function `@llvm.abs.i32`.
+3. **Phi Node:** Represents the phi function (`%4`), which selects values based on control flow.
+4. **Multiply 1:** Represents the first multiplication operation (`%5 = mul nsw i32 %4, %4`).
+5. **Multiply 2:** Represents the second multiplication operation (`%6 = mul nsw i32 %5, %4`).
+6. **Comparison 1:** Represents the comparison operation (`%7 = icmp ult i32 %6, %2`).
+7. **Increment:** Represents the increment operation (`%8 = add nuw nsw i32 %4, 1`).
+8. **Comparison 2:** Represents the second comparison operation (`%10 = icmp ule i32 %6, %2`).
+9. **Return:** Represents the return statement of the function.
+10. **Exit:** Represents the exit point of the function.
+
+### Edges
+- **Entry -> Abs Call:** Data flows from the entry point to the call of `@llvm.abs.i32`.
+- **Abs Call -> Phi Node:** The result of the absolute value calculation (`%2`) flows to the phi node.
+- **Phi Node -> Multiply 1:** The value from the phi node (`%4`) flows to the first multiplication operation.
+- **Multiply 1 -> Multiply 2:** The result of the first multiplication (`%5`) flows to the second multiplication operation.
+- **Multiply 2 -> Comparison 1:** The result of the second multiplication (`%6`) flows to the first comparison operation.
+- **Phi Node -> Increment:** The value from the phi node (`%4`) also flows to the increment operation.
+- **Increment -> Comparison 1:** The increment result (`%8`) is used in the first comparison operation.
+- **Comparison 1 -> Phi Node:** If the comparison is true, the flow goes back to the phi node (looping structure).
+- **Comparison 1 -> Exit:** If the comparison is false, the flow goes to the second comparison operation.
+- **Comparison 2 -> Return:** The result of the second comparison (`%10`) flows to the return statement.
+- **Return -> Exit:** The flow exits the function.
+
+### DOT Representation
+Here’s how we can represent this data flow graph in DOT format:
+
+```dot
+digraph DataFlowGraph {
+    // Nodes
+    Entry [label="Entry"]
+    AbsCall [label="Abs Call"]
+    PhiNode [label="Phi Node"]
+    Multiply1 [label="Multiply 1"]
+    Multiply2 [label="Multiply 2"]
+    Comparison1 [label="Comparison 1"]
+    Increment [label="Increment"]
+    Comparison2 [label="Comparison 2"]
+    Return [label="Return"]
+    Exit [label="Exit"]
+
+    // Edges
+    Entry -> AbsCall
+    AbsCall -> PhiNode
+    PhiNode -> Multiply1
+    Multiply1 -> Multiply2
+    Multiply2 -> Comparison1
+    PhiNode -> Increment
+    Increment -> Comparison1
+    Comparison1 -> PhiNode [label="True"]
+    Comparison1 -> Comparison2 [label="False"]
+    Comparison2 -> Return
+    Return -> Exit
+}
+```
+
+### Visualization
+To visualize the data flow graph diagrammatically:
+- Use a graph visualization tool that supports DOT format (like Graphviz).
+- Each node will be represented as a circle or rectangle with the respective labels, while directed edges (arrows) will show the flow of data.
+- Control flow can be represented with conditional edges (labeled as "True" or "False").
+
+This visualization will give a clear representation of how data moves through the function, illustrating variable dependencies and control flow structures.

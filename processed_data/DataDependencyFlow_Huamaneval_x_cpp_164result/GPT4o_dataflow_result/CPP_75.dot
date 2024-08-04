@@ -1,0 +1,98 @@
+To create a data flow graph (DFG) from the provided intermediate representation (IR) code, we need to identify the key components (nodes) of the code, including variables, operations, and control structures, and then map the dependencies (edges) between them. Below is a structured outline of the nodes and edges, along with a textual description of how to visualize the DFG diagrammatically.
+
+### Nodes
+The following nodes represent the main components of the IR code:
+
+1. **Input Node**
+   - `Input %0` (the input parameter)
+
+2. **Comparison Nodes**
+   - `Cmp1: icmp slt %0, 4`
+   - `Cmp2: icmp eq %12, 2`
+   - `Cmp3: icmp eq %19, 0`
+   - `Cmp4: icmp sgt %6, %4`
+   - `Cmp5: icmp sgt %17, %4`
+   - `Cmp6: icmp sgt %27, %24`
+
+3. **Arithmetic Nodes**
+   - `Add1: add nsw %15, 1`
+   - `Div: sdiv %16, %4`
+   - `SRem1: srem %6, %4`
+   - `SRem2: srem %17, %4`
+   - `Mul: mul nsw %26, %26`
+   - `Add2: add nuw nsw %4, 1`
+
+4. **Phi Nodes**
+   - `Phi1: phi %4 from %1 and %23`
+   - `Phi2: phi %5 from %1 and %23`
+   - `Phi3: phi %6 from %1 and %23`
+   - `Phi4: phi %12 from %1 and %23`
+   - `Phi5: phi %15 from %14 and %3`
+   - `Phi6: phi %16 from %14 and %3`
+   - `Phi7: phi %24 from %3 and %14`
+   - `Phi8: phi %25 from %3 and %14`
+
+5. **Return Node**
+   - `Return: ret %13`
+
+6. **Branch Nodes**
+   - `Branch1: br i1 %2`
+   - `Branch2: br i1 %10`
+   - `Branch3: br i1 %22`
+   - `Branch4: br i1 %28`
+
+### Edges
+The edges represent the dependencies between the nodes. Here’s an outline of the edges based on the operations and their dependencies:
+
+1. **Input to Comparison**
+   - `Input %0` → `Cmp1`
+   
+2. **Comparison to Branch**
+   - `Cmp1` → `Branch1`
+   - `Cmp1` → `Phi3`
+   - `Phi3` → `SRem1`
+   - `Phi3` → `Phi4`
+   - `Phi4` → `Cmp2`
+   - `Cmp4` → `Branch2`
+   - `Phi6` → `Div`
+   - `Div` → `Phi5`
+   - `Phi5` → `Add1`
+   - `Add1` → `SRem2`
+   - `SRem2` → `Cmp3`
+   - `Cmp3` → `Branch3`
+   - `Branch3` → `Return`
+   
+3. **Loop Control**
+   - `Phi6` → `Branch4`
+   - `Branch4` → `Cmp6`
+   - `Cmp6` → `Branch1`
+
+### Visualization Suggestions
+To visualize this data flow graph diagrammatically:
+
+1. **Graph Structure**: Use nodes to represent each of the components listed above. The nodes can be placed in a layout where the input node is at the top, followed by comparison nodes, arithmetic nodes, phi nodes, and ending with the return node.
+
+2. **Edges**: Draw directed edges from the producer nodes (e.g., inputs and outputs of operations) to the consumer nodes (e.g., variables that depend on those operations). The edges can be labeled with the operation type for clarity.
+
+3. **Tooling**: You can use graph visualization tools like Graphviz to represent the DFG in the DOT format. Below is a sample DOT representation that you can use:
+
+```dot
+digraph DataFlowGraph {
+    Input [label="%0"];
+    Cmp1 [label="icmp slt %0, 4"];
+    Branch1 [label="br i1 %2"];
+    Phi1 [label="phi %4"];
+    SRem1 [label="srem %6, %4"];
+    ...
+    Return [label="ret %13"];
+
+    Input -> Cmp1;
+    Cmp1 -> Branch1;
+    ...
+
+    // Add the remaining edges following the structure outlined above
+}
+```
+
+### Final Note
+This structure gives a clear representation of how data flows through the IR code, highlighting the dependencies between operations and the control flow. You can expand on the nodes and edges as needed to include all components of your IR code for a comprehensive DFG.

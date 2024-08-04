@@ -1,0 +1,107 @@
+To create a data flow graph (DFG) from the provided intermediate representation (IR) code, we will represent variables, operations, function calls, and control flows as nodes and the dependencies between them as edges. 
+
+### Nodes:
+1. **Parameters and Return Values**
+   - `@_Z12words_string(...)` - Entry point of the function, with parameters including a vector and a string.
+
+2. **Allocations**
+   - `%3`, `%4`, `%5`, `%6`, `%7`, `%8` - These represent allocated space for integers and strings.
+   - `%9`, `%10`, `%11`, `%12`, `%13` - Intermediate allocations and pointers for `basic_string`.
+
+3. **Memory Operations**
+   - `llvm.lifetime.start` - Memory management operations start.
+   - `llvm.memset` - For initializing memory.
+
+4. **Load Operations**
+   - `load i8*` - Loading pointers from the string structures.
+   - `load i64` - Loading integer values from the string structures.
+
+5. **Store Operations**
+   - `store i8*` - Storing pointers back into string structures.
+   - `store i64` - Storing integer values back into the respective allocated locations.
+
+6. **Control Flow Nodes**
+   - `br` (branch) - Represents conditional branches.
+   - `switch` - Represents switch-case structures.
+   - `invoke` - Represents function calls that can unwind.
+
+7. **Function Calls**
+   - Various calls to `@llvm.memcpy`, `@llvm.lifetime.end`, `@_ZNSt7__cxx1112basic_string...` - Calls to manage memory and perform operations on strings.
+
+8. **Cleanup and Exception Handling**
+   - `landingpad` - Nodes for exception handling.
+
+### Edges:
+- **Data dependencies:** 
+  - From loads to their respective store operations.
+  - Between allocation nodes and their subsequent use in `store` or `load`.
+- **Control dependencies:**
+  - From branch conditions to the respective branches.
+  - From invokes to their unwind labels.
+- **Function call dependencies:**
+  - From parameters passed to function calls to their respective invocation.
+
+### Dot Representation:
+```dot
+digraph G {
+    // Parameters
+    Entry [label="Entry: @_Z12words_string(...)"];
+    
+    // Allocations
+    Alloc1 [label="%3 (alloc i64)"];
+    Alloc2 [label="%4 (alloc i64)"];
+    Alloc3 [label="%5 (alloc i64)"];
+    Alloc4 [label="%6 (alloc basic_string)"];
+    Alloc5 [label="%7 (alloc basic_string)"];
+    Alloc6 [label="%8 (alloc basic_string)"];
+
+    // Load and Store Operations
+    Load1 [label="Load i8*"];
+    Load2 [label="Load i64"];
+    Store1 [label="Store i8*"];
+    Store2 [label="Store i64"];
+
+    // Control Flow Nodes
+    Branch1 [label="Branch (condition)"];
+    Branch2 [label="Switch (case)"];
+    
+    // Function Calls
+    FuncCall1 [label="@llvm.memcpy"];
+    FuncCall2 [label="@llvm.lifetime.start"];
+    FuncCall3 [label="@_ZNSt7__cxx1112basic_string..."];
+
+    // Cleanup
+    Cleanup [label="LandingPad"];
+
+    // Edges
+    Entry -> Alloc1;
+    Entry -> Alloc2;
+    Entry -> Alloc3;
+    Entry -> Alloc4;
+    Entry -> Alloc5;
+    Entry -> Alloc6;
+
+    Alloc1 -> Load1;
+    Alloc2 -> Load2;
+    Load1 -> Store1;
+    Load2 -> Store2;
+
+    Entry -> Branch1;
+    Branch1 -> FuncCall1; // Example function call based on the branch
+    Branch1 -> Branch2;   // Conditional flow leading to switch
+    Branch2 -> FuncCall2; // Function call based on switch case
+
+    FuncCall1 -> Cleanup; // Example of cleanup after function call
+
+    // Add more edges as per the actual data flow
+}
+```
+
+### Visualization:
+- This graph can be visualized using Graphviz or similar tools that can interpret the DOT format. 
+- Each node can be represented as a box containing the label, while directed edges can be arrows connecting the boxes based on dependencies.
+
+### Summary:
+- The DFG captures the essential flow of data through variables and operations in the IR code. 
+- The nodes represent key operations, allocations, and control flow, while the edges illustrate how data moves between these operations.
+- By visualizing this graph, one can gain insights into the dependencies and control structures present in the code.

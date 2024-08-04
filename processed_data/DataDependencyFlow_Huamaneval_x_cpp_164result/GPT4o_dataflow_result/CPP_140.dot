@@ -1,0 +1,78 @@
+To create a data flow graph (DFG) from the provided Intermediate Representation (IR) code, we need to identify the key nodes and their dependencies. Each node will represent a variable, operation, or function, while the edges will indicate the flow of data and dependencies between them. Below is a textual description of the DFG, followed by a suggestion on how to visualize it graphically.
+
+### Nodes and Edges Description
+
+#### Nodes
+1. **Function Entry**: `_Z10fix_spacesNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE`
+2. **Variables**:
+   - `%0` (input string)
+   - `%1` (another input string)
+   - `%10`, `%11`, `%12`, `%13`, `%14`, `%15`, `%16` (temporary strings)
+   - `%3`, `%4`, `%5`, `%6`, `%7`, `%8`, `%9` (alloca variables)
+   - `%21`, `%22`, `%40`, `%31`, `%39`, `%56`, `%48` (variables for storing lengths and pointers)
+   - `%70`, `%71`, `%72` (loop counters and conditional variables)
+   - `%73`, `%74`, `%75`, `%76` (characters for comparison)
+   - `%89` (pointer to the output string)
+   - `%131`, `%200`, `%406` (final output pointers)
+3. **Operations**:
+   - `alloca` (allocating memory for variables)
+   - `load` (loading variable values)
+   - `store` (storing values into variables)
+   - `getelementptr` (calculating addresses)
+   - `icmp` (comparison operations)
+   - `br` (branch instructions)
+   - `call` (function calls for string operations)
+   - `invoke` (invoking functions with exception handling)
+   - `switch` (control flow based on value)
+
+#### Edges
+- **Data Dependencies**:
+  - The output of every `load` operation connects to the `store` operations where the loaded values are used.
+  - `getelementptr` operations are connected to the `load` and `store` operations that consume or produce pointers.
+  - The results of `icmp` operations influence the branches (`br`) in the control flow.
+  - The results from function calls (like `@llvm.memcpy.p0i8.p0i8.i64`, `@llvm.lifetime.start.p0i8`, and `@_ZNSt7__cxx1112basic_string...`) feed into subsequent operations or stores.
+
+### Visual Representation
+To visualize the DFG, you can use the DOT language format suitable for graphing tools like Graphviz. Below is a simplified representation of how you might structure this in DOT format:
+
+```dot
+digraph DataFlowGraph {
+    node [shape=box];
+
+    // Function Entry
+    entry [label="_Z10fix_spacesNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE" shape=ellipse];
+
+    // Variables
+    input_str [label="%0"];
+    input_str2 [label="%1"];
+    temp_strs [label="%10, %11, %12, %13, %14, %15, %16"];
+    alloca_vars [label="%3, %4, %5, %6, %7, %8, %9"];
+    output_ptr [label="%89"];
+    final_str [label="%200"];
+
+    // Operations
+    load_op [label="load"];
+    store_op [label="store"];
+    get_elem_ptr [label="getelementptr"];
+    icmp_op [label="icmp"];
+    br_op [label="br"];
+    func_call [label="call"];
+    invoke_op [label="invoke"];
+
+    // Define edges (data flow)
+    entry -> input_str;
+    entry -> input_str2;
+    input_str -> load_op;
+    input_str2 -> load_op;
+    load_op -> store_op;
+    store_op -> output_ptr;
+    output_ptr -> final_str;
+
+    // Additional edges based on operations and variables can be added similarly
+}
+```
+
+### Visualization Tool
+You can visualize this graph using Graphviz or any other graph visualization tool that supports DOT format. Simply copy the DOT code above into a `.dot` file and use the command `dot -Tpng filename.dot -o output.png` to generate a graphical representation of the data flow graph.
+
+This DFG will help you understand how the variables are manipulated throughout the function, where data dependencies lie, and how control flows are managed based on conditional checks.

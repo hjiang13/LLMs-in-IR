@@ -1,0 +1,89 @@
+To analyze the provided Intermediate Representation (IR) code, we can create a Data Flow Graph (DFG). This graph will consist of nodes representing variables, operations, and function calls, alongside directed edges that indicate dependencies.
+
+### Data Flow Graph Description
+
+1. **Nodes**:
+   - **Function Definitions**:
+     - `@_Z19filter_by_substringSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EES5_`
+     - `@llvm.lifetime.start.p0i8`
+     - `@llvm.lifetime.end.p0i8`
+     - Other function declarations like `@__cxa_begin_catch`, `@__cxa_end_catch`, etc.
+
+   - **Variables**:
+     - `%0` - Input vector (class.std::vector)
+     - `%1` - Input vector (class.std::vector)
+     - `%2` - Input string (class.std::__cxx11::basic_string)
+     - `%4` - Local allocation (i64)
+     - `%5` - Bitcast of `%0`
+     - `%6`, `%7`, `%8`, `%9`, `%10`, `%11` - GEPs (getelementptr) for accessing elements in vectors and strings.
+     - `%13`, `%14`, `%18` - Loaded strings from vectors.
+     - `%15`, `%22`, `%23` - Comparison results and control flow variables.
+     - `%31`, `%37`, `%39` - Length checks and comparisons.
+     - `%47`, `%52`, `%57` - Outputs from function calls and memory operations.
+     - `%62` - Loop control variable.
+     - `%71` - Final return point.
+
+   - **Operations**:
+     - `alloca`, `load`, `store`, `bitcast`, `getelementptr`, `icmp` (comparison), `br` (branch), `call`, `invoke`, etc.
+
+2. **Edges**:
+   - **Data Dependencies**:
+     - Data flows from input vectors and strings (nodes `%0`, `%1`, `%2`) to various operations, such as loads and comparisons.
+     - The output of the `load` instructions feeds into comparison operations, which then lead to control flow decisions (branches).
+     - Function calls such as `@_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEPKcmm` receive specific arguments, and their results influence subsequent branches.
+     - Returns and control variables (like `%62` for loops) guide the flow of execution through the graph.
+
+### Suggested Visualization
+
+To visualize this Data Flow Graph diagrammatically:
+- **Nodes** can be represented as circles or boxes with the titles of the functions, variables, and operations inside them.
+- **Edges** can be arrows connecting these nodes, showing the flow of data from one node to another.
+- Color coding can be used to differentiate between variable nodes, operation nodes, and function nodes.
+- Loop structures can be highlighted with circular arrows to indicate the cyclic nature of the flow.
+- Control flow can be indicated with dashed lines to show conditional branches.
+
+### Example DOT File Representation
+
+Here is an example of how the DFG might be represented in DOT format:
+
+```dot
+digraph DataFlowGraph {
+    // Function Nodes
+    node [shape=box];
+    filter_by_substring [label="@_Z19filter_by_substringSt6vector..."];
+    lifetime_start [label="@llvm.lifetime.start.p0i8"];
+    lifetime_end [label="@llvm.lifetime.end.p0i8"];
+    find_function [label="@_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEPKcmm"];
+    
+    // Variable Nodes
+    vector_in_0 [label="%0: Input Vector"];
+    vector_in_1 [label="%1: Input Vector"];
+    string_in [label="%2: Input String"];
+    local_var [label="%4: Local Variable (i64)"];
+    
+    // Operations
+    load_operation [label="load"];
+    comparison [label="icmp"];
+    branch [label="br"];
+    
+    // Edges
+    vector_in_0 -> load_operation;
+    vector_in_1 -> load_operation;
+    string_in -> load_operation;
+    load_operation -> comparison;
+    comparison -> branch;
+    filter_by_substring -> lifetime_start;
+    lifetime_start -> load_operation;
+    lifetime_end -> branch;
+    
+    // Other edges for control flow and function calls
+    filter_by_substring -> find_function;
+}
+```
+
+In this DOT representation:
+- Each node is labeled appropriately.
+- Directed edges indicate the flow of data and control.
+- This representation can be processed by graph visualization tools (like Graphviz) to produce a visual graph. 
+
+You can run the above DOT code through Graphviz to generate a visual representation of the Data Flow Graph.

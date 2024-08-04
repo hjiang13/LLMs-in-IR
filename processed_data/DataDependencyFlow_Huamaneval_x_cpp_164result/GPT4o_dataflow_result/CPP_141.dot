@@ -1,0 +1,90 @@
+To represent the data flow of the provided Intermediate Representation (IR) code in a data flow graph using the DOT format, we will define a graph structure where nodes represent variables, operations, and function calls, while edges represent data dependencies between them.
+
+### Data Flow Graph Overview
+
+**Nodes:**
+1. **Function Entry**: The start of the function `_Z15file_name_check`
+2. **Allocations**: 
+   - `alloca_basic_string`
+   - `alloca_allocator`
+3. **Load Operations**:
+   - `load_string_length` (load from %1 to get the length of the string)
+   - `load_character` (load character from string)
+4. **Comparisons**: 
+   - `icmp_length_check` (compare length with constant)
+   - `icmp_character_check` (compare character with constants)
+5. **Branches**:
+   - `branch_length_ok`
+   - `branch_character_check`
+6. **Function Calls**:
+   - `call_compare1` (compare with ".txt")
+   - `call_compare2` (compare with ".exe")
+   - `call_compare3` (compare with ".dll")
+   - `call_allocate_string` (allocate new string)
+7. **Stores**:
+   - `store_result` (store the results based on conditions)
+8. **Function Exit**: The end of the function (return void)
+
+### Edges:
+- Connect nodes based on the data flow and dependencies. For example:
+  - From the function entry to allocation nodes, since the function begins by allocating memory.
+  - From allocation nodes to load operations (loading values from the allocated memory).
+  - From load operations to comparison nodes where the values are compared.
+  - From comparison nodes to branch nodes indicating the flow of control based on the comparison results.
+  - Connect branch nodes to the function calls based on the paths taken.
+  - From function calls to store operations indicating where results are stored.
+  - Finally, from store operations to the function exit, indicating that the function will complete after storing results.
+
+### DOT Format Representation
+
+Here’s how the above description can be translated into a DOT file format:
+
+```dot
+digraph DataFlowGraph {
+    // Node definitions
+    Entry [label="Function Entry"];
+    AllocaStr [label="alloca_basic_string"];
+    AllocaAlloc [label="alloca_allocator"];
+    LoadLength [label="load_string_length"];
+    IcLengthCheck [label="icmp_length_check"];
+    BranchLengthOk [label="branch_length_ok"];
+    LoadChar [label="load_character"];
+    IcCharCheck [label="icmp_character_check"];
+    BranchCharCheck [label="branch_character_check"];
+    CallCompare1 [label="call_compare1"];
+    CallCompare2 [label="call_compare2"];
+    CallCompare3 [label="call_compare3"];
+    CallAllocateStr [label="call_allocate_string"];
+    StoreResult [label="store_result"];
+    Exit [label="Function Exit"];
+
+    // Edges representing data flow
+    Entry -> AllocaStr;
+    Entry -> AllocaAlloc;
+    AllocaStr -> LoadLength;
+    LoadLength -> IcLengthCheck;
+    IcLengthCheck -> BranchLengthOk;
+    AllocaStr -> LoadChar;
+    LoadChar -> IcCharCheck;
+    IcCharCheck -> BranchCharCheck;
+    BranchLengthOk -> CallCompare1;
+    BranchLengthOk -> CallCompare2;
+    BranchLengthOk -> CallCompare3;
+    BranchCharCheck -> CallAllocateStr;
+    CallCompare1 -> StoreResult;
+    CallCompare2 -> StoreResult;
+    CallCompare3 -> StoreResult;
+    CallAllocateStr -> StoreResult;
+    StoreResult -> Exit;
+}
+```
+
+### Visualization Suggestions
+
+To visualize this in a diagrammatic form:
+1. **Graph Visualization Tools**: Use tools like Graphviz to render the DOT file. For example, you can use the command `dot -Tpng -o output.png your_file.dot` to create a PNG image of the graph.
+2. **Node Styles**: Differentiate nodes by color based on their types (e.g., allocations in one color, function calls in another).
+3. **Edge Styles**: Use arrows to represent the direction of data flow. You might also consider labeling edges to clarify what data is being passed (e.g., variable names).
+4. **Layout**: Ensure that the layout has a clear top-down or left-right flow to represent the order of operations visually.
+
+This is a high-level representation of the data flow based on the provided IR code. Each node and edge describes how data moves and is manipulated throughout the function, allowing for a better understanding of dependencies and control flow in the program's execution.

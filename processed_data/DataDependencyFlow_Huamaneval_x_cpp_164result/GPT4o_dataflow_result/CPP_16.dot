@@ -1,0 +1,100 @@
+To represent the data flow from the provided IR code in a data flow graph (DFG) format, we will outline the nodes and edges based on the operations and dependencies in the code. Each node will represent either a variable or an operation, while edges will indicate the flow of data between these nodes.
+
+### Nodes
+1. **Function Entry**
+   - Node: `entry`
+   - Description: Entry point of the function `count_distinct_characters`.
+
+2. **String Pointer**
+   - Node: `string_ptr`
+   - Description: Input parameter `%0` (the string).
+
+3. **String Length**
+   - Node: `string_length`
+   - Description: Loaded length of the string from the `basic_string`.
+
+4. **String Data Pointer**
+   - Node: `string_data`
+   - Description: Pointer to the character data in the string.
+
+5. **Character Processing Loop**
+   - Node: `char_processing_loop`
+   - Description: The loop that processes each character in the string.
+
+6. **Character Comparison**
+   - Node: `char_comparison`
+   - Description: Comparison operations for each character.
+
+7. **Character Transformation**
+   - Node: `char_transformation`
+   - Description: Transformation of characters (e.g., converting to lowercase).
+
+8. **Distinct Count**
+   - Node: `distinct_count`
+   - Description: Counting distinct characters.
+
+9. **Function Exit**
+   - Node: `exit`
+   - Description: Exit point of the function returning the count.
+
+### Edges
+1. **Entry to String Pointer**
+   - Edge: `entry -> string_ptr`
+   - Description: Flow of control from function entry to the input parameter.
+
+2. **String Pointer to String Length**
+   - Edge: `string_ptr -> string_length`
+   - Description: The input string is used to determine its length.
+
+3. **String Length to String Data Pointer**
+   - Edge: `string_length -> string_data`
+   - Description: The length is used to access the character data.
+
+4. **String Data Pointer to Character Processing Loop**
+   - Edge: `string_data -> char_processing_loop`
+   - Description: Data pointer is passed to the loop for character processing.
+
+5. **Character Processing Loop to Character Comparison**
+   - Edge: `char_processing_loop -> char_comparison`
+   - Description: Control flows to compare characters.
+
+6. **Character Comparison to Character Transformation**
+   - Edge: `char_comparison -> char_transformation`
+   - Description: Based on comparison results, characters are transformed.
+
+7. **Character Transformation to Distinct Count**
+   - Edge: `char_transformation -> distinct_count`
+   - Description: Transformed characters are used to update the distinct count.
+
+8. **Distinct Count to Function Exit**
+   - Edge: `distinct_count -> exit`
+   - Description: The result of the count is returned at function exit.
+
+### Visualization
+To visualize this DFG diagrammatically, you could use graph visualization tools like Graphviz. Below is an example of how you might represent this graph in DOT format:
+
+```dot
+digraph G {
+    entry [label="Function Entry"];
+    string_ptr [label="String Pointer"];
+    string_length [label="String Length"];
+    string_data [label="String Data Pointer"];
+    char_processing_loop [label="Character Processing Loop"];
+    char_comparison [label="Character Comparison"];
+    char_transformation [label="Character Transformation"];
+    distinct_count [label="Distinct Count"];
+    exit [label="Function Exit"];
+    
+    entry -> string_ptr;
+    string_ptr -> string_length;
+    string_length -> string_data;
+    string_data -> char_processing_loop;
+    char_processing_loop -> char_comparison;
+    char_comparison -> char_transformation;
+    char_transformation -> distinct_count;
+    distinct_count -> exit;
+}
+```
+
+### Summary
+This DFG representation captures the essential flow of data and control through the provided IR code, focusing on the function's operational structure without detailing the content of each basic block. By visualizing it using Graphviz, you can create a clear diagram showing the dependencies and data flow of the program.

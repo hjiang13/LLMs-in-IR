@@ -1,0 +1,103 @@
+To create a data flow graph (DFG) based on the provided Intermediate Representation (IR) code, we will outline the nodes and edges to represent variables, operations, and their dependencies. The DFG will include key operations, function calls, and control flow structures without detailing the contents of each basic block.
+
+### Nodes
+
+1. **Function Definition**
+   - `@_Z17get_closest_vowel`
+
+2. **Input Variables**
+   - `%0`: Input string (first argument)
+   - `%1`: Input string (second argument)
+
+3. **Local Variables**
+   - `%3`: Local string variable (allocated)
+   - `%4`: Another local string variable (allocated)
+
+4. **Memory Operations**
+   - `@llvm.lifetime.start.p0i8`: Start lifetime for `%3`
+   - `@llvm.lifetime.start.p0i8`: Start lifetime for `%4`
+   - `@llvm.memcpy.p0i8.p0i8.i64`: Memory copy operation from a constant string to `%4`
+   - `@llvm.lifetime.end.p0i8`: End lifetime for `%3`
+   - `@llvm.lifetime.end.p0i8`: End lifetime for `%4`
+
+5. **Control Flow**
+   - `br`: Branching operations based on conditions
+   - `icmp`: Integer comparisons that lead to branching
+   - `phi`: Used to select values based on control flow predecessors
+
+6. **String Operations**
+   - `load`: Load operations to read values from memory
+   - `store`: Store operations to write values to memory
+   - `getelementptr`: Pointer arithmetic to access elements in the strings
+
+7. **Function Calls**
+   - `@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc`: Function to replace elements in the string
+   - `@_ZdlPv`: Function to deallocate memory
+
+### Edges
+
+1. **Data Dependencies**
+   - `%0` and `%1` are inputs to the function, leading to the creation of `%3` and `%4`.
+   - Operations on `%3` lead to the initialization and population of `%4` through memory copy and stores.
+   - The result of string manipulations involving `%3` and `%4` flows into the `icmp` operations, which guide control flow.
+   - The result of the `icmp` is fed into the `br` statements, determining the path taken in the control flow.
+
+2. **Control Flow Dependencies**
+   - Each `br` instruction creates an edge to the corresponding basic block label.
+   - The `phi` instructions merge values from different predecessor blocks, creating dependencies between the various branches and their resulting values.
+
+3. **Function Call Dependencies**
+   - After processing, the result of the string manipulation and checks flows into the function call for string replacement, which alters the state of `%0`.
+
+### Visualization Suggestions
+
+- **Diagram Layout:**
+  - Use a directed graph layout with nodes representing the operations, variables, and control flow constructs.
+  - Nodes can be represented as circles or boxes labeled with their names (e.g., `%0`, `%1`, `@llvm.memcpy`, etc.).
+  - Directed edges (arrows) should connect nodes that have data dependencies or control flow relationships, with arrows pointing from the producer to the consumer.
+
+- **Graphical Representation:**
+  - **Tools:** You can use graph visualization tools like Graphviz to render the DFG from a dot file. 
+  - **Dot File Example:**
+    ```dot
+    digraph DFG {
+        rankdir=LR; // Left to Right layout
+        node [shape=box];
+
+        func [label="@_Z17get_closest_vowel"];
+        input1 [label="%0"];
+        input2 [label="%1"];
+        localVar1 [label="%3"];
+        localVar2 [label="%4"];
+        lifetimeStart1 [label="llvm.lifetime.start.p0i8 (3)"];
+        lifetimeStart2 [label="llvm.lifetime.start.p0i8 (4)"];
+        memcpy [label="llvm.memcpy"];
+        lifetimeEnd1 [label="llvm.lifetime.end.p0i8 (3)"];
+        lifetimeEnd2 [label="llvm.lifetime.end.p0i8 (4)"];
+        icmp [label="icmp"];
+        br [label="br"];
+        phi [label="phi"];
+        replaceFunction [label="@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc"];
+        dealloc [label="@_ZdlPv"];
+
+        func -> input1;
+        func -> input2;
+        func -> localVar1;
+        func -> localVar2;
+        localVar1 -> lifetimeStart1;
+        localVar2 -> lifetimeStart2;
+        lifetimeStart1 -> memcpy;
+        memcpy -> localVar2;
+        localVar2 -> lifetimeEnd2;
+        lifetimeEnd2 -> br;
+        br -> icmp;
+        icmp -> phi;
+        phi -> replaceFunction;
+        replaceFunction -> localVar1;
+        localVar1 -> lifetimeEnd1;
+        lifetimeEnd1 -> dealloc;
+    }
+    ```
+
+- **Interpretation:**
+  - This graph helps visualize how data flows through the function, highlighting dependencies and control flow across various operations and branches, making it easier to understand the overall logic and relationships in the IR code.

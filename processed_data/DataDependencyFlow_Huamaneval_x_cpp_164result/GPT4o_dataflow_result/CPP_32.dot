@@ -1,0 +1,80 @@
+To create a data flow graph (DFG) from the provided intermediate representation (IR) code, we will focus on the key variables, operations, and control flow structures without delving into the specifics of each basic block. The nodes in the graph will represent either variables (or data) or operations (such as arithmetic, comparisons, and function calls). The edges will represent the flow of data between these nodes.
+
+### Nodes and Edges Description
+
+**Nodes:**
+1. **Function Nodes:**
+   - `poly`: Represents the function `_Z4polySt6vectorIdSaIdEEd`.
+   - `find_zero`: Represents the function `_Z9find_zeroSt6vectorIdSaIdEE`.
+
+2. **Variable Nodes:**
+   - `vector`: Represents the input vector of doubles passed to functions.
+   - `x`: Represents the double parameter passed to `poly`.
+   - `result_poly`: Represents the output of the `poly` function.
+   - `result_find_zero`: Represents the output of the `find_zero` function.
+   - `temp`: Represents temporary values used for calculations.
+
+3. **Operation Nodes:**
+   - `load`: Represents various load operations to access vector elements.
+   - `add`: Represents addition operations.
+   - `mul`: Represents multiplication operations.
+   - `pow`: Represents the call to the `pow` function.
+   - `icmp`: Represents comparison operations (like equal or greater than).
+   - `br`: Represents branch instructions for control flow.
+   - `ret`: Represents return statements.
+
+**Edges:**
+- `vector` → `load`: The input vector is loaded to access its elements.
+- `x` → `pow`: The parameter `x` is used as an argument for the `pow` function.
+- `load` → `mul`: Loaded values from the vector are multiplied.
+- `mul` → `add`: The result of multiplication is added to another temporary result.
+- `add` → `result_poly`: The final result of the `poly` function.
+- `result_poly` → `find_zero`: The result of `poly` is passed as input to `find_zero`.
+- `find_zero` → `result_find_zero`: The result of `find_zero` is returned.
+- `icmp` → `br`: The results of comparisons determine the control flow.
+
+### Dot Representation
+
+Below is a simplified dot representation of the data flow graph:
+
+```dot
+digraph DFG {
+    // Function Nodes
+    poly [label="poly", shape=box];
+    find_zero [label="find_zero", shape=box];
+
+    // Variable Nodes
+    vector [label="vector", shape=ellipse];
+    x [label="x", shape=ellipse];
+    result_poly [label="result_poly", shape=ellipse];
+    result_find_zero [label="result_find_zero", shape=ellipse];
+    temp [label="temp", shape=ellipse];
+
+    // Operation Nodes
+    load [label="load", shape=rect];
+    add [label="add", shape=rect];
+    mul [label="mul", shape=rect];
+    pow [label="pow", shape=rect];
+    icmp [label="icmp", shape=rect];
+    br [label="br", shape=rect];
+    ret [label="ret", shape=rect];
+
+    // Edges
+    vector -> load;
+    x -> pow;
+    load -> mul;
+    mul -> add;
+    add -> result_poly;
+    result_poly -> find_zero;
+    find_zero -> result_find_zero;
+    icmp -> br;
+}
+```
+
+### Diagrammatic Visualization
+
+The dot representation can be visualized using tools such as Graphviz, which takes the above dot file and generates a graphical representation of the data flow graph. Each node will be represented as either a box (for functions and operations) or an ellipse (for variables), with directed edges showing the flow of data.
+
+### Summary
+
+This DFG captures the flow of data from inputs through operations to outputs while highlighting dependencies between variables and function calls. It serves as a useful tool for visualizing the relationships and dependencies present within the IR code, enabling a clearer understanding of the program's structure and data flow.

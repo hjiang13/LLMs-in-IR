@@ -1,0 +1,91 @@
+To create a data flow graph (DFG) from the provided intermediate representation (IR) code, we will identify key nodes representing variables and operations, as well as the edges that indicate data dependencies between these nodes. 
+
+### Nodes and Edges Description
+
+#### Nodes:
+1. **Function `_Z11change_baseB5cxx11ii`**: The main function where data flow starts.
+2. **Allocations**: 
+   - `%4`: Allocated `basic_string`
+   - `%5`: Allocated `basic_string`
+3. **Pointer Manipulations**:
+   - `%6`: Pointer to a member of `basic_string`
+   - `%7`: Bitcast of `basic_string*` to `union.anon**`
+   - `%8`: Bitcast of `union.anon*` to `i8*`
+   - `%9`: Pointer to another member of `basic_string`
+4. **Store Operations**:
+   - `%10`: Store to `basic_string` member
+   - `%11`, `%12`: Store allocations
+5. **Control Flow**:
+   - `%23`: Conditional check for value of `%1`
+   - `%24`, `%27`, `%31`: Labels for control flow branches
+6. **Arithmetic Operations**:
+   - `%28`: Result of a `phi` node
+   - `%29`, `%30`: Results of arithmetic and division operations
+7. **Function Calls**:
+   - `@llvm.lifetime.start.p0i8`
+   - `@__gxx_personality_v0`
+   - `@llvm.memcpy.p0i8.p0i8.i64`
+   - `@llvm.lifetime.end.p0i8`
+   - Other function calls related to `basic_string`.
+8. **Return**: The end of the function.
+
+#### Edges:
+- Edges connect nodes based on the flow of data:
+    - `%0` → `%4`, `%5`: Inputs to allocations
+    - `%4` → `%6`, `%7`: Pointer manipulations
+    - `%6` → `%7`: Store operation
+    - `%28` → `%29`, `%30`: Data flow from conditions
+    - `%31` → `%32`: Function call input
+    - Various nodes connecting to control flow labels: `%23` → `%24`, `%97`
+    - Conditional branches leading to different nodes for handling memory and returns.
+
+### Data Flow Graph Representation in DOT Format
+Below is a representation of the identified nodes and edges in DOT format, suitable for visualization using Graphviz or similar tools.
+
+```dot
+digraph G {
+    rankdir=TB;
+    node [shape=box];
+
+    function [label="_Z11change_baseB5cxx11ii"];
+    alloc1 [label="%4 (basic_string)"];
+    alloc2 [label="%5 (basic_string)"];
+    ptrManip1 [label="%6 (ptr to basic_string member)"];
+    ptrManip2 [label="%7 (bitcast)"];
+    storeOp1 [label="%10 (store operation)"];
+    storeOp2 [label="%11 (store allocation)"];
+    condCheck [label="%23 (conditional check)"];
+    label24 [label="%24"];
+    label27 [label="%27"];
+    arithmetic1 [label="%28 (phi result)"];
+    arithmetic2 [label="%29 (result of arithmetic)"];
+    functionCall1 [label="@llvm.lifetime.start.p0i8"];
+    functionCall2 [label="@llvm.memcpy.p0i8.p0i8.i64"];
+    returnNode [label="Return"];
+
+    function -> alloc1;
+    function -> alloc2;
+    alloc1 -> ptrManip1;
+    alloc1 -> ptrManip2;
+    ptrManip1 -> storeOp1;
+    ptrManip2 -> storeOp2;
+    condCheck -> label24;
+    condCheck -> label27;
+    arithmetic1 -> arithmetic2;
+    functionCall1 -> returnNode;
+    functionCall2 -> returnNode;
+
+    // Control flow connections
+    label24 -> arithmetic1;
+    label27 -> returnNode;
+}
+```
+
+### Visualization Suggestion
+
+1. **Graph Structure**: The graph should be oriented top-to-bottom (as indicated by `rankdir=TB`). 
+2. **Node Shapes**: Use rectangular boxes for nodes to represent operations and variables.
+3. **Edge Arrows**: Directed arrows should indicate the flow of data, showing which operations depend on which variables.
+4. **Control Flow Labels**: Clearly label all branches and returns to illustrate the control flow.
+
+This graph can be visualized using tools like Graphviz. Save the DOT format code in a `.dot` file and use Graphviz commands (e.g., `dot -Tpng -o graph.png graph.dot`) to create a visual representation of the data flow graph.

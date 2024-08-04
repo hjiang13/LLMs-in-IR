@@ -1,0 +1,100 @@
+To create a data flow graph (DFG) from the provided intermediate representation (IR) code, we'll outline the nodes and edges based on the operations and variables used in the code. Here’s how we can structure the DFG along with an explanation of the nodes and dependencies:
+
+### Nodes
+1. **Input Nodes**:
+   - `v0`: Represents the input vector (parameter `%0`).
+   - `v1`: Represents the read-only input vector (parameter `%1`).
+   - `s2`: Represents the read-only string (parameter `%2`).
+
+2. **Intermediate Nodes**:
+   - `alloc1`: Represents the allocation of space for `i64` (variable `%4`).
+   - `alloc2`: Represents the allocation of space for `i64` (variable `%5`).
+   - `alloc3`: Represents the allocation for a string (variable `%6`).
+   - `gep1`: Represents the `getelementptr` operation for accessing the vector's elements (e.g., `%7`, `%8`).
+   - `load1`: Represents loading of the string from `gep1` (e.g., `%23`, `%24`).
+   - `icmp1`: Represents the comparison operation (e.g., `%25`).
+   - `phi1`: Represents the phi node for handling control flow (e.g., `%27`).
+   - `call1`: Represents a call to a function (e.g., `@llvm.lifetime.start.p0i8` or `@llvm.memset.p0i8.i64`).
+   - `store1`: Represents storing data into memory (e.g., `%12`, `%5`, `%16`).
+   - `load2`: Represents loading data (e.g., from `%10`, `%11`).
+
+3. **Control Flow Nodes**:
+   - `br1`: Represents a branch based on a condition (e.g., `br i1 %25, label %117, label %26`).
+   - `switch1`: Represents a switch statement handling different cases.
+
+4. **Output Nodes**:
+   - `output`: Represents the return from the function (e.g., `ret void`).
+
+### Edges (Data Dependencies)
+- **From Input Nodes**:
+  - `v0` → `alloc1`: The input vector is allocated in the function.
+  - `v1` → `load1`: The read-only vector is loaded for processing.
+  - `s2` → `load2`: The read-only string is loaded for processing.
+
+- **From Intermediate Nodes**:
+  - `alloc1` → `store1`: The allocation of space is used to store data.
+  - `alloc2` → `store1`: Another allocation used for storing data.
+  - `gep1` → `load1`: The element pointer accesses elements for loading.
+  - `icmp1` → `br1`: The result of the comparison influences branching decisions.
+  - `phi1` → `call1`: The phi node feeds into the call instructions.
+  - `call1` → `store1`: The results from the call are stored.
+
+- **Control Flow Edges**:
+  - `br1` → `switch1`: The branch affects which case is taken in the switch.
+  - Each case in the `switch1` connects to its respective operations or returns.
+  
+- **From Intermediate Nodes to Output**:
+  - `store1` → `output`: The final stored data influences the output of the function.
+
+### Visualization
+To visualize this graphically, you can use the DOT format, which can be rendered using tools like Graphviz. Below is an example of how the DFG could be represented in DOT format:
+
+```dot
+digraph DFG {
+    rankdir=LR;
+
+    // Input Nodes
+    v0 [label="Input Vector (v0)"];
+    v1 [label="Read-Only Vector (v1)"];
+    s2 [label="Read-Only String (s2)"];
+
+    // Intermediate Nodes
+    alloc1 [label="Alloc (alloc1)"];
+    alloc2 [label="Alloc (alloc2)"];
+    alloc3 [label="Alloc String (alloc3)"];
+    gep1 [label="GEP (gep1)"];
+    load1 [label="Load String (load1)"];
+    icmp1 [label="Compare (icmp1)"];
+    phi1 [label="Phi Node (phi1)"];
+    call1 [label="Function Call (call1)"];
+    store1 [label="Store (store1)"];
+
+    // Control Flow Nodes
+    br1 [label="Branch (br1)"];
+    switch1 [label="Switch (switch1)"];
+
+    // Output Node
+    output [label="Output (output)"];
+
+    // Edges
+    v0 -> alloc1;
+    v1 -> load1;
+    s2 -> load2;
+    alloc1 -> store1;
+    alloc2 -> store1;
+    gep1 -> load1;
+    icmp1 -> br1;
+    phi1 -> call1;
+    call1 -> store1;
+    br1 -> switch1;
+    store1 -> output;
+}
+```
+
+### Explanation of Visualization
+- Each node is represented as a box with a label indicating its purpose (e.g., allocation, loading data, comparison).
+- Directed edges indicate the flow of data and dependencies between operations.
+- Control flow structures (like branches and switches) have their own nodes, highlighting decision points in the execution.
+- This structure helps in understanding how data moves through the program and the relationships between different operations. 
+
+You can use Graphviz to render this DOT file into a visual graph to analyze the data flow more intuitively.

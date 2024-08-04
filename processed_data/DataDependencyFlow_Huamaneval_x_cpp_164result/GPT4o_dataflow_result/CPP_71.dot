@@ -1,0 +1,125 @@
+To create a data flow graph from the provided Intermediate Representation (IR) code, we will focus on the key operations and dependencies between the variables. Below is a textual description of the nodes and edges in the graph, followed by a suggested DOT format that can be used to visualize the graph.
+
+### Data Flow Graph Description
+
+**Nodes:**
+1. **Inputs:**
+   - `Input_0` (represents `%0`)
+   - `Input_1` (represents `%1`)
+   - `Input_2` (represents `%2`)
+   
+2. **Operations:**
+   - `Add_1` (represents `%4 = fadd %0, %1`)
+   - `Cmp_1` (represents `%5 = fcmp ugt %4, %2`)
+   - `Add_2` (represents `%6 = fadd %0, %2`)
+   - `Cmp_2` (represents `%7 = fcmp ugt %6, %1`)
+   - `And` (represents `%8 = and i1 %5, %7`)
+   - `Add_3` (represents `%9 = fadd %1, %2`)
+   - `Cmp_3` (represents `%10 = fcmp ugt %9, %0`)
+   - `Select` (represents `%11 = select i1 %8, i1 %10, i1 false`)
+   - `Add_4` (represents `%13 = fadd %4, %2`)
+   - `Mul_1` (represents `%14 = fmul %13, 5.000000e-01`)
+   - `Sub_1` (represents `%15 = fsub %14, %0`)
+   - `Mul_2` (represents `%16 = fmul %14, %15`)
+   - `Sub_2` (represents `%17 = fsub %14, %1`)
+   - `Mul_3` (represents `%18 = fmul %17, %16`)
+   - `Sub_3` (represents `%19 = fsub %14, %2`)
+   - `Mul_4` (represents `%20 = fmul %19, %18`)
+   - `Extend` (represents `%21 = fpext %20 to double`)
+   - `Pow` (represents `%22 = tail call @pow(double %21, double 5.000000e-01)`)
+   - `Truncate` (represents `%23 = fptrunc %22 to float`)
+
+3. **Outputs:**
+   - `Output` (represents `%25`)
+
+### Edges:
+
+- `Input_0` -> `Add_1`
+- `Input_1` -> `Add_1`
+- `Add_1` -> `Cmp_1`
+- `Add_1` -> `Add_4`
+- `Input_2` -> `Cmp_1`
+- `Cmp_1` -> `And`
+- `Add_4` -> `Mul_1`
+- `Input_0` -> `Sub_1`
+- `Mul_1` -> `Sub_1`
+- `Sub_1` -> `Mul_2`
+- `Input_1` -> `Sub_2`
+- `Sub_2` -> `Mul_3`
+- `Mul_2` -> `Mul_3`
+- `Mul_3` -> `Mul_4`
+- `Input_2` -> `Sub_3`
+- `Sub_3` -> `Mul_4`
+- `Mul_4` -> `Extend`
+- `Extend` -> `Pow`
+- `Pow` -> `Truncate`
+- `Truncate` -> `Output`
+
+### DOT Format Visualization
+
+Here’s how you might represent this in DOT format:
+
+```dot
+digraph DataFlowGraph {
+    // Inputs
+    Input_0 [label="%0"];
+    Input_1 [label="%1"];
+    Input_2 [label="%2"];
+    
+    // Operations
+    Add_1 [label="%4 = fadd %0, %1"];
+    Cmp_1 [label="%5 = fcmp ugt %4, %2"];
+    Add_2 [label="%6 = fadd %0, %2"];
+    Cmp_2 [label="%7 = fcmp ugt %6, %1"];
+    And [label="%8 = and i1 %5, %7"];
+    Add_3 [label="%9 = fadd %1, %2"];
+    Cmp_3 [label="%10 = fcmp ugt %9, %0"];
+    Select [label="%11 = select i1 %8, i1 %10, i1 false"];
+    Add_4 [label="%13 = fadd %4, %2"];
+    Mul_1 [label="%14 = fmul %13, 5.000000e-01"];
+    Sub_1 [label="%15 = fsub %14, %0"];
+    Mul_2 [label="%16 = fmul %14, %15"];
+    Sub_2 [label="%17 = fsub %14, %1"];
+    Mul_3 [label="%18 = fmul %17, %16"];
+    Sub_3 [label="%19 = fsub %14, %2"];
+    Mul_4 [label="%20 = fmul %19, %18"];
+    Extend [label="%21 = fpext %20 to double"];
+    Pow [label="%22 = tail call @pow(double %21, double 5.000000e-01)"];
+    Truncate [label="%23 = fptrunc %22 to float"];
+    
+    // Output
+    Output [label="%25"];
+    
+    // Edges
+    Input_0 -> Add_1;
+    Input_1 -> Add_1;
+    Add_1 -> Cmp_1;
+    Add_1 -> Add_4;
+    Input_2 -> Cmp_1;
+    Cmp_1 -> And;
+    Add_4 -> Mul_1;
+    Input_0 -> Sub_1;
+    Mul_1 -> Sub_1;
+    Sub_1 -> Mul_2;
+    Input_1 -> Sub_2;
+    Sub_2 -> Mul_3;
+    Mul_2 -> Mul_3;
+    Mul_3 -> Mul_4;
+    Input_2 -> Sub_3;
+    Sub_3 -> Mul_4;
+    Mul_4 -> Extend;
+    Extend -> Pow;
+    Pow -> Truncate;
+    Truncate -> Output;
+}
+```
+
+### Visualization Suggestions
+
+1. **Graphical Tool**: You can use tools like Graphviz or online graph visualization tools that accept DOT format to visualize the graph.
+  
+2. **Color Coding**: You may consider color-coding nodes based on their function (input, operation, output) for better clarity.
+
+3. **Layout Options**: Experiment with different layout options (e.g., dot, neato, twopi) in Graphviz to find the most readable representation.
+
+This graph will provide a clear view of how data flows through the IR code and the dependencies between various operations and variables.

@@ -1,0 +1,95 @@
+To create a data flow graph from the provided intermediate representation (IR) code, we will represent the various variables, operations, and control structures as nodes, and the dependencies between them as directed edges. Below is a detailed description of the nodes and edges for the data flow graph.
+
+### Nodes
+1. **Function Entry**: `_Z3trii`
+2. **Memory Allocation**: `_Znwm` (for allocations)
+3. **Memory Deallocation**: `_ZdlPv` (for deallocations)
+4. **Vector Initialization**: `%"class.std::vector"*`
+5. **Comparison Operations**: `icmp eq`, `icmp slt`, `icmp ult`, `icmp ugt`, `icmp sgt`
+6. **Arithmetic Operations**: `add`, `sub`, `shl`, `lshr`, `and`
+7. **Load/Store Operations**: `load`, `store`, `getelementptr`
+8. **Branch Operations**: `br` (conditional branches)
+9. **Invoke Operations**: Functions that may throw exceptions, leading to different control flows.
+10. **Landing Pads**: For exception handling (`landingpad`)
+
+### Edges
+- **Data Dependencies**: Directed edges will connect nodes where one operation's output is used as another operation's input.
+- **Control Dependencies**: Directed edges will indicate control flow, such as branches and invokes.
+
+### Example of Nodes and Edges Representation
+- **Function Entry**
+  - Connects to: 
+    - Memory Allocation (`_Znwm`)
+    - Vector Initialization
+    - Comparison Operations (`icmp eq`, `icmp slt`)
+  
+- **Memory Allocation** (`_Znwm`)
+  - Connects to:
+    - Load/Store Operations (e.g., storing into the vector)
+  
+- **Comparison Operations** (`icmp eq`, `icmp slt`)
+  - Connects to:
+    - Branch Operations (`br`)
+    - Subsequent arithmetic operations
+   
+- **Arithmetic Operations** (e.g., `add`, `sub`, `shl`)
+  - Connects to:
+    - Load/Store Operations (e.g., storing results back into the vector)
+
+- **Load/Store Operations**
+  - Connects to:
+    - The vector node (indicating where the data is being stored or loaded from)
+
+- **Branch Operations** (`br`)
+  - Connects to:
+    - Different basic blocks, indicating control flow paths based on conditions
+  
+- **Invoke Operations**
+  - Connects to:
+    - Landing Pads (for exception handling)
+  
+- **Landing Pads**
+  - Connects back to:
+    - Function Entry or other nodes that handle the outcome of the invoked functions.
+
+### Suggested Visualization
+This graph can be visualized using a graph visualization tool like Graphviz. Below is an example of how the corresponding DOT representation might look:
+
+```dot
+digraph DataFlowGraph {
+    node [shape=box];
+
+    FunctionEntry [label="_Z3trii"];
+    MemoryAlloc [label="_Znwm"];
+    VectorInit [label="Vector Initialization"];
+    CompEq [label="icmp eq"];
+    CompSlt [label="icmp slt"];
+    Store [label="store"];
+    Load [label="load"];
+    Branch [label="br"];
+    Arithmetic [label="Arithmetic Ops"];
+    Invoke [label="invoke"];
+    LandingPad [label="landingpad"];
+    
+    FunctionEntry -> MemoryAlloc;
+    FunctionEntry -> VectorInit;
+    FunctionEntry -> CompEq;
+    FunctionEntry -> CompSlt;
+
+    MemoryAlloc -> Store;
+    Store -> VectorInit;
+
+    CompEq -> Branch;
+    CompSlt -> Branch;
+
+    Branch -> Arithmetic; // Depending on condition
+    Arithmetic -> Store; 
+    Store -> VectorInit;
+
+    Invoke -> LandingPad;
+    LandingPad -> FunctionEntry;
+}
+```
+
+### Summary
+This graph outlines how data flows through the IR code, illustrating dependencies between operations and control structures. The nodes represent key operations and data points, while the edges show how data is passed and how control flows through the function. By visualizing this with a tool like Graphviz, you can represent the overall structure and flow of data within the function in a clear and informative manner.

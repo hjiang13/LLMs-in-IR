@@ -1,0 +1,103 @@
+To create a data flow graph (DFG) from the provided intermediate representation (IR) code, we will focus on identifying key nodes (representing operations, variable allocations, and function calls) and edges that illustrate the dependencies between these nodes. Below is a detailed description of the nodes and edges, followed by a visualization suggestion using the DOT format.
+
+### Nodes
+- **Function Definition**:
+  - `"_Z17words_in_sentence"`: The main function node where processing begins.
+
+- **Variable Allocations**:
+  - `alloca_i64_1`: An allocation for a 64-bit integer.
+  - `alloca_i64_2`: Another allocation for a 64-bit integer.
+  - `alloca_string_1`: Allocation for a `basic_string`.
+  - `alloca_string_2`: Allocation for another `basic_string`.
+  - `alloca_string_3`: Allocation for a third `basic_string`.
+
+- **Operations**:
+  - `store_op_1`: Stores a value into `alloca_i64_1`.
+  - `load_op_1`: Loads a value from `alloca_i64_1`.
+  - `store_op_2`: Stores a value into `alloca_i64_2`.
+  - `load_op_2`: Loads a value from `alloca_i64_2`.
+  - `icmp_op`: Performs an integer comparison.
+  - `branch_op`: Represents the branching based on the comparison.
+  - `invoke_create`: Invokes the `M_create` function for string creation.
+  - `invoke_replace`: Invokes the `M_replace` function for string replacement.
+  - `invoke_erase`: Invokes the `M_erase` function for string erasure.
+  - `memory_copy`: Represents memory copy operations.
+
+- **Control Flow Nodes**:
+  - `branch_true`: Represents the true branch of a condition.
+  - `branch_false`: Represents the false branch of a condition.
+  
+- **Cleanup and Termination**:
+  - `cleanup`: Represents cleanup operations at the end of the function.
+
+### Edges
+- **Data Dependencies**:
+  - Edges from the variable allocation nodes to the store and load operation nodes indicating the flow of data.
+  - Edges from load operations to the comparison operation indicating the use of loaded values.
+  - Edges from comparison operations to branch operations indicating control flow based on the result of the comparison.
+  - Edges from the function invocation nodes back to the variable allocations they modify.
+  
+- **Control Flow**:
+  - Edges illustrating the branching between `branch_true` and `branch_false` based on the result of the `icmp_op`.
+  - Edges indicating the continuation of control flow after each invoked function.
+
+### DOT Representation
+Below is a simplified version of the DFG represented in DOT format. This can be visualized using tools such as Graphviz.
+
+```dot
+digraph DataFlowGraph {
+    // Nodes
+    "Function" [label="_Z17words_in_sentence"];
+    "alloca_i64_1" [label="alloca_i64_1"];
+    "alloca_i64_2" [label="alloca_i64_2"];
+    "alloca_string_1" [label="alloca_string_1"];
+    "alloca_string_2" [label="alloca_string_2"];
+    "alloca_string_3" [label="alloca_string_3"];
+    
+    "store_op_1" [label="store_op_1"];
+    "load_op_1" [label="load_op_1"];
+    "store_op_2" [label="store_op_2"];
+    "load_op_2" [label="load_op_2"];
+    "icmp_op" [label="icmp_op"];
+    "branch_op" [label="branch_op"];
+    "invoke_create" [label="invoke_create"];
+    "invoke_replace" [label="invoke_replace"];
+    "invoke_erase" [label="invoke_erase"];
+    "memory_copy" [label="memory_copy"];
+    "cleanup" [label="cleanup"];
+
+    // Edges
+    "Function" -> "alloca_i64_1";
+    "Function" -> "alloca_i64_2";
+    "Function" -> "alloca_string_1";
+    "Function" -> "alloca_string_2";
+    "Function" -> "alloca_string_3";
+    
+    "alloca_i64_1" -> "store_op_1";
+    "alloca_i64_1" -> "load_op_1";
+    "alloca_i64_2" -> "store_op_2";
+    "alloca_i64_2" -> "load_op_2";
+    
+    "load_op_1" -> "icmp_op";
+    "load_op_2" -> "icmp_op";
+    
+    "icmp_op" -> "branch_op"; // Control flow based on comparison
+    
+    "branch_op" -> "invoke_create"; // True path
+    "branch_op" -> "invoke_erase"; // False path
+    
+    "invoke_create" -> "alloca_string_1"; // Creates new string
+    "invoke_replace" -> "alloca_string_2"; // Replaces in string
+    "invoke_erase" -> "alloca_string_3"; // Erases from string
+    
+    "cleanup" -> "Function"; // Cleanup at function end
+}
+```
+
+### Visualization
+To visualize this data flow graph:
+1. Use a tool like Graphviz (http://www.graphviz.org/).
+2. Copy the DOT representation into a file with a `.dot` extension.
+3. Use the command `dot -Tpng yourfile.dot -o output.png` to generate an image of the graph.
+
+This visualization will help to understand the flow of data and control through the IR code, highlighting dependencies and operations clearly.

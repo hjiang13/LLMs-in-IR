@@ -1,0 +1,121 @@
+Certainly! Below is a detailed description of the data flow graph based on the provided Intermediate Representation (IR) code. 
+
+### Nodes:
+1. **Function Entry**: `_Z10below_zeroSt6vectorIiSaIiEE` (Function Entry)
+2. **Load Operations**:
+   - `%3`: Load from `i32*` (first element of vector)
+   - `%5`: Load from `i32*` (second element of vector)
+3. **Pointer to Integer Conversions**:
+   - `%6`: Convert pointer `%3` to integer
+   - `%7`: Convert pointer `%5` to integer
+4. **Arithmetic Operations**:
+   - `%8`: Subtract `%6` and `%7`
+   - `%9`: Arithmetic right shift of `%8`
+5. **Comparison Operations**:
+   - `%10`: Compare if `%8 == 0`
+   - `%12`: Call `@llvm.umax.i64` with `%9` and `1`
+   - `%14`: Compare if loaded value `%13` is less than `0`
+   - `%16`: Phi node for tracking iteration count
+   - `%17`: Phi node for tracking sum
+   - `%18`: Compare if `%16 == %12`
+   - `%20`: Pointer arithmetic based on `%16`
+   - `%21`: Load value from updated pointer
+   - `%22`: Add `%21` and `%17`
+   - `%23`: Compare if `%22 < 0`
+   - `%24`: Increment `%16` by `1`
+   - `%26`: Compare if `%9 > %16`
+6. **Branching and Control Flow**:
+   - `br %10`: Branch based on comparison of `%10`
+   - `br %14`: Branch based on comparison of `%14`
+   - `br %18`: Branch based on comparison of `%18`
+   - `br %23`: Branch based on comparison of `%23`
+   - `br %26`: Branch based on comparison of `%26`
+7. **Return Value**: `%28`: Return value of the function
+
+### Edges:
+- **Control Flow Edges**:
+  - From **Function Entry** to `%10` (Check if `%8` is zero)
+  - From `%10` to `%12` (if true) and to `%11` (if false)
+  - From `%11` (false case) to `%14` (check if `%13 < 0`)
+  - From `%14` to `%15` (if true) and to `%27` (if false)
+  - From `%15` to `%18` (check if `%16 == %12`)
+  - From `%18` to `%19` (if true) and to `%25` (if false)
+  - From `%19` to `%20` (pointer arithmetic)
+  - From `%20` to `%21` (load value)
+  - From `%21` to `%22` (sum calculation)
+  - From `%22` to `%23` (check if `%22 < 0`)
+  - From `%23` to `%25` (if false) and back to `%15` (if true)
+  - From `%25` to `%26` (check if `%9 > %16`)
+  - From `%26` to `%27` (final control flow)
+
+- **Data Dependency Edges**:
+  - `%3` and `%5` produce values that are used by `%6` and `%7`
+  - `%6` and `%7` are used in the computation of `%8`
+  - `%8` is used for the comparison in `%10`
+  - `%9` is computed from `%8` and is used in `%12`
+  - `%13` is loaded and used in the comparison at `%14`
+  - `%16` and `%17` are updated in the loop and are used in `%18`
+  - `%22` is computed and used in the comparison at `%23`
+  - The result of `%26` is used to determine the final return value `%28`
+
+### Dot File Representation:
+Here's how the above nodes and edges can be represented in a dot file format.
+
+```dot
+digraph data_flow_graph {
+    rankdir=LR;
+
+    // Nodes
+    func_entry [label="_Z10below_zeroSt6vectorIiSaIiEE"];
+    load1 [label="%3: load i32*"];
+    load2 [label="%5: load i32*"];
+    ptrtoint1 [label="%6: ptrtoint %3"];
+    ptrtoint2 [label="%7: ptrtoint %5"];
+    sub [label="%8: sub"];
+    arith_shift [label="%9: ashr"];
+    cmp1 [label="%10: icmp eq"];
+    call [label="%12: call @llvm.umax.i64"];
+    cmp2 [label="%14: icmp slt"];
+    phi1 [label="%16: phi"];
+    phi2 [label="%17: phi"];
+    cmp3 [label="%18: icmp eq"];
+    ptr_arith [label="%20: getelementptr"];
+    load3 [label="%21: load i32"];
+    add [label="%22: add"];
+    cmp4 [label="%23: icmp slt"];
+    inc [label="%24: increment"];
+    cmp5 [label="%26: icmp ugt"];
+    ret [label="%28: return"];
+
+    // Control flow edges
+    func_entry -> cmp1;
+    cmp1 -> call [label="true"];
+    cmp1 -> load1 [label="false"];
+    load1 -> cmp2;
+    cmp2 -> cmp3 [label="true"];
+    cmp2 -> ret [label="false"];
+    cmp3 -> phi1 [label="true"];
+    cmp3 -> phi2 [label="false"];
+    phi1 -> ptr_arith;
+    ptr_arith -> load3;
+    load3 -> add;
+    add -> cmp4;
+    cmp4 -> ret [label="false"];
+    cmp4 -> cmp3 [label="true"];
+    load2 -> ptrtoint1;
+    load2 -> ptrtoint2;
+    ptrtoint1 -> sub;
+    ptrtoint2 -> sub;
+    sub -> arith_shift;
+    arith_shift -> cmp1;
+    call -> cmp2;
+}
+```
+
+### Visualization:
+To visualize this graph:
+1. Use Graphviz, a popular graph visualization tool.
+2. Save the above dot format code in a file named `data_flow_graph.dot`.
+3. Run the command `dot -Tpng data_flow_graph.dot -o data_flow_graph.png` to generate a PNG image of the graph.
+
+This will produce a clear, visual representation of the data flow through the intermediate representation code, highlighting the dependencies and control flow structures.

@@ -1,0 +1,136 @@
+To create a data flow graph based on the provided intermediate representation (IR) code, we will identify the key variables, operations, and control flow structures. The nodes in the graph will represent variables and operations, while the edges will represent data dependencies between those nodes.
+
+### Nodes
+1. **Input Variables**
+   - `%0`: Input parameter of type `i32`
+   - `%1`: Input parameter of type `i32`
+
+2. **Control Flow Nodes**
+   - **Comparison Operations**:
+     - `%3`: `icmp sgt i32 %0, 0`
+     - `%4`: `icmp sgt i32 %0, 1`
+   - **Branch Nodes**:
+     - **Branch to Label 5**: based on `%4`
+     - **Branch to Label 16**: based on `%4`
+   
+3. **Basic Block Nodes (Label 5)**
+   - `%6`: `phi i32 [ %9, %5 ], [ 0, %2 ]`
+   - `%7`: `phi i32 [ %8, %5 ], [ 1, %2 ]`
+   - `%8`: `mul nsw i32 %7, %1`
+   - `%9`: `add nuw nsw i32 %6, 1`
+   - `%10`: `icmp sle i32 %8, %0`
+   - `%11`: `icmp ult i32 %6, 99`
+   - `%12`: `select i1 %10, i1 %11, i1 false`
+   - `%13`: `xor i1 %12, true`
+   - `%14`: `icmp eq i32 %8, %0`
+   - `%15`: `select i1 %13, i1 true, i1 %14`
+   - **Branch to Label 16**: based on `%15`
+   - **Branch to Label 5**: based on `%15`
+  
+4. **Basic Block Nodes (Label 16)**
+   - `%17`: `phi i1 [ %3, %2 ], [ %12, %5 ]`
+   - **Return Node**: `ret i1 %17`
+
+### Edges
+1. **From Input Variables to Comparison Operations**:
+   - `%0` → `%3`
+   - `%0` → `%4`
+   - `%1` → `%8`
+   - `%6` → `%9`
+   - `%7` → `%8`
+
+2. **From Comparison Operations to Branch Nodes**:
+   - `%4` → (to Label 5 or Label 16)
+   
+3. **From Label 5 Operations to Other Operations**:
+   - `%8` → `%10`
+   - `%6` → `%9`
+   - `%9` → `%12`
+   - `%10` → `%12`
+   - `%11` → `%12`
+   - `%12` → `%13`
+   - `%8` → `%14`
+   - `%13` → `%15`
+   - `%14` → `%15`
+   
+4. **From Label 5 Branch to Label 16 and Back**:
+   - `%15` → (to Label 5 or Label 16)
+   
+5. **From Label 16 to Return Node**:
+   - `%3` → `%17`
+   - `%12` → `%17`
+   
+### Dot File Representation
+The following is a simplified version of the data flow graph in DOT format.
+
+```dot
+digraph DataFlowGraph {
+    // Input nodes
+    node [shape=circle];
+    Input0 [label="%0"];
+    Input1 [label="%1"];
+    
+    // Control nodes
+    Comp0 [label="%3"];
+    Comp1 [label="%4"];
+    
+    // Basic Block Nodes (Label 5)
+    Phi6 [label="%6"];
+    Phi7 [label="%7"];
+    Mul8 [label="%8"];
+    Add9 [label="%9"];
+    Comp10 [label="%10"];
+    Comp11 [label="%11"];
+    Select12 [label="%12"];
+    Xor13 [label="%13"];
+    Comp14 [label="%14"];
+    Select15 [label="%15"];
+    
+    // Basic Block Nodes (Label 16)
+    Phi17 [label="%17"];
+    
+    // Return Node
+    Ret [label="Return"];
+
+    // Edges for data flow
+    Input0 -> Comp0;
+    Input0 -> Comp1;
+    Input1 -> Mul8;
+    Phi6 -> Add9;
+    Phi7 -> Mul8;
+    
+    Comp0 -> Comp1; // If needed for logical flow
+    Comp1 -> Phi6; // Branching logic
+    Comp1 -> Phi17; // Branch to Label 16
+
+    // Label 5 operations
+    Mul8 -> Comp10;
+    Phi6 -> Add9;
+    Add9 -> Select12;
+    Comp10 -> Select12;
+    Comp11 -> Select12;
+    
+    Select12 -> Xor13;
+    Mul8 -> Comp14;
+    Xor13 -> Select15;
+    Comp14 -> Select15;
+
+    // Branching back to Label 5 or to Label 16
+    Select15 -> Phi6; // back to Label 5
+    Select15 -> Phi17; // to Label 16
+
+    // Label 16 to return
+    Comp0 -> Phi17;
+    Select12 -> Phi17;
+
+    // Return Node
+    Phi17 -> Ret;
+}
+```
+
+### Visualization
+To visualize this graph:
+1. Use a graph visualization tool that supports DOT format, such as Graphviz.
+2. Save the DOT representation to a `.dot` file.
+3. Run Graphviz to generate a graphical representation, which could be in formats like PNG, PDF, or SVG.
+4. The resulting diagram will show nodes as circles, with directed edges representing the flow of data, which can help analyze the dependencies and control flow in the provided IR code.

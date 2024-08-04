@@ -1,0 +1,100 @@
+To represent the data flow graph from the provided Intermediate Representation (IR) code, we will outline the nodes (representing variables, operations, and function calls) and the edges (indicating data dependencies). 
+
+### Data Flow Graph Description
+
+#### Nodes (representing the key elements)
+1. **Function Node**: `get_matrix_triples`
+2. **Allocations**:
+   - Allocation 1: `vector_0`
+   - Allocation 2: `vector_1`
+   - Allocation 3: `vector_2`
+   - Allocation 4: `vector_3`
+   - Allocation 5: `vector_4`
+3. **Function Calls**:
+   - `llvm.lifetime.start`
+   - `llvm.memset`
+   - `new[]` (allocation, various sizes)
+   - `__uninitialized_copy`
+   - `__realloc_insert`
+   - `delete[]`
+   - `llvm.lifetime.end`
+4. **Variables**:
+   - `i32* ptr_1`
+   - `i32* ptr_2`
+   - `i32* ptr_3`
+   - `i32* ptr_4`
+5. **Condition and Control Flow**:
+   - `icmp` (comparison operations)
+   - `br` (branching operations)
+
+#### Edges (indicating data dependencies)
+- **From Function Node**: 
+   - `get_matrix_triples` calls `llvm.lifetime.start` (beginning of lifetime management).
+- **Allocation Edges**:
+   - `vector_0` → `llvm.memset` (initialization of the vector).
+   - `vector_1` → `new[]` (allocation).
+   - `vector_2` → `__uninitialized_copy` (copying data).
+   - `vector_3` → `__realloc_insert` (inserting into vector).
+   - `vector_4` → `delete[]` (deallocation).
+- **Data Dependency Edges**:
+   - `ptr_1` ← `load` from `vector_1` (retrieving pointer).
+   - `ptr_2` ← `load` from `vector_2`.
+   - `ptr_3` ← `load` from `vector_3`.
+   - `ptr_4` ← `load` from `vector_4`.
+- **Control Flow Edges**:
+   - `icmp` comparison results to branch decisions in `br` statements.
+
+### Visualization Suggestions
+To visualize this data flow graph, you can use the DOT language format to represent the nodes and edges. Below is an example of how this might look in a DOT file format:
+
+```dot
+digraph DataFlowGraph {
+    // Function Node
+    node [shape=box];
+    get_matrix_triples [label="get_matrix_triples", shape=ellipse];
+
+    // Allocations
+    vector_0 [label="vector_0"];
+    vector_1 [label="vector_1"];
+    vector_2 [label="vector_2"];
+    vector_3 [label="vector_3"];
+    vector_4 [label="vector_4"];
+
+    // Variables
+    ptr_1 [label="ptr_1"];
+    ptr_2 [label="ptr_2"];
+    ptr_3 [label="ptr_3"];
+    ptr_4 [label="ptr_4"];
+
+    // Function Calls
+    llvm_lifetime_start [label="llvm.lifetime.start"];
+    llvm_memset [label="llvm.memset"];
+    new_allocation [label="new[]"];
+    uninitialized_copy [label="__uninitialized_copy"];
+    realloc_insert [label="__realloc_insert"];
+    delete_allocation [label="delete[]"];
+    llvm_lifetime_end [label="llvm.lifetime.end"];
+
+    // Edges (dependencies)
+    get_matrix_triples -> llvm_lifetime_start;
+    vector_0 -> llvm_memset;
+    vector_1 -> new_allocation;
+    vector_2 -> uninitialized_copy;
+    vector_3 -> realloc_insert;
+    vector_4 -> delete_allocation;
+
+    ptr_1 -> vector_1;
+    ptr_2 -> vector_2;
+    ptr_3 -> vector_3;
+    ptr_4 -> vector_4;
+
+    // Control Flow
+    icmp -> br1;
+    icmp -> br2;
+}
+```
+
+### Notes:
+- In this representation, each node is defined with a label to indicate what it represents.
+- The arrows (`->`) indicate the direction of data flow, showing how data is passed from one operation or variable to another.
+- You can visualize this DOT representation using tools like Graphviz to generate a graphical representation of the data flow graph.

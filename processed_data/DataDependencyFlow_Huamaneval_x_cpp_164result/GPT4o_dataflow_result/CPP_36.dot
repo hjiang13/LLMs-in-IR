@@ -1,0 +1,114 @@
+To create a data flow graph (DFG) based on the provided Intermediate Representation (IR) code, we will represent the variables and operations as nodes, and the dependencies between them as directed edges. Below is a textual description of the nodes and edges, followed by a suggested format for a `.dot` file that can be visualized using graph visualization tools like Graphviz.
+
+### Nodes
+1. **Input Node**
+   - `input_%0`: Represents the input integer parameter of the function.
+
+2. **Comparison Nodes**
+   - `icmp_sgt_%0`: Compares if `input_%0` is greater than 0.
+   - `icmp_ne_%8`: Compares if `urem_%8` is not equal to 0.
+   - `icmp_ne_%10`: Compares if `urem_%10` is not equal to 0.
+   - `icmp_eq_%6`: Compares if `input_%0` is equal to `urem_%6`.
+   - `icmp_eq_%18`: Compares if `urem_%18` is equal to 7.
+   - `icmp_ult_%16`: Compares if `urem_%16` is less than 10.
+
+3. **Arithmetic Nodes**
+   - `urem_%6`: Computes the remainder of `input_%6` divided by 11.
+   - `urem_%10`: Computes the remainder of `input_%6` divided by 13.
+   - `add_%20`: Adds `input_%17` and `zext_%19`.
+   - `udiv_%16`: Divides `input_%16` by 10.
+   - `add_%26`: Computes `input_%6 + 1`.
+
+4. **Control Flow Nodes**
+   - `branch_%2`: Represents the branching based on the comparison of `input_%0`.
+   - `branch_%14`: Represents the branching based on the result of the logical and operation.
+
+5. **Return Node**
+   - `return_%4`: Represents the return value of the function.
+
+6. **Phi Nodes**
+   - `phi_%4`: Merges values for the return path from block 3.
+   - `phi_%6`: Merges values for the path leading to block 5.
+   - `phi_%16`: Merges values for the path leading to block 15.
+   - `phi_%25`: Merges values for the path leading to block 24.
+
+### Edges
+- **Data Dependencies**
+   - `input_%0` → `icmp_sgt_%0`
+   - `icmp_sgt_%0` → `branch_%2`
+   - `branch_%2` → `phi_%4`
+   - `branch_%2` → `phi_%6`
+   - `phi_%6` → `urem_%8`
+   - `phi_%6` → `urem_%10`
+   - `urem_%8` → `icmp_ne_%8`
+   - `urem_%10` → `icmp_ne_%10`
+   - `icmp_ne_%8` → `and_%12`
+   - `icmp_ne_%10` → `and_%12`
+   - `and_%12` → `branch_%14`
+   - `branch_%14` → `phi_%16`
+   - `phi_%16` → `urem_%18`
+   - `urem_%18` → `icmp_eq_%18`
+   - `icmp_eq_%18` → `add_%20`
+   - `phi_%6` → `add_%26`
+   - `add_%26` → `icmp_eq_%6`
+   - `icmp_eq_%6` → `return_%4`
+   - `phi_%4` → `return_%4`
+
+### Suggested `.dot` Format
+Here is how the data flow graph can be represented in a `.dot` format:
+
+```dot
+digraph DFG {
+    rankdir=LR; // Left to Right layout
+
+    // Nodes
+    input_%0 [label="Input %0"];
+    icmp_sgt_%0 [label="icmp sgt %0"];
+    branch_%2 [label="Branch"];
+    phi_%4 [label="phi %4"];
+    phi_%6 [label="phi %6"];
+    urem_%8 [label="urem %8"];
+    urem_%10 [label="urem %10"];
+    icmp_ne_%8 [label="icmp ne %8"];
+    icmp_ne_%10 [label="icmp ne %10"];
+    and_%12 [label="and %12"];
+    branch_%14 [label="Branch"];
+    phi_%16 [label="phi %16"];
+    urem_%18 [label="urem %18"];
+    icmp_eq_%18 [label="icmp eq %18"];
+    add_%20 [label="add %20"];
+    add_%26 [label="add %26"];
+    icmp_eq_%6 [label="icmp eq %6"];
+    return_%4 [label="Return %4"];
+
+    // Edges
+    input_%0 -> icmp_sgt_%0;
+    icmp_sgt_%0 -> branch_%2;
+    branch_%2 -> phi_%4;
+    branch_%2 -> phi_%6;
+    phi_%6 -> urem_%8;
+    phi_%6 -> urem_%10;
+    urem_%8 -> icmp_ne_%8;
+    urem_%10 -> icmp_ne_%10;
+    icmp_ne_%8 -> and_%12;
+    icmp_ne_%10 -> and_%12;
+    and_%12 -> branch_%14;
+    branch_%14 -> phi_%16;
+    phi_%16 -> urem_%18;
+    urem_%18 -> icmp_eq_%18;
+    icmp_eq_%18 -> add_%20;
+    phi_%6 -> add_%26;
+    add_%26 -> icmp_eq_%6;
+    icmp_eq_%6 -> return_%4;
+    phi_%4 -> return_%4;
+}
+```
+
+### Visualization
+This `.dot` file can be visualized using tools like Graphviz. You can save the content to a `.dot` file and then use the command:
+```bash
+dot -Tpng -o output.png input.dot
+```
+This command will generate a PNG image (`output.png`) of the data flow graph, illustrating the flow of data and dependencies as described.
+
+The nodes represent operations and variables, while the directed edges indicate the flow of data and dependencies, making it easy to understand how data is manipulated throughout the function.

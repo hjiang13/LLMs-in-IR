@@ -1,0 +1,108 @@
+To create a data flow graph from the provided Intermediate Representation (IR) code, we will represent variables, operations, and control flow using nodes and edges. Below is a detailed description of the nodes and edges which can be translated into a DOT format for visualization.
+
+### Nodes
+1. **Function Entry**: `@_Z15smallest_changeSt6vectorIiSaIiEE`
+2. **Load Operations**:
+   - `Load: %3` (Loading `i32*` from the vector)
+   - `Load: %5` (Loading `i32*` from the vector)
+   - `Load: %19` (Loading `i32` from the memory address calculated using `%18`)
+   - `Load: %21` (Loading `i32` from the memory address calculated using `%20`)
+3. **Pointer Operations**:
+   - `GEP: %2` (Getting element pointer for the first load)
+   - `GEP: %4` (Getting element pointer for the second load)
+   - `GEP: %18` (Getting element pointer for loading the first element)
+   - `GEP: %20` (Getting element pointer for loading the second element)
+4. **Arithmetic Operations**:
+   - `Sub: %8` (Subtraction)
+   - `AShr: %9` (Arithmetic right shift)
+   - `Add: %10` (Addition)
+   - `Add: %24` (Result of a conditional addition)
+   - `Add: %25` (Increment operation)
+   - `Sub: %26` (Subtraction from -2)
+   - `Add: %27` (Final addition operation)
+5. **Comparison Operations**:
+   - `ICmp: %11` (Check if `%10` is equal to 0)
+   - `ICmp: %22` (Check if two loaded integers are not equal)
+   - `ICmp: %28` (Check if `%27` is greater than `%25`)
+6. **Control Flow**:
+   - `Branch: %12` (Conditional branch based on `%11`)
+   - `Branch: %14` (Loop back based on `%28`)
+7. **Function Exit**: `Return: %13` (Returning the result)
+
+### Edges
+- **Data Dependencies**:
+  - `Load: %3` and `Load: %5` depend on `GEP: %2` and `GEP: %4`
+  - `Sub: %8` depends on `ptrtoint` results from `%6` and `%7`
+  - `AShr: %9` depends on `Sub: %8`
+  - `Add: %10` depends on `AShr: %9`
+  - `ICmp: %11` depends on `Add: %10`
+  - `Phi: %13` depends on `ICmp: %11` and `%24`
+  - `Phi: %15`, `Phi: %16`, and `Phi: %17` depend on the control flow from `%1` and `%14`
+  - `Load: %19` depends on `GEP: %18`
+  - `Load: %21` depends on `GEP: %20`
+  - `ICmp: %22` depends on `Load: %19` and `Load: %21`
+  - `Add: %24` depends on `Phi: %17` and `ZExt: %22`
+  - `Add: %25` depends on `Phi: %15`
+  - `Sub: %26` depends on the value `-2` and `Phi: %15`
+  - `Add: %27` depends on `Add: %9` and `Sub: %26`
+  - `ICmp: %28` depends on `Add: %27` and `Add: %25`
+
+### Visualizing the Graph
+To visualize this data flow graph in a DOT format, you would represent the nodes and edges using the following syntax:
+
+```dot
+digraph DataFlowGraph {
+    // Nodes
+    entry [label="@_Z15smallest_changeSt6vectorIiSaIiEE"];
+    load3 [label="Load: %3"];
+    load5 [label="Load: %5"];
+    load19 [label="Load: %19"];
+    load21 [label="Load: %21"];
+    gep2 [label="GEP: %2"];
+    gep4 [label="GEP: %4"];
+    gep18 [label="GEP: %18"];
+    gep20 [label="GEP: %20"];
+    sub8 [label="Sub: %8"];
+    ashr9 [label="AShr: %9"];
+    add10 [label="Add: %10"];
+    icmp11 [label="ICmp: %11"];
+    phi13 [label="Phi: %13"];
+    phi15 [label="Phi: %15"];
+    add24 [label="Add: %24"];
+    icmp22 [label="ICmp: %22"];
+    add25 [label="Add: %25"];
+    sub26 [label="Sub: %26"];
+    add27 [label="Add: %27"];
+    icmp28 [label="ICmp: %28"];
+    exit [label="Return: %13"];
+
+    // Edges
+    entry -> gep2;
+    entry -> gep4;
+    gep2 -> load3;
+    gep4 -> load5;
+    load3 -> sub8;
+    load5 -> gep18;
+    gep18 -> load19;
+    load20 -> load21;
+    sub8 -> ashr9;
+    ashr9 -> add10;
+    add10 -> icmp11;
+    icmp11 -> phi13;
+    
+    // Loop and conditional dependencies
+    phi13 -> exit;
+    ph15 -> add24;
+    icmp22 -> add24;
+    icmp22 -> load19;
+    icmp22 -> load21;
+    add24 -> add25;
+    phi15 -> sub26;
+    add25 -> add27;
+    add27 -> icmp28;
+    icmp28 -> phi15;
+}
+```
+
+### Summary
+The resulting data flow graph provides a high-level overview of how data moves through the IR code, highlighting the dependencies between operations and the control flow structure. You can visualize it using any DOT-compatible graph visualization tool, such as Graphviz.

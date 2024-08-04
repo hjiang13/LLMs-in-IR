@@ -1,0 +1,136 @@
+To represent the data flow graph (DFG) based on the provided Intermediate Representation (IR) code, we'll identify the key variables, operations, and control flow constructs, and then outline the nodes and edges that illustrate the dependencies among them. Below is a detailed text description of the nodes and edges, followed by a suggested dot file format for visualization.
+
+### Nodes:
+1. **Input Variable:**
+   - Node 0: `%0` (Input vector)
+
+2. **Load Operations:**
+   - Node 1: `%3` (Load operation from vector)
+   - Node 2: `%5` (Load operation from vector)
+   - Node 3: `%40` (Load operation from element in vector)
+   - Node 4: `%41` (Load operation from element in vector)
+   - Node 5: `%42` (Load operation from element in vector)
+   - Node 6: `%43` (Load operation from element in vector)
+   - Node 7: `%48` (Load operation from element in vector)
+   - Node 8: `%49` (Load operation from element in vector)
+   - Node 9: `%50` (Load operation from element in vector)
+   - Node 10: `%51` (Load operation from element in vector)
+
+3. **Arithmetic Operations:**
+   - Node 11: `%8` (Subtraction)
+   - Node 12: `%12` (Call to `@llvm.umax.i64`)
+   - Node 13: `%14` (Shift right)
+   - Node 14: `%15` (Addition)
+   - Node 15: `%18` (Bitwise AND)
+   - Node 16: `%19` (Shift left)
+   - Node 17: `%24` (Shift left)
+   - Node 18: `%25` (Bitwise OR)
+   - Node 19: `%26` (Bitwise OR)
+   - Node 20: `%27` (Bitwise OR)
+   - Node 21: `%28` (Bitwise OR)
+   - Node 22: `%29` (Bitwise OR)
+   - Node 23: `%30` (Bitwise OR)
+   - Node 24: `%31` (Bitwise OR)
+
+4. **Comparison Operations:**
+   - Node 25: `%9` (Equality comparison)
+   - Node 26: `%16` (Unsigned less than comparison)
+   - Node 27: `%65` (Equality comparison)
+   - Node 28: `%69` (Equality comparison)
+
+5. **Select Operations:**
+   - Node 29: `%60` (Select based on comparison)
+   - Node 30: `%61` (Select based on comparison)
+
+6. **Phi Nodes:**
+   - Node 31: `%21` (Phi node for loop)
+   - Node 32: `%22` (Phi node for loop)
+   - Node 33: `%23` (Phi node for loop)
+   - Node 34: `%71` (Phi node for loop)
+   - Node 35: `%72` (Phi node for loop)
+   - Node 36: `%73` (Phi node for loop)
+
+7. **Function Calls:**
+   - Node 37: `@llvm.vector.reduce.add.v4i32` (Function call)
+   - Node 38: `@llvm.umax.i64` (Function call)
+
+8. **Return Variable:**
+   - Node 39: `%75` (Return value)
+
+### Edges:
+- An edge from Node 0 to Nodes 1 and 2 (loading from vector).
+- Edges connecting load operations (Nodes 1, 2) to arithmetic and comparison nodes (Nodes 8, 12, 14, 15, etc.).
+- Edges connecting arithmetic nodes to phi nodes (Nodes 31, 32, 33 - representing values across loop iterations).
+- Edges connecting comparison nodes to control flow (branches) and select operations (Nodes 29, 30).
+- Edges from function call nodes (Nodes 37, 38) leading to subsequent operations.
+- Edges leading to the return node (Node 39) from the final computations.
+
+### Dot File Format
+Below is a sample representation of the data flow graph in dot format:
+
+```dot
+digraph DataFlowGraph {
+    rankdir=TB;
+
+    // Input
+    node [shape=box];
+    input [label="%0 (Input Vector)"];
+    
+    // Load operations
+    load1 [label="%3 (Load)"];
+    load2 [label="%5 (Load)"];
+    load3 [label="%40 (Load)"];
+    load4 [label="%41 (Load)"];
+    load5 [label="%42 (Load)"];
+    load6 [label="%43 (Load)"];
+    load7 [label="%48 (Load)"];
+    load8 [label="%49 (Load)"];
+    load9 [label="%50 (Load)"];
+    load10 [label="%51 (Load)"];
+
+    // Arithmetic operations
+    sub [label="%8 (Subtraction)"];
+    max [label="%12 (Call to llvm.umax)"];
+    add [label="%14 (Addition)"];
+    and [label="%15 (Bitwise AND)"];
+    shl [label="%19 (Shift Left)"];
+    shr [label="%13 (Shift Right)"];
+    
+    // Comparison operations
+    eq1 [label="%9 (Equality Check)"];
+    ult [label="%16 (Unsigned Less Than)"];
+
+    // Phi Nodes
+    phi1 [label="%21 (Phi Node)"];
+    phi2 [label="%22 (Phi Node)"];
+    phi3 [label="%23 (Phi Node)"];
+
+    // Function Calls
+    func1 [label="@llvm.vector.reduce.add.v4i32"];
+    func2 [label="@llvm.umax.i64"];
+
+    // Return
+    ret [label="%75 (Return Value)"];
+
+    // Edges
+    input -> load1;
+    input -> load2;
+    load1 -> sub;
+    load2 -> max;
+    sub -> eq1;
+    max -> add;
+    eq1 -> ult;
+    ult -> phi1;
+    phi1 -> ret;
+    
+    // Additional edges to be defined based on the complete flow
+}
+```
+
+### Visualization
+To visualize this diagrammatically:
+- You can use graph visualization tools like Graphviz, which can render the dot file into a flowchart.
+- The layout can be arranged from top to bottom (rankdir=TB) to represent the flow of computation, with nodes representing operations and variables, and directed edges indicating data dependencies.
+- Utilize different shapes or colors for nodes to distinguish between types (e.g., input, load, arithmetic, comparison, function calls, etc.).
+
+This representation effectively captures the flow of data through the IR code and highlights dependencies between different variables and operations.

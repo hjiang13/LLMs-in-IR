@@ -1,0 +1,109 @@
+To represent the data flow graph (DFG) based on the provided intermediate representation (IR) code, we need to identify nodes (variables and operations) and edges (dependencies between these nodes). Below is a detailed text description of the nodes and edges, followed by the output in DOT format for visualization.
+
+### Data Flow Graph Description
+
+**Nodes:**
+1. **Input Variables**
+   - `input1 (i32 %0)`
+   - `input2 (i32 %1)`
+   - `input3 (i32 %2)`
+
+2. **Intermediate Operations**
+   - `gt_check (icmp sgt i32 %0, 1)` -> Result stored in `%4`
+   - `lt_check (icmp slt i32 %0, 4)` -> Result stored in `%6`
+   - `zext_check (zext i1 %4 to i8)` -> Result stored in `%5`
+   - `phi1 (phi i8)` -> Result stored in `%8`
+   - `and_op (and i8 %8, 1)` -> Result stored in `%9`
+   - `eq_check1 (icmp eq i8 %9, 0)` -> Result stored in `%10`
+   - `select1 (select i1 %10, i32 %2, i32 %1)` -> Result stored in `%11`
+   - `phi2 (phi i32)` -> Result stored in `%13`
+   - `phi3 (phi i8)` -> Result stored in `%14`
+   - `srem_op (srem i32 %0, %13)` -> Result stored in `%15`
+   - `eq_check2 (icmp eq i32 %15, 0)` -> Result stored in `%16`
+   - `select2 (select i1 %16, i8 0, i8 %14)` -> Result stored in `%17`
+   - `add_op (add nuw nsw i32 %13, 1)` -> Result stored in `%18`
+   - `mul_op (mul nsw i32 %18, %18)` -> Result stored in `%19`
+   - `gt_check2 (icmp sgt i32 %19, %0)` -> Result stored in `%20`
+
+3. **Control Flow Nodes**
+   - `branch1 (br i1 %6)` -> Control flow to either `%7` or `%12`
+   - `branch2 (br i1 %20)` -> Control flow to either `%7` or `%12`
+
+### Edges (Data Dependencies)
+- `%0` -> `%4` (input1 influences gt_check)
+- `%0` -> `%6` (input1 influences lt_check)
+- `%4` -> `%5` (result of gt_check influences zext_check)
+- `%5` -> `%8` (result of zext_check influences phi1)
+- `%8` -> `%9` (phi1 influences and_op)
+- `%9` -> `%10` (and_op influences eq_check1)
+- `%10`, `%1`, `%2` -> `%11` (eq_check1 and inputs influence select1)
+- `%3` -> `%8` (phi1 from branch)
+- `%13` -> `%15` (phi2 influences srem_op)
+- `%16`, `%14` -> `%17` (eq_check2 and phi3 influence select2)
+- `%3` -> `%13` (phi2 from branch)
+- `%13` -> `%18` (phi2 influences add_op)
+- `%18` -> `%19` (add_op influences mul_op)
+- `%19`, `%0` -> `%20` (mul_op and input1 influence gt_check2)
+- `%20` -> `%7` or `%12` (control flow based on gt_check2)
+
+### DOT Representation
+Here's the DOT format representation of the data flow graph:
+
+```dot
+digraph DFG {
+    // Input Variables
+    input1 [label="input1 (i32 %0)"];
+    input2 [label="input2 (i32 %1)"];
+    input3 [label="input3 (i32 %2)"];
+
+    // Intermediate Operations
+    gt_check [label="gt_check (icmp sgt i32 %0, 1)"];
+    lt_check [label="lt_check (icmp slt i32 %0, 4)"];
+    zext_check [label="zext_check (zext i1 %4 to i8)"];
+    phi1 [label="phi1 (phi i8)"];
+    and_op [label="and_op (and i8 %8, 1)"];
+    eq_check1 [label="eq_check1 (icmp eq i8 %9, 0)"];
+    select1 [label="select1 (select i1 %10, i32 %2, i32 %1)"];
+    phi2 [label="phi2 (phi i32)"];
+    phi3 [label="phi3 (phi i8)"];
+    srem_op [label="srem_op (srem i32 %0, %13)"];
+    eq_check2 [label="eq_check2 (icmp eq i32 %15, 0)"];
+    select2 [label="select2 (select i1 %16, i8 0, i8 %14)"];
+    add_op [label="add_op (add nuw nsw i32 %13, 1)"];
+    mul_op [label="mul_op (mul nsw i32 %18, %18)"];
+    gt_check2 [label="gt_check2 (icmp sgt i32 %19, %0)"];
+    
+    // Control Flow Nodes
+    branch1 [label="branch1 (br i1 %6)"];
+    branch2 [label="branch2 (br i1 %20)"];
+
+    // Edges
+    input1 -> gt_check;
+    input1 -> lt_check;
+    gt_check -> zext_check;
+    zext_check -> phi1;
+    phi1 -> and_op;
+    and_op -> eq_check1;
+    eq_check1 -> select1;
+    input2 -> select1;
+    input3 -> select1;
+    phi1 -> branch1;
+    phi2 -> srem_op;
+    srem_op -> eq_check2;
+    eq_check2 -> select2;
+    phi3 -> select2;
+    phi2 -> add_op;
+    add_op -> mul_op;
+    input1 -> gt_check2;
+    mul_op -> gt_check2;
+    gt_check2 -> branch2;
+}
+```
+
+### Visualization
+To visualize this graph:
+1. Use a tool such as Graphviz. Save the DOT representation to a file with a `.dot` extension (e.g., `data_flow_graph.dot`).
+2. Run the command: `dot -Tpng data_flow_graph.dot -o data_flow_graph.png` to generate a PNG image of the graph.
+3. Open the PNG file to view the data flow graph.
+
+This visualization will clearly show the dependencies between different operations and variables, as well as the control flow of the program.

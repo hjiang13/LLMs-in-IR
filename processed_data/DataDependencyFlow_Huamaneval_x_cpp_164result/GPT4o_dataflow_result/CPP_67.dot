@@ -1,0 +1,102 @@
+Creating a data flow graph (DFG) from the provided intermediate representation (IR) code involves identifying key nodes (variables, operations, and function calls) and their dependencies through edges. Below, you'll find a description of the DFG, along with a suggested `dot` format output for visualization.
+
+### Data Flow Graph Description
+
+#### Nodes
+1. **Function Entry**: `_Z18fruit_distributionNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEi`
+2. **Input Variables**: 
+   - `%0` (class.string)
+   - `%1` (i32)
+3. **Local Variables**:
+   - `%3` (i64)
+   - `%4` (i64)
+   - `%5`, `%6`, `%7`, `%8` (class.string)
+4. **Pointer Variables**:
+   - `%9` (i8*)
+   - `%10` to `%14` (various pointers within basic_string)
+5. **Function Calls**:
+   - `@llvm.lifetime.start.p0i8`
+   - `@llvm.lifetime.end.p0i8`
+   - `@strtol`
+   - `@llvm.memcpy.p0i8.p0i8.i64`
+   - `@_ZdlPv` (free)
+   - `@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm`
+   - `@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc`
+6. **Control Flow Nodes**:
+   - Branch nodes (e.g., `br i1 %42`, `br label %50`, `switch i32 %69`)
+   - PHI nodes (e.g., `%51`, `%63`, `%203`)
+
+#### Edges
+- Edges represent data dependencies between nodes. For example:
+  - From input nodes `%0` and `%1` to local variables `%3`, `%4`, and `%5`, etc., indicating they are used to compute or initialize these variables.
+  - From local variables to function calls, e.g., from `%3` to `@llvm.memcpy.p0i8.p0i8.i64`, indicating that the data in `%3` is used as an argument.
+  - Edges from branches to their respective targets (basic blocks), showing control flow.
+  - PHI nodes will have edges coming from multiple predecessor blocks, illustrating how they select values based on control flow.
+
+### Dot Format Output
+
+Below is a simplified representation of the DFG in `dot` format. You can visualize this using tools like Graphviz.
+
+```dot
+digraph DFG {
+    // Function Entry
+    Entry [label="_Z18fruit_distributionNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEi"];
+    
+    // Input Variables
+    Input0 [label="%0 (class.string)"];
+    Input1 [label="%1 (i32)"];
+    
+    // Local Variables
+    LocalVar3 [label="%3 (i64)"];
+    LocalVar4 [label="%4 (i64)"];
+    LocalVar5 [label="%5 (class.string)"];
+    LocalVar6 [label="%6 (class.string)"];
+    LocalVar7 [label="%7 (class.string)"];
+    LocalVar8 [label="%8 (class.string)"];
+
+    // Function Calls
+    LifetimeStart [label="@llvm.lifetime.start.p0i8"];
+    LifetimeEnd [label="@llvm.lifetime.end.p0i8"];
+    Strtol [label="@strtol"];
+    Memcpy [label="@llvm.memcpy.p0i8.p0i8.i64"];
+    Free [label="@_ZdlPv"];
+    CreateString [label="@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm"];
+    ReplaceString [label="@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc"];
+
+    // Control Flow
+    Branch1 [label="br i1 %42"];
+    Branch2 [label="br label %50"];
+    Switch [label="switch i32 %69"];
+    
+    // PHI Nodes
+    Phi1 [label="%51"];
+    Phi2 [label="%63"];
+    Phi3 [label="%203"];
+    
+    // Edges
+    Entry -> Input0;
+    Entry -> Input1;
+    Input0 -> LocalVar5;
+    Input1 -> LocalVar3;
+    LocalVar3 -> Strtol;
+    LocalVar4 -> CreateString;
+    LocalVar5 -> LifetimeStart;
+    LifetimeStart -> LifetimeEnd;
+    LifetimeEnd -> Free;
+    Branch1 -> Switch;
+    Branch1 -> Branch2;
+    Phi1 -> LocalVar5;
+    Phi2 -> LocalVar3;
+    Phi3 -> Branch1;
+}
+```
+
+### Visualization Suggestion
+To visualize the DFG:
+1. Save the `dot` format as a `.dot` file.
+2. Use Graphviz tools (e.g., `dot`, `neato`, `twopi`) to render the graph into PNG, PDF, or SVG formats. For example, you can run the following command in the terminal:
+   ```bash
+   dot -Tpng dfg.dot -o dfg.png
+   ```
+
+This visualization will help you understand how data flows through the function, allowing you to analyze variable dependencies, control flow, and the impact of function calls within the given IR code.

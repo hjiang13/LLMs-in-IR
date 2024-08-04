@@ -1,0 +1,62 @@
+To create a data flow graph (DFG) from the provided intermediate representation (IR) code, we will identify the key operations, variables, and the flow of data between them. The DFG will consist of nodes representing the variables and operations, and directed edges indicating the dependencies between them.
+
+### Data Flow Graph Description
+
+#### Nodes
+1. **Input Node**: 
+   - **%0**: Input float variable to the function `truncate_number`.
+
+2. **Intermediate Nodes**:
+   - **%2**: Result of converting `%0` from float to i32 (`fptosi` operation).
+   - **%3**: Result of converting `%2` back from i32 to float (`sitofp` operation).
+   - **%4**: Result of the subtraction operation (`fsub`) between `%0` and `%3`.
+
+3. **Output Node**:
+   - **Return Value**: The return value of the function, which is the result stored in `%4`.
+
+#### Edges
+- There is a directed edge from the input node `%0` to the intermediate node `%2`, indicating that `%0` is used as an input to the `fptosi` operation.
+- An edge from `%2` to `%3` shows that `%2` is used as an input to the `sitofp` operation.
+- An edge from `%0` to `%4` indicates that `%0` is used in the `fsub` operation.
+- An edge from `%3` to `%4` shows that `%3` is also used in the `fsub` operation.
+- Finally, there is an edge from `%4` to the return value, indicating that `%4` is the final output of the function.
+
+### Dot File Format
+
+Below is the representation of the DFG in the DOT language format:
+
+```dot
+digraph DataFlowGraph {
+    // Nodes
+    node [shape=circle];
+
+    // Input
+    Input [label="%0 (float input)" shape=ellipse];
+
+    // Intermediate operations
+    ToInt [label="%2 (fptosi)" shape=ellipse];
+    ToFloat [label="%3 (sitofp)" shape=ellipse];
+    Subtract [label="%4 (fsub)" shape=ellipse];
+
+    // Output
+    Output [label="Return Value" shape=ellipse];
+
+    // Edges
+    Input -> ToInt;         // %0 -> %2
+    ToInt -> ToFloat;      // %2 -> %3
+    Input -> Subtract;     // %0 -> %4
+    ToFloat -> Subtract;   // %3 -> %4
+    Subtract -> Output;     // %4 -> return value
+}
+```
+
+### Visualization Suggestions
+To visualize this data flow graph:
+
+1. **Graph Visualization Tools**: Use graph visualization tools such as Graphviz, which can render DOT files into graphical representations. You can run the above DOT code in Graphviz to generate a visual representation.
+
+2. **Diagrammatic Representation**: The resulting diagram would have nodes representing the variables and operations, with directed arrows indicating the flow of data. Each node would be labeled with its corresponding variable or operation.
+
+3. **Color Coding**: You could enhance the visualization further by color coding nodes—e.g., input nodes in green, intermediate computation nodes in blue, and the output node in red.
+
+By following this description and format, you can effectively illustrate and analyze the data flow within the provided IR code.

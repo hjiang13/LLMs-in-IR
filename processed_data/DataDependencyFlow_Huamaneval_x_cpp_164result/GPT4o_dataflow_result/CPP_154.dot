@@ -1,0 +1,133 @@
+To create a data flow graph from the provided Intermediate Representation (IR) code, we need to analyze the flow of data between variables, operations, and function calls, capturing the dependencies and control flow. Below is a detailed outline of the nodes and edges, as well as a textual representation of the graph in DOT format.
+
+### Data Flow Graph Outline
+
+#### Nodes
+Each node represents either a variable, a significant operation, or a function call. Here are some key nodes identified in the IR code:
+
+1. **Input Variables:**
+   - `arg0`: `%0` (first input string)
+   - `arg1`: `%1` (second input string)
+
+2. **Allocations:**
+   - `alloc_3`: `%3` (allocated variable)
+   - `alloc_4`: `%4` (allocated variable)
+   - `alloc_5`: `%5` (allocated string)
+   - `alloc_6`: `%6` (allocated string)
+   - `alloc_7`: `%7` (allocated string)
+
+3. **Operations:**
+   - `getelemptr_1`: `%8`
+   - `getelemptr_2`: `%14`
+   - `getelemptr_3`: `%16`
+   - `getelemptr_4`: `%20`
+   - `getelemptr_5`: `%24`
+   - `load_33`: `%33`
+   - `icmp_eq_34`: `%34`
+   - `icmp_ugt_36`: `%37`
+   - `call_memcpy`: `%52`
+   - `call_find`: `%119`
+   - `call_replace`: `%90`
+   - `call_append`: `%92`
+
+4. **Control Flow Nodes:**
+   - `branch_1`: First conditional branch (`br i1 %34`)
+   - `branch_2`: Second conditional branch (`br i1 %44`)
+   - `branch_3`: Switch statement handling (`switch i64 %43`)
+   - `branch_4`: Last conditional branch (`br i1 %83`)
+
+5. **Output Variable:**
+   - `return_value`: `%142` (return value of the function)
+
+#### Edges
+The edges indicate the flow of data between nodes, representing dependencies. Here are some of the significant edges:
+
+1. **From Input Variables to Allocations:**
+   - `arg0` -> `alloc_5`
+   - `arg1` -> `alloc_6`
+
+2. **From Allocations to Operations:**
+   - `alloc_5` -> `getelemptr_1`
+   - `alloc_6` -> `getelemptr_2`
+   - `alloc_3` -> `load_33`
+   - `alloc_4` -> `load_4`
+   - `alloc_6` -> `call_append`
+   - `alloc_7` -> `call_find`
+
+3. **From Operations to Control Flow:**
+   - `load_33` -> `icmp_eq_34`
+   - `branch_1` -> `icmp_ugt_36`
+   - `branch_2` -> `call_memcpy`
+   - `branch_4` -> `call_replace`
+
+4. **From Control Flow to Output:**
+   - `branch_1` -> `return_value`
+   - `branch_4` -> `return_value`
+
+### DOT Representation
+
+Here’s how the data flow graph might be represented in DOT format:
+
+```dot
+digraph DataFlowGraph {
+    // Input Variables
+    arg0 [label="Input String 0"]
+    arg1 [label="Input String 1"]
+    
+    // Allocations
+    alloc_3 [label="Alloc 3"]
+    alloc_4 [label="Alloc 4"]
+    alloc_5 [label="Alloc 5"]
+    alloc_6 [label="Alloc 6"]
+    alloc_7 [label="Alloc 7"]
+    
+    // Operations
+    getelemptr_1 [label="GetElemPtr 1"]
+    getelemptr_2 [label="GetElemPtr 2"]
+    getelemptr_3 [label="GetElemPtr 3"]
+    getelemptr_4 [label="GetElemPtr 4"]
+    getelemptr_5 [label="GetElemPtr 5"]
+    load_33 [label="Load 33"]
+    icmp_eq_34 [label="ICMP Eq"]
+    icmp_ugt_36 [label="ICMP UGT"]
+    call_memcpy [label="Call MemCpy"]
+    call_find [label="Call Find"]
+    call_replace [label="Call Replace"]
+    call_append [label="Call Append"]
+
+    // Control Flow
+    branch_1 [label="Branch 1"]
+    branch_2 [label="Branch 2"]
+    branch_3 [label="Switch"]
+    branch_4 [label="Branch 4"]
+
+    // Output Variable
+    return_value [label="Return Value"]
+
+    // Edges
+    arg0 -> alloc_5
+    arg1 -> alloc_6
+    alloc_5 -> getelemptr_1
+    alloc_6 -> getelemptr_2
+    alloc_3 -> load_33
+    alloc_4 -> load_4
+    alloc_6 -> call_append
+    alloc_7 -> call_find
+    load_33 -> icmp_eq_34
+    branch_1 -> icmp_ugt_36
+    branch_2 -> call_memcpy
+    branch_4 -> call_replace
+    branch_1 -> return_value
+    branch_4 -> return_value
+}
+```
+
+### Visualization Suggestion
+
+To visualize the graph, you can use tools like Graphviz, which can take the DOT description and render it into a graphical representation. Simply save the DOT representation to a `.dot` file and use the following command to generate a PNG image:
+
+```bash
+dot -Tpng your_file.dot -o output.png
+```
+
+This would give you a clear visual representation of the data flow through the IR code, highlighting the dependencies and flow of data between operations and variables.

@@ -1,0 +1,122 @@
+To create a data flow graph from the provided IR code, we will outline the key nodes (representing variables, operations, and control flow) and edges that depict the data dependencies between these nodes.
+
+### Data Flow Graph Outline
+
+#### Nodes
+1. **Function Node**
+   - `@_Z23mean_absolute_deviationSt6vectorIfSaIfEE`
+   
+2. **Input Node**
+   - `%0`: Input vector of floats (class.std::vector)
+
+3. **Load Nodes**
+   - `%3`: Load pointer to float (from `%2`)
+   - `%5`: Load pointer to float (from `%4`)
+   - `%12`: Intermediate float value (from conversion)
+   - `%54`: Accumulated float value (inside loop)
+   - `%59`: Accumulated float value (after loop)
+   - `%75`: Converted float value (from `%9`)
+   - `%113`: Accumulated float value (inside final loop)
+   - `%125`: Accumulated float value (inside final loop)
+   - `%130`: Final divisor (from `%75`, `%12`, etc.)
+
+4. **Arithmetic Nodes**
+   - `%6`: Pointer-to-integer conversion (from `%3`)
+   - `%7`: Pointer-to-integer conversion (from `%5`)
+   - `%8`: Subtraction (address difference)
+   - `%9`: Right shift operation
+   - `%10`: Comparison to check if `%8` is zero
+   - `%14`: Call to `@llvm.umax.i64`
+   - `%16`: AND operation
+   - `%22`: Accumulated sum in loop
+   - `%30`: Accumulated sum in loop
+   - `%50`: Accumulated sum (after loading)
+   - `%74`: Accumulated sum (from loop)
+   - `%132`: Final result (float division)
+
+5. **Control Flow Nodes**
+   - `%11`: Branch for `%10 == true`
+   - `%13`: Branch for `%10 == false`
+   - `%18`: Branch for loop continuing
+   - `%20`: Loop continuation (phi nodes)
+   - `%58`: End of loop check
+   - `%73`: Branch for `%16 == 0`
+   - `%112`: Branch for final loop check
+   - `%129`: Final return
+
+6. **Function Call Nodes**
+   - `@llvm.fabs.f32`: Function calls for absolute value computation
+   - `@llvm.umax.i64`: Function call for maximum value computation
+
+#### Edges
+- **Input to Load Nodes**
+  - `%0` → `%3` (Load from input vector)
+  - `%0` → `%5` (Load from input vector)
+
+- **Load to Arithmetic Nodes**
+  - `%3` → `%6`
+  - `%5` → `%7`
+  - `%6` → `%8`
+  - `%7` → `%8`
+  - `%8` → `%9`
+  - `%9` → `%10`
+  
+- **Control Flow**
+  - `%10` → `%11` (if true)
+  - `%10` → `%13` (if false)
+  - `%13` → `%14`
+  - `%14` → `%15`
+  - `%15` → `%16`
+  
+- **Loop Constructs**
+  - `%11` → `%129`
+  - `%13` → `%58`
+  - `%18` → `%20`
+  - `%20` → `%22`
+  - `%20` → `%58` (loop back)
+  
+- **Final Computation**
+  - `%132` ← `%131` (from accumulated values)
+  - `%75` → `%76` (final division)
+
+#### Visualization Suggestion
+To visualize the above data flow graph, you can use a tool like Graphviz. You would format the graph in DOT language, which might look like this:
+
+```dot
+digraph DataFlowGraph {
+    rankdir=TB;
+
+    // Nodes
+    function [label="@_Z23mean_absolute_deviationSt6vectorIfSaIfEE"];
+    input [label="%0"];
+    load3 [label="%3"];
+    load5 [label="%5"];
+    arithmetic6 [label="%6"];
+    arithmetic7 [label="%7"];
+    arithmetic8 [label="%8"];
+    arithmetic9 [label="%9"];
+    comparison10 [label="%10"];
+    branch11 [label="%11"];
+    branch13 [label="%13"];
+    branch18 [label="%18"];
+    phi20 [label="%20"];
+    finalResult [label="%132"];
+
+    // Edges
+    input -> load3;
+    input -> load5;
+    load3 -> arithmetic6;
+    load5 -> arithmetic7;
+    arithmetic6 -> arithmetic8;
+    arithmetic7 -> arithmetic8;
+    arithmetic8 -> arithmetic9;
+    arithmetic9 -> comparison10;
+
+    comparison10 -> branch11 [label="true"];
+    comparison10 -> branch13 [label="false"];
+    branch11 -> finalResult;
+    branch13 -> branch18;
+}
+```
+
+This DOT file can be processed by Graphviz to create a graphical representation of the data flow graph. You can expand this graph by adding more nodes and edges as per the detailed analysis provided above.

@@ -1,0 +1,54 @@
+To create a data flow graph (DFG) based on the provided intermediate representation (IR) code, we will outline the nodes and edges that represent the flow of data through the code. 
+
+### Nodes
+1. **Input Variables**
+   - `input_a` (corresponds to `%0` in the IR)
+   - `input_b` (corresponds to `%1` in the IR)
+
+2. **Operations**
+   - `mul1` (corresponds to `%3`, which is the result of `fmul float %0, %1`)
+   - `mul2` (corresponds to `%4`, which is the result of `fmul float %3, 5.000000e-01`)
+
+3. **Return Value**
+   - `return_value` (the return value of the function, corresponds to `ret float %4`)
+
+### Edges
+- An edge from `input_a` to `mul1` indicating that `input_a` is used in the multiplication operation `mul1`.
+- An edge from `input_b` to `mul1` indicating that `input_b` is used in the multiplication operation `mul1`.
+- An edge from `mul1` to `mul2` indicating that the result of `mul1` is used in the multiplication operation `mul2`.
+- An edge from `mul2` to `return_value` indicating that the result of `mul2` is the return value of the function.
+
+### Dot File Representation
+The following dot file format describes the nodes and edges of the data flow graph:
+
+```dot
+digraph DataFlowGraph {
+    // Nodes
+    node [shape=box];
+    input_a [label="input_a"];
+    input_b [label="input_b"];
+    mul1 [label="mul1 (input_a * input_b)"];
+    mul2 [label="mul2 (mul1 * 0.5)"];
+    return_value [label="return_value"];
+
+    // Edges
+    input_a -> mul1;
+    input_b -> mul1;
+    mul1 -> mul2;
+    mul2 -> return_value;
+}
+```
+
+### Visualization Suggestions
+To visualize this graph, you can use graph visualization tools such as:
+- **Graphviz**: You can generate a visual representation of the graph by using the `dot` command-line tool provided by Graphviz. Save the above dot representation to a file (e.g., `data_flow_graph.dot`) and run the command:
+    ```bash
+    dot -Tpng data_flow_graph.dot -o data_flow_graph.png
+    ```
+  This will create a PNG image of the graph.
+
+- **Web-based tools**: There are web-based graph visualization tools like `Viz.js` or `WebGraphviz` where you can paste the dot representation to see the graph directly in your browser.
+
+- **IDE plugins**: Some Integrated Development Environments (IDEs) have plugins for visualizing dot files directly.
+
+This structured approach provides a clear representation of the data dependencies and flow in the IR code, helping in analysis and understanding of variable interactions.

@@ -1,0 +1,108 @@
+To create a data flow graph for the provided IR code, we will represent the operations and variables as nodes and the data dependencies as edges. The graph will not detail the content of each basic block but will focus on the flow of data through the program.
+
+### Nodes and Edges Description
+
+#### Nodes
+1. **Function Call**: `_Z17generate_integersii`
+2. **Parameters**: 
+    - `%0` (class.std::vector*)
+    - `%1` (i32)
+    - `%2` (i32)
+3. **Operations**:
+    - `icmp slt %2, %1`
+    - `select %4`
+    - `getelementptr %0, ...` (multiple instances)
+    - `bitcast %0 to i8*`
+    - `call @llvm.memset`
+    - `br label %12`
+    - `phi i32*` (multiple instances)
+    - `icmp slt %16, 10`
+    - `and %17, %19`
+    - `br i1 %20`
+    - `icmp eq i32* %15, %14`
+    - `store i32 %16, %15`
+    - `ptrtoint %15`
+    - `sub %26, %27`
+    - `ashr %28`
+    - `invoke @__throw_length_error`
+    - `invoke @malloc`
+    - `store i32 %16, %49`
+    - `tail call @llvm.memmove`
+    - `store %48`
+    - `store %60`
+    - `landingpad`
+    - `resume`
+4. **Control Flow**:
+    - Basic blocks: `%12`, `%21`, `%23`, `%25`, `%31`, `%33`, `%42`, `%54`, `%59`, `%71`, etc.
+
+#### Edges
+- Data dependencies between operations:
+    - From `%2` to `icmp slt %2, %1`
+    - From `%4` to `select %4`
+    - From `%0` to `getelementptr %0, ...` (multiple instances)
+    - From `bitcast %0` to `call @llvm.memset`
+    - From `phi` nodes to subsequent operations (`icmp`, `store`, etc.)
+    - From `%18` to control flow decisions (`br i1 %20`)
+    - From `%16` to multiple `store` operations
+    - From `sub %26, %27` to subsequent operations
+    - From `invoke` operations to control flow
+    - From `landingpad` to `resume`
+
+### Data Flow Graph in DOT Format
+The following is a simplified representation of the data flow graph using the DOT language:
+
+```dot
+digraph DataFlowGraph {
+    rankdir=TB;
+
+    // Function Node
+    func [label="_Z17generate_integersii" shape=box];
+
+    // Parameters
+    param0 [label="%0 (class.std::vector*)" shape=circle];
+    param1 [label="%1 (i32)" shape=circle];
+    param2 [label="%2 (i32)" shape=circle];
+
+    // Operations Nodes
+    icmp [label="icmp slt" shape=ellipse];
+    select [label="select" shape=ellipse];
+    getelementptr0 [label="getelementptr %0" shape=ellipse];
+    bitcast [label="bitcast" shape=ellipse];
+    memset [label="call @llvm.memset" shape=ellipse];
+    br12 [label="br label %12" shape=diamond];
+    phi [label="phi" shape=ellipse];
+    store1 [label="store %16" shape=ellipse];
+    store2 [label="store %49" shape=ellipse];
+    invoke_throw [label="invoke @__throw_length_error" shape=ellipse];
+    malloc [label="invoke @malloc" shape=ellipse];
+
+    // Control Flow
+    br_decision [label="control flow" shape=diamond];
+    
+    // Edges
+    func -> param0;
+    func -> param1;
+    func -> param2;
+    param1 -> icmp;
+    param2 -> icmp;
+    icmp -> select;
+    param0 -> getelementptr0;
+    getelementptr0 -> bitcast;
+    bitcast -> memset;
+    memset -> br12;
+    br12 -> phi;
+    phi -> store1;
+    store1 -> malloc;
+    malloc -> store2;
+    // Additional edges can be added similarly to represent other dependencies
+}
+
+```
+
+### Visualization
+To visualize this graph:
+1. Use a visualization tool that supports the DOT format such as Graphviz.
+2. Save the DOT representation into a `.dot` file.
+3. Run the Graphviz tool to generate a graphical representation (e.g., PNG, PDF) of the data flow graph.
+
+The nodes represent functions, parameters, operations, and control flow decisions, while the edges indicate the flow of data and dependencies among the various components in the intermediate representation code.

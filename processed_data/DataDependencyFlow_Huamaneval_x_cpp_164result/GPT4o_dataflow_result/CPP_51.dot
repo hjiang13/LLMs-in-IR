@@ -1,0 +1,115 @@
+To create a data flow graph (DFG) from the provided Intermediate Representation (IR) code, we need to identify relevant nodes (variables, operations, control flow) and edges (data dependencies and control flow edges). Below is the representation of the DFG in the DOT format, followed by a detailed description of the nodes and edges.
+
+### DOT Format Representation:
+
+```dot
+digraph DataFlowGraph {
+    // Nodes representing variables and operations
+    node [shape=box];
+
+    // Function entry
+    entry [label="Function Entry: remove_vowels"];
+
+    // Variables
+    v0 [label="%0: sret(basic_string)"];
+    v1 [label="%1: readonly(basic_string)"];
+    v2 [label="%3: alloca(i64)"];
+    v3 [label="%4: alloca(basic_string)"];
+    v4 [label="%5: alloca(basic_string)"];
+    v5 [label="%6: getelementptr(basic_string)"];
+    v6 [label="%8: bitcast(anon to i8*)"];
+    v7 [label="%10: getelementptr(basic_string)"];
+    v8 [label="%12: getelementptr(basic_string)"];
+    v9 [label="%14: bitcast(anon to i8*)"];
+    v10 [label="%18: getelementptr(basic_string)"];
+    v11 [label="%19: getelementptr(basic_string)"];
+    v12 [label="%29: load(i64)"];
+    v13 [label="%30: icmp(eq)"];
+    v14 [label="%31: br"];
+    v15 [label="%37: end"];
+    v16 [label="%38: phi"];
+    v17 [label="%115: invoke(create)"];
+    v18 [label="%174: phi"];
+    v19 [label="%182: lifetime.end"];
+    
+    // Control flow nodes (basic blocks)
+    b2 [label="Basic Block 2"];
+    b31 [label="Basic Block 31"];
+    b34 [label="Basic Block 34"];
+    b37 [label="Basic Block 37"];
+    b115 [label="Basic Block 115"];
+    b174 [label="Basic Block 174"];
+    
+    // Edges representing data dependencies
+    entry -> v0;
+    entry -> v1;
+    v0 -> v5;
+    v1 -> v10;
+    v2 -> v13;
+    v3 -> v4;
+    v5 -> v6;
+    v6 -> v8;
+    v8 -> v9;
+    v10 -> v11;
+    v12 -> v13;
+    v13 -> b31;
+    b31 -> v14;
+    v14 -> v15;
+    v15 -> b2;
+    b2 -> v18;
+    v18 -> b174;
+    b115 -> v17;
+    b174 -> v19;
+    
+    // Control flow edges
+    b2 -> b31;
+    b31 -> b37;
+    b37 -> b115;
+    b37 -> b174;
+}
+```
+
+### Detailed Description of the Data Flow Graph
+
+**Nodes:**
+1. **Function Entry**:
+   - `Function Entry: remove_vowels`: Represents the entry point of the function that processes a string to remove vowels.
+
+2. **Variables**:
+   - `%0: sret(basic_string)`: The return value of the function, a string.
+   - `%1: readonly(basic_string)`: The input string that is read-only.
+   - `%3: alloca(i64)`: An allocation for storing an integer (size).
+   - `%4: alloca(basic_string)`: An allocation for a new string.
+   - `%5: alloca(basic_string)`: Another allocation for string processing.
+   - `%6: getelementptr(basic_string)`: Pointer operation to access an element in the string.
+   - `%8: bitcast(anon to i8*)`: Casting of an anonymous type to an i8 pointer.
+   - `%10: getelementptr(basic_string)`: Pointer to a specific part of the string.
+   - `%12: getelementptr(basic_string)`: Pointer to another part of the string.
+   - `%14: bitcast(anon to i8*)`: Another casting operation.
+   - `%18: getelementptr(basic_string)`: Accessing a specific element in the string.
+   - `%19: lifetime.end`: Indicates the end of the lifetime of certain variables.
+
+3. **Control Flow Nodes**:
+   - `Basic Block 2`: Represents the beginning of a basic block.
+   - `Basic Block 31`: Represents another basic block where a decision is made.
+   - `Basic Block 34`: Represents a decision point in control flow.
+   - `Basic Block 37`: Represents the final processing and branching.
+   - `Basic Block 115`: Represents the block after invoking the creation function.
+   - `Basic Block 174`: Represents final operations after processing.
+
+**Edges:**
+- **Data Dependencies**: Edges show the flow of data from one variable to another, indicating which variables depend on the output of others.
+- **Control Flow**: Represents the branching and decision-making process throughout the function, where the flow can change based on conditions evaluated (e.g., `icmp` and `br`).
+
+### Visualization Suggestions
+This graph can be visualized using graph visualization tools such as Graphviz. The DOT format can be rendered using a tool like `dot` from Graphviz to create a graphical representation, where:
+- Nodes are represented as boxes.
+- Directed edges (arrows) illustrate the flow of data and control.
+- Nodes can be colored or shaped differently to denote the type of operation or variable (e.g., allocations, function calls, etc.).
+
+Using Graphviz, the command to visualize would be:
+```bash
+dot -Tpng data_flow_graph.dot -o data_flow_graph.png
+```
+
+This will generate an image file (`data_flow_graph.png`) illustrating the data flow graph for the provided Intermediate Representation code.

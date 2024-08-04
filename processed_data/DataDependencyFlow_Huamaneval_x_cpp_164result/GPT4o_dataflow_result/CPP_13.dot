@@ -1,0 +1,82 @@
+To create a data flow graph (DFG) based on the given intermediate representation (IR) code of the `greatest_common_divisor` function, we can identify the key variables and operations, and represent them as nodes and edges. Below, I will outline the nodes and edges of the DFG, followed by a dot representation that can be used to visualize the graph.
+
+### Nodes
+1. **Input Parameters**
+   - `i32 %0`: First input integer
+   - `i32 %1`: Second input integer
+
+2. **Control Flow Nodes**
+   - `label %3`: Loop header node
+   - `label %11`: Return node
+
+3. **Operations**
+   - `phi %4`: Selects between `%1` and `%7`
+   - `phi %5`: Selects between `%0` and `%9`
+   - `icmp slt %6`: Compares `%5` and `%4` (less than)
+   - `select %7`: Selects between `%5` and `%4` based on `%6`
+   - `select %8`: Selects between `%4` and `%5` based on `%6`
+   - `srem %9`: Computes the remainder of `%8` divided by `%7`
+   - `icmp eq %10`: Checks if `%9` is equal to 0
+
+4. **Return Value**
+   - `ret %7`: Returns the value of `%7` when the condition in `%10` is true
+
+### Edges
+- `(%0) -> (phi %5)` : Input parameter `%0` flows into `phi %5`
+- `(%1) -> (phi %4)` : Input parameter `%1` flows into `phi %4`
+- `(phi %5) -> (icmp slt %6)` : `phi %5` flows into comparison operation `icmp slt %6`
+- `(phi %4) -> (icmp slt %6)` : `phi %4` also flows into `icmp slt %6`
+- `(icmp slt %6) -> (select %7)` : Comparison result flows into `select %7`
+- `(icmp slt %6) -> (select %8)` : Comparison result also flows into `select %8`
+- `(select %7) -> (srem %9)` : `select %7` flows into `srem %9`
+- `(select %8) -> (srem %9)` : `select %8` also flows into `srem %9`
+- `(srem %9) -> (icmp eq %10)` : Remainder result flows into equality check `icmp eq %10`
+- `(icmp eq %10) -> (label %11)` : If equal to zero, flows to return node `label %11`
+- `(select %7) -> (label %3)` : Also flows back to loop header `label %3` (for continuing the loop)
+
+### Dot Representation
+Here is how you can represent this DFG in DOT format:
+
+```dot
+digraph DataFlowGraph {
+    // Nodes for inputs
+    node [shape=circle];
+    input0 [label="%0" shape=ellipse];
+    input1 [label="%1" shape=ellipse];
+
+    // Nodes for control flow
+    label3 [label="label %3" shape=box];
+    label11 [label="label %11" shape=box];
+
+    // Nodes for operations
+    phi4 [label="phi %4" shape=box];
+    phi5 [label="phi %5" shape=box];
+    icmp6 [label="icmp slt %6" shape=box];
+    select7 [label="select %7" shape=box];
+    select8 [label="select %8" shape=box];
+    srem9 [label="srem %9" shape=box];
+    icmp10 [label="icmp eq %10" shape=box];
+
+    // Edges
+    input0 -> phi5;
+    input1 -> phi4;
+    phi5 -> icmp6;
+    phi4 -> icmp6;
+    icmp6 -> select7;
+    icmp6 -> select8;
+    select7 -> srem9;
+    select8 -> srem9;
+    srem9 -> icmp10;
+    icmp10 -> label11;
+    select7 -> label3;
+}
+```
+
+### Visualization
+To visualize the graph diagrammatically, you can use any graph visualization tool that supports DOT format, such as Graphviz. You can save the above DOT representation to a file (e.g., `data_flow_graph.dot`) and then use the command line to generate an image:
+
+```bash
+dot -Tpng data_flow_graph.dot -o data_flow_graph.png
+```
+
+This will create a PNG image of the data flow graph representing the dependencies and flow of data through the operations in your IR code.

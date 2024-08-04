@@ -1,0 +1,170 @@
+To analyze the provided IR code, we can represent the data flow graph (DFG) in DOT format. This graph will consist of nodes that represent variables, operations, and control flow structures, while edges will indicate the dependencies between them.
+
+### Data Flow Graph Description
+
+#### Nodes
+- **Function Node**:
+  - `minSubArraySum`: The entry point of the function being analyzed.
+
+- **Load Nodes**:
+  - `Load_3`: Load operation loading from pointer `%3`.
+  - `Load_4`: Load operation loading from pointer `%4`.
+  - `Load_6`: Load operation loading from pointer `%6`.
+  - `Load_27`: Load operation loading from pointer `%27`.
+  - `Load_41`: Load operation loading from pointer `%41`.
+  - `Load_49`: Load operation loading from pointer `%49`.
+  
+- **Arithmetic and Logic Operation Nodes**:
+  - `Sub_9`: Subtraction operation involving `%7` and `%8`.
+  - `Ashr_10`: Arithmetic shift right operation performed on `%9`.
+  - `Add_13`: Addition operation for `%10` and `-1`.
+  - `And_14`: Bitwise AND operation.
+  - `Select_28`: Select operation based on condition.
+  - `Add_29`: Addition operation involving `%27` and `%28`.
+  - `Select_31`: Select operation based on condition.
+  - `Add_43`: Addition operation involving `%41` and `%42`.
+  - `Add_51`: Addition operation involving `%49` and `%50`.
+  
+- **Comparison Nodes**:
+  - `Icmp_11`: Comparison operation checking if `%10 > 1`.
+  - `Icmp_15`: Comparison operation checking if `%9 == 16`.
+  - `Icmp_23`: Comparison operation checking if `%14 == 0`.
+  - `Icmp_25`: Comparison operation checking if `%22 < 0`.
+  - `Icmp_30`: Comparison operation checking if `%29 < %21`.
+  - `Icmp_39`: Comparison operation checking if `%37 < 0`.
+  - `Icmp_44`: Comparison operation checking if `%43 < %36`.
+  - `Icmp_52`: Comparison operation checking if `%51 < %45`.
+  - `Icmp_56`: Comparison operation checking if `%55 == 0`.
+
+- **Phi Nodes**:
+  - `Phi_19`: Phi node for variable updates.
+  - `Phi_33`: Final return value phi node.
+
+- **Basic Block Nodes**:
+  - `BB_1`: Entry block.
+  - `BB_12`: Block for the first conditional branch.
+  - `BB_16`: Block for the second conditional branch.
+  - `BB_18`: Block for the third conditional branch.
+  - `BB_24`: Block for the fourth conditional branch.
+  - `BB_32`: Block for the exit.
+  - `BB_34`: Block for the loop.
+
+#### Edges
+- **Control Flow Edges**:
+  - From `minSubArraySum` to `BB_1`
+  - From `BB_1` to `Icmp_11` (checking condition)
+  - From `Icmp_11` to `BB_12` (true branch) and `BB_32` (false branch)
+  - From `BB_12` to `Icmp_15`
+  - From `Icmp_15` to `BB_18` (true branch) and `BB_16` (false branch)
+  - From `BB_16` to `BB_34`
+  - From `BB_18` to `BB_24`
+  - From `BB_24` to `BB_32`
+  - From `BB_34` to `BB_18` (loop back) and `BB_32` (exit)
+
+- **Data Dependency Edges**:
+  - From `Load_3` to `Sub_9` (used in subtraction)
+  - From `Load_6` to `Sub_9` (used in subtraction)
+  - From `Sub_9` to `Ashr_10`
+  - From `Ashr_10` to `Icmp_11`
+  - From `Add_13` to `And_14`
+  - From `And_14` to `Icmp_15`
+  - From `Load_4` to `Select_28`
+  - From `Select_28` to `Add_29`
+  - From `Add_29` to `Icmp_30`
+  - From `Add_43` to `Icmp_44`
+  - From `Load_41` to `Add_43`
+  - From `Load_49` to `Add_51`
+  - From `Select_31` to `Phi_33`
+  - From `Phi_19` and `Phi_33` to `Phi_33` (for return value)
+
+### DOT Format Representation
+
+Here's how this can be represented in DOT format:
+
+```dot
+digraph G {
+    // Function and Basic Blocks
+    minSubArraySum [label="minSubArraySum" shape=box];
+    BB_1 [label="BB_1" shape=box];
+    BB_12 [label="BB_12" shape=box];
+    BB_16 [label="BB_16" shape=box];
+    BB_18 [label="BB_18" shape=box];
+    BB_24 [label="BB_24" shape=box];
+    BB_32 [label="BB_32" shape=box];
+    BB_34 [label="BB_34" shape=box];
+
+    // Load Operations
+    Load_3 [label="Load_3" shape=ellipse];
+    Load_4 [label="Load_4" shape=ellipse];
+    Load_6 [label="Load_6" shape=ellipse];
+    Load_27 [label="Load_27" shape=ellipse];
+    Load_41 [label="Load_41" shape=ellipse];
+    Load_49 [label="Load_49" shape=ellipse];
+
+    // Operations
+    Sub_9 [label="Sub_9" shape=ellipse];
+    Ashr_10 [label="Ashr_10" shape=ellipse];
+    Add_13 [label="Add_13" shape=ellipse];
+    And_14 [label="And_14" shape=ellipse];
+    Select_28 [label="Select_28" shape=ellipse];
+    Add_29 [label="Add_29" shape=ellipse];
+    Select_31 [label="Select_31" shape=ellipse];
+    Add_43 [label="Add_43" shape=ellipse];
+    Add_51 [label="Add_51" shape=ellipse];
+
+    // Comparison Operations
+    Icmp_11 [label="Icmp_11" shape=ellipse];
+    Icmp_15 [label="Icmp_15" shape=ellipse];
+    Icmp_23 [label="Icmp_23" shape=ellipse];
+    Icmp_25 [label="Icmp_25" shape=ellipse];
+    Icmp_30 [label="Icmp_30" shape=ellipse];
+    Icmp_39 [label="Icmp_39" shape=ellipse];
+    Icmp_44 [label="Icmp_44" shape=ellipse];
+    Icmp_52 [label="Icmp_52" shape=ellipse];
+    Icmp_56 [label="Icmp_56" shape=ellipse];
+
+    // Phi Nodes
+    Phi_19 [label="Phi_19" shape=ellipse];
+    Phi_33 [label="Phi_33" shape=ellipse];
+
+    // Edges
+    minSubArraySum -> BB_1;
+    BB_1 -> Icmp_11;
+    Icmp_11 -> BB_12 [label="true"];
+    Icmp_11 -> BB_32 [label="false"];
+    BB_12 -> Icmp_15;
+    Icmp_15 -> BB_18 [label="true"];
+    Icmp_15 -> BB_16 [label="false"];
+    BB_16 -> BB_34;
+    BB_18 -> BB_24;
+    BB_24 -> BB_32;
+    BB_34 -> BB_18 [label="loop"];
+    BB_34 -> BB_32 [label="exit"];
+
+    // Data Dependencies
+    Load_3 -> Sub_9;
+    Load_6 -> Sub_9;
+    Sub_9 -> Ashr_10;
+    Ashr_10 -> Icmp_11;
+    Add_13 -> And_14;
+    And_14 -> Icmp_15;
+    Load_4 -> Select_28;
+    Select_28 -> Add_29;
+    Add_29 -> Icmp_30;
+    Add_43 -> Icmp_44;
+    Load_41 -> Add_43;
+    Load_49 -> Add_51;
+    Select_31 -> Phi_33;
+    Phi_19 -> Phi_33;
+}
+```
+
+### Visualization
+
+To visualize the graph, you can use graph visualization tools like Graphviz. You can save the DOT representation in a file (e.g., `data_flow_graph.dot`), and then run:
+
+```bash
+dot -Tpng data_flow_graph.dot -o data_flow_graph.png
+```
+
+This command generates a PNG image of the data flow graph, illustrating the flow of data through the IR code, including operations, variables, and control flow structures.

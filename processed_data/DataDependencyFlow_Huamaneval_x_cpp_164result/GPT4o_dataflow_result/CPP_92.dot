@@ -1,0 +1,163 @@
+To represent the data flow graph for the provided intermediate representation (IR) code, we can use a graph in the DOT format. Below is a detailed outline of the nodes (representing variables and operations) and edges (indicating data dependencies).
+
+### Nodes
+1. **Function Node**
+   - `Function: @_Z7any_intfff`
+
+2. **Input Nodes**
+   - `Input: %0`
+   - `Input: %1`
+   - `Input: %2`
+
+3. **Operation Nodes**
+   - `Op: @llvm.round.f32 %0` (result: %4)
+   - `Op: @llvm.round.f32 %1` (result: %6)
+   - `Op: @llvm.round.f32 %2` (result: %9)
+   - `Op: fcmp une %4, %0` (result: %5)
+   - `Op: fcmp une %6, %1` (result: %7)
+   - `Op: select %5, true, %7` (result: %8)
+   - `Op: fcmp une %9, %2` (result: %10)
+   - `Op: select %8, true, %10` (result: %11)
+
+4. **Branching Nodes**
+   - `Branch: br i1 %11`
+   - `Branch: br label %21` (from %12)
+   - `Branch: br label %21` (from %3)
+
+5. **Basic Block %12 Nodes**
+   - `Op: fadd %0, %1` (result: %13)
+   - `Op: fcmp oeq %13, %2` (result: %14)
+   - `Op: fadd %0, %2` (result: %15)
+   - `Op: fcmp oeq %15, %1` (result: %16)
+   - `Op: or %14, %16` (result: %17)
+   - `Op: fadd %1, %2` (result: %18)
+   - `Op: fcmp oeq %18, %0` (result: %19)
+   - `Op: select %17, true, %19` (result: %20)
+
+6. **Merge Node**
+   - `Merge: phi i1 [ false, %3 ], [ %20, %12 ]` (result: %22)
+
+7. **Return Node**
+   - `Return: ret i1 %22`
+
+### Edges
+- Connect inputs to their respective operations:
+  - `%0` -> `%4`
+  - `%1` -> `%6`
+  - `%2` -> `%9`
+  
+- Connect operations to comparisons and selections:
+  - `%4` -> `%5`
+  - `%0` -> `%5`
+  - `%6` -> `%7`
+  - `%1` -> `%7`
+  - `%5` -> `%8`
+  - `%7` -> `%8`
+  - `%9` -> `%10`
+  - `%2` -> `%10`
+  - `%8` -> `%11`
+  - `%10` -> `%11`
+
+- Connect %11 to the branching structure:
+  - `%11` -> `%21` (both branches)
+
+- Connect basic block %12 operations:
+  - `%0` -> `%13`
+  - `%1` -> `%13`
+  - `%13` -> `%14`
+  - `%0` -> `%15`
+  - `%15` -> `%16`
+  - `%14` -> `%17`
+  - `%16` -> `%17`
+  - `%1` -> `%18`
+  - `%2` -> `%18`
+  - `%18` -> `%19`
+  - `%0` -> `%19`
+  - `%17` -> `%20`
+  - `%19` -> `%20`
+
+- Finally, connect the merge and return:
+  - `%3` -> `%22`
+  - `%20` -> `%22`
+  - `%22` -> `ret`
+
+### DOT Representation
+Here's how the graph can be represented in DOT format:
+
+```dot
+digraph DataFlowGraph {
+    rankdir=LR;
+
+    Function [label="Function: @_Z7any_intfff"];
+    Input0 [label="%0"];
+    Input1 [label="%1"];
+    Input2 [label="%2"];
+    
+    Op4 [label="Op: @llvm.round.f32 %0"];
+    Op6 [label="Op: @llvm.round.f32 %1"];
+    Op9 [label="Op: @llvm.round.f32 %2"];
+    
+    Op5 [label="Op: fcmp une %4, %0"];
+    Op7 [label="Op: fcmp une %6, %1"];
+    Op8 [label="Op: select %5, true, %7"];
+    Op10 [label="Op: fcmp une %9, %2"];
+    Op11 [label="Op: select %8, true, %10"];
+    
+    Branch11 [label="Branch: br i1 %11"];
+    Branch21_1 [label="Branch: br label %21 (from %12)"];
+    Branch21_2 [label="Branch: br label %21 (from %3)"];
+    
+    Op13 [label="Op: fadd %0, %1"];
+    Op14 [label="Op: fcmp oeq %13, %2"];
+    Op15 [label="Op: fadd %0, %2"];
+    Op16 [label="Op: fcmp oeq %15, %1"];
+    Op17 [label="Op: or %14, %16"];
+    Op18 [label="Op: fadd %1, %2"];
+    Op19 [label="Op: fcmp oeq %18, %0"];
+    Op20 [label="Op: select %17, true, %19"];
+    
+    Merge22 [label="Merge: phi i1 [ false, %3 ], [ %20, %12 ]"];
+    Return [label="Return: ret i1 %22"];
+
+    Function -> Input0;
+    Function -> Input1;
+    Function -> Input2;
+
+    Input0 -> Op4;
+    Input1 -> Op6;
+    Input2 -> Op9;
+
+    Op4 -> Op5;
+    Op6 -> Op7;
+    Op9 -> Op10;
+
+    Op5 -> Op8;
+    Op7 -> Op8;
+    Op8 -> Branch11;
+
+    Op10 -> Op11;
+
+    Branch11 -> Branch21_1;
+    Branch11 -> Branch21_2;
+
+    Op13 -> Op14;
+    Op13 -> Op15;
+    Op15 -> Op16;
+    
+    Op14 -> Op17;
+    Op16 -> Op17;
+
+    Op18 -> Op19;
+    Op19 -> Op20;
+
+    Op17 -> Op20;
+
+    Branch21_1 -> Merge22;
+    Branch21_2 -> Merge22;
+
+    Merge22 -> Return;
+}
+```
+
+### Visualization
+To visualize this graph, you can use Graphviz or any other tool that supports the DOT format. The nodes will represent the different operations and data points, while the arrows will indicate the flow of data and dependencies, making it easier to analyze the relationships and data dependencies in the code. You can generate a graphical representation by executing the DOT code in a Graphviz tool or online DOT visualizer.

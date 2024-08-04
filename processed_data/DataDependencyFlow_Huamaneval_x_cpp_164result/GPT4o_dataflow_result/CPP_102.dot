@@ -1,0 +1,90 @@
+To create a data flow graph from the provided Intermediate Representation (IR) code, we need to identify the nodes and their relationships based on the data dependencies and control flow. Below is a detailed description of the nodes and edges for the data flow graph, followed by the dot file representation.
+
+### Nodes
+1. **Function**: `@_Z10choose_numii`
+2. **Parameter**: `%0`
+3. **Parameter**: `%1`
+4. **Comparison**: `icmp slt i32 %1, %0`
+5. **Branch**: `br i1 %3`
+6. **Comparison**: `icmp eq i32 %1, %0`
+7. **Remainder**: `srem i32 %1, 2`
+8. **Comparison**: `icmp eq i32 %6, 1`
+9. **Logical AND**: `and i1 %5, %7`
+10. **Branch**: `br i1 %8`
+11. **Sign Extension**: `sext i1 %7 to i32`
+12. **Addition**: `add nsw i32 %10, %1`
+13. **Branch**: `br label %12`
+14. **PHI Node**: `%13`
+15. **Return**: `ret i32 %13`
+
+### Edges (Data Dependencies)
+- From **Parameter** `%0` to **Comparison** `icmp slt i32 %1, %0`
+- From **Parameter** `%1` to **Comparison** `icmp slt i32 %1, %0`
+- From **Comparison** `icmp slt i32 %1, %0` to **Branch** `br i1 %3`
+- From **Branch** `br i1 %3` to **Comparison** `icmp eq i32 %1, %0` (true path)
+- From **Branch** `br i1 %3` to **Branch** `br label %4` (false path)
+- From **Comparison** `icmp eq i32 %1, %0` to **Remainder** `srem i32 %1, 2`
+- From **Remainder** `srem i32 %1, 2` to **Comparison** `icmp eq i32 %6, 1`
+- From **Comparison** `icmp eq i32 %6, 1` to **Logical AND** `and i1 %5, %7`
+- From **Comparison** `icmp eq i32 %1, %0` to **Logical AND** `and i1 %5, %7`
+- From **Logical AND** `and i1 %5, %7` to **Branch** `br i1 %8`
+- From **Branch** `br i1 %8` to **Sign Extension** `sext i1 %7 to i32` (true path)
+- From **Branch** `br i1 %8` to **Branch** `br label %12` (false path)
+- From **Sign Extension** `sext i1 %7 to i32` to **Addition** `add nsw i32 %10, %1`
+- From **Addition** `add nsw i32 %10, %1` to **PHI Node** `%13`
+- From **Comparison** `icmp eq i32 %1, %0` to **PHI Node** `%13` (false path)
+- From **Branch** `br label %12` to **PHI Node** `%13`
+- From **PHI Node** `%13` to **Return** `ret i32 %13`
+
+### Dot File Representation
+The following is the dot file representation of the data flow graph based on the nodes and edges described above:
+
+```dot
+digraph DataFlowGraph {
+    node [shape=box];
+
+    func [label="@_Z10choose_numii"];
+    param0 [label="%0"];
+    param1 [label="%1"];
+    cmp1 [label="icmp slt i32 %1, %0"];
+    branch1 [label="br i1 %3"];
+    cmp2 [label="icmp eq i32 %1, %0"];
+    rem [label="srem i32 %1, 2"];
+    cmp3 [label="icmp eq i32 %6, 1"];
+    and_op [label="and i1 %5, %7"];
+    branch2 [label="br i1 %8"];
+    sext [label="sext i1 %7 to i32"];
+    add [label="add nsw i32 %10, %1"];
+    phi [label="%13"];
+    ret [label="ret i32 %13"];
+
+    func -> param0;
+    func -> param1;
+    param0 -> cmp1;
+    param1 -> cmp1;
+    cmp1 -> branch1;
+    branch1 -> cmp2 [label="true"];
+    branch1 -> branch2 [label="false"];
+    cmp2 -> rem;
+    rem -> cmp3;
+    cmp3 -> and_op;
+    cmp2 -> and_op;
+    and_op -> branch2;
+    branch2 -> sext [label="true"];
+    branch2 -> phi [label="false"];
+    sext -> add;
+    add -> phi;
+    cmp2 -> phi [label="false"];
+    branch2 -> phi;
+    phi -> ret;
+}
+```
+
+### Visualization
+To visualize this data flow graph, you can use tools that accept dot format files, such as Graphviz. You can copy the dot representation into a `.dot` file and run the following command in a terminal:
+
+```bash
+dot -Tpng your_graph.dot -o output.png
+```
+
+This command will generate a PNG image of the data flow graph, displaying the nodes and their connections based on the dependencies defined in the graph structure. The graphical representation will help in understanding how data flows through the IR code and the relationships between different operations and variables.

@@ -1,0 +1,59 @@
+To represent the data flow graph for the provided Intermediate Representation (IR) code, we will outline the nodes and edges based on the operations and data dependencies present in the function `is_equal_to_sum_eveni`. 
+
+### Nodes and Edges Description
+
+#### Nodes
+1. **Input Node**
+   - `Input %0` : The input parameter to the function.
+
+2. **Operations**
+   - `Op1: %2 = and i32 %0, 1` : This node represents the bitwise AND operation between the input and the constant 1.
+   - `Op2: %3 = icmp eq i32 %2, 0` : This node checks if the result of `Op1` is equal to 0.
+   - `Op3: %4 = icmp sgt i32 %0, 7` : This node checks if the input is greater than 7.
+   - `Op4: %5 = and i1 %4, %3` : This node represents the AND operation between the results of `Op2` and `Op3`.
+
+3. **Output Node**
+   - `Output %5` : The return value of the function.
+
+#### Edges
+- From `Input %0` to `Op1: %2` : Represents the input flow to the first operation.
+- From `Op1: %2` to `Op2: %3` : Represents the flow of the result of the AND operation to the comparison.
+- From `Input %0` to `Op3: %4` : Represents the input flow to the second comparison.
+- From `Op3: %4` to `Op4: %5` : Represents the flow of the result of the greater-than comparison to the final AND operation.
+- From `Op2: %3` to `Op4: %5` : Represents the flow of the result of the equality comparison to the final AND operation.
+- From `Op4: %5` to `Output %5` : Represents the return of the final result.
+
+### DOT Format for Visualization
+Below is the representation of the data flow graph in DOT format:
+
+```dot
+digraph DataFlowGraph {
+    // Nodes
+    Input [label="Input %0"];
+    Op1 [label="Op1: %2 = and i32 %0, 1"];
+    Op2 [label="Op2: %3 = icmp eq i32 %2, 0"];
+    Op3 [label="Op3: %4 = icmp sgt i32 %0, 7"];
+    Op4 [label="Op4: %5 = and i1 %4, %3"];
+    Output [label="Output %5"];
+
+    // Edges
+    Input -> Op1;
+    Op1 -> Op2;
+    Input -> Op3;
+    Op3 -> Op4;
+    Op2 -> Op4;
+    Op4 -> Output;
+}
+```
+
+### Visualization Suggestions
+To visualize this graph:
+1. Use a graph visualization tool that can render DOT files, such as Graphviz. 
+2. Save the above DOT representation in a file with a `.dot` extension.
+3. Use the command line to generate an image, such as PNG or PDF:
+   ```
+   dot -Tpng data_flow_graph.dot -o data_flow_graph.png
+   ```
+4. Open the generated image file to view the data flow graph.
+
+This representation clearly outlines the flow of data through the function and highlights the dependencies between the variables and operations involved.

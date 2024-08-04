@@ -1,0 +1,116 @@
+To construct a data flow graph (DFG) from the provided intermediate representation (IR) code, we will identify the key variables, operations, and control flow structures in the code, and then represent them as nodes and edges.
+
+### Nodes
+In the DFG, nodes will represent:
+1. **Variables**: These are the inputs and outputs of operations.
+2. **Operations**: These can be arithmetic operations, memory loads/stores, and function calls.
+3. **Control flow nodes**: These represent branches in the code (e.g., if-else constructs).
+
+### Edges
+Edges will represent:
+- **Data dependencies**: From a variable or operation to any operation that uses its result.
+- **Control flow**: From a control structure to the subsequent operations based on the control flow.
+
+### Summary of Nodes
+- **Function nodes**:
+  - `maximum`: Entry function
+  - `__introsort_loop`: Helper function for sorting
+  - `__final_insertion_sort`: Helper function for final sorting
+  - `__make_heap`: Helper function to create a heap
+  - `__throw_length_error`: Function to handle errors
+
+- **Variable nodes**:
+  - `@.str`: Constant string for error message
+  - `%0`: Output vector
+  - `%1`: Input vector (readonly)
+  - `%2`: Integer parameter (size)
+  - Other intermediate variables (e.g., pointers, indices)
+
+### Graph Outline
+```plaintext
+Nodes:
+- Function: maximum
+- Function: __introsort_loop
+- Function: __final_insertion_sort
+- Function: __make_heap
+- Variable: @.str
+- Variable: %0 (output vector)
+- Variable: %1 (input vector)
+- Variable: %2 (size)
+- Variable: %4 (pointer to vector data)
+- Variable: %5 (pointer to vector data)
+- Variable: %6 (pointer to vector data)
+- Variable: %8 (comparison result)
+- Variable: %10 (pointer to memory)
+- Variable: %12 (intermediate calculations)
+- ...
+- Various temporary variables created during sorting
+
+Edges:
+- maximum -> %0
+- maximum -> %1
+- maximum -> %2
+
+- maximum -> __introsort_loop (calls)
+- maximum -> __final_insertion_sort (calls)
+- maximum -> __make_heap (calls)
+
+- __introsort_loop -> %4
+- __introsort_loop -> %5
+- __introsort_loop -> %6
+- __introsort_loop -> %8
+
+- __final_insertion_sort -> %0
+- __final_insertion_sort -> %1
+
+- Data dependencies among temporary variables
+- Control flow edges indicating branches (e.g., if-else)
+
+- Unreachable nodes connected to error handling
+```
+
+### Visualization Suggestions
+1. **Graph Layout**:
+   - Use a hierarchical layout where the entry function (`maximum`) is at the top.
+   - Place helper functions (`__introsort_loop`, `__final_insertion_sort`, etc.) below it.
+   - Group variable nodes around their respective functions to show local dependencies.
+
+2. **Diagram Type**:
+   - Use a directed graph (or DAG) format, where arrows represent the direction of data flow.
+   - Different colors can represent different types of nodes (e.g., blue for functions, green for variables).
+
+3. **Tools for Visualization**:
+   - Tools like Graphviz can be used to create visual representations based on the dot notation.
+   - Use a simple text-based representation for initial drafts before creating the actual graph.
+
+### Example Dot Representation
+Here is a simplified dot representation based on the outlined nodes and edges:
+
+```dot
+digraph DFG {
+    rankdir=TB;
+
+    function_maximum [label="maximum"];
+    function_introsort [label="__introsort_loop"];
+    function_final_sort [label="__final_insertion_sort"];
+    function_make_heap [label="__make_heap"];
+    variable_str [label="@.str"];
+    variable_output [label="%0"];
+    variable_input [label="%1"];
+    variable_size [label="%2"];
+    
+    // Function calls
+    function_maximum -> function_introsort;
+    function_maximum -> function_final_sort;
+    function_maximum -> function_make_heap;
+
+    // Variables
+    function_maximum -> variable_output;
+    function_maximum -> variable_input;
+    function_maximum -> variable_size;
+    
+    // Additional variables and dependencies can be added here
+}
+```
+
+This representation captures the essential components and relationships in the data flow of the given IR code, which can be expanded upon as needed.

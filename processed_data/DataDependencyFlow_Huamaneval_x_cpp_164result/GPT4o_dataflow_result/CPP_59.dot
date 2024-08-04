@@ -1,0 +1,142 @@
+To generate a data flow graph (DFG) for the provided intermediate representation (IR) code, we will focus on the key components of the control flow, including the variables, operations, and the relationships between them. The DFG will include nodes representing variables and operations, and directed edges indicating the flow of data and dependencies.
+
+### Data Flow Graph Nodes and Edges
+
+#### Nodes
+
+1. **Function Entry**
+   - Node: `Entry`
+   - Description: Entry point of the function `_Z20largest_prime_factori`.
+
+2. **Comparisons and Branches**
+   - Node: `icmp_slt`
+   - Description: Comparison operation to check if `%0 < 4`.
+   - Node: `branch_1`
+   - Description: Branching based on the result of `icmp_slt`.
+
+3. **Basic Block 3**
+   - Node: `BasicBlock3`
+   - Description: Contains computations for prime factorization.
+   - Nodes:
+     - `phi_4`: `%4 = phi(...)` (holds value from either `%21` or `2`).
+     - `phi_5`: `%5 = phi(...)` (holds value from either `%20` or `%0`).
+     - `srem_6`: `%6 = srem(...)` (remainder operation).
+     - `icmp_eq_7`: `%7 = icmp eq(...)` (checks if remainder is zero).
+     - `icmp_sgt_8`: `%8 = icmp sgt(...)` (checks if `%5 > %4`).
+     - `and_9`: `%9 = and(...)` (logical AND operation).
+     - `branch_2`: `branching based on %9`.
+
+4. **Basic Block 10**
+   - Node: `BasicBlock10`
+   - Description: Returns the value in `%11`.
+   - Node: `phi_11`: `%11 = phi(...)`.
+
+5. **Basic Block 12**
+   - Node: `BasicBlock12`
+   - Description: Further checks and calculations.
+   - Nodes:
+     - `phi_13`: `%13 = phi(...)`.
+     - `sdiv_14`: `%14 = sdiv(...)` (divides previous results).
+     - `srem_15`: `%15 = srem(...)` (another remainder).
+     - `icmp_eq_16`: `%16 = icmp eq(...)`.
+     - `icmp_sgt_17`: `%17 = icmp sgt(...)`.
+     - `and_18`: `%18 = and(...)`.
+     - `branch_3`: `branching based on %18`.
+
+6. **Basic Block 19**
+   - Node: `BasicBlock19`
+   - Description: Updates values and continues calculations.
+   - Nodes:
+     - `phi_20`: `%20 = phi(...)`.
+     - `add_21`: `%21 = add(...)` (increments value).
+     - `mul_22`: `%22 = mul(...)` (squares the incremented value).
+     - `icmp_sgt_23`: `%23 = icmp sgt(...)`.
+     - `branch_4`: `branching based on %23`.
+
+7. **Function Exit**
+   - Node: `Exit`
+   - Description: Exits the function.
+
+#### Edges
+
+- `Entry` -> `icmp_slt`
+- `icmp_slt` -> `branch_1`
+- `branch_1` -> `BasicBlock3` (if true)
+- `branch_1` -> `BasicBlock10` (if false)
+- `BasicBlock3` -> `phi_4`
+- `BasicBlock3` -> `phi_5`
+- `phi_5` -> `srem_6`
+- `srem_6` -> `icmp_eq_7`
+- `srem_6` -> `icmp_sgt_8`
+- `icmp_eq_7` -> `and_9`
+- `icmp_sgt_8` -> `and_9`
+- `and_9` -> `branch_2`
+- `branch_2` -> `BasicBlock12` (if true)
+- `branch_2` -> `BasicBlock19` (if false)
+- `BasicBlock12` -> `phi_13`
+- `phi_13` -> `sdiv_14`
+- `sdiv_14` -> `srem_15`
+- `srem_15` -> `icmp_eq_16`
+- `srem_15` -> `icmp_sgt_17`
+- `icmp_eq_16` -> `and_18`
+- `icmp_sgt_17` -> `and_18`
+- `and_18` -> `branch_3`
+- `branch_3` -> `BasicBlock12` (if true)
+- `branch_3` -> `BasicBlock19` (if false)
+- `BasicBlock19` -> `phi_20`
+- `phi_20` -> `add_21`
+- `add_21` -> `mul_22`
+- `mul_22` -> `icmp_sgt_23`
+- `icmp_sgt_23` -> `branch_4`
+- `branch_4` -> `BasicBlock10` (if true)
+- `branch_4` -> `Exit` (if false)
+
+### Visualization
+
+To visualize this graphically, you can use the Graphviz DOT format. Below is a sample representation of how to format the DFG in DOT language:
+
+```dot
+digraph DataFlowGraph {
+    Entry -> icmp_slt;
+    icmp_slt -> branch_1;
+    branch_1 -> BasicBlock3 [label="true"];
+    branch_1 -> BasicBlock10 [label="false"];
+    
+    BasicBlock3 -> phi_4;
+    BasicBlock3 -> phi_5;
+    phi_5 -> srem_6;
+    srem_6 -> icmp_eq_7;
+    srem_6 -> icmp_sgt_8;
+    icmp_eq_7 -> and_9;
+    icmp_sgt_8 -> and_9;
+    and_9 -> branch_2;
+    
+    branch_2 -> BasicBlock12 [label="true"];
+    branch_2 -> BasicBlock19 [label="false"];
+    
+    BasicBlock12 -> phi_13;
+    phi_13 -> sdiv_14;
+    sdiv_14 -> srem_15;
+    srem_15 -> icmp_eq_16;
+    srem_15 -> icmp_sgt_17;
+    icmp_eq_16 -> and_18;
+    icmp_sgt_17 -> and_18;
+    and_18 -> branch_3;
+    
+    branch_3 -> BasicBlock12 [label="true"];
+    branch_3 -> BasicBlock19 [label="false"];
+    
+    BasicBlock19 -> phi_20;
+    phi_20 -> add_21;
+    add_21 -> mul_22;
+    mul_22 -> icmp_sgt_23;
+    icmp_sgt_23 -> branch_4;
+    
+    branch_4 -> BasicBlock10 [label="true"];
+    branch_4 -> Exit [label="false"];
+}
+```
+
+### Conclusion
+
+This data flow graph captures the relationships between the variables and operations in the provided IR code, illustrating the flow of data and the dependencies that dictate the control flow of the program. Each node represents a significant operation or variable, and the edges indicate how the data flows between them, which is essential for further analysis, such as optimization or debugging.

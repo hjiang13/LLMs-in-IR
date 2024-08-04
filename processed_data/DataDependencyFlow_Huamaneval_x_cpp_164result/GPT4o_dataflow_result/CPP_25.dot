@@ -1,0 +1,126 @@
+To represent the data flow graph of the provided Intermediate Representation (IR) code in a DOT format, we will define nodes for operations, variables, and control flow points. The edges will represent data dependencies between these nodes.
+
+### Nodes
+1. **Function Entry**: `_Z9factorizei`
+2. **Input Parameters**:
+   - `vector* %0`
+   - `i32 %1`
+3. **Memory Operations**: 
+   - `llvm.memset`
+   - `llvm.memmove`
+   - `malloc` (represented as `_Znwm`)
+   - `free` (represented as `_ZdlPv`)
+4. **Control Flow**:
+   - `icmp slt %6`
+   - `icmp eq %9`
+   - `icmp eq %20`
+   - `icmp ult %27`
+   - `icmp ugt %28`
+   - `icmp eq %31`
+   - `icmp eq %59`
+   - `icmp eq %61`
+   - `icmp eq %67`
+   - `icmp eq %73`
+5. **Arithmetic Operations**:
+   - `add %25`
+   - `shl %33`
+   - `sdiv %58`
+   - `srem %57`
+   - `mul %116`
+6. **Return**: `ret void`
+
+### Edges
+- From **Function Entry** to **Input Parameters**.
+- From **Input Parameters** to:
+  - **Memory Operations** (indicating initialization).
+  - **Control Flow** nodes (based on comparisons).
+- From **Control Flow** nodes to:
+  - **Arithmetic Operations** (resulting from conditions).
+  - **Memory Operations** (for allocations and deallocations).
+- From **Arithmetic Operations** back to **Control Flow** nodes (for decision-making).
+- From **Memory Operations** to **Return**.
+
+### DOT Representation
+```dot
+digraph data_flow_graph {
+    rankdir=LR; // Left to right orientation
+
+    // Function Entry
+    Entry [label="_Z9factorizei" shape=box];
+
+    // Input Parameters
+    ParamVector [label="vector* %0" shape=ellipse];
+    ParamInt [label="i32 %1" shape=ellipse];
+
+    // Memory Operations
+    MemSet [label="llvm.memset" shape=box];
+    MemMove [label="llvm.memmove" shape=box];
+    Malloc [label="_Znwm" shape=box];
+    Free [label="_ZdlPv" shape=box];
+
+    // Control Flow
+    CompSlt [label="icmp slt %6" shape=diamond];
+    CompEq1 [label="icmp eq %9" shape=diamond];
+    CompEq2 [label="icmp eq %20" shape=diamond];
+    CompUlt [label="icmp ult %27" shape=diamond];
+    CompUgt [label="icmp ugt %28" shape=diamond];
+    CompEq3 [label="icmp eq %31" shape=diamond];
+    CompEq4 [label="icmp eq %59" shape=diamond];
+    CompEq5 [label="icmp eq %61" shape=diamond];
+    CompEq6 [label="icmp eq %67" shape=diamond];
+    CompEq7 [label="icmp eq %73" shape=diamond];
+
+    // Arithmetic Operations
+    Add [label="add %25" shape=box];
+    Shl [label="shl %33" shape=box];
+    Sdiv [label="sdiv %58" shape=box];
+    Srem [label="srem %57" shape=box];
+    Mul [label="mul %116" shape=box];
+
+    // Return
+    Ret [label="ret void" shape=box];
+
+    // Edges
+    Entry -> ParamVector;
+    Entry -> ParamInt;
+
+    ParamVector -> MemSet;
+    ParamInt -> MemSet;
+
+    MemSet -> CompSlt;
+
+    CompSlt -> CompEq1 [label="true"];
+    CompSlt -> CompEq2 [label="false"];
+
+    CompEq1 -> Add;
+    CompEq2 -> Add;
+
+    Add -> Shl;
+    Add -> Sdiv;
+    Add -> Srem;
+    
+    Shl -> Malloc;
+    Sdiv -> Free;
+    
+    Malloc -> Ret;
+    Free -> Ret;
+
+    CompEq3 -> CompEq4;
+    CompEq5 -> CompEq6;
+
+    CompEq4 -> Ret;
+    CompEq6 -> Ret;
+
+    // Additional connections based on the flow
+    // (add more edges as inferred from the IR structure)
+}
+```
+
+### Visualization Suggestions
+To visualize the graph:
+1. Use graph visualization tools like Graphviz.
+2. Save the above DOT code in a file, for example, `data_flow_graph.dot`.
+3. Render the graph using `dot -Tpng data_flow_graph.dot -o data_flow_graph.png` to create a PNG image.
+4. Explore interactive graph visualization platforms such as `WebGraphviz` or `Viz.js` for better user experiences.
+
+This representation serves to clarify the data dependencies and control flow within the IR code, showcasing how data moves through various operations and branches.

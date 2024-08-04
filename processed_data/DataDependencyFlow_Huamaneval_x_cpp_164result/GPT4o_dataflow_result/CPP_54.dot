@@ -1,0 +1,110 @@
+To represent the data flow graph for the provided Intermediate Representation (IR) code, we will focus on the key variables, operations, and control flow structures while summarizing the nodes and edges. Below is a detailed outline for constructing the graph.
+
+### Data Flow Graph Description
+
+#### Nodes
+1. **Function Definition**
+   - Node: `@_Z10same_chars`
+   - Description: Entry point of the function.
+
+2. **Basic Blocks**
+   - Node: `bb_0`
+     - Description: Initial block where the function starts.
+   - Node: `bb_1`
+     - Description: Block handling comparison of string lengths.
+   - Node: `bb_2`
+     - Description: Block handling the loop for character comparison.
+   - Node: `bb_3`
+     - Description: Block handling the end conditions and returns.
+
+3. **Variable Nodes**
+   - Node: `%0`
+     - Description: First input string (basic_string).
+   - Node: `%1`
+     - Description: Second input string (basic_string).
+   - Node: `%4`
+     - Description: Length of the first string.
+   - Node: `%8`
+     - Description: Length of the second string.
+   - Node: `%14`
+     - Description: Current character index in comparisons.
+   - Node: `%23`
+     - Description: Character from the first string.
+   - Node: `%29`
+     - Description: Character from the second string.
+   - Node: `%119`
+     - Description: Current comparison result.
+
+4. **Condition Nodes**
+   - Node: `cmp_eq`
+     - Description: Comparison operation for equality.
+   - Node: `cmp_ult`
+     - Description: Comparison operation for less than.
+   - Node: `cmp_sgt`
+     - Description: Comparison operation for greater than.
+
+5. **Return Node**
+   - Node: `ret_val`
+     - Description: Final return value of the function.
+
+#### Edges
+- **Control Flow Edges**
+  - From `@_Z10same_chars` to `bb_0`.
+  - From `bb_0` to `bb_1` (check string length).
+  - From `bb_1` to `bb_2` (loop for character comparison).
+  - From `bb_2` to `bb_3` (end conditions).
+
+- **Data Dependency Edges**
+  - From `%0` to `%4` (load length of first string).
+  - From `%1` to `%8` (load length of second string).
+  - From `%4` to `cmp_sgt` for length checks.
+  - From `%4` to `%14` (loop index).
+  - From `%14` to `%23` (load character from first string).
+  - From `%14` to `%29` (load character from second string).
+  - From `%23` to `cmp_eq` (compare characters).
+  - From `%29` to `cmp_eq` (compare characters).
+  - From `cmp_eq` to `%119` (store comparison result).
+  - From `%119` to `ret_val` (return value).
+
+### Visualization
+To visualize this graph, you can use a graph visualization tool like Graphviz. Below is a simple representation of the `dot` format for the graph.
+
+```dot
+digraph DataFlowGraph {
+    rankdir=LR;
+
+    function [label="@_Z10same_chars", shape=box];
+    bb0 [label="bb_0", shape=box];
+    bb1 [label="bb_1", shape=box];
+    bb2 [label="bb_2", shape=box];
+    bb3 [label="bb_3", shape=box];
+    
+    input0 [label="%0 (input string 1)", shape=ellipse];
+    input1 [label="%1 (input string 2)", shape=ellipse];
+    len0 [label="%4 (length of string 1)", shape=ellipse];
+    len1 [label="%8 (length of string 2)", shape=ellipse];
+    index [label="%14 (current index)", shape=ellipse];
+    char1 [label="%23 (char from string 1)", shape=ellipse];
+    char2 [label="%29 (char from string 2)", shape=ellipse];
+    cmp_eq [label="cmp_eq (compare chars)", shape=diamond];
+    ret [label="ret_val (return value)", shape=box];
+
+    function -> bb0;
+    bb0 -> bb1;
+    bb1 -> bb2;
+    bb2 -> bb3;
+
+    input0 -> len0;
+    input1 -> len1;
+    len0 -> bb1;
+    len1 -> bb1;
+    len0 -> index;
+    index -> char1;
+    index -> char2;
+    char1 -> cmp_eq;
+    char2 -> cmp_eq;
+    cmp_eq -> ret;
+}
+```
+
+This `dot` format can be rendered using Graphviz to visualize the data flow graph, illustrating the relationships between the various elements of the IR code. Each node represents a significant operation or variable, while the edges indicate how data flows between these elements, capturing the control and data dependencies inherent in the code.

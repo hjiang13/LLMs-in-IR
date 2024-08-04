@@ -1,0 +1,93 @@
+To represent the data flow of the provided intermediate representation (IR) code, we can create a data flow graph in the DOT format. In this graph, nodes represent variables, operations, and control flow constructs, while edges represent the flow of data and dependencies between them.
+
+### Nodes Description
+
+1. **Function Entry**: `@_Z3eatiii`
+2. **Inputs**:
+   - `%0`: Pointer to `std::vector`
+   - `%1`: Integer
+   - `%2`: Integer
+   - `%3`: Integer
+3. **Comparisons**:
+   - `%5`: Comparison result of `%3 < %2`
+4. **Memory Allocation**:
+   - `%7`: Pointer from `_Znwm` (memory allocation)
+5. **Basic Block 8**:
+   - `%9`: Result of `(%3 + %1)`
+   - `%10`: Pointer to `i32*` from `%7`
+   - `%12`: Pointer to next element in the vector
+   - `%13`: Pointer to vector data
+6. **Basic Block 15**:
+   - `%16`: Result of `(%3 - %2)`
+   - `%17`: Result of `(%2 + %1)`
+   - `%18`: Pointer to `i32*` from `%7`
+7. **Merge Block 23**:
+   - `%24`: Phi node to select from `%16` or `0`
+   - `%25`: Phi node to select between `%20` or `%12`
+   - `%26`: Pointer to another memory location in `%7`
+   - `%27`: Pointer to `i32*` from `%26`
+   - `%28`: Pointer to another element in the vector
+   - `%29`: Pointer to `i8**` from `%28`
+8. **Function Exit**: `ret void`
+
+### Edges Description
+
+- **Function Entry** to **Inputs**: Represents the entry of the function and the parameters being passed.
+- **Inputs** to **Comparison**: Indicates that the comparison is dependent on `%3`, `%2`.
+- **Comparison** to **Basic Block 8**: Flow of control based on the comparison result.
+- **Basic Block 8** to **Memory Allocation**: Memory allocation happens when the condition `%5` is true.
+- **Memory Allocation** to **Basic Block 8**: Represents the allocated memory being used to store values.
+- **Basic Block 8** to **Basic Block 23**: Control flow from the block to the merge block after storing values.
+- **Basic Block 15** to **Basic Block 23**: Control flow from the alternate block to the merge block.
+- **Basic Block 23** to **Function Exit**: Represents the exit point of the function following completion of operations.
+
+### DOT Format Representation
+
+```dot
+digraph DataFlowGraph {
+    // Nodes
+    Entry [label="@_Z3eatiii", shape=circle];
+    Input0 [label="%0: std::vector*", shape=ellipse];
+    Input1 [label="%1: i32", shape=ellipse];
+    Input2 [label="%2: i32", shape=ellipse];
+    Input3 [label="%3: i32", shape=ellipse];
+    Comparison [label="%5: %3 < %2", shape=diamond];
+    Allocation [label="%7: _Znwm", shape=box];
+    Block8 [label="Basic Block 8", shape=box];
+    Block15 [label="Basic Block 15", shape=box];
+    MergeBlock [label="Basic Block 23", shape=box];
+    Exit [label="Function Exit", shape=circle];
+
+    // Edges
+    Entry -> Input0;
+    Entry -> Input1;
+    Entry -> Input2;
+    Entry -> Input3;
+    Input3 -> Comparison;
+    Input2 -> Comparison;
+    Comparison -> Block8 [label="true"];
+    Comparison -> Block15 [label="false"];
+    Block8 -> Allocation;
+    Allocation -> Block8;
+    Block8 -> MergeBlock;
+    Block15 -> MergeBlock;
+    MergeBlock -> Exit;
+}
+```
+
+### Visualization Suggestions
+
+1. **Node Shapes**:
+   - Use circles for function entry and exit.
+   - Use ellipses for inputs (variables).
+   - Use diamonds for comparison operations.
+   - Use boxes for basic blocks and operations.
+
+2. **Edge Representation**:
+   - Directed edges can show the flow of data and control.
+   - Optionally, labels can indicate conditional paths (e.g., true/false conditions).
+
+3. **Graph Layout**:
+   - Use a hierarchical layout to show the flow from the entry point through comparisons and basic blocks to the exit point.
+
+This DOT representation can be visualized using tools like Graphviz, which can render the graph based on the provided format. Simply save the DOT code to a file (e.g., `data_flow_graph.dot`) and use the command `dot -Tpng data_flow_graph.dot -o data_flow_graph.png` to generate a visual representation.

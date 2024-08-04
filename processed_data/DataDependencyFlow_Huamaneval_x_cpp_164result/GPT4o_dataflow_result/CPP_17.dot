@@ -1,0 +1,88 @@
+To create a data flow graph (DFG) from the provided Intermediate Representation (IR) code, we will represent the key variables and operations as nodes and their dependencies as directed edges. The nodes will represent variables (like local variables, function arguments, temporary values) and operations (like loads, stores, calls, and branches). 
+
+### Nodes and Edges Description
+
+**Nodes:**
+1. **Function `_Z11parse_music`:** Entry point of the function.
+2. **Variables:**
+   - `%0`: Pointer to a vector.
+   - `%1`: Pointer to a string.
+   - `%3`: Local variable (64-bit integer).
+   - `%4`, `%5`: Local variables (strings).
+   - `%6`: Pointer to the string's character buffer.
+   - `%14`: Loaded value from `i64* %12`.
+   - `%17`: Pointer to a string.
+   - `%25`: Result from `_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm`.
+   - `%36`: Pointer to the result of a conditional.
+   - `%38`: Pointer to the string character buffer.
+   - `%39`, `%40`, `%43`: Various loaded and stored values.
+   - `%92`: Result from the landing pad.
+   - `%94`: Loaded value from `i64* %12`.
+   - `%95`: Conditional check result.
+   - `%100`, `%101`: Various pointers to string elements.
+   - `%311`: Final result of the function.
+
+**Operations:**
+- **Loads:** Various load operations from memory.
+- **Stores:** Various store operations to memory.
+- **Function Calls:** Calls to various functions (e.g., `@llvm.lifetime.start`, `@llvm.memset`, `@llvm.memcpy`, etc.).
+- **Comparisons:** Various comparison operations (e.g., `icmp eq`, `icmp ugt`, etc.).
+- **Branches:** Control flow decisions (e.g., `br`, `invoke`, etc.).
+
+### Edges:
+- **Data Dependency Edges:**
+  - From `%1` to `%14` indicating the load of `%14` depends on the value of `%1`.
+  - From `%0` to `%13` indicating the store operation to the vector pointer.
+  - From `%4` to `%5` indicating the initialization of the string.
+  - From `%5` to `%25` indicating that `%25` is created based on `%5`.
+  - From `%14` to `%15` indicating that the comparison depends on the value loaded into `%14`.
+  - From `%17` to `%36` indicating that the result of the call depends on `%17`.
+  - From `%36` to `%38` indicating that the value stored in `%36` depends on the function call result.
+  - From `%39` to `%40` indicating that `%40` is a result of a calculation based on `%39`.
+  - From `%43` to `%311` indicating that the final result depends on the operations leading to `%43`.
+
+### Visualization Suggestions:
+1. **Graph Layout**: Use a directed graph layout to represent data flow clearly. Nodes can be arranged in a top-down manner where the function entry is at the top and the final output is at the bottom.
+2. **Color Coding**: Differentiate between variable nodes (e.g., blue) and operation nodes (e.g., green) to provide clarity.
+3. **Edge Arrows**: Use arrows to indicate the direction of data flow, making it clear which operations depend on which variables.
+4. **Tooling**: Use graph visualization tools like Graphviz to create the actual visual representation of this data flow graph.
+
+### Dot File Format:
+The following is a simplified representation of the DFG in DOT format.
+
+```dot
+digraph DFG {
+    // Nodes
+    Function [label="_Z11parse_music"];
+    Var0 [label="%0"];
+    Var1 [label="%1"];
+    Var3 [label="%3"];
+    Var4 [label="%4"];
+    Var5 [label="%5"];
+    Var6 [label="%6"];
+    Var14 [label="%14"];
+    Var17 [label="%17"];
+    Var25 [label="%25"];
+    Var36 [label="%36"];
+    Var38 [label="%38"];
+    Var39 [label="%39"];
+    Var40 [label="%40"];
+    Var43 [label="%43"];
+    Var311 [label="%311"];
+
+    // Edges (Data Dependencies)
+    Function -> Var0;
+    Var1 -> Var14;
+    Var0 -> Var36;
+    Var4 -> Var5;
+    Var5 -> Var25;
+    Var14 -> Var36;
+    Var17 -> Var36;
+    Var39 -> Var40;
+    Var43 -> Var311;
+
+    // Add more edges based on dependencies...
+}
+```
+
+This dot file captures the essence of the data flow for the function in question, outlining the relationships between variables and operations. Each node represents either a variable or an operation, and the directed edges indicate the data dependencies. This can be rendered using Graphviz or similar graph visualization tools.

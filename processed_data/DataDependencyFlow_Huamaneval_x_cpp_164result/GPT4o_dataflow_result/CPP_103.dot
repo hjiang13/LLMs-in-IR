@@ -1,0 +1,125 @@
+### Data Flow Graph Description
+
+The data flow graph (DFG) for the provided Intermediate Representation (IR) code will consist of nodes that represent variables, operations, and function calls, with directed edges indicating the flow of data and dependencies between them. Below is a detailed description of the nodes and edges that can be used to construct a dot file for visualization.
+
+#### Nodes
+1. **Function Node**
+   - `_Z11rounded_avgB5cxx11ii`: Entry point of the function.
+
+2. **Basic Block Nodes**
+   - `BB_Entry`: Entry block of the function.
+   - `BB_Condition`: Basic block containing the conditional check for `%7`.
+   - `BB_True`: Block executed if `%7` is true.
+   - `BB_False`: Block executed if `%7` is false.
+   - `BB_Compute`: Block for computing and preparing data.
+   - `BB_Invoke`: Block where the `invoke` happens.
+   - `BB_Return`: Block for the return statement.
+
+3. **Variable Nodes**
+   - `%1`: First integer parameter.
+   - `%2`: Second integer parameter.
+   - `%4, %5, %6`: Allocated strings.
+   - `%9`: Pointer to string's union.
+   - `%12`, `%18`: GEP results for string structures.
+   - `%22`: Sum of `%1` and `%2`.
+   - `%30`: Result of the operation.
+   - `%43`: Intermediate computation result.
+   - `%49`: Result of the append operation.
+   - `%90`: Pointer for final output.
+
+4. **Function Call Nodes**
+   - `@llvm.lifetime.start.p0i8`: Function for starting lifetime tracking.
+   - `@llvm.lifetime.end.p0i8`: Function for ending lifetime tracking.
+   - `@vsnprintf`: String formatting function.
+   - `@llvm.memcpy`: Memory copy function.
+   - `_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm`: Function to append strings.
+   - `_ZdlPv`: Function to deallocate memory.
+
+5. **Control Flow Nodes**
+   - `br`: Represents branch instructions.
+   - `invoke`: Represents invoke instructions that might throw exceptions.
+
+#### Edges
+- **Control Flow Edges**:
+  - From `BB_Entry` to `BB_Condition`.
+  - From `BB_Condition` to `BB_True` and `BB_False` based on the result of `%7`.
+  - Connections from blocks to subsequent blocks based on conditional and unconditional branches.
+
+- **Data Dependency Edges**:
+  - From `%1` and `%2` to `%7` (used in the conditional).
+  - From `%7` to `%9` (used in the true block).
+  - From `%9` to `%12` and `%18` (used in storing values).
+  - From `%12` and `%18` to `%22` (to compute the sum).
+  - From `%22` to `%43` (used in checks).
+  - From `%43` to `@vsnprintf` (to invoke the formatting function).
+  - From the result of `@vsnprintf` to `%49` (for appending results).
+  - From `%49` to the return value through `%90`.
+
+### Visualization Suggestions
+To visualize the described data flow graph, you can use the Graphviz `dot` language. Below is an example of how to represent the nodes and edges in a `dot` file format:
+
+```dot
+digraph DataFlowGraph {
+    // Function Node
+    function [label="_Z11rounded_avgB5cxx11ii", shape=box];
+
+    // Basic Block Nodes
+    entry [label="BB_Entry", shape=ellipse];
+    condition [label="BB_Condition", shape=ellipse];
+    true_block [label="BB_True", shape=ellipse];
+    false_block [label="BB_False", shape=ellipse];
+    compute [label="BB_Compute", shape=ellipse];
+    invoke [label="BB_Invoke", shape=ellipse];
+    return_block [label="BB_Return", shape=ellipse];
+
+    // Variable Nodes
+    param1 [label="%1", shape=circle];
+    param2 [label="%2", shape=circle];
+    alloc_str1 [label="%4", shape=circle];
+    alloc_str2 [label="%5", shape=circle];
+    alloc_str3 [label="%6", shape=circle];
+    pointer [label="%9", shape=circle];
+    gep1 [label="%12", shape=circle];
+    gep2 [label="%18", shape=circle];
+    sum [label="%22", shape=circle];
+    result [label="%30", shape=circle];
+    intermediate [label="%43", shape=circle];
+    append_result [label="%49", shape=circle];
+    final_output [label="%90", shape=circle];
+
+    // Function Call Nodes
+    lifetime_start [label="@llvm.lifetime.start.p0i8", shape=diamond];
+    lifetime_end [label="@llvm.lifetime.end.p0i8", shape=diamond];
+    vsnprintf [label="@vsnprintf", shape=diamond];
+    memcpy [label="@llvm.memcpy", shape=diamond];
+    append [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm", shape=diamond];
+    dealloc [label="_ZdlPv", shape=diamond];
+
+    // Control Flow Edges
+    function -> entry;
+    entry -> condition;
+    condition -> true_block [label="true"];
+    condition -> false_block [label="false"];
+    true_block -> compute;
+    false_block -> compute;
+    compute -> invoke;
+    invoke -> return_block;
+
+    // Data Dependency Edges
+    param1 -> condition;
+    param2 -> condition;
+    condition -> pointer;
+    pointer -> gep1;
+    pointer -> gep2;
+    gep1 -> sum;
+    gep2 -> intermediate;
+    sum -> invoke;
+    invoke -> append_result;
+    append_result -> final_output;
+}
+```
+
+### Notes for Visualization
+- Use Graphviz or a similar tool to render the dot file into a visual graph.
+- You can adjust node shapes and colors for better differentiation among function calls, variables, and control flow nodes.
+- Consider adding labels to edges to indicate the nature of the dependency or control flow, making the graph more informative.

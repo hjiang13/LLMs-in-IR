@@ -1,0 +1,103 @@
+To create a data flow graph from the provided Intermediate Representation (IR) code, we need to extract the main variables, operations, and control flow structures. Below, I will outline the nodes and edges in a dot format, which describes the relationships between the nodes.
+
+### Nodes
+1. **Function Entry**: `_Z14reverse_deleteNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_`
+2. **Parameters**:
+   - `vector`
+   - `string1`
+   - `string2`
+3. **Alloca**:
+   - `alloca_i64_1`
+   - `alloca_i64_2`
+   - `alloca_string_1`
+   - `alloca_string_2`
+   - `alloca_string_3`
+4. **GetElementPtr Operations**:
+   - `GEP_string1`
+   - `GEP_string2`
+   - `GEP_allocated_string`
+5. **Load Operations**:
+   - `load_string1`
+   - `load_string2`
+6. **Store Operations**:
+   - `store_string1`
+   - `store_string2`
+7. **Comparison Operations**:
+   - `icmp_eq_1`
+   - `icmp_eq_2`
+8. **Branches**:
+   - `branch_condition`
+   - `branch_true`
+   - `branch_false`
+9. **Function Calls**:
+   - `call_allocate_memory`
+   - `call_copy_string`
+   - `call_deallocate_memory`
+10. **Function Exit**: `Function Exit`
+
+### Edges
+- From **Function Entry** to **Parameters**: Indicates the input to the function.
+- From **Parameters** to **Alloca**: Each parameter is allocated space.
+- From **Alloca** to **GetElementPtr Operations**: Allocated variables are used to create pointers.
+- From **GetElementPtr Operations** to **Load Operations**: The pointers are used to load values.
+- From **Load Operations** to **Store Operations**: Loaded values are stored in allocated memory.
+- From **Load Operations** to **Comparison Operations**: Loaded values are compared.
+- From **Comparison Operations** to **Branches**: The results of comparisons determine control flow.
+- From **Branches** to **Function Calls**: Depending on the branch taken, different function calls may be made.
+- From **Function Calls** to **Function Exit**: Call results may lead to function exit.
+
+### Graph Representation in Dot Format
+```dot
+digraph DataFlowGraph {
+    rankdir=LR;
+
+    // Nodes
+    Entry [label="_Z14reverse_deleteNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_"];
+    Param_Vector [label="vector"];
+    Param_String1 [label="string1"];
+    Param_String2 [label="string2"];
+    Alloca_i64_1 [label="alloca_i64_1"];
+    Alloca_i64_2 [label="alloca_i64_2"];
+    Alloca_String1 [label="alloca_string_1"];
+    Alloca_String2 [label="alloca_string_2"];
+    Alloca_String3 [label="alloca_string_3"];
+    GEP_String1 [label="GEP_string1"];
+    GEP_String2 [label="GEP_string2"];
+    GEP_Allocated_String [label="GEP_allocated_string"];
+    Load_String1 [label="load_string1"];
+    Load_String2 [label="load_string2"];
+    Store_String1 [label="store_string1"];
+    Store_String2 [label="store_string2"];
+    ICMP_Eq_1 [label="icmp_eq_1"];
+    ICMP_Eq_2 [label="icmp_eq_2"];
+    Branch_Condition [label="branch_condition"];
+    Branch_True [label="branch_true"];
+    Branch_False [label="branch_false"];
+    Call_Allocate_Memory [label="call_allocate_memory"];
+    Call_Copy_String [label="call_copy_string"];
+    Call_Deallocate_Memory [label="call_deallocate_memory"];
+    Exit [label="Function Exit"];
+
+    // Edges
+    Entry -> {Param_Vector Param_String1 Param_String2};
+    {Param_Vector Param_String1 Param_String2} -> {Alloca_i64_1 Alloca_i64_2 Alloca_String1 Alloca_String2 Alloca_String3};
+    {Alloca_i64_1 Alloca_i64_2 Alloca_String1 Alloca_String2 Alloca_String3} -> {GEP_String1 GEP_String2 GEP_Allocated_String};
+    {GEP_String1 GEP_String2} -> {Load_String1 Load_String2};
+    {Load_String1 Load_String2} -> {Store_String1 Store_String2};
+    {Load_String1 Load_String2} -> {ICMP_Eq_1 ICMP_Eq_2};
+    {ICMP_Eq_1 ICMP_Eq_2} -> {Branch_Condition};
+    Branch_Condition -> {Branch_True Branch_False};
+    Branch_True -> {Call_Allocate_Memory Call_Copy_String};
+    Branch_False -> {Call_Deallocate_Memory};
+    {Call_Allocate_Memory Call_Copy_String Call_Deallocate_Memory} -> Exit;
+}
+```
+
+### Visualization
+You can visualize this graph using graph visualization tools that support the dot format, such as Graphviz. To do this, save the dot code into a `.dot` file and use the command line to generate an image:
+
+```bash
+dot -Tpng your_graph.dot -o output.png
+```
+
+This will create a visual representation of the data flow graph, showing the dependencies and flow of data through the operations and control structures within the IR code.

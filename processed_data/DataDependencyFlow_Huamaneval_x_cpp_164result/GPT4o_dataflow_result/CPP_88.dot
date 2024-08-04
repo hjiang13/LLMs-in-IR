@@ -1,0 +1,106 @@
+To create a data flow graph from the provided intermediate representation (IR) code, we will identify key variables, operations, and function calls that will serve as nodes in the graph. Each node will represent either a variable or a computation/operation, and directed edges will illustrate how data flows between these nodes, highlighting dependencies.
+
+### Nodes and Edges
+
+#### Nodes
+1. **Function Node**: `_Z10sort_arraySt6vectorIiSaIiEE`
+   - Represents the main function that sorts an array.
+
+2. **Variable Nodes**:
+   - `%0`: Output vector (result of sorting).
+   - `%1`: Input vector (to be sorted).
+   - `%4`, `%6`: Pointers to data in the vectors.
+   - `%10`: Computed value representing the size of the vector.
+   - `%15`, `%18`: Intermediate values for calculations.
+   - `%19`: Result of an addition operation.
+   - `%20`, `%21`: Results of comparisons and conditions.
+   - `%22`: Pointer to the input vector in some comparisons.
+   - `%24`: Output of a `shufflevector` operation.
+   - `%33`: Final result stored in the output vector.
+   - `%49`, `%50`: Values used for further calculations.
+
+3. **Operation Nodes**:
+   - `load`: Represents loading data from memory.
+   - `add`: Represents addition operations.
+   - `sub`: Represents subtraction operations.
+   - `icmp`: Represents integer comparisons.
+   - `br`: Represents branching based on conditions.
+   - `call`: Function call operations (e.g., to `@llvm.memset.p0i8.i64`).
+
+4. **Function Call Nodes**:
+   - `@llvm.memset.p0i8.i64`: Called to set memory for the vectors.
+   - `@__gxx_personality_v0`: C++ personality function for exception handling.
+   - `_ZSt16__introsort_loop...`: Internal sorting loops.
+   - `_ZSt22__final_insertion_sort...`: Final insertion sort.
+   - `_Znwm`: Memory allocation function.
+
+#### Edges
+- **Data Flow Edges**:
+   - `Function Node` to `Variable Nodes`: Output vector `%0` is filled based on the input vector `%1`.
+   - From `%4` to `%6`: Data is loaded from the input vector.
+   - From `%10` to `%19`: Size is used in calculations.
+   - From `%15` to `%20`: Results of operations depend on previous calculations.
+   - Between `load` operations and their respective variable nodes, indicating data retrieval from memory.
+   - Between arithmetic operations (add, sub) and the variables they operate on, indicating the flow of computed values.
+   - From `icmp` nodes to `br` nodes, indicating control flow decisions based on comparisons.
+   - From the `call` nodes back to the `Function Node`, indicating that the function's result affects the overall data flow.
+
+### Suggested Visualization
+
+To visualize this graphically, you can use graph visualization tools like Graphviz. Here’s how the nodes and edges can be represented in a DOT format:
+
+```dot
+digraph DataFlowGraph {
+    rankdir=LR;
+    
+    // Function Node
+    sort_array [label="_Z10sort_arraySt6vectorIiSaIiEE", shape=box];
+
+    // Variable Nodes
+    output_vector [label="%0", shape=circle];
+    input_vector [label="%1", shape=circle];
+    ptr_data1 [label="%4", shape=circle];
+    ptr_data2 [label="%6", shape=circle];
+    size [label="%10", shape=circle];
+    intermediate1 [label="%15", shape=circle];
+    intermediate2 [label="%18", shape=circle];
+    result_add [label="%19", shape=circle];
+    result_compare [label="%20", shape=circle];
+    pointer_compare [label="%22", shape=circle];
+    shuffled_vector [label="%24", shape=circle];
+    final_result [label="%33", shape=circle];
+    value1 [label="%49", shape=circle];
+    value2 [label="%50", shape=circle];
+
+    // Function Call Nodes
+    memset [label="@llvm.memset.p0i8.i64", shape=ellipse];
+    personality [label="@__gxx_personality_v0", shape=ellipse];
+    introsort_loop [label="_ZSt16__introsort_loop...", shape=ellipse];
+    final_insertion_sort [label="_ZSt22__final_insertion_sort...", shape=ellipse];
+    malloc [label="_Znwm", shape=ellipse];
+
+    // Edges
+    sort_array -> output_vector;
+    sort_array -> input_vector;
+    output_vector -> ptr_data1;
+    input_vector -> ptr_data2;
+    size -> result_add;
+    intermediate1 -> result_compare;
+    intermediate2 -> pointer_compare;
+    result_add -> final_result;
+    result_compare -> memset;
+    pointer_compare -> introsort_loop;
+    final_result -> malloc;
+    memset -> sort_array;
+    introsort_loop -> final_insertion_sort;
+}
+```
+
+### Diagrammatic Representation
+In this diagram:
+- **Boxes** represent functions.
+- **Circles** represent variables.
+- **Ellipses** represent function calls.
+- **Directed edges** indicate the flow of data and dependencies between the nodes.
+
+This structure allows for an efficient understanding of how data moves through the IR code, highlighting dependencies between variables and operations. You can visualize it using tools like Graphviz to create a diagram from the DOT representation above.

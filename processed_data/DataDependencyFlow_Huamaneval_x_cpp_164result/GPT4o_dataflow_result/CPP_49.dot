@@ -1,0 +1,120 @@
+To generate a data flow graph from the provided Intermediate Representation (IR) code, we need to identify the nodes (variables, operations, and control structures) and the edges (data dependencies between nodes). Below is a detailed description of the data flow graph, followed by a representation in the DOT format.
+
+### Nodes
+
+1. **Inputs**
+   - `%0`: Input parameter 1
+   - `%1`: Input parameter 2
+
+2. **Basic Blocks**
+   - **BB0**: Initial comparison and branching
+     - `%3`: Comparison (`icmp sgt`) result
+   - **BB1**: Handling positive input
+     - `%5`: Calculation (`add`)
+     - `%6`: Calculation (`and`)
+     - `%7`: Comparison (`icmp ult`)
+   - **BB2**: Negative case handling
+     - `%9`: Calculation (`and`)
+   - **BB3**: Loop handling
+     - `%11`: Phi node (value from BB1 or BB2)
+     - `%12`: Phi node (initial value or from BB1)
+     - `%13`: Comparison (`icmp eq`)
+   - **BB4**: Loop body
+     - `%15`: Phi node (value from previous loop iteration or from BB3)
+     - `%16`: Phi node (value from previous loop iteration or from BB3)
+     - `%17`: Calculation (`shl`)
+     - `%18`: Calculation (`srem`)
+     - `%19`: Calculation (`add`)
+     - `%20`: Comparison (`icmp eq`)
+   - **BB5**: Final return
+     - `%22`: Phi node (final output value)
+
+3. **Loop Block**
+   - **BB6**: Loop continuation
+     - `%24`: Phi node (loop variable)
+     - `%25`: Phi node (calculated value)
+     - `%26`: Calculation (`shl`)
+     - `%27`: Calculation (`srem`)
+     - `%28`: Calculation (`shl`)
+     - `%29`: Calculation (`srem`)
+     - `%30`: Calculation (`shl`)
+     - `%31`: Calculation (`srem`)
+     - `%32`: Calculation (`shl`)
+     - `%33`: Calculation (`srem`)
+     - `%34`: Calculation (`add`)
+     - `%35`: Comparison (`icmp eq`)
+
+### Edges
+
+- **From Inputs to BB0**: 
+  - `%0` → `%3`
+  - `%1` → `%18` (used in calculations later)
+
+- **From BB0 to BB1**: 
+  - `%3` → `%5`, `%6`, `%7`
+
+- **From BB1 to BB2**: 
+  - `%5` → `%9` (only if branch taken)
+
+- **From BB1 to BB3**: 
+  - `%7` → BB3 (branch taken)
+
+- **From BB3 to BB4**: 
+  - `%11`, `%12` (phi values) → `%15`, `%16`
+  - `%13` → `%20`
+
+- **From BB4 to BB5**: 
+  - `%22` (final output) is derived from `%15`, `%18`, etc.
+
+- **From BB5 back to BB3**: 
+  - Loop controlled by `%20` and `%35`.
+
+- **From BB6 back to BB3**: 
+  - Loop variable `%24`, `%25` → Control flow of loop.
+
+### DOT Representation
+
+Here's how you would represent the above structure in DOT format:
+
+```dot
+digraph DataFlowGraph {
+    // Input Nodes
+    node [shape=circle];
+    Input0 [label="%0"];
+    Input1 [label="%1"];
+
+    // Basic Block Nodes
+    BB0 [label="BB0"];
+    BB1 [label="BB1"];
+    BB2 [label="BB2"];
+    BB3 [label="BB3"];
+    BB4 [label="BB4"];
+    BB5 [label="BB5"];
+    BB6 [label="BB6"];
+
+    // Add edges
+    Input0 -> BB0;
+    Input1 -> BB3; // As %1 is used in BB3.
+
+    BB0 -> BB1;
+    BB0 -> BB2; // Based on condition.
+
+    BB1 -> BB3; // Loop decision.
+
+    BB3 -> BB4; // Loop body.
+
+    BB4 -> BB5; // Final output.
+
+    BB5 -> BB3; // Loop back.
+
+    BB6 -> BB3; // Continuation of loop.
+}
+```
+
+### Visualization Suggestions
+
+To visualize this graph:
+1. Use a graph visualization tool such as Graphviz, which can interpret DOT files.
+2. The nodes can be represented as circles with labels indicating their purpose.
+3. Directed edges (arrows) should clearly show the flow of data from one node to the next, with the ability to highlight different paths based on the control flow structure (e.g., branching, looping).
+4. Consider using colors or different shapes for input nodes, basic blocks, and control structures to enhance clarity.

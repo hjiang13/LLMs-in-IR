@@ -1,0 +1,100 @@
+To represent the data flow in the provided Intermediate Representation (IR) code, we can outline a data flow graph using nodes and edges. Each node will represent either a variable or an operation, while edges will illustrate the data dependencies between these nodes. Below is the description of the nodes and edges, followed by a suggestion for visualizing the graph diagrammatically using the DOT language.
+
+### Data Flow Graph Description
+
+#### Nodes
+1. **Function Entry**: `_Z14circular_shiftB5cxx11ii`
+2. **Variables**:
+   - `%0`: Input string (type: `%"class.std::__cxx11::basic_string"*`)
+   - `%1`: Integer parameter
+   - `%2`: Integer parameter
+   - `%4`, `%5`, `%6`: Local variables (allocated on the stack)
+   - `%7`, `%8`, `%9`, `%10`, `%11`: Local `basic_string` objects (allocated on the stack)
+   - `%12`: Pointer to memory (type: `i8*`)
+   - `%13`: Pointer to the internal structure of `%7`
+   - `%19`: Pointer to `i8*` (represents the data in the string)
+   - `%20`, `%21`: Intermediate pointers for internal structure
+   - `%22`: Pointer to the internal structure of `%8`
+   - `%39`: Pointer to intermediate data storage
+   - `%56`: Pointer to resultant data storage (based on conditions)
+   - `%62`, `%63`: Temporary integer variables for calculations
+   - `%72`: Result of a comparison (used in a branch)
+   - `%74`: Result from another function call (to create or modify a string)
+   - `%215`: Pointer for the final string storage
+   - `%243`: Pointer for the string after copying or appending
+
+3. **Operations**:
+   - `alloca`: Memory allocation for local variables
+   - `call`: Function calls (e.g., `@llvm.lifetime.start`, `@llvm.memcpy`, etc.)
+   - `load`: Loading values from specified memory locations
+   - `store`: Storing values into specified memory locations
+   - `icmp`: Integer comparison operations
+   - `getelementptr`: Pointer arithmetic to access elements within structures
+
+4. **Control Flow**:
+   - `invoke`: Invocation of functions with possible exceptions
+   - `br`: Branching statements that direct the flow depending on conditions
+   - `switch`: Switch statements for multi-way branching
+
+#### Edges
+- **Input Parameters**: Connects `%0`, `%1`, and `%2` to the function entry node.
+- **Data Flow**:
+  - From `%0` to `%7` and `%8` as they are initialized.
+  - From `%7` to `%13`, representing the internal structure of the string being accessed.
+  - From `%19` to `%20`, illustrating the loading of internal data.
+  - From `%22` to `%21` as the internal structure of `%8` is accessed.
+  - Pointers `%39`, `%56`, `%62`, `%63`, etc., connect various computation results back into the flow.
+- **Function Calls**: Each `call` and `invoke` will connect to the respective operation nodes, showing where results are produced.
+- **Branching**: The edges will go from comparison operations (`icmp`) to their respective branches, depicting the control flow decisions.
+
+### Visualization in DOT Format
+You can visualize this graph using the DOT language as follows:
+
+```dot
+digraph DataFlowGraph {
+    // Nodes
+    Entry [label="Function Entry: _Z14circular_shiftB5cxx11ii"];
+    InputString [label="%0: Input String"];
+    Param1 [label="%1: Integer Parameter"];
+    Param2 [label="%2: Integer Parameter"];
+    LocalVar1 [label="%4: Local Var 1"];
+    LocalVar2 [label="%5: Local Var 2"];
+    LocalVar3 [label="%6: Local Var 3"];
+    BasicString1 [label="%7: Local basic_string"];
+    BasicString2 [label="%8: Local basic_string"];
+    Pointer1 [label="%12: Memory Pointer"];
+    Pointer2 [label="%13: Internal Pointer of %7"];
+    Pointer3 [label="%19: Pointer to data"];
+    Pointer4 [label="%22: Pointer to internal structure of %8"];
+    ResultPointer [label="%215: Result Pointer"];
+    FunctionCall [label="Function Call"];
+    
+    // Edges
+    Entry -> InputString;
+    Entry -> Param1;
+    Entry -> Param2;
+    Entry -> LocalVar1;
+    Entry -> LocalVar2;
+    Entry -> LocalVar3;
+    Entry -> BasicString1;
+    Entry -> BasicString2;
+    
+    InputString -> BasicString1;
+    BasicString1 -> Pointer2;
+    Pointer2 -> Pointer3;
+    BasicString2 -> Pointer4;
+    
+    Pointer3 -> ResultPointer;
+    
+    // More edges can be added based on specific operations, branching, etc.
+}
+```
+
+### Diagrammatic Visualization
+To visualize the above DOT format:
+1. Use a graph visualization tool such as Graphviz (http://www.graphviz.org/).
+2. Save the DOT code in a file (e.g., `data_flow_graph.dot`).
+3. Use the command line to generate an image: `dot -Tpng data_flow_graph.dot -o data_flow_graph.png`.
+4. Open the generated image file to view the data flow graph.
+
+This graph will provide a clear representation of how data flows through the function, highlighting variable dependencies and operations, making it easier to analyze the code structure and data transformations.

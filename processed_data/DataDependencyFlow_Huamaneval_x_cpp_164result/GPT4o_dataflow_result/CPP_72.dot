@@ -1,0 +1,108 @@
+To create a data flow graph (DFG) based on the provided intermediate representation (IR) code, we will identify key variables, operations, and control flow structures. The nodes will represent these elements, while the edges will represent the data dependencies between them.
+
+### Nodes:
+1. **Function: will_it_fly**
+2. **Load: %4** (Load from vector base data)
+3. **Load: %6** (Load from vector element)
+4. **Conversion: %7** (Pointer to integer conversion of %4)
+5. **Conversion: %8** (Pointer to integer conversion of %6)
+6. **Subtraction: %9** (Subtraction of %7 and %8)
+7. **Arithmetic Shift: %10** (Arithmetic right shift of %9)
+8. **Comparison: %11** (Comparison of %9 with 0)
+9. **Branch: %12** (Branch based on %11)
+10. **Call: llvm.umax.i64** (Call to the LLVM max function)
+11. **Phi: %15** (Phi node for %15)
+12. **Phi: %16** (Phi node for %16)
+13. **Get Element Pointer: %17** (Pointer to integer array access)
+14. **Load: %18** (Load integer from %17)
+15. **XOR: %19** (XOR operation on %15)
+16. **Addition: %20** (Addition operation)
+17. **Get Element Pointer: %21** (Pointer to next integer element)
+18. **Load: %22** (Load integer from %21)
+19. **Comparison: %23** (Compare %18 and %22)
+20. **Branch: %24** (Branch based on %23)
+21. **Addition: %25** (Addition operation for loop increment)
+22. **Increment: %26** (Increment operation)
+23. **Comparison: %27** (Comparison for loop condition)
+24. **Branch: %28** (Branch to loop check)
+25. **Phi: %29** (Loop iteration variable)
+26. **Comparison: %30** (Comparison of %29 and %1)
+27. **Return: %32** (Return statement)
+
+### Edges (Data Dependencies):
+- **Function: will_it_fly** → **Load: %4**
+- **Load: %4** → **Conversion: %7**
+- **Load: %6** → **Conversion: %8**
+- **Conversion: %7** → **Subtraction: %9**
+- **Conversion: %8** → **Subtraction: %9**
+- **Subtraction: %9** → **Arithmetic Shift: %10**
+- **Subtraction: %9** → **Comparison: %11**
+- **Arithmetic Shift: %10** → **Comparison: %11**
+- **Comparison: %11** → **Branch: %12**
+- **Branch: %12** → **Call: llvm.umax.i64**
+- **Call: llvm.umax.i64** → **Phi: %15**
+- **Branch: %12** → **Phi: %16**
+- **Phi: %15** → **Get Element Pointer: %17**
+- **Load: %6** → **Get Element Pointer: %17**
+- **Get Element Pointer: %17** → **Load: %18**
+- **Load: %18** → **XOR: %19**
+- **Phi: %15** → **Addition: %20**
+- **Addition: %20** → **Get Element Pointer: %21**
+- **Get Element Pointer: %21** → **Load: %22**
+- **Load: %22** → **Comparison: %23**
+- **Comparison: %18** → **Comparison: %23**
+- **Comparison: %23** → **Branch: %24**
+- **Branch: %24** → **Addition: %25**
+- **Addition: %25** → **Increment: %26**
+- **Increment: %26** → **Comparison: %27**
+- **Comparison: %27** → **Branch: %28**
+- **Branch: %28** → **Phi: %29**
+- **Phi: %29** → **Comparison: %30**
+- **Comparison: %30** → **Return: %32**
+
+### Dot File Representation
+The following is a dot representation of the above data flow graph:
+
+```dot
+digraph DFG {
+    rankdir=LR;
+    
+    Function_will_it_fly -> Load_%4;
+    Load_%4 -> Conversion_%7;
+    Load_%6 -> Conversion_%8;
+    Conversion_%7 -> Subtraction_%9;
+    Conversion_%8 -> Subtraction_%9;
+    Subtraction_%9 -> Arithmetic_Shift_%10;
+    Subtraction_%9 -> Comparison_%11;
+    Arithmetic_Shift_%10 -> Comparison_%11;
+    Comparison_%11 -> Branch_%12;
+    Branch_%12 -> Call_llvm_umax_i64;
+    Call_llvm_umax_i64 -> Phi_%15;
+    Branch_%12 -> Phi_%16;
+    Phi_%15 -> Get_Element_Pointer_%17;
+    Load_%6 -> Get_Element_Pointer_%17;
+    Get_Element_Pointer_%17 -> Load_%18;
+    Load_%18 -> XOR_%19;
+    Phi_%15 -> Addition_%20;
+    Addition_%20 -> Get_Element_Pointer_%21;
+    Get_Element_Pointer_%21 -> Load_%22;
+    Load_%22 -> Comparison_%23;
+    Comparison_%18 -> Comparison_%23;
+    Comparison_%23 -> Branch_%24;
+    Branch_%24 -> Addition_%25;
+    Addition_%25 -> Increment_%26;
+    Increment_%26 -> Comparison_%27;
+    Comparison_%27 -> Branch_%28;
+    Branch_%28 -> Phi_%29;
+    Phi_%29 -> Comparison_%30;
+    Comparison_%30 -> Return_%32;
+}
+```
+
+### Visualization
+To visualize this graph:
+1. Use a **graph visualization tool** like Graphviz, which can render the dot format into a graphical representation.
+2. The nodes can be represented as circles or boxes, with the edges depicted as directed arrows showing the flow of data between them.
+3. By arranging the nodes, you can identify how data flows through the function and where the dependencies lie, which can help in understanding the computational logic of the IR code.
+
+This DFG provides a clear view of how each variable and operation interconnects, revealing the structure and dependencies within the function's implementation.

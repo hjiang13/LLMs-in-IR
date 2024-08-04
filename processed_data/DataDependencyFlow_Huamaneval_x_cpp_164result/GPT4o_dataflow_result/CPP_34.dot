@@ -1,0 +1,111 @@
+To represent the data flow graph of the provided intermediate representation (IR) code, we will summarize the key operations and variables, denoting them as nodes, and outline the relationships (dependencies) between them as edges. Below is a structured outline of the graph, followed by a suggested visualization in dot format.
+
+### Nodes
+
+1. **Function Nodes**
+   - `_Z6uniqueSt6vectorIiSaIiEE` (Main function)
+   - `@llvm.memset.p0i8.i64`
+   - `@llvm.ctlz.i64`
+   - `_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_`
+   - `_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_`
+   - `_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_RT0_`
+   - `_ZdlPv`
+   - `_ZSt20__throw_length_errorPKc`
+
+2. **Variable Nodes**
+   - `%0`, `%1`, `%2`, `%3`, `%4` (Various pointers to vector data)
+   - `%5`, `%6`, `%7` (Pointer to allocated memory)
+   - `%8` (Bitcast pointer)
+   - `%9`, `%10`, `%11` (Loaded values)
+   - `%12`, `%13` (Comparison results)
+   - `%14`, `%15` (Intermediate results)
+   - `%16`, `%17`, `%18`, `%19`, `%20`, `%21`, `%22`, `%23`, `%24`, `%25`, `%26` (Various integer and pointer calculations)
+
+3. **Control Flow Nodes**
+   - Branch nodes: `br i1 %11`, `br i1 %13`, `br i1 %34`, etc.
+   - Invoke nodes: `invoke void @_ZSt16__introsort_loop...`
+   - Return nodes: `ret void`
+
+### Edges
+
+- **Data Dependencies**:
+  - From `%1` to `%3`, `%4`, representing the loading of vector elements.
+  - From `%3` and `%4` to `%9` and `%10`, where values are compared.
+  - From `%9`, `%10` to `%11`, indicating the result of the comparison.
+  - From `%11` to the conditional branches, leading to various function calls based on conditions.
+  - From various computations (e.g., `%12`, `%13`, `%15`) to subsequent operations.
+  - From function calls back to variables representing their return values or side effects.
+
+### Dot File Representation
+
+Below is a simplified dot representation of the data flow graph, which can be visualized using Graphviz:
+
+```dot
+digraph DataFlowGraph {
+    // Function Nodes
+    node [shape=box];
+    func1 [label="_Z6uniqueSt6vectorIiSaIiEE"];
+    func2 [label="@llvm.memset.p0i8.i64"];
+    func3 [label="@llvm.ctlz.i64"];
+    func4 [label="_ZSt16__introsort_loop..."];
+    func5 [label="_ZSt22__final_insertion_sort..."];
+    func6 [label="_ZSt11__make_heap..."];
+    func7 [label="_ZdlPv"];
+    func8 [label="_ZSt20__throw_length_errorPKc"];
+
+    // Variable Nodes
+    var0 [label="%0"];
+    var1 [label="%1"];
+    var2 [label="%2"];
+    var3 [label="%3"];
+    var4 [label="%4"];
+    var5 [label="%5"];
+    var6 [label="%6"];
+    var7 [label="%7"];
+    var8 [label="%8"];
+    var9 [label="%9"];
+    var10 [label="%10"];
+
+    // Control Flow Nodes
+    branch1 [label="br i1 %11"];
+    branch2 [label="br i1 %13"];
+    branch3 [label="br i1 %34"];
+    
+    // Function Calls
+    func1 -> var0;
+    func1 -> func2;
+    func1 -> func3;
+    func1 -> func4;
+    func1 -> func5;
+    func1 -> func6;
+    func1 -> func7;
+    func1 -> func8;
+    
+    // Variable Dependencies
+    var1 -> var3;
+    var1 -> var4;
+    var3 -> var9;
+    var4 -> var10;
+
+    // Control Flow
+    var11 -> branch1;
+    var13 -> branch2;
+    var34 -> branch3;
+
+    // Edges for more detailed flow
+    func2 -> var0;
+    func3 -> var1;
+}
+```
+
+### Visualization
+
+To visualize this graph:
+1. Save the dot representation to a file (e.g., `data_flow_graph.dot`).
+2. Use Graphviz to render the graph:
+   ```sh
+   dot -Tpng data_flow_graph.dot -o data_flow_graph.png
+   ```
+3. Open the resulting image to see the data flow graph.
+
+This outline captures the core structure and relationships of the data flow in the provided IR code, allowing for analysis of variable dependencies and control flow.

@@ -1,0 +1,128 @@
+To create a data flow graph based on the provided IR code, we will focus on the key elements: variables, operations, and control flow structures. Here's a detailed outline of the nodes and edges, followed by a suggestion on how to visualize it.
+
+### Data Flow Graph Outline
+
+#### Nodes:
+1. **Input Parameter**
+   - `arg0`: Input argument `%0` (of type `i32`)
+
+2. **Allocation**
+   - `alloca`: Allocated array `%2` of type `[100 x i32]`
+
+3. **Lifetime Start**
+   - `lifetime_start`: Call to `@llvm.lifetime.start.p0i8`
+
+4. **Initialization**
+   - `init`: Store `<4 x i32>` into `%4`
+
+5. **Comparison**
+   - `icmp_slt`: Comparison `%5` (result of `icmp slt i32 %0, 4`)
+
+6. **Branch**
+   - `branch_cond1`: Branch based on `%5`
+
+7. **Increment**
+   - `increment`: Calculate `%7` (result of `add nuw i32 %0, 1`)
+
+8. **Store Value**
+   - `store_value`: Store `2` into `%8`
+
+9. **Comparison**
+   - `icmp_eq_5`: Comparison `%9` (result of `icmp eq i32 %7, 5`)
+
+10. **Branch**
+    - `branch_cond2`: Branch based on `%9`
+
+11. **Zero-Extension**
+    - `zext`: Zero-extend `%11` to `%12`
+
+12. **Bitwise AND**
+    - `bitwise_and`: Result of `and i64 %11, 1`
+
+13. **Comparison**
+    - `icmp_eq_6`: Comparison `%13` (result of `icmp eq i32 %7, 6`)
+
+14. **Branch**
+    - `branch_cond3`: Branch based on `%13`
+
+15. **Arithmetic Operations**
+    - `arithmetic_neg`: Result of `add nsw i64 %11, -4`
+    - `arithmetic_bitwise`: Result of `and i64 %15, -2`
+
+16. **Phi Nodes**
+    - `phi_1`: Result of `phi i64` (for variable tracking)
+    - `phi_2`: Result of `phi i32` (for variable tracking)
+    - `phi_3`: Result of `phi i64` (for variable tracking)
+    - `phi_4`: Result of `phi i32` (for variable tracking)
+
+17. **Final Store**
+    - `final_store`: Store final value into the allocated array
+
+18. **Lifetime End**
+    - `lifetime_end`: Call to `@llvm.lifetime.end.p0i8`
+
+19. **Return**
+    - `return_value`: Return value from the function (final loaded value)
+
+#### Edges:
+1. `arg0 -> branch_cond1`: Input argument influences the first branch.
+2. `branch_cond1 -> increment`: If condition is true, flow moves to increment.
+3. `increment -> store_value`: Incremented value is stored.
+4. `branch_cond1 -> branch_cond2`: If condition false, it jumps to branch 2.
+5. `branch_cond2 -> zero_extension`: Condition leads to zero-extension.
+6. `zero_extension -> bitwise_and`: Results in bitwise operation.
+7. `bitwise_and -> branch_cond3`: Controls next flow based on bitwise result.
+8. `branch_cond3 -> arithmetic_neg`: If true, moves to arithmetic negation.
+9. `arithmetic_neg -> final_store`: Negated value flows to the final store.
+10. `phi_1, phi_2, phi_3, phi_4 -> final_store`: Phi nodes aggregate values from different paths.
+11. `final_store -> return_value`: Final stored value is returned.
+
+### Visualization Suggestion
+To visualize the data flow graph, you can use the DOT language, which is part of Graphviz. Here’s how you might represent this in DOT format:
+
+```dot
+digraph DataFlowGraph {
+    rankdir=LR;
+
+    arg0 [label="Input Argument (arg0)"];
+    alloca [label="Alloc Array (alloca)"];
+    lifetime_start [label="Lifetime Start"];
+    init [label="Initialization"];
+    icmp_slt [label="icmp_slt"];
+    branch_cond1 [label="Branch Cond (branch_cond1)"];
+    increment [label="Increment"];
+    store_value [label="Store Value"];
+    icmp_eq_5 [label="icmp_eq_5"];
+    branch_cond2 [label="Branch Cond (branch_cond2)"];
+    zext [label="Zero-Extension"];
+    bitwise_and [label="Bitwise AND"];
+    icmp_eq_6 [label="icmp_eq_6"];
+    branch_cond3 [label="Branch Cond (branch_cond3)"];
+    arithmetic_neg [label="Arithmetic Negation"];
+    phi_1 [label="Phi Node 1"];
+    phi_2 [label="Phi Node 2"];
+    phi_3 [label="Phi Node 3"];
+    phi_4 [label="Phi Node 4"];
+    final_store [label="Final Store"];
+    lifetime_end [label="Lifetime End"];
+    return_value [label="Return Value"];
+
+    arg0 -> branch_cond1;
+    branch_cond1 -> increment;
+    increment -> store_value;
+    branch_cond1 -> branch_cond2;
+    branch_cond2 -> zext;
+    zext -> bitwise_and;
+    bitwise_and -> branch_cond3;
+    branch_cond3 -> arithmetic_neg;
+    arithmetic_neg -> final_store;
+    { rank=same; phi_1; phi_2; phi_3; phi_4; }
+    phi_1 -> final_store;
+    phi_2 -> final_store;
+    phi_3 -> final_store;
+    phi_4 -> final_store;
+    final_store -> return_value;
+}
+```
+
+This DOT representation captures the essential flow of data and control through the IR code, making it suitable for visualization using Graphviz tools. You can render this by saving it to a `.dot` file and using Graphviz to generate an image.

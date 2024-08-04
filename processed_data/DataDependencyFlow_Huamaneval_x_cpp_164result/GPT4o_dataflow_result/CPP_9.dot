@@ -1,0 +1,95 @@
+To create a data flow graph (DFG) from the provided intermediate representation (IR) code, we will identify the key nodes (representing operations, variables, and control flow structures) and the edges (representing dependencies and data flow). 
+
+### Nodes and Edges
+
+**Nodes:**
+- **Function Node:** `_Z11rolling_maxSt6vectorIiSaIiEE` - Entry point of the function.
+- **Memory Operations:**
+  - `llvm.memset` - Zeroes out memory.
+  - `load` - Loads data from memory.
+  - `store` - Stores data to memory.
+- **Control Flow Nodes:**
+  - `br` - Conditional branches.
+  - `phi` - Merges different control flow paths.
+  - `invoke` - Invokes a function which may throw.
+- **Comparisons and Calculations:**
+  - `icmp` - Compares values.
+  - `select` - Chooses between two values based on a condition.
+  - `add`, `sub`, `shl`, `ashr` - Mathematical operations.
+- **Error Handling:**
+  - `_ZSt20__throw_length_errorPKc` - Throws an error.
+  - `_ZdlPv` - Deallocates memory.
+
+**Edges:**
+- Connect nodes based on the flow of data.
+- For example, the result of a `load` operation feeds into a subsequent `icmp` or `select`.
+- The output of branch conditions influences which path is followed (e.g., `br i1 %11`).
+
+### DFG Representation in DOT Format
+
+Below is a simplified representation of the DFG in DOT format. Each node represents key operations or data elements, and edges depict the flow of data.
+
+```dot
+digraph DataFlowGraph {
+    rankdir=LR;
+
+    // Function node
+    func [label="_Z11rolling_maxSt6vectorIiSaIiEE", shape=box];
+
+    // Memory operations
+    memset [label="llvm.memset", shape=box];
+    load1 [label="load %9", shape=box];
+    load2 [label="load %10", shape=box];
+    store1 [label="store %24", shape=box];
+    store2 [label="store %58", shape=box];
+    store3 [label="store %63", shape=box];
+
+    // Control flow
+    branch1 [label="br %11", shape=diamond];
+    branch2 [label="br %25", shape=diamond];
+    phi1 [label="phi %14", shape=box];
+    phi2 [label="phi %15", shape=box];
+
+    // Comparisons and calculations
+    cmp1 [label="icmp eq %11", shape=diamond];
+    cmp2 [label="icmp sgt %22", shape=diamond];
+    add1 [label="add %32", shape=box];
+
+    // Error handling
+    throw_error [label="_ZSt20__throw_length_errorPKc", shape=box];
+    dealloc [label="_ZdlPv", shape=box];
+
+    // Edges
+    func -> memset;
+    func -> load1;
+    func -> load2;
+    memset -> load1;
+    load1 -> cmp1;
+    load2 -> cmp1;
+    cmp1 -> branch1 [label="true"];
+    cmp1 -> branch2 [label="false"];
+    branch1 -> store1;
+    branch2 -> phi1;
+    phi1 -> store2;
+    phi2 -> store3;
+    store1 -> add1;
+    add1 -> throw_error;
+    cmp2 -> dealloc;
+}
+```
+
+### Visualization Suggestion
+
+To visualize this data flow graph:
+
+1. **Graphviz**: Use Graphviz, a powerful graph visualization tool, to render the DOT file. You can save the above DOT code in a file (e.g., `dfg.dot`) and run:
+   ```bash
+   dot -Tpng dfg.dot -o dfg.png
+   ```
+   This will generate a PNG image of the graph.
+
+2. **Online Graph Visualization Tools**: You can also use online platforms like `WebGraphviz` or `Viz.js` to paste the DOT format and generate graphs directly in a browser.
+
+3. **Diagramming Tools**: Utilize diagramming tools like Lucidchart or draw.io, where you can manually create boxes and connect them based on the edge descriptions.
+
+This DFG captures the flow of data and dependencies in the provided IR code, allowing for easier analysis and understanding of the operations involved.

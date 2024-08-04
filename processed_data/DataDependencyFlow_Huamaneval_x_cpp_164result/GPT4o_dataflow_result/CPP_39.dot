@@ -1,0 +1,138 @@
+To generate a data flow graph from the provided intermediate representation (IR) code, we will identify the key variables, operations, and control flow structures. Each node in the graph will represent a significant variable or operation, while the edges will indicate the dependencies between them.
+
+### Nodes in the Data Flow Graph
+
+1. **Function Entry**: `_Z9prime_fibi(i32 %0)` - The entry point of the function.
+2. **Basic Block 2**: 
+    - **`%3`**: `phi` operation (from `%1` and `%19`)
+    - **`%4`**: `phi` operation (from `%1` and `%19`)
+    - **`%5`**: `phi` operation (from `%1` and `%19`)
+    - **`%6`**: `icmp slt i32 %5, %0` - Comparison operation.
+    - **`@llvm.assume`**: Function call based on the result of `%6`.
+    - **`%7`**: `add nsw i32 %4, %3` - Addition operation.
+    - **`%8`**: `icmp slt i32 %4, 4` - Comparison for control flow.
+3. **Basic Block 9**: 
+    - **`%10`**: `phi` operation (from `%2` and `%9`)
+    - **`%11`**: `srem i32 %4, %10` - Remainder operation.
+    - **`%12`**: `icmp eq i32 %11, 0` - Comparison operation.
+    - **`%13`**: `add nuw nsw i32 %10, 1` - Increment operation.
+    - **`%14`**: `mul nsw i32 %13, %13` - Multiplication operation.
+    - **`%15`**: `icmp sgt i32 %14, %4` - Comparison operation.
+    - **`%16`**: `select` operation based on `%12` and `%15`.
+4. **Basic Block 17**: 
+    - **`%18`**: `xor i1 %12, true` - XOR operation.
+5. **Basic Block 19**: 
+    - **`%20`**: `phi i1 [ true, %2 ], [ %18, %17 ]` - Conditional assignment.
+    - **`%21`**: `zext i1 %20 to i32` - Zero extension.
+    - **`%22`**: `add nuw nsw i32 %5, %21` - Addition operation.
+    - **`%23`**: `icmp eq i32 %22, %0` - Comparison operation.
+6. **Basic Block 24**: 
+    - **Return Value**: `ret i32 %4` - Return statement.
+
+### Edges in the Data Flow Graph
+
+- **Control Flow Edges**:
+    - From **Function Entry** to **Basic Block 2**.
+    - From **Basic Block 2** to **Basic Block 9** (if condition `%8` is true) and back to **Basic Block 2** (if `%23` is false).
+    - From **Basic Block 9** to **Basic Block 17** (if `%16` is true) and back to **Basic Block 9** (if false).
+    - From **Basic Block 17** back to **Basic Block 19**.
+    - From **Basic Block 19** to **Basic Block 24** (if `%23` is true) and back to **Basic Block 2** (if false).
+
+- **Data Dependency Edges**:
+    - `%3`, `%4`, `%5` are inputs to `%6`, `%7`, and `%8`.
+    - `%10` feeds into `%11`, `%12`, and `%13`.
+    - `%13` feeds into `%14`.
+    - `%12`, `%15` feed into `%16`.
+    - `%20` is derived from `%2` and `%18`.
+    - `%21` is derived from `%20`.
+    - `%22` is derived from `%5` and `%21`.
+    - `%23` is derived from `%22` and `%0`.
+
+### Dot Format Representation
+
+The following is a dot representation of the data flow graph:
+
+```dot
+digraph DataFlowGraph {
+    rankdir=LR; // Left to Right orientation
+
+    // Nodes
+    FunctionEntry [label="_Z9prime_fibi(i32 %0)"];
+    Block2 [label="Basic Block 2"];
+    Block9 [label="Basic Block 9"];
+    Block17 [label="Basic Block 17"];
+    Block19 [label="Basic Block 19"];
+    Block24 [label="Basic Block 24"];
+    
+    // Data nodes
+    phi3 [label="%3 (phi)"];
+    phi4 [label="%4 (phi)"];
+    phi5 [label="%5 (phi)"];
+    icmp6 [label="%6 (icmp)"];
+    llvm_assume [label="@llvm.assume"];
+    add7 [label="%7 (add)"];
+    icmp8 [label="%8 (icmp)"];
+    
+    phi10 [label="%10 (phi)"];
+    srem11 [label="%11 (srem)"];
+    icmp12 [label="%12 (icmp)"];
+    add13 [label="%13 (add)"];
+    mul14 [label="%14 (mul)"];
+    icmp15 [label="%15 (icmp)"];
+    select16 [label="%16 (select)"];
+    
+    xor18 [label="%18 (xor)"];
+    
+    phi20 [label="%20 (phi)"];
+    zext21 [label="%21 (zext)"];
+    add22 [label="%22 (add)"];
+    icmp23 [label="%23 (icmp)"];
+    
+    // Edges
+    FunctionEntry -> Block2;
+    Block2 -> Block9; // Control flow
+    Block2 -> Block24; // Control flow for return
+
+    Block9 -> Block17; // Control flow
+    Block9 -> Block19; // Control flow for looping
+    Block17 -> Block19; // Control flow
+
+    Block19 -> Block24; // Return edge
+    Block19 -> Block2; // Loop back edge
+
+    // Data dependencies
+    Block2 -> phi3;
+    Block2 -> phi4;
+    Block2 -> phi5;
+
+    phi3 -> icmp6;
+    phi4 -> add7;
+    phi5 -> add7;
+    add7 -> icmp8; // Data dependency
+
+    Block9 -> phi10;
+    phi10 -> srem11;
+    srem11 -> icmp12;
+    phi10 -> add13;
+    add13 -> mul14;
+    mul14 -> icmp15;
+    
+    icmp12 -> select16;
+    icmp15 -> select16;
+
+    Block17 -> xor18; // Data dependency
+    Block19 -> phi20;
+    phi20 -> zext21;
+    zext21 -> add22;
+    add22 -> icmp23;
+}
+```
+
+### Visualization Suggestions
+
+To visualize the graph:
+- Use tools like Graphviz to render the `.dot` file into a graphical representation.
+- Each variable and operation can be represented as nodes, with directed edges illustrating the flow of data and control.
+- Color coding can be used to distinguish between operations (e.g., arithmetic, comparison, phi) and control flow (regular vs. conditional branches).
+
+This graph will clearly illustrate the data dependencies and control flow present in the provided IR code.
