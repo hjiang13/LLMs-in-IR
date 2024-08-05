@@ -1,0 +1,66 @@
+</details>
+
+  - Please submit your code, including:
+    - your recurrent neural network (RNN) model (`.py` file)
+    - your model weights that you obtained during training (`.pt` file)
+
+### Submission
+
+- deadline: *2022-03-17* 17:00
+- format: zip file containing your code and weights
+- please submit your model on Canvas.
+
+### Testing your model
+
+- We will use your model to test it in 3 different tasks:
+  - in `controlflow_prediction` task, the task name will be given
+  - in `controlflow_prediction` and `dataflow_prediction` tasks, the task name will be omitted
+- To test your model, we will use the following command:
+
+  ```bash
+  python test.py --data_dir=/path/to/data/dir  \
+  --task_name=task_name \
+  --model=your_model \
+  --model_checkpoint=/path/to/model/checkpoint/dir/or/file \
+  --output_dir=/path/to/output/dir \
+  --batch_size=batch_size
+  ```
+
+- `test.py` will:
+  - create the model (`RNNModel` or `LSTMModel`)
+  - load model weights
+  - load the following data files from `--data_dir`:
+    - `task_name.train.txt`
+    - `task_name.valid.txt`
+    - `task_name.test.txt` (if the task name is given)
+  - create the following output files in `--output_dir`:
+    - `task_name.valid.pred.txt`
+    - `task_name.test.pred.txt` (if the task name is given)
+  - the log info will be printed to the screen.
+
+### Evaluation
+
+- We will mainly focus on the accuracy of your predictions and the quality of your generated code.
+- You can use the following command to evaluate your predictions:
+
+  ```bash
+  python evaluate.py --data_dir=/path/to/data/dir  \
+  --task_name=task_name \
+  --output_dir=/path/to/output/dir
+  ```
+
+- `evaluate.py` will:
+  - load the following data files from `--data_dir`:
+    - `task_name.train.txt`
+    - `task_name.valid.txt`
+    - `task_name.test.txt` (if the task name is given)
+  - load the following prediction files from `--output_dir`:
+    - `task_name.valid.pred.txt`
+    - `task_name.test.pred.txt` (if the task name is given)
+  - print the accuracy of your predictions to the screen.
+  - print the BLEU scores of your generated code to the screen.
+
+### Reference
+
+- [https://github.com/microsoft/CodeXGLUE/tree/main/Code-Code/CodeCompletion-token](https://github.com/microsoft/CodeXGLUE/tree/main/Code-Code/CodeCompletion-token)
+- [https://github.com/pytorch/examples/tree/main/word_language_model](https://github.com/pytorch/examples/tree/main/word_language_model)

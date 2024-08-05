@@ -1,0 +1,60 @@
+<|im_end|>
+```
+
+## How to use
+
+### Using this model directly
+
+```python
+from transformers import AutoModelForCausalLM, AutoTokenizer
+
+tokenizer = AutoTokenizer.from_pretrained("mistupv/code_auto_regressive")
+model = AutoModelForCausalLM.from_pretrained("mistupv/code_auto_regressive")
+prompt = "def f(x):#@1@#return x*x#@2@#"
+input_ids = tokenizer(prompt, return_tensors="pt").input_ids
+sample_outputs = model.generate(input_ids, max_length=20,
+                                num_beams=5,
+                                no_repeat_ngram_size=3,
+                                early_stopping=True,
+                                temperature=1.0,
+                                top_k=0,
+                                top_p=0.8,
+                                repetition_penalty=1.0,
+                                length_penalty=1.0,
+                                bad_words_ids=[[628], [198]]
+                                )
+```
+
+### Fine-tuning this model
+
+```python
+from transformers import AutoModelForCausalLM, AutoTokenizer, DataCollatorForLanguageModeling, Trainer, TrainingArguments
+
+# Prepare dataset and tokenizer
+dataset = load_dataset("code_docstring", "python")
+tokenizer = AutoTokenizer.from_pretrained("mistupv/code_auto_regressive")
+dataset.set_transform(
+    lambda examples: tokenizer(examples["docstring"], examples["code"], truncation=True, max_length=4096)
+)
+# Prepare model
+model = AutoModelForCausalLM.from_pretrained("mistupv/code_auto_regressive")
+# Preprocess dataset
+data_collator = DataCollatorForLanguageModeling(tokenizer=tokenizer, mlm=False)
+# Train model
+training_args = TrainingArguments(output_dir="./results", save_steps=500000, save_total_limit=2,
+                                  per_device_train_batch_size=16,
+                                  per_device_eval_batch_size=16,
+                                  evaluation_strategy="steps",
+                                  eval_steps=500000,
+                                  num_train_epochs=1,
+                                  learning_rate=5e-4,
+                                  logging_steps=500000,
+                                  logging_dir='./logs',
+                                  run_name='Fine-tuning code auto-regressive model',
+                                  load_best_model_at_end=True,
+                                  report_to="none",
+                                  push_to_hub=False)
+trainer = Trainer(model=model, args=training_args,
+                  data_collator=data_collator, train_dataset=dataset["train"])
+trainer.train()
+```

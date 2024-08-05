@@ -1,0 +1,104 @@
+You can use the IR to get the results but remember that you need to detect the data dependency and control dependence.
+       
+       Here is your output:
+       ```
+       <|im_start|>
+node 0:
+        title: "ROOT"  
+        type: "root"  
+        text: ""  
+node 1:
+        title: "Entry"  
+        type: "entry"  
+        text: ""  
+node 2:
+        title: "BB1"  
+        type: "BB"  
+        text: "label %128"  
+node 3:
+        title: "BB2"  
+        type: "BB"  
+        text: "label %8"  
+node 4:
+        title: "BB3"  
+        type: "BB"  
+        text: "label %15"  
+node 5:
+        title: "BB4"  
+        type: "BB"  
+        text: "label %42"  
+edge 0:
+        source: 0
+        target: 1
+        type: "source-target"  
+edge 1:
+        source: 1
+        target: 2
+        type: "source-target"  
+edge 2:
+        source: 1
+        target: 3
+        type: "source-target"  
+edge 3:
+        source: 2
+        target: 4
+        type: "source-target"  
+edge 4:
+        source: 3
+        target: 4
+        type: "source-target"  
+edge 5:
+        source: 4
+        target: 3
+        type: "source-target"  
+edge 6:
+        source: 4
+        target: 2
+        type: "source-target"  
+<|im_end|>
+        ```
+       """
+      ),
+    ]
+    for example in examples:
+      example.set_defaults(data_dir=None, shuffle_buffer_size=20)
+
+
+class IR_ControlFlowProgramming(Task):
+  """Control flow graph programming problem."""
+
+  def __init__(self, config: configure.TaskConfig):
+    super().__init__(config)
+    self._ds = [
+        functools.partial(
+            ir_control_flow_dataset,
+            data_dir=config.data_dir,
+            shuffle_buffer_size=config.shuffle_buffer_size,
+        ),
+    ]
+
+
+def ir_control_flow_dataset(split, shuffle_files=False, data_dir=None,
+                            shuffle_buffer_size=None):
+  """Returns a tf.data.Dataset from ir control flow data."""
+
+  assert split in ["train", "test"]
+  assert data_dir is not None
+
+  if split == "train":
+    with tf.io.gfile.GFile(data_dir) as f:
+      dataset = tf.data.Dataset.from_tensor_slices(
+          tf.constant([json.loads(line) for line in f.readlines()],
+                      dtype=tf.string))
+  else:
+    dataset = data.TaskDataset(
+        split,
+        data_dir,
+        data.YesNoOutputFeature(
+            add_features=dict(inputs=data.TensorFeature)))
+  if shuffle_files:
+    dataset = dataset.shuffle(10)
+  if shuffle_buffer_size:
+    dataset = dataset.shuffle(shuffle_buffer_size)
+  dataset = dataset.repeat()
+  return dataset.prefetch(tf.data.experimental.AUTOTUNE)

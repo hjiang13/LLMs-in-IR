@@ -1,0 +1,23 @@
+"""
+
+    def get_story_templates(self):
+        return [self.story_template_one]
+
+
+class CppCompiler(Compiler):
+    def __init__(self, config_path=None):
+        super().__init__(config_path=config_path)
+        self.runner = CppInterpreter(config_path=config_path)
+        self.metrics = "bleu"
+
+    def setup_runner(self):
+        self.runner.setup()
+
+    def get_runner(self):
+        return self.runner
+
+    def compile_story(self, story_name, story_content):
+        return None
+
+    def predict(self, story_name, story_content):
+        return self.runner.run(story_content)

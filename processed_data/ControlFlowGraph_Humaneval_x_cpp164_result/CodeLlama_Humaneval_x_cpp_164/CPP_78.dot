@@ -1,0 +1,52 @@
+<|im_candidate|>
+<|im_end|>
+```
+
+#### Step 2: Convert the IR code into CFGs
+
+```
+g++ ir2cfg.cpp -o ir2cfg
+./ir2cfg <../IR_CFG_Test/CPP_78.ll 1>../IR_CFG_Test/CPP_78.cfg
+```
+
+#### Step 3: Train the models
+
+```
+python train.py --train_file ../IR_CFG_Test/CPP_78.cfg --dev_file ../IR_CFG_Test/GCC_24.cfg --output_dir ../IR_CFG_Test/output --do_train --num_train_epochs 30 --train_batch_size 4 --eval_batch_size 16 --learning_rate 2e-5 --max_grad_norm 1.0 --max_seq_length 128 --max_dialog_length 128 --seed 123456 2>&1 | tee ../IR_CFG_Test/output/log.txt
+```
+
+#### Step 4: Inference the models
+
+```
+python train.py --output_dir ../IR_CFG_Test/output --do_eval --eval_batch_size 16 --seed 123456 2>&1 | tee ../IR_CFG_Test/output/log.txt
+```
+
+#### Step 5: Convert the predicted CFGs into IRs
+
+```
+python cfg2ir.py --input_file ../IR_CFG_Test/CPP_78.ll --output_file ../IR_CFG_Test/CPP_78.ir --predict_file ../IR_CFG_Test/output/predictions.json
+```
+
+#### Step 6: Translate into assembly
+
+```
+clang -S -emit-llvm -O0 -fno-unroll-loops -flto=thin ../IR_CFG_Test/CPP_78.ir -o ../IR_CFG_Test/CPP_78.s
+```
+
+#### Step 7: Linking into executable
+
+```
+clang -O0 -fno-unroll-loops -flto=thin -fuse-ld=lld ../CPP_78.s main.cpp -o ../IR_CFG_Test/CPP_78.out
+```
+
+Step 8: Run the executable and get the result
+
+```
+./../IR_CFG_Test/CPP_78.out
+```
+
+#### Step 9: Compare the result with the original result
+
+```
+./../CPP_78.out
+```

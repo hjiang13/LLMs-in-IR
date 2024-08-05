@@ -1,0 +1,31 @@
+'''
+        # TODO: Your code goes here.
+        # I am ready for you.
+        # You can refer to https://networkx.org/documentation/stable/tutorial.html.
+        im_start_mark = '<|im_start|>'
+        im_end_mark = '<|im_end|>'
+        im_start_idx = ir_string.find(im_start_mark)
+        im_end_idx = ir_string.find(im_end_mark)
+        if im_start_idx == -1 or im_end_idx == -1:
+            print('missing im_start_idx or im_end_idx')
+            return
+        im_start_idx += len(im_start_mark)
+        ir_string = ir_string[im_start_idx: im_end_idx]
+        dot_lines = []
+        # TODO: Your code goes here.
+        # I am ready for you.
+        # You can refer to https://networkx.org/documentation/stable/tutorial.html.
+        return ir_string
+
+    def get_label(self, node):
+        if node not in self.nodes_info:
+            return None
+        else:
+            return self.nodes_info[node]
+
+    def get_cfg(self, ir_string):
+        ir_string = self.preprocess(ir_string)
+        self.instructions = self.parse_ir(ir_string)
+        self.nodes_info, self.edges_info = self.get_nodes_edges_info()
+        self.cfg = self.get_cfg_from_nodes_edges_info(self.nodes_info, self.edges_info)
+        return self.cfg

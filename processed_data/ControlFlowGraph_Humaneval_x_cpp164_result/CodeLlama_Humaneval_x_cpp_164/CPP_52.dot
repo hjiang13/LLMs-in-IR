@@ -1,0 +1,67 @@
+<|im_start|>system
+
+Here is a example:
+```
+digraph G {
+1[label="function_name()"];
+...
+}
+```
+<|im_end|>
+<|im_start|>user
+
+
+<|im_end|>"""
+
+# Handle "/stop" command
+def stop(update, context):
+    # Get user that sent /stop command
+    user = update.message.from_user
+    # Send goodbye message, 30 seconds time delay
+    update.message.reply_text(
+        'Thank you! We will stop our conversation.', reply_markup=ReplyKeyboardRemove()
+    )
+    context.user_data.clear()
+    logger.info("User %s canceled the conversation.", user.first_name)
+    return ConversationHandler.END
+
+
+def main():
+    # Create the Updater and pass it your bot's token.
+    # Make sure to set use_context=True to use the new context based callbacks
+    # Post version 12 this will no longer be necessary
+    updater = Updater("TOKEN", use_context=True)
+
+    # Get the dispatcher to register handlers
+    dp = updater.dispatcher
+
+    # Add conversation handler with the states GENDER, PHOTO, LOCATION and BIO
+    conv_handler = ConversationHandler(
+        entry_points=[CommandHandler('start', start)],
+        states={
+            GENDER: [MessageHandler(Filters.regex('^Boy|Girl$'), gender)],
+            PHOTO: [MessageHandler(Filters.photo, photo),
+                    CommandHandler('skip', skip_photo)],
+            LOCATION: [MessageHandler(Filters.location, location),
+                       CommandHandler('skip', skip_location)],
+            BIO: [MessageHandler(Filters.text, bio)]
+        },
+        fallbacks=[CommandHandler('cancel', cancel)]
+    )
+
+    dp.add_handler(conv_handler)
+
+    # log all errors
+    dp.add_error_handler(error)
+
+    # Start the Bot
+    updater.start_polling()
+
+    # Run the bot until you press Ctrl-C or the process receives SIGINT,
+    # SIGTERM or SIGABRT. This should be used most of the time, since
+    # start_polling() is non-blocking and will stop the bot gracefully.
+    updater.idle()
+
+
+if __name__ == '__main__':
+    main()

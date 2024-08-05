@@ -1,0 +1,80 @@
+```
+       digraph G {
+       label="";
+       labelloc="t";
+       labeljust="l";
+       0 [label="2"];
+       1 [label="34"];
+       2 [label="49"];
+       3 [label="84"];
+       4 [label="88"];
+       0 -> 1 [label="False"];
+       0 -> 2 [label="True"];
+       1 -> 2 [label="True"];
+       2 -> 2 [label="True"];
+       2 -> 3 [label="False"];
+       3 -> 4 [label="False"];
+       4 -> 2 [label="True"];
+       }
+       ```
+       
+       Your output should be a string. Your output will be compared to correct answer through a **exact** match. If the output is same, you will get full points.
+       <|im_end|>
+       <|im_end|>
+       <|im_end|>
+       <|im_end|>
+    """
+
+    def __init__(self,bot:GPT, 
+                 wrap_dataset:WrapDataset, 
+                 interactive_mode:bool=False, 
+                 **kwargs):
+        super().__init__(bot, wrap_dataset, 
+                         interactive_mode=interactive_mode, 
+                         **kwargs)
+    
+    @torch.no_grad()
+    def _convert_dataset_to_code(self, dataset):
+        # print(dataset)
+        prompt = "\n".join(["\n".join(i) for i in dataset])
+        # prompt = "\n".join(dataset)
+        prompt = self.wrap_dataset.tokenizer.encode(prompt, add_special_tokens=False)
+        prompt = prompt[:3000]
+        prompt = self.wrap_dataset.tokenizer.decode(prompt)
+        prompt = prompt.split("\n")
+        prompt = [i.replace("[im_end]", "") for i in prompt]
+        prompt = "\n".join(prompt)
+        code = self.bot.handle_completion(prompt=prompt)
+        return code
+
+    def forward(self, batch):
+        # print(batch)
+        src = batch["src"]
+        if "tgt" in batch:
+            tgt = batch["tgt"]
+        else:
+            tgt = None
+        final_code = self._convert_dataset_to_code(src)
+        if tgt:
+            score = self.interact_with_code(tgt, final_code)
+        else:
+            score = None
+        return {"score": score}
+        
+    def interact_with_code(self, tgt, final_code):
+        # print(tgt)
+        # print(final_code)
+        tgt = self.wrap_dataset.tokenizer.encode(tgt, add_special_tokens=False)
+        tgt = tgt[:3000]
+        tgt = self.wrap_dataset.tokenizer.decode(tgt)
+        tgt = tgt.split("\n")
+        tgt = [i.replace("[im_end]", "") for i in tgt]
+        tgt = "\n".join(tgt)
+        if tgt.strip() == "":
+            return 1
+        # print(tgt)
+        # print(final_code)
+        if tgt.strip() == final_code.strip():
+            return 1
+        else:
+            return 0

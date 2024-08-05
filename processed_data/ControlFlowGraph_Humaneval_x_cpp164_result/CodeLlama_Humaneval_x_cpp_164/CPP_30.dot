@@ -1,0 +1,101 @@
+<|im_start|>system
+<|im_end|>
+<|im_start|>user
+
+# The output should be
+
+    digraph MyGraph {
+        "entry" ->"BB.entry"
+        "BB.entry" ->"BB.for.body"
+        "BB.for.body" ->"BB.for.body"
+        "BB.for.body" ->"BB.if.then"
+        "BB.if.then" ->"BB.if.end"
+        "BB.if.end" ->"BB.for.cond.cleanup"
+        "BB.for.cond.cleanup" ->"BB.for.body"
+        "BB.for.cond.cleanup" ->"BB.for.end"
+        "BB.for.end" ->"BB.memset.tail"
+        "BB.memset.tail" ->"BB.for.body.lr.ph.i"
+        "BB.for.body.lr.ph.i" ->"BB.for.body.i"
+        "BB.for.body.i" ->"BB.for.body.i"
+        "BB.for.body.i" ->"BB.for.body.i.split"
+        "BB.for.body.i.split" ->"BB.if.then.i"
+        "BB.for.body.i.split" ->"BB.for.inc.i"
+        "BB.if.then.i" ->"BB.for.inc.i"
+        "BB.for.inc.i" ->"BB.for.cond.cleanup.i"
+        "BB.for.cond.cleanup.i" ->"BB.for.body.i"
+        "BB.for.cond.cleanup.i" ->"BB.for.end.i"
+        "BB.for.end.i" ->"BB.for.cond.cleanup.i_crit_edge"
+        "BB.for.cond.cleanup.i_crit_edge" ->"BB.for.body.i"
+        "BB.for.cond.cleanup.i_crit_edge" ->"BB.for.end.i"
+        "BB.for.end.i" ->"BB.memmove.tail"
+        "BB.memmove.tail" ->"BB.for.end.i"
+        "BB.for.end.i" ->"BB.if.end.i_crit_edge"
+        "BB.memset.tail_crit_edge" ->"BB.for.body.lr.ph.i"
+        "BB.if.end.i_crit_edge" ->"BB.memset.tail_crit_edge"
+        "BB.if.end.i_crit_edge" ->"BB.for.end_crit_edge"
+        "BB.for.end_crit_edge" ->"BB.if.end_crit_edge"
+        "BB.if.end_crit_edge" ->"BB.memset.tail_crit_edge"
+        "BB.if.end_crit_edge" ->"BB.for.end_crit_edge"
+        "BB.if.end_crit_edge" ->"BB.for.end3"
+        "BB.for.end3" ->"BB.if.end3"
+        "BB.if.end3" ->"BB.for.end3"
+        "BB.if.end3" ->"BB.for.end4"
+        "BB.for.end4" ->"BB.if.end4"
+        "BB.if.end4" ->"BB.for.end4"
+        "BB.if.end4" ->"BB.for.end4_crit_edge"
+        "BB.for.end4_crit_edge" ->"BB.for.end3"
+    }
+
+
+# If you finish, please type "im_done" and hit enter.
+<|im_end|>
+<|im_start|>system
+Welcome to human service center. How could I help you?
+<|im_end|>
+<|im_start|>user
+im_done
+<|im_end|>
+<|im_start|>system
+Thank you for your cooperation. See you next time!
+<|im_end|>
+```
+
+### Running
+
+```sh
+python run.py --task=human_eval
+```
+
+
+### Code
+
+`main.py` is the main entry code for all the tasks.
+
+`run.py` is the main entry code for this task.
+
+#### Important Files
+
+```
+human_eval/
+  human_eval.py # main entry for this task
+  run.py # main entry code for this task
+  human_eval.py # main entry for this task
+  human_eval_config.py # config file for this task
+  human_eval_data_record.py # module for recoding and loading human eval data
+  run.py # main entry code for this task
+  task_human_eval_dataset.py # task data module
+  task_human_eval_reader.py # task data reader
+  task_human_eval_scorer.py # task scoring module
+  task_human_eval_statistics.py # task statistics module
+```
+
+#### Other Files
+
+```
+human_eval/
+  human_eval_processor.py # task data processor
+  human_eval_utils.py # task utils
+  task_human_eval_metrics.py # task metrics
+  task_human_eval_mixins.py # task mixins
+  task_human_eval_turk_metrics.py # turk task metrics
+```

@@ -1,0 +1,62 @@
+<|im_start|>system
+        The output format is dot file including nodes and edges. Don't need to list the content of each basic blocks. Just show the title of each nodes.
+        <|im_end|>
+
+
+### 1. Load IR code
+We can use `llvm.IRReader` to parse the IR code.
+```
+from llvmlite import ir, binding
+from llvmlite.ir import Module
+
+mod = ir.Module(ir.LLVMContext())
+mod = ir.Module.from_assembly(string=IR_CODE, context=binding.get_context())
+```
+
+### 2. Load the file and check the function
+First of all, we need to get the main function from the module.
+Then we can find all the basic blocks from the module.
+After that, we need to build the edges among the basic blocks.
+```
+main = mod.get_function_named('main')
+
+bbs = main.blocks
+
+for bb in bbs:
+  if bb.is_terminated:
+    last_inst = bb.instructions[-1]
+    if isinstance(last_inst, ir.BranchInst):
+      if last_inst.op_code == 'Br':
+        if last_inst.true_block == last_inst.false_block:
+          bb_map[bb].append(last_inst.true_block)
+        else:
+          bb_map[bb].append(last_inst.true_block)
+          bb_map[bb].append(last_inst.false_block)
+      else:
+        bb_map[bb].append(last_inst.block)
+```
+### 3. Generate the dot file
+We have already have the edges between each basic blocks.
+```
+file = open('result.dot', 'w')
+file.write('digraph G {\n')
+file.write('    labelloc="t";\n')
+file.write('    label="Control Flow Graph";\n')
+
+for bb1 in bbs:
+  file.write('    "' + bb1.name + '" [label="' + bb1.name + '"];\n')
+for bb1 in bb_map:
+  for bb2 in bb_map[bb1]:
+    file.write('    "' + bb1.name + '" -> "' + bb2.name + '";\n')
+file.write('}')
+```
+
+### 4. Generate the image
+```
+import subprocess
+
+subprocess.run('dot -Tpng result.dot -o result.png', shell=True)
+```
+
+### 5. The result
+![image](https://user-images.githubusercontent.com/29313161/146416253-1f96d8b2-4b87-4887-85b2-f96d8b284b87.png)

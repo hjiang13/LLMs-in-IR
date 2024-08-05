@@ -1,0 +1,65 @@
+""")
+
+
+
+def get_default_dataset_path():
+    return os.path.join(os.path.dirname(os.path.realpath(__file__)), "data/")
+
+def get_dataset_path(args):
+    if args.dataset_path:
+        return args.dataset_path
+    return get_default_dataset_path()
+
+def get_dataset(args):
+    if args.dataset_type == 'ir':
+        return IRDataset(get_dataset_path(args))
+    elif args.dataset_type == 'asm':
+        return AsmDataset(get_dataset_path(args))
+    elif args.dataset_type == 'src':
+        return SrcDataset(get_dataset_path(args))
+    elif args.dataset_type == 'im':
+        return ImDataset(get_dataset_path(args))
+    else:
+        raise ValueError("dataset_type must be selected from 'asm', 'ir', 'src', 'im'")
+
+def get_sequential_data_iterator(args):
+    dataset = get_dataset(args)
+    return SequentialDataIterator(dataset, args.batch_size, args.num_steps)
+
+def get_shuffled_data_iterator(args):
+    dataset = get_dataset(args)
+    return ShuffledDataIterator(dataset, args.batch_size, args.num_steps)
+
+def get_test_sequential_data_iterator(args):
+    if args.dataset_type == 'ir':
+        return IRTestSequentialDataIterator(get_dataset_path(args), args.test_batch_size, args.test_num_steps)
+    elif args.dataset_type == 'asm':
+        return AsmTestSequentialDataIterator(get_dataset_path(args), args.test_batch_size, args.test_num_steps)
+    elif args.dataset_type == 'src':
+        return SrcTestSequentialDataIterator(get_dataset_path(args), args.test_batch_size, args.test_num_steps)
+    elif args.dataset_type == 'im':
+        return ImTestSequentialDataIterator(get_dataset_path(args), args.test_batch_size, args.test_num_steps)
+    else:
+        raise ValueError("dataset_type must be selected from 'asm', 'ir', 'src', 'im'")
+
+def get_test_shuffled_data_iterator(args):
+    if args.dataset_type == 'ir':
+        return IRTestShuffledDataIterator(get_dataset_path(args), args.test_batch_size, args.test_num_steps)
+    elif args.dataset_type == 'asm':
+        return AsmTestShuffledDataIterator(get_dataset_path(args), args.test_batch_size, args.test_num_steps)
+    elif args.dataset_type == 'src':
+        return SrcTestShuffledDataIterator(get_dataset_path(args), args.test_batch_size, args.test_num_steps)
+    elif args.dataset_type == 'im':
+        return ImTestShuffledDataIterator(get_dataset_path(args), args.test_batch_size, args.test_num_steps)
+    else:
+        raise ValueError("dataset_type must be selected from 'asm', 'ir', 'src', 'im'")
+
+def filter_vocab_for_test(args, vocab):
+    if args.dataset_type == 'ir' or args.dataset_type == 'im':
+        return IRVocab(vocab, args.test_vocab_file)
+    elif args.dataset_type == 'asm':
+        return AsmVocab(vocab, args.test_vocab_file)
+    elif args.dataset_type == 'src':
+        return SrcVocab(vocab, args.test_vocab_file)
+    else:
+        raise ValueError("dataset_type must be selected from 'asm', 'ir', 'src', 'im'")

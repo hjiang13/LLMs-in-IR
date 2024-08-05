@@ -1,0 +1,76 @@
+4. When the conversation is over:
+    * <|im_start|>system
+    You are an expert in high-performance computation.<|im_end|>
+    * <|im_start|>user
+    Bye!<|im_end|>
+
+## Download and Build with Docker
+- Download from https://drive.google.com/drive/folders/1173dNW3J4Rj5XRDxGArr3If6803LF5QT?usp=sharing
+- Unzip the folders into `s2s/docker/docker`
+- Build the docker image
+```bash
+cd s2s/docker/docker
+docker build -t s2s .
+docker run -it s2s /bin/bash
+```
+- Run the server
+```bash
+cd src
+bash run.sh
+```
+
+## Evaluation
+We evaluate the performance of different models using a combination of automatic and human evaluation.
+### Automatic evaluation
+We use the BLEU scores as an automatic evaluation metric.
+```bash
+python -m s2s.evaluate
+```
+
+### Human evaluation
+We also manually evaluate the performance of different models. 
+We ask each annotator to evaluate 10 randomly selected conversations from the test set.
+We provide the annotator with the following instruction:
+```
+Please evaluate the system output for each turn. 
+1: The system utterance is perfectly correct.
+2: The system utterance is mostly correct, but there is at least one small mistake.
+3: The system utterance has some mistakes.
+4: The system utterance is mostly incorrect.
+5: The system utterance is utterly nonsense.
+
+Please evaluate the whole conversation. 
+1: The whole conversation is perfectly correct.
+2: The whole conversation is mostly correct, but there is at least one small mistake.
+3: The whole conversation has some mistakes.
+4: The whole conversation is mostly incorrect.
+5: The whole conversation is utterly nonsense.
+```
+
+## Conversation Data
+The conversation data is collected using Amazon Mechanical Turk.
+Please refer to the following paper for more information:
+```
+@inproceedings{yin2020retrieval,
+  title={Retrieval-based Conversational Modeling with Limited-Knowledge},
+  author={Yin, Wenpeng and Li, Li and Zhao, Yao and Yu, Zhou and Zhang, Zheng},
+  booktitle={The 28th International Conference on Computational Linguistics},
+  pages={1909--1923},
+  year={2020}
+}
+```
+
+## Reference
+If you use the code, please cite the following paper:
+```
+@inproceedings{yu2021evaluating,
+  title={Evaluating retrieval-based conversational models using human evaluation},
+  author={Yu, Zhou and Yin, Wenpeng and Zhao, Yao and Zhang, Zheng},
+  booktitle={Proceedings of the 59th Annual Meeting of the Association for Computational Linguistics and the 11th International Joint Conference on Natural Language Processing (Volume 1: Long Papers)},
+  pages={854--868},
+  year={2021}
+}
+``` 
+
+## License
+The code is available under the [MIT License](LICENSE).

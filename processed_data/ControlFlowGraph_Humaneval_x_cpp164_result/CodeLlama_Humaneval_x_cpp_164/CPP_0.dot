@@ -1,0 +1,138 @@
+<|im_start|>system
+Here is your output: 
+```
+
+digraph G{
+"bb.0" -> "bb.1"
+"bb.0" -> "bb.2"
+"bb.1" -> "bb.3"
+"bb.1" -> "bb.4"
+"bb.2" -> "bb.4"
+"bb.3" -> "bb.4"
+"bb.3" -> "bb.5"
+"bb.4" -> "bb.5"
+
+"bb.0"
+"bb.1"
+"bb.2"
+"bb.3"
+"bb.4"
+"bb.5"
+}
+```
+<|im_end|>
+<|im_start|>user
+```
+
+digraph G{
+"bb.0" -> "bb.1"
+"bb.1" -> "bb.2"
+"bb.1" -> "bb.3"
+"bb.2" -> "bb.3"
+"bb.3" -> "bb.4"
+"bb.3" -> "bb.5"
+"bb.4" -> "bb.5"
+
+"bb.0"
+"bb.1"
+"bb.2"
+"bb.3"
+"bb.4"
+"bb.5"
+}
+```
+<|im_end|>
+<|im_start|>system
+You have solve the problem correctly.
+Here is your flag:
+```
+flag{o7rMqS4Cg1qH__2688}
+```
+<|im_end|>
+<|im_start|>system
+Thanks for using our service. 
+Please enjoy your flag!
+<|im_end|>
+```
+
+
+
+
+
+
+
+
+
+
+# 解法
+
+
+
+
+
+
+
+
+
+
+```python
+
+import string
+import json
+
+# 取出字符串
+def get_all_strings_from_data(data):
+    # all the printable characters
+    chars = string.ascii_letters + string.punctuation + string.digits + " "
+
+    results = ""
+
+    for c in data:
+        if c in chars:
+            results += c
+        else:
+            results += " "
+
+    return results.split()
+
+# 解密
+def decrypt(data, key):
+    # we know the flag format
+    flag_format = "flag{}"
+
+    decrypted = bytearray()
+
+    for i in range(len(data)):
+        decrypted.append(data[i] ^ key[i % len(key)])
+
+    return decrypted
+
+
+with open("./data.json", "r") as file:
+    data = json.load(file)
+
+history_inputs = data["history_inputs"]
+
+# 取出所有的字符串
+print("[*] Trying to get all strings from data...")
+
+all_strings = get_all_strings_from_data(bytes.fromhex(history_inputs[0][1]))
+
+print("[+] We got {} strings".format(len(all_strings)))
+print("[*] Trying to find the key...")
+
+# 遍历所有的字符串，然后试试能不能解出来
+for candidate in all_strings:
+    for i in range(len(candidate)):
+        print("[*] Trying key: {}".format(candidate[:i]))
+
+        decrypted = decrypt(bytes.fromhex(history_inputs[1][1]), candidate[:i].encode())
+
+        if flag_format in str(decrypted):
+            print("[+] We found the key: {}".format(candidate[:i]))
+            print("[+] Flag: " + str(decrypted))
+
+            exit(0)
+
+
+```

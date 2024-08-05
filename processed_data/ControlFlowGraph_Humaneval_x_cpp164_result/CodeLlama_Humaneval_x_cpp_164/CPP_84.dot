@@ -1,0 +1,86 @@
+"""
+
+        tmpl = Template()
+        basic_blocks = []
+        basic_block_ids = []
+        basic_block_contents = []
+        for bb in self.function.basic_blocks:
+            basic_blocks.append(bb)
+            basic_block_ids.append(bb.id)
+            basic_block_contents.append(
+                f"{bb.identifier} {bb.instructions[0].line_number}:{bb.instructions[-1].line_number}"
+            )
+
+        tmpl.add_edge_list(
+            [(basic_blocks[i - 1], basic_blocks[i]) for i in range(1, len(basic_blocks))]
+        )
+
+        self.graph = nx.from_agraph(tmpl.get_string())
+        for node in self.graph.nodes:
+            self.graph.nodes[node]["label"] = basic_block_contents[basic_block_ids.index(node)]
+
+    def _extract_edges(self):
+        self.function_edges = [
+            (self.graph.nodes[edge[0]]["label"], self.graph.nodes[edge[1]]["label"])
+            for edge in self.graph.edges
+        ]
+
+        self.edges = [
+            (self.graph.nodes[edge[0]]["label"], self.graph.nodes[edge[1]]["label"], {"weight": 1})
+            for edge in self.graph.edges
+        ]
+
+    def _extract_nodes(self):
+        self.nodes = [
+            (self.graph.nodes[node]["label"], {"weight": 1}) for node in self.graph.nodes
+        ]
+
+
+class GraphHandler:
+    """
+    GraphHandler class is a wrapper class for handling graphs.
+    """
+
+    def __init__(self, graph: nx.DiGraph) -> None:
+        self.graph = graph
+        self.number_of_nodes = None
+        self.number_of_edges = None
+        self.average_degree = None
+        self.density = None
+        self.diameter = None
+        self.number_of_connected_components = None
+        self.is_connected = None
+        self.is_directed = None
+        self.is_weighted = None
+
+    def _calc_graph_features(self):
+        self.number_of_nodes = self.graph.number_of_nodes()
+        self.number_of_edges = self.graph.number_of_edges()
+        self.average_degree = 2 * self.number_of_edges / self.number_of_nodes
+        self.density = nx.density(self.graph)
+        self.diameter = nx.diameter(self.graph)
+        self.number_of_connected_components = nx.number_connected_components(self.graph)
+        self.is_connected = nx.is_connected(self.graph)
+        self.is_directed = self.graph.is_directed()
+        self.is_weighted = self.graph.size(weight="weight") > 0
+
+    def get_features(self) -> dict:
+        self._calc_graph_features()
+
+        return {
+            "number_of_nodes": self.number_of_nodes,
+            "number_of_edges": self.number_of_edges,
+            "average_degree": self.average_degree,
+            "density": self.density,
+            "diameter": self.diameter,
+            "number_of_connected_components": self.number_of_connected_components,
+            "is_connected": self.is_connected,
+            "is_directed": self.is_directed,
+            "is_weighted": self.is_weighted,
+        }
+
+    def visualize(self, file_path: str):
+        plt.figure(figsize=(20, 20))
+        labels = nx.get_node_attributes(self.graph, "label")
+        nx.draw(self.graph, node_color="orange", node_size=50, labels=labels)
+        plt.savefig(file_path)

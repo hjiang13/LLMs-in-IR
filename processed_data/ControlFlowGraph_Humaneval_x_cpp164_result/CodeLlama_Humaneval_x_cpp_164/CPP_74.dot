@@ -1,0 +1,60 @@
+<|im_start|>system
+       <|im_end|>
+      <|im_end|>
+
+      """
+
+    # Generate the context
+    contexts = [
+        # dialog context
+        f'<|user|> {input_text}',
+        f'<|system|> {output_text}',
+    ]
+
+    # Generate the input
+    if not no_cuda and torch.cuda.is_available():
+        device = torch.device("cuda" if not no_cuda and torch.cuda.is_available() else "cpu")
+        n_gpu = torch.cuda.device_count()
+    else:
+        device = xm.xla_device()
+        n_gpu = xm.xrt_world_size()
+
+    # Set seed
+    set_seed(seed, n_gpu)
+
+    # Prepare model
+    config = GPT2Config.from_pretrained(model_name)
+    tokenizer = tokenization_bert.BertTokenizer(vocab_file=vocab_file)
+    tokenizer.max_len = config.n_positions
+    config.n_positions = 1024
+    while len(tokenizer) < config.n_positions:
+        tokenizer.add_tokens(['unused%d' % tokenizer.vocab_size])
+    print(config)
+    model = GPT2LMHeadModel(config)
+    load_weight(model, model_name, device)
+    model.to(device)
+    model.eval()
+
+    # Create inputs
+    context_tokens = []
+    for i, context in enumerate(contexts):
+        context_tokens_choice = tokenizer.convert_tokens_to_ids(tokenizer.tokenize(context))
+        context_tokens += context_tokens_choice
+    out = sample_sequence(
+        model=model,
+        context=context_tokens,
+        length=length,
+        device=device,
+        temperature=temperature,
+        top_k=top_k,
+        top_p=top_p,
+        repetition_penalty=repetition_penalty,
+        no_repeat_ngram_size=no_repeat_ngram_size,
+        no_copy_ngram_size=no_copy_ngram_size,
+        num_samples=num_samples,
+    )
+    return out
+
+
+if __name__ == '__main__':
+    fire.Fire(interact_model)

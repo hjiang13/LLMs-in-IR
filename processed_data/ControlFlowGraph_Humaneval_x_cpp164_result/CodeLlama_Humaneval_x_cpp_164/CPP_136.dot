@@ -1,0 +1,126 @@
+<|im_start|>system
+Here is the control flow graph of the IR code above.
+```
+digraph G {
+	labelloc="t";
+	label="largest_smallest_integers";
+	n1[label="entry"];
+	n2[label="bb3"];
+	n3[label="bb2"];
+	n4[label="bb4"];
+	n5[label="bb5"];
+	n6[label="bb6"];
+	n7[label="bb1"];
+	n8[label="bb7"];
+	n1 -> n2
+	n2 -> n3
+	n3 -> n4
+	n3 -> n5
+	n5 -> n6
+	n6 -> n7
+	n7 -> n8
+	n8 -> n2
+}
+```
+<|im_end|>
+<|im_start|>user
+
+        The output format is dot file including nodes and edges. Don't need to list the content of each basic blocks. Just show the title of each nodes.
+        
+        ```
+        digraph G {
+            labelloc="t";
+            label="largest_smallest_integers";
+            n1[label="entry"];
+            n2[label="bb3"];
+            n3[label="bb2"];
+            n4[label="bb4"];
+            n5[label="bb5"];
+            n6[label="bb6"];
+            n7[label="bb1"];
+            n8[label="bb7"];
+            n1 -> n2
+            n2 -> n3
+            n3 -> n4
+            n3 -> n5
+            n5 -> n6
+            n6 -> n7
+            n7 -> n8
+            n8 -> n2
+        }
+        ```
+       <|im_end|>
+       <|im_start|>system
+       You are an expert in high-performance computation.<|im_end|>
+
+    """
+    cfg_nodes, cfg_edges = build_cfg(ir_code)
+    dot_code = to_dot(cfg_nodes, cfg_edges)
+    return '<|im_end|>\n' + dot_code + '\n<|im_start|>system\nYou are an expert in high-performance computation.<|im_end|>'
+
+
+def to_dot(nodes, edges):
+    dot_code = 'digraph G {\n\tlabelloc="t";\n\tlabel="%s";\n' % (nodes[0].get('label', ''))
+    for node in nodes:
+        label = node.get('label', None)
+        if label is None:
+            continue
+        dot_code += '\tn%s[label="%s"];\n' % (node['id'], label)
+    for edge in edges:
+        dot_code += '\tn%s -> n%s\n' % (edge[0], edge[1])
+    dot_code += '}'
+    return dot_code
+
+
+def build_cfg(ir_code):
+    ir_code_str = ir_code.replace('<|im_start|>', '').replace('<|im_end|>', '')
+    ir_code_lines = ir_code_str.split('\n')
+    ir_code_lines = [line.strip() for line in ir_code_lines if line.strip() != '']
+    ir_code_lines = ir_code_lines[:-1]  # remove the last line: '}'
+    func_line = ir_code_lines[0]
+    func_name = func_line.split(' ')[1].split('@')[-1]
+    ir_code_lines = ir_code_lines[1:]
+    ir_code_lines = ir_code_lines[1:]  # remove the second line: '{'
+    cfg_nodes = list()
+    cfg_edges = list()
+    cfg_nodes.append({'id': 1, 'label': 'entry'})
+    cfg_nodes.append({'id': 2, 'label': func_name})
+    cfg_edges.append([1, 2])
+    label_id = 2
+    prev_id = 2
+    for line in ir_code_lines:
+        if line[0] == '%':
+            label_id += 1
+            cfg_nodes.append({'id': label_id, 'label': line.split(':')[0].strip()})
+            cfg_edges.append([prev_id, label_id])
+            prev_id = label_id
+        elif line[0] == ';' and 'preds' in line:
+            prev_labels = line[line.index('preds =') + len('preds ='):].strip().split(', ')
+            for prev_label in prev_labels:
+                prev_label = prev_label.replace('%', '', 1)
+                for node in cfg_nodes:
+                    if prev_label == node['label']:
+                        cfg_edges.append([node['id'], label_id])
+            prev_id = label_id
+        elif line[0] == 'b' and line[1] == 'r':
+            if line.split(' ')[1] == 'label':
+                label_id += 1
+                cfg_nodes.append({'id': label_id, 'label': 'bb%s' % label_id})
+                cfg_edges.append([prev_id, label_id])
+                prev_id = label_id
+    return cfg_nodes, cfg_edges
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--data_path', type=str, default='./data/train.txt', help='input data path')
+    parser.add_argument('--save_path', type=str, default='./data/train_cfg.txt', help='output data path')
+    args = parser.parse_args()
+    with open(args.data_path, 'r', encoding='utf-8') as f:
+        lines = f.readlines()
+    with open(args.save_path, 'w', encoding='utf-8') as f:
+        for line in lines:
+            if line.strip() == '':
+                continue
+            cfg_line = ir2cfg(line)
+            f.write(cfg_line + '\n')

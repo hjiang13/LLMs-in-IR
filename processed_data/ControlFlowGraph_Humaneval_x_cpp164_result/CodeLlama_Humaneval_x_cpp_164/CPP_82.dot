@@ -1,0 +1,26 @@
+```
+    '''
+
+    def __init__(self, data_dir, split):
+        # 1000000
+        self.data_dir = data_dir
+        self.split = split
+        self.c_files = glob.glob(os.path.join(data_dir, split, '*.c'))
+
+    def __getitem__(self, index):
+        c_file = self.c_files[index]
+        with open(c_file) as f:
+            text = f.read()
+
+        # 1024
+        text_tokens = re.split(r'\s+', text)[:1024]
+        source = ' '.join(text_tokens)
+
+        # 512
+        text_tokens = re.split(r'\s+', text)[:512]
+        target = ' '.join(text_tokens)
+
+        return source, target, c_file
+
+    def __len__(self):
+        return len(self.c_files)

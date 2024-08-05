@@ -1,0 +1,76 @@
+<|im_start|>system
+<|im_end|>
+<|im_start|>user
+
+        The output is as follows:
+        ```
+        digraph G {
+        node [shape=rect];
+        bb_1 [label = "bb_1:"];
+        bb_2 [label = "bb_2:"];
+        bb_3 [label = "bb_3:"];
+        bb_4 [label = "bb_4:"];
+        bb_5 [label = "bb_5:"];
+        bb_6 [label = "bb_6:"];
+        bb_7 [label = "bb_7:"];
+        bb_8 [label = "bb_8:"];
+        bb_9 [label = "bb_9:"];
+        bb_10 [label = "bb_10:"];
+        bb_11 [label = "bb_11:"];
+        bb_12 [label = "bb_12:"];
+        bb_13 [label = "bb_13:"];
+        
+        bb_1 -> bb_2;
+        bb_2 -> bb_3;
+        bb_2 -> bb_12;
+        bb_3 -> bb_4;
+        bb_4 -> bb_5;
+        bb_5 -> bb_6;
+        bb_5 -> bb_10;
+        bb_6 -> bb_7;
+        bb_7 -> bb_8;
+        bb_8 -> bb_9;
+        bb_9 -> bb_5;
+        bb_10 -> bb_11;
+        bb_11 -> bb_13;
+        bb_12 -> bb_13;
+        }
+        ```
+       <|im_end|>
+<|im_start|>system
+Please enter your question:
+<|im_end|>
+<|im_start|>user
+
+        Your answer is correct!
+       <|im_end|>
+<|im_start|>system
+Please enter your question:
+<|im_end|>
+<|im_start|>user
+
+        Please tell us your final answer:
+       <|im_end|>
+<|im_start|>system
+Your final answer is correct!
+Thank you for your participation!
+<|im_end|>
+"""
+
+
+# Test
+if __name__ == "__main__":
+    # Model
+    model = ConvModel(device="cpu", jit=False)
+    if args.model_file:
+        model.load_state_dict(torch.load(args.model_file))
+
+    data_source = get_data(args.data_dir, args.test_file)
+
+    # Run test
+    if args.data_dir:
+        test_loss, test_accuracy = model.evaluate(data_source)
+        print("Test loss: {:.2f} - accuracy: {:.2f}".format(test_loss, test_accuracy))
+    else:
+        with open(args.input_file, "r") as f:
+            interactive_loop(f, model)

@@ -1,0 +1,31 @@
+'''
+
+    def add_special_tokens_(self, *tensors):
+        return tensors
+    
+    def on_epoch_begin(self, **kwargs):
+        self.history = []
+
+    def encode_batch(self, examples):
+        self.history = []
+        X = [None] * len(examples)
+        for i, example in enumerate(examples):
+            tokens = self.tokenizer.encode(example['input_text'], verbose=False)
+            X[i] = tokens
+            self.history.append(tokens)
+        return X
+
+    def decode_batch(self, outputs):
+        output_texts = []
+        for output in outputs:
+            output_text = self.tokenizer.decode(output, skip_special_tokens=True)
+            output_texts.append(output_text)
+        return output_texts
+
+    def __call__(self, x):
+        x = x.strip()
+        output_text = self.tokenizer.decode(self.tokenizer.encode(x))
+        return output_text 
+
+    def __len__(self):
+        return len(self.history)
