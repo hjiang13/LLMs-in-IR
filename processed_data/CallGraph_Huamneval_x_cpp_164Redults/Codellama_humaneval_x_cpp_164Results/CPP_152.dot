@@ -1,0 +1,31 @@
+Based on the provided Intermediate Representation (IR) code, we can extract the function calls to construct a call graph. The resulting graph will represent the functions and their relationships.
+
+Here's a simplified representation of the call graph in DOT format:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    _Z7compareSt6vectorIiSaIiEES1_ [label="_Z7compareSt6vectorIiSaIiEES1_"];
+    __gxx_personality_v0 [label="__gxx_personality_v0"];
+    _ZdlPv [label="_ZdlPv"];
+    _ZSt20__throw_length_errorPKc [label="_ZSt20__throw_length_errorPKc"];
+    _Znwm [label="_Znwm"];
+    llvm_memmove_p0i8_p0i8_i64 [label="llvm.memmove.p0i8.p0i8.i64"];
+    llvm_abs_i32 [label="llvm.abs.i32"];
+    llvm_memset_p0i8_i64 [label="llvm.memset.p0i8.i64"];
+
+    // Edges
+    _Z7compareSt6vectorIiSaIiEES1_ -> llvm_memset_p0i8_i64;
+    _Z7compareSt6vectorIiSaIiEES1_ -> llvm_abs_i32;
+    _Z7compareSt6vectorIiSaIiEES1_ -> _ZdlPv;
+    _Z7compareSt6vectorIiSaIiEES1_ -> _ZSt20__throw_length_errorPKc;
+    _Z7compareSt6vectorIiSaIiEES1_ -> _Znwm;
+    _Z7compareSt6vectorIiSaIiEES1_ -> llvm_memmove_p0i8_p0i8_i64;
+}
+```
+
+### Explanation:
+- **Nodes**: Each function defined in the IR code has been represented as a node in the graph.
+- **Edges**: The edges represent the function calls. For instance, `_Z7compareSt6vectorIiSaIiEES1_` (the main function) calls several other functions such as `llvm.memset.p0i8.i64`, `llvm.abs.i32`, `_ZdlPv`, `_ZSt20__throw_length_errorPKc`, and `_Znwm`.
+
+You can visualize this graph using Graphviz or any compatible tool that accepts DOT format.

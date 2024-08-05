@@ -1,0 +1,29 @@
+Based on the provided Intermediate Representation (IR) code, we can extract the function calls to create a call graph. Here's a representation in the DOT format, which includes the nodes (functions) and edges (function calls):
+
+```dot
+digraph CallGraph {
+    node [shape=box];
+
+    // Nodes
+    rolling_max [label="_Z11rolling_maxSt6vectorIiSaIiEE"];
+    __gxx_personality_v0 [label="__gxx_personality_v0"];
+    _ZdlPv [label="_ZdlPv"];
+    _ZSt20__throw_length_errorPKc [label="_ZSt20__throw_length_errorPKc"];
+    _Znwm [label="_Znwm"];
+    llvm_memmove [label="llvm.memmove.p0i8.p0i8.i64"];
+    llvm_memset [label="llvm.memset.p0i8.i64"];
+
+    // Edges
+    rolling_max -> llvm_memset;
+    rolling_max -> _ZSt20__throw_length_errorPKc;
+    rolling_max -> _Znwm;
+    rolling_max -> llvm_memmove;
+    rolling_max -> _ZdlPv;
+}
+```
+
+### Explanation:
+- **Nodes**: Each function is represented as a node. The labels indicate the mangled names of the functions.
+- **Edges**: An edge from `rolling_max` to other functions indicates a call from `rolling_max` to those functions.
+  
+This graph represents the relationships between the functions in the provided IR code, highlighting which functions are called by `rolling_max`.

@@ -1,0 +1,30 @@
+Based on the provided Intermediate Representation (IR) code, we can identify the functions and the calls made within them to create a call graph. The call graph will represent the relationships between the functions, showing which functions call which other functions.
+
+From the given IR code, we can see that there are two declared functions: `@llvm.ceil.f32` and `@llvm.umax.i64`. The primary function defined in the IR code is `_Z11sum_squaresSt6vectorIfSaIfEE`.
+
+Here's the call graph represented in DOT format:
+
+```dot
+digraph CallGraph {
+    // Function nodes
+    node [shape=box];
+    sum_squares [label="_Z11sum_squaresSt6vectorIfSaIfEE"];
+    llvm_ceil_f32 [label="@llvm.ceil.f32"];
+    llvm_umax_i64 [label="@llvm.umax.i64"];
+
+    // Edges representing function calls
+    sum_squares -> llvm_ceil_f32;
+    sum_squares -> llvm_umax_i64;
+}
+```
+
+### Explanation:
+- **Nodes**:
+  - `sum_squares`: This is the main function defined in the IR code.
+  - `llvm_ceil_f32`: This function is declared and called within `sum_squares`.
+  - `llvm_umax_i64`: This function is also declared and called within `sum_squares`.
+
+- **Edges**: 
+  - The arrows (`->`) indicate the calls from `sum_squares` to `llvm_ceil_f32` and `llvm_umax_i64`.
+
+This representation provides a clear view of the call relationships within the program.

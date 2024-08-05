@@ -1,0 +1,43 @@
+To create a call graph from the provided Intermediate Representation (IR) code, we will extract the functions and their calls to display them in a DOT format. Below is the representation of the call graph in DOT format:
+
+```dot
+digraph CallGraph {
+    node [shape=ellipse];
+
+    // Function Definitions
+    _Z13string_to_md5NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE;
+    MD5_Init;
+    MD5_Update;
+    MD5_Final;
+    _ZdlPv;
+    llvm_memcpy_p0i8_p0i8_i64;
+    _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm;
+    _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc;
+
+    // Function Calls
+    _Z13string_to_md5NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> MD5_Init;
+    _Z13string_to_md5NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> MD5_Update;
+    _Z13string_to_md5NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> MD5_Final;
+    _Z13string_to_md5NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> llvm_memcpy_p0i8_p0i8_i64;
+    _Z13string_to_md5NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> _ZdlPv;
+    _Z13string_to_md5NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm;
+    _Z13string_to_md5NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc;
+
+    // Additional function declarations not called within the provided function
+    MD5_Init;
+    MD5_Update;
+    MD5_Final;
+    _ZdlPv;
+    llvm_memcpy_p0i8_p0i8_i64;
+    _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm;
+    _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc;
+}
+```
+
+### Explanation:
+- Each function defined in the input is represented as a node in the graph.
+- The arrows (`->`) indicate function calls, with the calling function pointing to the function being called.
+- The functions `MD5_Init`, `MD5_Update`, and `MD5_Final` are called within the function `_Z13string_to_md5NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE`.
+- The memory management functions `_ZdlPv` and `llvm_memcpy_p0i8_p0i8_i64` are also included because they are invoked within the same function.
+
+This representation allows for a visual understanding of how the functions interact with each other. To visualize this graph, you can use tools like Graphviz.

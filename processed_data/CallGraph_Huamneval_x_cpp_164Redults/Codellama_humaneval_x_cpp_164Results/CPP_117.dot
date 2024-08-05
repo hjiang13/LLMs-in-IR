@@ -1,0 +1,37 @@
+Based on the provided Intermediate Representation (IR) code, I will extract the function definitions and any calls between them to construct a call graph. The output will be in the dot format, which can be used to visualize the call graph.
+
+Here is the call graph represented in the dot format:
+
+```dot
+digraph CallGraph {
+    // Functions
+    _Z12select_wordsNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEi;
+    _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE17_M_realloc_insertIJRKS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_;
+    _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm;
+    _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm;
+    _ZdlPv;
+    __clang_call_terminate;
+    _ZSt9terminatev;
+    @llvm.memcpy.p0i8.p0i8.i64;
+    @llvm.memset.p0i8.i64;
+    @llvm.lifetime.start.p0i8;
+    @llvm.lifetime.end.p0i8;
+    @llvm.experimental.noalias.scope.decl;
+
+    // Edges
+    _Z12select_wordsNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEi -> _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm;
+    _Z12select_wordsNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEi -> _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm;
+    _Z12select_wordsNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEi -> _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE17_M_realloc_insertIJRKS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_;
+    _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE17_M_realloc_insertIJRKS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_ -> _ZdlPv;
+    _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE17_M_realloc_insertIJRKS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_ -> _ZSt9terminatev;
+    _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm -> _ZdlPv;
+    _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm -> _ZdlPv;
+}
+```
+
+### Explanation:
+- **Nodes**: Each function in the IR code has been listed as a node in the graph. 
+- **Edges**: An edge connects the caller function to the called function, indicating that one function invokes another. 
+- **Special Functions**: Some standard library functions and LLVM intrinsic functions have been included as they are called within the user-defined function.
+
+This dot format can be processed with graph visualization tools (like Graphviz) to generate a visual representation of the call graph.

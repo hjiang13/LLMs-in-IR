@@ -1,0 +1,56 @@
+Based on the provided intermediate representation (IR) code, we can extract the functions and generate a call graph in the DOT format. The functions present in the IR are:
+
+1. `_Z17decimal_to_binaryB5cxx11i`
+2. `_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_RKS8_`
+3. `_ZN9__gnu_cxx12__to_xstringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEET_PFiPT0_mPKS8_P13__va_list_tagEmSB_z`
+4. `@llvm.lifetime.start.p0i8`
+5. `@llvm.lifetime.end.p0i8`
+6. `__gxx_personality_v0`
+7. `@llvm.memcpy.p0i8.p0i8.i64`
+8. `@_ZdlPv`
+9. `@strlen`
+10. `@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm`
+11. `@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7reserveEm`
+12. `@_ZSt20__throw_length_errorPKc`
+13. `@llvm.va_start`
+14. `@llvm.va_end`
+
+Using this information, the call graph in DOT format can be constructed as follows:
+
+```dot
+digraph CallGraph {
+    rankdir=LR;
+    
+    node [shape=box];
+    
+    _Z17decimal_to_binaryB5cxx11i;
+    _ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_RKS8_;
+    _ZN9__gnu_cxx12__to_xstringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEET_PFiPT0_mPKS8_P13__va_list_tagEmSB_z;
+    @llvm.lifetime.start.p0i8;
+    @llvm.lifetime.end.p0i8;
+    __gxx_personality_v0;
+    @llvm.memcpy.p0i8.p0i8.i64;
+    @_ZdlPv;
+    @strlen;
+    @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm;
+    @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7reserveEm;
+    @_ZSt20__throw_length_errorPKc;
+    @llvm.va_start;
+    @llvm.va_end;
+    
+    // Edges representing function calls
+    _Z17decimal_to_binaryB5cxx11i -> @_ZN9__gnu_cxx12__to_xstringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEET_PFiPT0_mPKS8_P13__va_list_tagEmSB_z;
+    _Z17decimal_to_binaryB5cxx11i -> @llvm.memcpy.p0i8.p0i8.i64;
+    _Z17decimal_to_binaryB5cxx11i -> @llvm.lifetime.start.p0i8;
+    _Z17decimal_to_binaryB5cxx11i -> @llvm.lifetime.end.p0i8;
+    _Z17decimal_to_binaryB5cxx11i -> @_ZdlPv;
+    _Z17decimal_to_binaryB5cxx11i -> @strlen;
+    _Z17decimal_to_binaryB5cxx11i -> @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm;
+    _Z17decimal_to_binaryB5cxx11i -> @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7reserveEm;
+    _Z17decimal_to_binaryB5cxx11i -> @_ZSt20__throw_length_errorPKc;
+    
+    // Other edges can be added similarly based on the calls found in the IR
+}
+```
+
+This DOT representation outlines the functions and their direct calls to each other. You can visualize this graph using any DOT-compatible visualization tool.

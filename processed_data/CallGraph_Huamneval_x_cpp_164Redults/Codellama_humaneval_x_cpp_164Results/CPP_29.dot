@@ -1,0 +1,54 @@
+Based on the provided Intermediate Representation (IR) code, we can extract the functions and their relationships to create a call graph in DOT format. The key functions that we can identify in the IR code are:
+
+1. `_Z16filter_by_prefixSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EES5_`
+2. `@llvm.memset.p0i8.i64`
+3. `@llvm.lifetime.start.p0i8`
+4. `@llvm.lifetime.end.p0i8`
+5. `@__gxx_personality_v0`
+6. `_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev`
+7. `@__clang_call_terminate`
+8. `_ZdlPv`
+9. `_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm`
+10. `@llvm.memcpy.p0i8.p0i8.i64`
+11. `_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE17_M_realloc_insertIJRKS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_`
+12. `@bcmp`
+13. `@llvm.experimental.noalias.scope.decl`
+14. `_ZSt20__throw_length_errorPKc`
+
+Here’s the call graph in DOT format:
+
+```dot
+digraph CallGraph {
+    rankdir=TB; // Top to Bottom layout
+
+    // Nodes
+    "filter_by_prefix" [label="_Z16filter_by_prefixSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EES5_"];
+    "llvm.memset" [label="@llvm.memset.p0i8.i64"];
+    "llvm.lifetime.start" [label="@llvm.lifetime.start.p0i8"];
+    "llvm.lifetime.end" [label="@llvm.lifetime.end.p0i8"];
+    "gxx_personality" [label="@__gxx_personality_v0"];
+    "vector_dtor" [label="_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev"];
+    "clang_call_terminate" [label="@__clang_call_terminate"];
+    "delete" [label="_ZdlPv"];
+    "string_create" [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm"];
+    "llvm.memcpy" [label="@llvm.memcpy.p0i8.p0i8.i64"];
+    "vector_realloc_insert" [label="_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE17_M_realloc_insertIJRKS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_"];
+    "bcmp" [label="@bcmp"];
+    "noalias_scope_decl" [label="@llvm.experimental.noalias.scope.decl"];
+    "throw_length_error" [label="_ZSt20__throw_length_errorPKc"];
+
+    // Edges
+    "filter_by_prefix" -> "llvm.memset";
+    "filter_by_prefix" -> "llvm.lifetime.start";
+    "filter_by_prefix" -> "vector_dtor";
+    "filter_by_prefix" -> "string_create";
+    "filter_by_prefix" -> "vector_realloc_insert";
+    "filter_by_prefix" -> "clang_call_terminate";
+    "filter_by_prefix" -> "delete";
+    "filter_by_prefix" -> "bcmp";
+    "filter_by_prefix" -> "noalias_scope_decl";
+    "vector_dtor" -> "throw_length_error";
+}
+```
+
+This DOT representation captures the functions and their calls, allowing a visualization tool (like Graphviz) to render the call graph based on this specification. Each node represents a function, and each directed edge indicates a call from one function to another.

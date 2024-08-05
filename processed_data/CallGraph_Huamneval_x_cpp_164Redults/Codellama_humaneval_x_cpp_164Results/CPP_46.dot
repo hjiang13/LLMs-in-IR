@@ -1,0 +1,28 @@
+Based on the provided Intermediate Representation (IR) code, we can construct a call graph in DOT format. The call graph will include the function defined in the IR code and the functions it calls.
+
+Here's the call graph in DOT format:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    node [shape=box];
+
+    _Z4fib4i [label="_Z4fib4i"];
+    llvm_lifetime_start [label="llvm.lifetime.start.p0i8"];
+    llvm_lifetime_end [label="llvm.lifetime.end.p0i8"];
+
+    // Edges
+    _Z4fib4i -> llvm_lifetime_start;
+    _Z4fib4i -> llvm_lifetime_end;
+}
+```
+
+### Explanation:
+- **Nodes**: Each function is represented as a node. In this case, we have:
+  - `_Z4fib4i`: The main function defined in the IR.
+  - `llvm.lifetime.start.p0i8`: A function called within `_Z4fib4i`.
+  - `llvm.lifetime.end.p0i8`: Another function called within `_Z4fib4i`.
+
+- **Edges**: The directed edges represent calls from one function to another.
+
+This structure clearly represents the relationships between the functions in the given IR code.

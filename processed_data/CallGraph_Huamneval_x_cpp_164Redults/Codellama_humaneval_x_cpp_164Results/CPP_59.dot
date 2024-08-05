@@ -1,0 +1,31 @@
+Based on the provided Intermediate Representation (IR) code, we can extract the function and control flow information to create a call graph in the DOT format. In this case, there is only one function defined (`_Z20largest_prime_factori`), and we can outline the basic blocks and their connections as nodes and edges.
+
+Here’s the corresponding DOT representation for the call graph:
+
+```dot
+digraph CallGraph {
+    // Nodes representing each basic block
+    node [shape=box];
+    entry [label="Entry"];
+    block3 [label="Block 3"];
+    block10 [label="Block 10"];
+    block12 [label="Block 12"];
+    block19 [label="Block 19"];
+    
+    // Edges representing control flow between basic blocks
+    entry -> block3;
+    block3 -> block10;
+    block3 -> block12;
+    block10 -> block19;
+    block12 -> block12; // Loop back to Block 12
+    block12 -> block19;
+    block19 -> block10; // Loop back to Block 10
+    block19 -> block3;
+}
+```
+
+### Explanation:
+- **Nodes**: Each basic block is represented as a node. I’ve given them labels corresponding to their block numbers.
+- **Edges**: Directed edges indicate the flow of control from one block to another based on the branches and jumps in the IR code. 
+
+This representation captures the structure and flow of the function without detailing the individual instructions in each block.

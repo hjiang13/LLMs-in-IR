@@ -1,0 +1,33 @@
+To generate a call graph in DOT format from the provided Intermediate Representation (IR) code, we need to identify the function calls and define nodes for each function, along with edges between them to represent the calls.
+
+From your IR code, we can see the following functions:
+
+1. `@_Z10prod_signsSt6vectorIiSaIiEE`
+2. `@llvm.abs.i32`
+3. `@llvm.umax.i64`
+
+The main function `@_Z10prod_signsSt6vectorIiSaIiEE` calls:
+- `@llvm.abs.i32` (twice)
+- `@llvm.umax.i64`
+
+We can represent this information in a DOT format as follows:
+
+```dot
+digraph CallGraph {
+    // Function nodes
+    node [shape=box];
+    prod_signs [label="_Z10prod_signsSt6vectorIiSaIiEE"];
+    llvm_abs [label="llvm.abs.i32"];
+    llvm_umax [label="llvm.umax.i64"];
+
+    // Edges representing function calls
+    prod_signs -> llvm_abs;
+    prod_signs -> llvm_umax;
+}
+```
+
+In this representation:
+- Each function is represented as a node.
+- The edges represent the calls made from `prod_signs` to `llvm.abs.i32` and `llvm.umax.i64`. 
+
+You can use this DOT representation with a tool like Graphviz to visualize the call graph.

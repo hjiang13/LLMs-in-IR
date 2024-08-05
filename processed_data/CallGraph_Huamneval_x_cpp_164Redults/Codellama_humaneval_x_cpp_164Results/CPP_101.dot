@@ -1,0 +1,39 @@
+To create a call graph from the provided Intermediate Representation (IR) code, we need to identify the functions and their calls. The call graph will represent the functions as nodes and the calls between them as directed edges.
+
+Below is the DOT representation of the call graph based on the provided IR code:
+
+```dot
+digraph CallGraph {
+    // Nodes (Functions)
+    node [shape=box];
+    words_string [label="_Z12words_stringNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE"];
+    vector_destructor [label="_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev"];
+    clang_call_terminate [label="__clang_call_terminate"];
+    malloc [label="_Znwm"];
+    string_create [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm"];
+    replace_aux [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc"];
+    vector_insert [label="_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE17_M_realloc_insertIJRKS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_"];
+    dealloc [label="_ZdlPv"];
+    terminate [label="_ZSt9terminatev"];
+    throw_length_error [label="_ZSt20__throw_length_errorPKc"];
+
+    // Edges (Function Calls)
+    words_string -> string_create;
+    words_string -> vector_insert;
+    words_string -> vector_destructor;
+    vector_insert -> string_create;
+    vector_insert -> replace_aux;
+    vector_destructor -> dealloc;
+    clang_call_terminate -> terminate;
+    string_create -> malloc;
+    replace_aux -> dealloc;
+}
+```
+
+### Explanation:
+- **Nodes**: Each function is represented as a node. The label attribute contains the mangled name of the function.
+- **Edges**: Directed edges represent calls from one function to another. For example, `words_string` calls `string_create`, which is represented as an edge pointing from `words_string` to `string_create`.
+
+### Notes:
+- The provided IR code contains several functions, and the edges represent the direct function calls made within the code.
+- This representation can be visualized using tools that support the DOT format, such as Graphviz.

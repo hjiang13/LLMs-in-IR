@@ -1,0 +1,38 @@
+To create a call graph from the provided Intermediate Representation (IR) code, we'll identify the functions defined and called within the code. The output will be formatted in the DOT language, which is used for graph representation.
+
+Here is the call graph in DOT format based on the provided IR code:
+
+```dot
+digraph G {
+    // Function Definitions
+    node [shape=box];
+    _Z21separate_paren_groupsNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE;
+    _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev;
+    __clang_call_terminate;
+    _ZdlPv;
+    _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_mutateEmmPKcm;
+    _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE17_M_realloc_insertIJRKS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_;
+    _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm;
+
+    // Function Calls
+    _Z21separate_paren_groupsNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> @llvm.memset.p0i8.i64;
+    _Z21separate_paren_groupsNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> @llvm.lifetime.start.p0i8;
+    _Z21separate_paren_groupsNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> @llvm.lifetime.end.p0i8;
+    _Z21separate_paren_groupsNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_mutateEmmPKcm;
+    _Z21separate_paren_groupsNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE17_M_realloc_insertIJRKS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_;
+    _Z21separate_paren_groupsNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev;
+    _Z21separate_paren_groupsNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> _ZdlPv;
+
+    // Additional Calls
+    _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev -> _ZdlPv;
+    _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_mutateEmmPKcm -> _ZdlPv;
+    _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm -> _ZdlPv;
+}
+```
+
+### Explanation:
+1. **Nodes**: Each function is represented as a node in the graph. The names of the functions are derived from their mangled C++ names.
+2. **Edges**: Arrows (`->`) indicate function calls. For example, the function `_Z21separate_paren_groupsNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE` calls several functions, which are represented as outgoing edges.
+3. **Function Definitions**: The graph captures both the functions defined in the IR as well as the calls made from one function to another.
+
+This DOT representation can be visualized using tools like Graphviz to provide a graphical view of the call relationships.

@@ -1,0 +1,44 @@
+To create the call graph in DOT format based on the provided Intermediate Representation (IR) code, we need to identify the functions and their relationships (calls) within the code.
+
+From the provided IR code, we can see the following functions:
+1. `_Z10sort_arraySt6vectorIiSaIiEE` (the main function defined in the IR)
+2. `@llvm.abs.i32`
+3. `@llvm.memmove.p0i8.p0i8.i64`
+4. `@llvm.memset.p0i8.i64`
+5. `@__gxx_personality_v0`
+6. `_ZdlPv`
+7. `_ZSt20__throw_length_errorPKc`
+8. `_Znwm`
+
+The main function `_Z10sort_arraySt6vectorIiSaIiEE` calls several functions, including `@llvm.abs.i32`, `@llvm.memmove.p0i8.p0i8.i64`, `@llvm.memset.p0i8.i64`, `_ZdlPv`, and `_ZSt20__throw_length_errorPKc`.
+
+Here's the DOT representation of the call graph:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    node [shape=rectangle];
+    sort_array [label="_Z10sort_arraySt6vectorIiSaIiEE"];
+    llvm_abs [label="@llvm.abs.i32"];
+    llvm_memmove [label="@llvm.memmove.p0i8.p0i8.i64"];
+    llvm_memset [label="@llvm.memset.p0i8.i64"];
+    gxx_personality [label="@__gxx_personality_v0"];
+    delete [label="_ZdlPv"];
+    throw_length_error [label="_ZSt20__throw_length_errorPKc"];
+    new [label="_Znwm"];
+
+    // Edges
+    sort_array -> llvm_abs;
+    sort_array -> llvm_memmove;
+    sort_array -> llvm_memset;
+    sort_array -> delete;
+    sort_array -> throw_length_error;
+    sort_array -> new;
+}
+```
+
+### Explanation:
+- Each function is represented as a node in the graph.
+- Directed edges (arrows) indicate the calls made from the main function to the other functions.
+- The `label` attributes are used to give a meaningful name to each node, matching the function signatures found in the IR code.
+- The graph can be visualized using graph visualization tools that accept DOT format, such as Graphviz.

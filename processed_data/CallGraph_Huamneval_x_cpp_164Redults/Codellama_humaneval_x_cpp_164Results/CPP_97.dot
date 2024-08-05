@@ -1,0 +1,24 @@
+Based on the given Intermediate Representation (IR) code, we can identify the functions and their relationships to create a call graph. In the provided IR, we have the following relevant functions:
+
+1. `@_Z8multiplyii` - This is a defined function.
+2. `@llvm.abs.i32` - This is a declared function that is called within the defined function.
+
+The call graph can be represented in the DOT format as follows:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    "multiply" [label="_Z8multiplyii" shape=box];
+    "llvm_abs" [label="llvm.abs.i32" shape=box];
+
+    // Edges
+    "multiply" -> "llvm_abs"; // multiply calls llvm.abs.i32
+}
+```
+
+### Explanation:
+- The node `"multiply"` represents the function `_Z8multiplyii` (which is a mangled name for a function, likely called `multiply`).
+- The node `"llvm_abs"` represents the LLVM intrinsic function `@llvm.abs.i32`.
+- The edge from `"multiply"` to `"llvm_abs"` indicates that the `multiply` function makes a call to the `llvm.abs.i32` function.
+
+This representation captures the relationships between the functions in the provided IR code.

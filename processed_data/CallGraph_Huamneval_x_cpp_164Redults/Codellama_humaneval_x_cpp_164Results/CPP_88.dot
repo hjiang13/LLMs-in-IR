@@ -1,0 +1,42 @@
+To represent the call graph from the provided Intermediate Representation (IR) code in the DOT format, we'll identify the function calls and their relationships. The DOT format is structured with nodes and edges, where nodes represent functions and edges denote calls between them.
+
+Here’s the output in DOT format based on the provided IR code:
+
+```dot
+digraph CallGraph {
+    rankdir=LR;
+
+    // Nodes
+    sort_array [label="_Z10sort_arraySt6vectorIiSaIiEE"];
+    introsort_loop [label="_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_"];
+    final_insertion_sort [label="_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_"];
+    make_heap [label="_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_RT0_"];
+    ctlz [label="llvm.ctlz.i64"];
+    memset [label="llvm.memset.p0i8.i64"];
+    throw_length_error [label="_ZSt20__throw_length_errorPKc"];
+    new_memory [label="_Znwm"];
+    delete_memory [label="_ZdlPv"];
+
+    // Edges
+    sort_array -> introsort_loop;
+    sort_array -> final_insertion_sort;
+    sort_array -> memset;
+    sort_array -> make_heap;
+    introsort_loop -> ctlz;
+    introsort_loop -> final_insertion_sort;
+    final_insertion_sort -> make_heap;
+    throw_length_error -> delete_memory;
+    new_memory -> delete_memory;
+}
+```
+
+### Explanation:
+- Each function is represented as a node in the graph.
+- The edges represent function calls:
+  - `sort_array` calls `introsort_loop`, `final_insertion_sort`, `memset`, and `make_heap`.
+  - `introsort_loop` calls `ctlz` and `final_insertion_sort`.
+  - `final_insertion_sort` calls `make_heap`.
+  - The `throw_length_error` function invokes memory cleanup by calling `delete_memory`.
+  - The `new_memory` function also calls `delete_memory` for its cleanup.
+
+This representation captures the structure of the call graph, allowing for visualization and analysis of function relationships within the code.

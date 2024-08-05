@@ -1,0 +1,35 @@
+Based on the provided Intermediate Representation (IR) code, the call graph can be constructed by analyzing the function definitions and the calls made within the functions. Below is a representation of the call graph in DOT format, including only the function names as nodes and the edges that represent the function calls.
+
+```dot
+digraph CallGraph {
+    // Nodes
+    node [shape=box];
+    _Z8simplifyNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_ [label="_Z8simplifyNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_"];
+    _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm"];
+    @llvm.lifetime.start.p0i8 [label="@llvm.lifetime.start.p0i8"];
+    @llvm.lifetime.end.p0i8 [label="@llvm.lifetime.end.p0i8"];
+    @strtol [label="@strtol"];
+    @_ZdlPv [label="@_ZdlPv"];
+    @_ZSt24__throw_out_of_range_fmtPKcz [label="@_ZSt24__throw_out_of_range_fmtPKcz"];
+    @llvm.memcpy.p0i8.p0i8.i64 [label="@llvm.memcpy.p0i8.p0i8.i64"];
+    @llvm.experimental.noalias.scope.decl [label="@llvm.experimental.noalias.scope.decl"];
+
+    // Edges
+    _Z8simplifyNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_ -> _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm;
+    _Z8simplifyNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_ -> @llvm.lifetime.start.p0i8;
+    _Z8simplifyNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_ -> @llvm.lifetime.end.p0i8;
+    _Z8simplifyNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_ -> @strtol;
+    _Z8simplifyNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_ -> @_ZdlPv;
+    _Z8simplifyNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_ -> @_ZSt24__throw_out_of_range_fmtPKcz;
+    _Z8simplifyNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_ -> @llvm.memcpy.p0i8.p0i8.i64;
+    _Z8simplifyNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_ -> @llvm.experimental.noalias.scope.decl;
+}
+```
+
+### Explanation:
+- Each function is represented as a node in the graph.
+- The edges represent calls made from one function to another.
+- The function `_Z8simplifyNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_` is the main function in this case, and it calls several other functions.
+- The function names are mangled C++ names (demangled as necessary) to represent their signatures correctly. 
+
+You can visualize this DOT representation using any Graphviz-compatible tool to see the call graph structure.

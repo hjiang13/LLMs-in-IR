@@ -1,0 +1,39 @@
+Based on the provided Intermediate Representation (IR) code, I can extract the function definitions and their calls to construct the call graph in the DOT format. Here’s how the call graph can be represented:
+
+```dot
+digraph CallGraph {
+    node [shape=box];
+
+    // Function nodes
+    _Z5solveB5cxx11;
+    _ZN9__gnu_cxx12__to_xstringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEET_PFiPT0_mPKS8_P13__va_list_tagEmSB_z;
+    @llvm.lifetime.start.p0i8;
+    @llvm.lifetime.end.p0i8;
+    @__gxx_personality_v0;
+    @llvm.va_start;
+    @llvm.va_end;
+    @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm;
+    @llvm.memcpy.p0i8.p0i8.i64;
+    @_ZdlPv;
+    @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm;
+    @llvm.vector.reduce.add.v4i32;
+
+    // Edges (calls)
+    _Z5solveB5cxx11 -> _ZN9__gnu_cxx12__to_xstringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEET_PFiPT0_mPKS8_P13__va_list_tagEmSB_z;
+    _Z5solveB5cxx11 -> @llvm.lifetime.start.p0i8;
+    _Z5solveB5cxx11 -> @llvm.lifetime.end.p0i8;
+    _Z5solveB5cxx11 -> @__gxx_personality_v0;
+    _Z5solveB5cxx11 -> @llvm.va_start;
+    _Z5solveB5cxx11 -> @llvm.va_end;
+    _Z5solveB5cxx11 -> @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm;
+    _Z5solveB5cxx11 -> @llvm.memcpy.p0i8.p0i8.i64;
+    _Z5solveB5cxx11 -> @_ZdlPv;
+    _Z5solveB5cxx11 -> @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm;
+    _Z5solveB5cxx11 -> @llvm.vector.reduce.add.v4i32;
+}
+```
+
+### Explanation:
+- Each function is represented as a node in the graph.
+- The edges represent function calls. For example, `_Z5solveB5cxx11` calls `_ZN9__gnu_cxx12__to_xstring...`, indicating that the `solve` function is invoking the `__to_xstring` function, among others.
+- The nodes are formatted using the DOT graph description language, which can be visualized using graph visualization tools.

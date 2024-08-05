@@ -1,0 +1,35 @@
+Based on the provided Intermediate Representation (IR) code, we can extract the function definitions and their calls to construct a call graph. 
+
+The main function defined in the IR code is `_Z15check_dict_caseSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_St4lessIS5_ESaISt4pairIKS5_S5_EEE`, and it calls the following functions:
+
+1. `@llvm.lifetime.start.p0i8`
+2. `@llvm.memcpy.p0i8.p0i8.i64`
+3. `@llvm.lifetime.end.p0i8`
+4. `_ZdlPv`
+5. `_ZSt18_Rb_tree_incrementPSt18_Rb_tree_node_base`
+6. `_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm`
+
+Given this information, the call graph in DOT format would look like this:
+
+```dot
+digraph CallGraph {
+    // Node Definitions
+    "check_dict_case" [label="_Z15check_dict_caseSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_St4lessIS5_ESaISt4pairIKS5_S5_EEE"];
+    "llvm.lifetime.start" [label="@llvm.lifetime.start.p0i8"];
+    "llvm.memcpy" [label="@llvm.memcpy.p0i8.p0i8.i64"];
+    "llvm.lifetime.end" [label="@llvm.lifetime.end.p0i8"];
+    "delete" [label="_ZdlPv"];
+    "Rb_tree_increment" [label="_ZSt18_Rb_tree_incrementPSt18_Rb_tree_node_base"];
+    "basic_string_create" [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm"];
+
+    // Edges
+    "check_dict_case" -> "llvm.lifetime.start";
+    "check_dict_case" -> "llvm.memcpy";
+    "check_dict_case" -> "llvm.lifetime.end";
+    "check_dict_case" -> "delete";
+    "check_dict_case" -> "Rb_tree_increment";
+    "check_dict_case" -> "basic_string_create";
+}
+```
+
+This representation captures the function calls made within the `check_dict_case` function, showing which functions are invoked during its execution. Each function is represented as a node, and directed edges indicate the calls made from one function to another.

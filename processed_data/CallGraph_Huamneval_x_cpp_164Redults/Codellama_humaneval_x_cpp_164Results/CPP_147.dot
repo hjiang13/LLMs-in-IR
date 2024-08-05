@@ -1,0 +1,33 @@
+Based on the provided IR code, I'll construct the call graph in the DOT format. Each function will be represented as a node, and calls to other functions will be represented as directed edges. Here’s how the call graph will look:
+
+```dot
+digraph CallGraph {
+    // Define the nodes
+    "get_matrix_triples" [label="_Z18get_matrix_triplesi"];
+    "operator new" [label="_Znwm"];
+    "operator delete" [label="_ZdlPv"];
+    "throw_length_error" [label="_ZSt20__throw_length_errorPKc"];
+    "throw_bad_alloc" [label="_ZSt17__throw_bad_allocv"];
+    "uninitialized_copy" [label="_ZNSt20__uninitialized_copyILb0EE13__uninit_copyIPKSt6vectorIiSaIiEEPS4_EET0_T_S9_S8_"];
+    "assign_aux" [label="_ZNSt6vectorIS_IiSaIiEESaIS1_EE13_M_assign_auxIPKS1_EEvT_S7_St20forward_iterator_tag"];
+    "allocate_and_copy" [label="_ZNSt6vectorIS_IiSaIiEESaIS1_EE20_M_allocate_and_copyIPKS1_EEPS1_mT_S8_"];
+    "realloc_insert" [label="_ZNSt6vectorIS_IiSaIiEESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_"];
+
+    // Define the edges (function calls)
+    "get_matrix_triples" -> "operator new";
+    "get_matrix_triples" -> "operator delete";
+    "get_matrix_triples" -> "throw_length_error";
+    "get_matrix_triples" -> "throw_bad_alloc";
+    "get_matrix_triples" -> "uninitialized_copy";
+    "get_matrix_triples" -> "assign_aux";
+    "get_matrix_triples" -> "allocate_and_copy";
+    "get_matrix_triples" -> "realloc_insert";
+
+    // Additional functions called can be added here in a similar manner
+}
+```
+
+### Explanation:
+- Each function is represented as a node in the graph. The label represents the mangled name of the function.
+- The edges represent calls made from one function to another. For example, `get_matrix_triples` calls `operator new`, `operator delete`, and other functions as indicated in the IR code.
+- You can expand this graph with more nodes and edges as you analyze more functions and their calls from the IR code.

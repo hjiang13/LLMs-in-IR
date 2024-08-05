@@ -1,0 +1,34 @@
+Based on the provided IR code, we can analyze the function calls and create a corresponding call graph in DOT format. The primary function in this code appears to be `_Z11change_baseB5cxx11ii`, along with other functions it calls, such as `@llvm.lifetime.start.p0i8`, `@llvm.lifetime.end.p0i8`, `@__gxx_personality_v0`, and `_ZN9__gnu_cxx12__to_xstringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEET_PFiPT0_mPKS8_P13__va_list_tagEmSB_z`.
+
+Here’s the call graph in DOT format:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    _Z11change_baseB5cxx11ii [label="_Z11change_baseB5cxx11ii"];
+    @llvm.lifetime.start.p0i8 [label="@llvm.lifetime.start.p0i8"];
+    @llvm.lifetime.end.p0i8 [label="@llvm.lifetime.end.p0i8"];
+    @__gxx_personality_v0 [label="@__gxx_personality_v0"];
+    _ZN9__gnu_cxx12__to_xstringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEET_PFiPT0_mPKS8_P13__va_list_tagEmSB_z [label="_ZN9__gnu_cxx12__to_xstringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEET_PFiPT0_mPKS8_P13__va_list_tagEmSB_z"];
+    _ZdlPv [label="_ZdlPv"];
+    _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm"];
+    @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm [label="@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm"];
+    @llvm.memcpy.p0i8.p0i8.i64 [label="@llvm.memcpy.p0i8.p0i8.i64"];
+    @llvm.va_start [label="@llvm.va_start"];
+    @llvm.va_end [label="@llvm.va_end"];
+
+    // Edges
+    _Z11change_baseB5cxx11ii -> @llvm.lifetime.start.p0i8;
+    _Z11change_baseB5cxx11ii -> @llvm.lifetime.end.p0i8;
+    _Z11change_baseB5cxx11ii -> @__gxx_personality_v0;
+    _Z11change_baseB5cxx11ii -> _ZN9__gnu_cxx12__to_xstringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEET_PFiPT0_mPKS8_P13__va_list_tagEmSB_z;
+    _Z11change_baseB5cxx11ii -> _ZdlPv;
+    _Z11change_baseB5cxx11ii -> _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm;
+    _Z11change_baseB5cxx11ii -> @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm;
+    _Z11change_baseB5cxx11ii -> @llvm.memcpy.p0i8.p0i8.i64;
+    _Z11change_baseB5cxx11ii -> @llvm.va_start;
+    _Z11change_baseB5cxx11ii -> @llvm.va_end;
+}
+```
+
+This DOT representation outlines the call relationships between the functions. You can visualize this graph using tools that support the DOT format, such as Graphviz. The nodes represent the functions, and the edges represent the calls made from one function to another.

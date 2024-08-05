@@ -1,0 +1,31 @@
+Below is the call graph in DOT format based on the provided Intermediate Representation (IR) code. The graph shows the relationships between the functions defined in the code:
+
+```dot
+digraph CallGraph {
+    // Function Nodes
+    node [shape=box];
+
+    _Z13is_palindromeNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE [label="_Z13is_palindromeNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE"];
+    _Z15make_palindromeNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE [label="_Z15make_palindromeNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE"];
+    _ZdlPv [label="_ZdlPv"];
+    @llvm.lifetime.start.p0i8 [label="@llvm.lifetime.start.p0i8"];
+    @llvm.lifetime.end.p0i8 [label="@llvm.lifetime.end.p0i8"];
+    @bcmp [label="@bcmp"];
+    @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm [label="__ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm"];
+    @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm [label="__ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm"];
+
+    // Edges
+    _Z13is_palindromeNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm;
+    _Z13is_palindromeNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> @bcmp;
+    _Z15make_palindromeNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm;
+    _Z15make_palindromeNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> @llvm.lifetime.start.p0i8;
+    _Z15make_palindromeNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> @llvm.lifetime.end.p0i8;
+}
+```
+
+### Explanation:
+- Each function is represented as a node in the graph, with its name as the label.
+- Edges represent calls between functions; for instance, `_Z13is_palindromeNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE` calls `_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm` and `@bcmp`.
+- The nodes are formatted using the `shape=box` style for clarity.
+
+To visualize this graph, you can use Graphviz or any other DOT file viewer.

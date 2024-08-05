@@ -1,0 +1,35 @@
+To create a call graph from the provided Intermediate Representation (IR) code, we'll identify the functions and their call relationships. Below is the dot file representation of the call graph based on the provided IR code.
+
+```dot
+digraph CallGraph {
+    // Nodes (Functions)
+    node [shape=box];
+    _Z6commonSt6vectorIiSaIiEES1_ [label="_Z6commonSt6vectorIiSaIiEES1_"];
+    _ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_ [label="_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_"];
+    _ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_ [label="_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_"];
+    _ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_RT0_ [label="_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_RT0_"];
+    @__gxx_personality_v0 [label="__gxx_personality_v0"];
+    @_ZdlPv [label="_ZdlPv"];
+    @_ZSt20__throw_length_errorPKc [label="_ZSt20__throw_length_errorPKc"];
+    @_Znwm [label="_Znwm"];
+    @llvm.memset.p0i8.i64 [label="@llvm.memset.p0i8.i64"];
+    @llvm.memmove.p0i8.p0i8.i64 [label="@llvm.memmove.p0i8.p0i8.i64"];
+    
+    // Edges (Function Calls)
+    _Z6commonSt6vectorIiSaIiEES1_ -> _ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_;
+    _Z6commonSt6vectorIiSaIiEES1_ -> _ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_;
+    _ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_ -> @_ZdlPv;
+    _ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_ -> @_ZdlPv;
+    _ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_RT0_ -> @_ZdlPv;
+    
+    // Other declarations
+    _Z6commonSt6vectorIiSaIiEES1_ -> @llvm.memset.p0i8.i64;
+    _Z6commonSt6vectorIiSaIiEES1_ -> @llvm.memmove.p0i8.p0i8.i64;
+}
+```
+
+### Explanation:
+- Each function is represented as a node in the graph, and the labels represent the function names.
+- The edges represent the function calls, indicating which functions call other functions.
+- The external functions (like `@llvm.memset.p0i8.i64`, `@llvm.memmove.p0i8.p0i8.i64`, etc.) are also included as nodes since they are part of the function calls.
+- This graph is expressed in the DOT language, which can be visualized using graph visualization tools such as Graphviz.

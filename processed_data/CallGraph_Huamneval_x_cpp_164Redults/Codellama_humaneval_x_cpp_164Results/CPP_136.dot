@@ -1,0 +1,25 @@
+Based on the provided IR code, we can construct a call graph that shows the functions and their relationships (calls) to one another. Here's the corresponding DOT representation of the call graph:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    node [shape=box];
+    
+    "_Z25largest_smallest_integersSt6vectorIiSaIiEE" [label="_Z25largest_smallest_integersSt6vectorIiSaIiEE"];
+    "__gxx_personality_v0" [label="__gxx_personality_v0"];
+    "_Znwm" [label="_Znwm"];
+    "llvm.memset.p0i8.i64" [label="llvm.memset.p0i8.i64"];
+    "llvm.umax.i64" [label="llvm.umax.i64"];
+    
+    // Edges
+    "_Z25largest_smallest_integersSt6vectorIiSaIiEE" -> "llvm.umax.i64";
+    "_Z25largest_smallest_integersSt6vectorIiSaIiEE" -> "_Znwm";
+    "_Z25largest_smallest_integersSt6vectorIiSaIiEE" -> "llvm.memset.p0i8.i64";
+    "_Z25largest_smallest_integersSt6vectorIiSaIiEE" -> "__gxx_personality_v0";
+}
+```
+
+### Explanation:
+- Each function defined in the IR is represented as a node in the graph. The label of the node corresponds to the function name.
+- The edges represent function calls. For instance, the function `_Z25largest_smallest_integersSt6vectorIiSaIiEE` calls `llvm.umax.i64`, `_Znwm`, and `llvm.memset.p0i8.i64`, and it also references `__gxx_personality_v0`.
+- The graph is formatted in a way that can be interpreted by graph visualization tools that support the DOT format, allowing you to visualize the call relationships between these functions.

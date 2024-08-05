@@ -1,0 +1,37 @@
+Based on the provided IR code, we can extract the function definitions and declarations to construct a call graph. Here's the representation in DOT format, which includes nodes for each function and edges representing calls between them.
+
+```dot
+digraph CallGraph {
+    // Nodes
+    node [shape=box];
+    parse_nested_parens [label="@_Z19parse_nested_parensNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE"];
+    llvm_memset [label="@llvm.memset.p0i8.i64"];
+    llvm_lifetime_start [label="@llvm.lifetime.start.p0i8"];
+    llvm_lifetime_end [label="@llvm.lifetime.end.p0i8"];
+    _ZdlPv [label="@_ZdlPv(i8*)"];
+    _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_mutateEmmPKcm [label="@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_mutateEmmPKcm"];
+    _ZSt20__throw_length_errorPKc [label="@_ZSt20__throw_length_errorPKc"];
+    _Znwm [label="@_Znwm(i64)"];
+    llvm_memmove [label="@llvm.memmove.p0i8.p0i8.i64"];
+    _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm [label="@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm"];
+
+    // Edges
+    parse_nested_parens -> llvm_memset;
+    parse_nested_parens -> llvm_lifetime_start;
+    parse_nested_parens -> _ZdlPv;
+    parse_nested_parens -> _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_mutateEmmPKcm;
+    parse_nested_parens -> _ZSt20__throw_length_errorPKc;
+    parse_nested_parens -> _Znwm;
+    parse_nested_parens -> llvm_memmove;
+    parse_nested_parens -> _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm;
+
+    llvm_memset -> llvm_lifetime_end;
+    llvm_lifetime_end -> _ZdlPv;
+}
+```
+
+### Explanation:
+- **Nodes**: Each function is represented as a node. The label for each node is the mangled name of the function.
+- **Edges**: Directed edges indicate function calls. For example, `parse_nested_parens` calls `llvm_memset`, `llvm_lifetime_start`, and other functions.
+  
+This representation allows visualization of how functions are interconnected through calls, which is useful for understanding the control flow of the program.

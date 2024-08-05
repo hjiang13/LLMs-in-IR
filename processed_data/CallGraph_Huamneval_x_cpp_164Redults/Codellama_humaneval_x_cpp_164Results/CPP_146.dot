@@ -1,0 +1,39 @@
+Based on the provided Intermediate Representation (IR) code, I will generate a call graph in the DOT format. The graph will include nodes representing the functions and edges representing the calls between them.
+
+```dot
+digraph CallGraph {
+    rankdir=LR;
+
+    // Function Definitions
+    node1 [label="_Z13specialFilterSt6vectorIiSaIiEE"];
+    node2 [label="_ZN9__gnu_cxx12__to_xstringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEET_PFiPT0_mPKS8_P13__va_list_tagEmSB_z"];
+    node3 [label="@__gxx_personality_v0"];
+    node4 [label="@llvm.lifetime.start.p0i8"];
+    node5 [label="@llvm.lifetime.end.p0i8"];
+    node6 [label="@_ZdlPv"];
+    node7 [label="@vsnprintf"];
+    node8 [label="@llvm.va_start"];
+    node9 [label="@llvm.va_end"];
+    node10 [label="@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm"];
+    node11 [label="@llvm.memcpy.p0i8.p0i8.i64"];
+
+    // Edges
+    node1 -> node2; // _Z13specialFilterSt6vectorIiSaIiEE calls _ZN9__gnu_cxx12__to_xstringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEET_PFiPT0_mPKS8_P13__va_list_tagEmSB_z
+    node1 -> node4; // _Z13specialFilterSt6vectorIiSaIiEE calls @llvm.lifetime.start.p0i8
+    node1 -> node5; // _Z13specialFilterSt6vectorIiSaIiEE calls @llvm.lifetime.end.p0i8
+    node1 -> node6; // _Z13specialFilterSt6vectorIiSaIiEE calls @_ZdlPv
+    node1 -> node7; // _Z13specialFilterSt6vectorIiSaIiEE calls @vsnprintf
+    node1 -> node8; // _Z13specialFilterSt6vectorIiSaIiEE calls @llvm.va_start
+    node1 -> node9; // _Z13specialFilterSt6vectorIiSaIiEE calls @llvm.va.end
+    node2 -> node10; // _ZN9__gnu_cxx12__to_xstringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEET_PFiPT0_mPKS8_P13__va_list_tagEmSB_z calls @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm
+    node2 -> node11; // _ZN9__gnu_cxx12__to_xstringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEET_PFiPT0_mPKS8_P13__va_list_tagEmSB_z calls @llvm.memcpy.p0i8.p0i8.i64
+    node1 -> node3; // _Z13specialFilterSt6vectorIiSaIiEE calls @__gxx_personality_v0
+}
+```
+
+### Explanation:
+- Each function is represented as a node in the graph.
+- The edges indicate the function calls made within the functions.
+- The labels on the nodes represent the names of the functions as defined in the IR code. 
+
+You can visualize this DOT representation using tools like Graphviz to see the call graph structure.

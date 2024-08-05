@@ -1,0 +1,31 @@
+Based on the provided Intermediate Representation (IR) code, we can analyze the function calls and construct a call graph in the DOT format. The graph will represent the relationships between the functions, showing which functions call others.
+
+Here's the call graph in DOT format:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    "_Z25count_distinct_charactersNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE" [label="_Z25count_distinct_charactersNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE"];
+    "tolower" [label="tolower"];
+    "_ZdlPv" [label="_ZdlPv"];
+    "_ZSt20__throw_length_errorPKc" [label="_ZSt20__throw_length_errorPKc"];
+    "_Znwm" [label="_Znwm"];
+    "llvm.memmove.p0i8.p0i8.i64" [label="llvm.memmove.p0i8.p0i8.i64"];
+
+    // Edges
+    "_Z25count_distinct_charactersNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE" -> "tolower";
+    "_Z25count_distinct_charactersNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE" -> "_ZdlPv";
+    "_Z25count_distinct_charactersNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE" -> "_ZSt20__throw_length_errorPKc";
+    "_Z25count_distinct_charactersNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE" -> "_Znwm";
+    "_Z25count_distinct_charactersNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE" -> "llvm.memmove.p0i8.p0i8.i64";
+}
+```
+
+### Explanation:
+
+- Each function is represented as a node.
+- The `label` attributes of the nodes show the function names.
+- The directed edges (`->`) indicate calls from one function to another.
+- The function `_Z25count_distinct_charactersNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE` is the primary function in this IR, and it calls several other functions: `tolower`, `_ZdlPv`, `_ZSt20__throw_length_errorPKc`, `_Znwm`, and `llvm.memmove.p0i8.p0i8.i64`. 
+
+This representation allows for a visual understanding of the call hierarchy and the relationships between the functions in the program.

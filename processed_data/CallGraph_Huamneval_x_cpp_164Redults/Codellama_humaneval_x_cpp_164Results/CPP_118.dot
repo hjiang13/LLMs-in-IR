@@ -1,0 +1,33 @@
+Based on the provided Intermediate Representation (IR) code, I'll create a call graph in the DOT format. The graph will include nodes for the functions defined and declared within the IR code, along with directed edges representing the calls between those functions.
+
+Here's the call graph in DOT format:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    node [shape=box];
+    get_closest_vowel [label="_Z17get_closest_vowelNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE"];
+    llvm_lifetime_start [label="llvm.lifetime.start.p0i8"];
+    llvm_lifetime_end [label="llvm.lifetime.end.p0i8"];
+    dlPv [label="_ZdlPv"];
+    memcpy [label="llvm.memcpy.p0i8.p0i8.i64"];
+    basic_string_replace_aux [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc"];
+
+    // Edges
+    get_closest_vowel -> llvm_lifetime_start;
+    get_closest_vowel -> llvm_lifetime_end;
+    get_closest_vowel -> dlPv;
+    get_closest_vowel -> memcpy;
+    get_closest_vowel -> basic_string_replace_aux;
+
+    // Additional edges for the declared functions (if needed)
+    llvm_lifetime_start -> llvm_lifetime_end;
+}
+```
+
+### Explanation:
+- Each function and declared function in the IR code is represented as a node in the graph.
+- The edges represent the calls made within the `get_closest_vowel` function to other functions such as `llvm.lifetime.start.p0i8`, `llvm.lifetime.end.p0i8`, `_ZdlPv`, `llvm.memcpy.p0i8.p0i8.i64`, and `_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc`.
+- The graph is directed (`->` indicates the direction of the call) and uses a box shape for the nodes. 
+
+You can visualize this graph using any DOT file viewer or graph visualization tool.

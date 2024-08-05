@@ -1,0 +1,32 @@
+Based on the provided IR code, we can extract the function definitions and their calls to create a call graph in DOT format. In the given IR code, the primary function defined is `_Z11count_upperNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE`. The other functions declared but not defined in the provided code are `@llvm.lifetime.start.p0i8`, `@llvm.lifetime.end.p0i8`, and `@llvm.memcpy.p0i8.p0i8.i64`.
+
+Here's how the call graph in DOT format would look:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    node [shape=rectangle];
+    count_upper [label="_Z11count_upperNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE"];
+    llvm_lifetime_start [label="@llvm.lifetime.start.p0i8"];
+    llvm_lifetime_end [label="@llvm.lifetime.end.p0i8"];
+    llvm_memcpy [label="@llvm.memcpy.p0i8.p0i8.i64"];
+    gxx_personality [label="@__gxx_personality_v0"];
+
+    // Edges
+    count_upper -> llvm_lifetime_start;
+    count_upper -> llvm_lifetime_end;
+    count_upper -> llvm_memcpy;
+}
+```
+
+### Explanation:
+1. **Nodes**:
+   - Each function is represented as a node in the graph.
+   - The main function `_Z11count_upperNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE` is the entry point.
+   - The functions `@llvm.lifetime.start.p0i8`, `@llvm.lifetime.end.p0i8`, `@llvm.memcpy.p0i8.p0i8.i64`, and `@__gxx_personality_v0` are also included as they are called within the main function.
+
+2. **Edges**:
+   - Directed edges represent calls from one function to another.
+   - The edges show that `count_upper` calls the three declared functions.
+
+You can visualize this graph using any tool that supports the DOT format, such as Graphviz.

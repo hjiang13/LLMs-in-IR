@@ -1,0 +1,45 @@
+Based on the provided Intermediate Representation (IR) code, we can extract the function definitions and their call relationships to create a call graph in the DOT format. The call graph will include nodes for each function and directed edges to represent function calls.
+
+Here's the DOT representation of the call graph:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    node [shape=box];
+    encode_shift [label="_Z12encode_shiftNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE"];
+    decode_shift [label="_Z12decode_shiftNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE"];
+    delete [label="_ZdlPv"];
+    create [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm"];
+    replace [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc"];
+    memcpy [label="llvm.memcpy.p0i8.p0i8.i64"];
+    lifetime_start [label="llvm.lifetime.start.p0i8"];
+    lifetime_end [label="llvm.lifetime.end.p0i8"];
+    noalias_scope [label="llvm.experimental.noalias.scope.decl"];
+
+    // Edges
+    encode_shift -> create;
+    encode_shift -> memcpy;
+    encode_shift -> lifetime_start;
+    encode_shift -> lifetime_end;
+    encode_shift -> replace;
+    encode_shift -> delete;
+  
+    decode_shift -> create;
+    decode_shift -> memcpy;
+    decode_shift -> lifetime_start;
+    decode_shift -> lifetime_end;
+    decode_shift -> replace;
+    decode_shift -> delete;
+
+    // Additional edges for calls in the functions
+    encode_shift -> noalias_scope;
+    decode_shift -> noalias_scope;
+}
+```
+
+### Explanation:
+- Each function in the IR code is represented as a node.
+- The edges represent the function calls made within each function.
+- The labels for the nodes are the mangled names of the functions, which correspond to the definitions in the IR code.
+
+You can visualize this DOT representation using Graphviz or similar tools to see the structure of the call graph.

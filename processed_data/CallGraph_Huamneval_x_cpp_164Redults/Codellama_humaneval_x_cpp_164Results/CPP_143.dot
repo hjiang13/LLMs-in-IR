@@ -1,0 +1,42 @@
+To generate a call graph in Dot format from the provided Intermediate Representation (IR) code, we need to identify the functions and the calls made between them. Based on the provided IR code, I can extract the relevant function names and their call relationships.
+
+Here's the call graph in Dot format:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    node1 [label="_Z17words_in_sentenceNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE"];
+    node2 [label="__gxx_personality_v0"];
+    node3 [label="_ZdlPv"];
+    node4 [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm"];
+    node5 [label="llvm.memcpy.p0i8.p0i8.i64"];
+    node6 [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc"];
+    node7 [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm"];
+    node8 [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm"];
+    node9 [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_eraseEmm"];
+    node10 [label="llvm.experimental.noalias.scope.decl"];
+    node11 [label="__cxa_begin_catch"];
+    node12 [label="_ZSt9terminatev"];
+    
+    // Edges
+    node1 -> node2;  // Call to __gxx_personality_v0
+    node1 -> node3;  // Call to _ZdlPv
+    node1 -> node4;  // Call to _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm
+    node1 -> node5;  // Call to llvm.memcpy.p0i8.p0i8.i64
+    node1 -> node6;  // Call to _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc
+    node1 -> node7;  // Call to _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm
+    node1 -> node8;  // Call to _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm
+    node1 -> node9;  // Call to _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8_M_eraseEmm
+    node1 -> node10; // Call to llvm.experimental.noalias.scope.decl
+    node1 -> node11; // Call to __cxa_begin_catch
+    node1 -> node12; // Call to _ZSt9terminatev
+}
+```
+
+### Explanation:
+- Each node represents a function in the IR code.
+- The edges represent calls from one function to another.
+- Function names are extracted from the IR code and represented in the format suitable for a Dot file.
+- The node labels are the mangled names of the functions as they appear in the IR. 
+
+You can visualize this Dot format using graph visualization tools, such as Graphviz.

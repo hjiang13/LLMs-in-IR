@@ -1,0 +1,41 @@
+To generate a call graph from the given Intermediate Representation (IR) code, we need to extract the function definitions and the function calls. Here is the dot format representation of the call graph based on the provided IR code:
+
+```dot
+digraph CallGraph {
+    // Function definitions (nodes)
+    node [shape=ellipse];
+    anti_shuffle [label="_Z12anti_shuffleNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE"];
+    int_sort_loop [label="_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEElNS0_5__ops15_Iter_less_iterEEvT_SC_T0_T1_"];
+    final_insertion_sort [label="_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEENS0_5__ops15_Iter_less_iterEEvT_SC_T0_"];
+    make_heap [label="_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEENS0_5__ops15_Iter_less_iterEEvT_SC_RT0_"];
+    create [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm"];
+    replace_aux [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc"];
+    append [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm"];
+    delete [label="_ZdlPv"];
+    personality [label="__gxx_personality_v0"];
+    memcpy [label="llvm.memcpy.p0i8.p0i8.i64"];
+    lifetime_start [label="llvm.lifetime.start.p0i8"];
+    lifetime_end [label="llvm.lifetime.end.p0i8"];
+    noalias_scope_decl [label="llvm.experimental.noalias.scope.decl"];
+
+    // Function calls (edges)
+    anti_shuffle -> int_sort_loop;
+    anti_shuffle -> final_insertion_sort;
+    anti_shuffle -> make_heap;
+    anti_shuffle -> create;
+    anti_shuffle -> append;
+    anti_shuffle -> replace_aux;
+    anti_shuffle -> delete;
+    anti_shuffle -> lifetime_start;
+    anti_shuffle -> lifetime_end;
+    anti_shuffle -> noalias_scope_decl;
+}
+```
+
+### Explanation:
+- Each function defined in the provided IR is represented as a node in the graph.
+- The edges indicate the function calls made within the `anti_shuffle` function to other functions.
+- The node labels consist of the mangled names used in the IR.
+- The `->` operator is used to create directed edges from the calling function to the called function.
+
+This representation captures the relationships between the functions as specified in the IR code provided.

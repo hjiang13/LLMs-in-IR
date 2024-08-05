@@ -1,0 +1,34 @@
+To generate a call graph in DOT format from the provided Intermediate Representation (IR) code, we first need to extract the function definitions and the calls made within those functions. Based on the provided IR code, the relevant function calls can be identified.
+
+Here's the call graph represented in DOT format:
+
+```dot
+digraph CallGraph {
+    // Function nodes
+    node [shape=box];
+    _Z17strange_sort_listSt6vectorIiSaIiEE;
+    @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_;
+    @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_;
+    @llvm.memset.p0i8.i64;
+    @__gxx_personality_v0;
+    @_ZdlPv;
+    @_Znwm(i64);
+
+    // Edges representing calls
+    _Z17strange_sort_listSt6vectorIiSaIiEE -> @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_;
+    _Z17strange_sort_listSt6vectorIiSaIiEE -> @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_;
+    _Z17strange_sort_listSt6vectorIiSaIiEE -> @llvm.memset.p0i8.i64;
+    _ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_ -> @_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_RT0_;
+    _ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_ -> @_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5_ops15_Iter_less_iterEEvT_S9_RT0_;
+    _ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5_ops15_Iter_less_iterEEvT_S9_RT0_ -> @llvm.ctlz.i64;
+    _ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5_ops15_Iter_less_iterEEvT_S9_RT0_ -> @_ZdlPv;
+    _ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5_ops15_Iter_less_iterEEvT_S9_RT0_ -> @_Znwm(i64);
+}
+```
+
+### Explanation:
+- Each function is represented as a node in the graph.
+- The edges represent calls from one function to another. For example, `_Z17strange_sort_listSt6vectorIiSaIiEE` calls the sorting functions and memory functions.
+- The function names are encoded in a mangled format typical of C++ compilers. 
+
+This DOT representation can be used with graph visualization tools (like Graphviz) to visualize the call graph.

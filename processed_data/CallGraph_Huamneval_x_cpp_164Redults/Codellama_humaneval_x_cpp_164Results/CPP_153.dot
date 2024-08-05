@@ -1,0 +1,35 @@
+Based on the provided Intermediate Representation (IR) code, the following is the call graph represented in DOT format. In the graph, functions are represented as nodes, and calls between them are represented as directed edges.
+
+```dot
+digraph CallGraph {
+    // Nodes
+    node [shape=box];
+    Strongest_Extension [label="_Z19Strongest_ExtensionNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIS4_SaIS4_EE"];
+    llvm_lifetime_start [label="llvm.lifetime.start.p0i8"];
+    llvm_lifetime_end [label="llvm.lifetime.end.p0i8"];
+    llvm_vector_reduce_add [label="llvm.vector.reduce.add.v4i32"];
+    _ZdlPv [label="_ZdlPv"];
+    _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm"];
+    _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_ [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_"];
+    _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc"];
+    _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm"];
+
+    // Edges
+    Strongest_Extension -> llvm_lifetime_start;
+    Strongest_Extension -> llvm_lifetime_end;
+    Strongest_Extension -> llvm_vector_reduce_add;
+    Strongest_Extension -> _ZdlPv;
+    Strongest_Extension -> _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm;
+    Strongest_Extension -> _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_;
+    Strongest_Extension -> _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc;
+    Strongest_Extension -> _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm;
+}
+```
+
+### Explanation:
+- Each function in the IR has been turned into a node with a label that corresponds to its mangled name.
+- The edges represent calls made from the `Strongest_Extension` function to other functions. 
+- The `Strongest_Extension` function is the main function of interest in this provided IR code, and it calls several other functions during its execution.
+- The `llvm.lifetime.start.p0i8` and `llvm.lifetime.end.p0i8` functions are also included, as they are essential to memory management within the IR code. 
+
+This graph can be visualized using any tool that supports the DOT format, such as Graphviz.

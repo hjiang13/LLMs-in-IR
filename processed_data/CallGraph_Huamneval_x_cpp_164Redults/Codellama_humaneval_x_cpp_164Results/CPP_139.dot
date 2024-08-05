@@ -1,0 +1,38 @@
+Based on the provided Intermediate Representation (IR) code, we can construct a call graph in the DOT format. The function defined in the IR is `_Z17special_factoriali`, and it contains several basic blocks. In the call graph, we will represent the function as a node and the control flow between basic blocks as edges.
+
+Here’s how the call graph can be represented in DOT format:
+
+```dot
+digraph CallGraph {
+    // Node representing the function
+    node [shape=box];
+    _Z17special_factoriali;
+
+    // Basic blocks as nodes
+    B1 [label="3"];
+    B2 [label="10"];
+    B3 [label="12"];
+    B4 [label="18"];
+    B5 [label="28"];
+    B6 [label="30"];
+
+    // Edges representing control flow
+    _Z17special_factoriali -> B1;
+    B1 -> B2; // Control flow from block 1 to block 2
+    B1 -> B3; // Control flow from block 1 to block 3
+    B2 -> B6; // Control flow from block 2 to block 6
+    B3 -> B4; // Control flow from block 3 to block 4
+    B4 -> B4; // Loop back in block 4
+    B4 -> B5; // Control flow from block 4 to block 5
+    B4 -> B6; // Control flow from block 4 to block 6
+    B6 -> B3; // Loop back in block 6
+    B6 -> B6; // Loop in block 6
+}
+```
+
+In this representation:
+- Each basic block is represented as a node with the label corresponding to its identifier (e.g., "3", "10", "12", "18", "28", "30").
+- The edges indicate control flow between these basic blocks.
+- The function `_Z17special_factoriali` is the entry point of the graph, and the basic blocks are the subsequent nodes in the flow of execution. 
+
+You can visualize this graph using various tools that support DOT format, such as Graphviz.

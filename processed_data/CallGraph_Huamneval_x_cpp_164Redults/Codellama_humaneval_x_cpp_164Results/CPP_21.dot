@@ -1,0 +1,20 @@
+To generate the call graph based on the provided Intermediate Representation (IR) code, we'll analyze the function calls and their relationships. The only function defined in the input is `@_Z15rescale_to_unitSt6vectorIfSaIfEE`, which calls `@llvm.umax.i64` and `@llvm.memset.p0i8.i64`.
+
+Here is the corresponding dot representation of the call graph:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    "_Z15rescale_to_unitSt6vectorIfSaIfEE" [label="_Z15rescale_to_unitSt6vectorIfSaIfEE"];
+    "llvm.umax.i64" [label="llvm.umax.i64"];
+    "llvm.memset.p0i8.i64" [label="llvm.memset.p0i8.i64"];
+
+    // Edges
+    "_Z15rescale_to_unitSt6vectorIfSaIfEE" -> "llvm.umax.i64";
+    "_Z15rescale_to_unitSt6vectorIfSaIfEE" -> "llvm.memset.p0i8.i64";
+}
+```
+
+### Explanation
+- **Nodes**: Each function is represented as a node.
+- **Edges**: Directed edges show which functions call which other functions. In this case, the function `_Z15rescale_to_unitSt6vectorIfSaIfEE` calls both `llvm.umax.i64` and `llvm.memset.p0i8.i64`.

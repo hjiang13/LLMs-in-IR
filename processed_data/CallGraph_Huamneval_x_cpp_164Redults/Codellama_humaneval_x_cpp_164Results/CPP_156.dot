@@ -1,0 +1,57 @@
+To generate a call graph from the provided Intermediate Representation (IR) code, we need to identify the functions defined and called in the code. The functions can be identified through the `define` and `call` statements in the IR.
+
+Based on the provided IR, here are the identified functions:
+
+1. `_Z18int_to_mini_romankB5cxx11i`
+2. `@llvm.lifetime.start.p0i8`
+3. `@llvm.lifetime.end.p0i8`
+4. `@__gxx_personality_v0`
+5. `@llvm.memcpy.p0i8.p0i8.i64`
+6. `_ZNSt20__uninitialized_copyILb0EE13__uninit_copyIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPS7_EET0_T_SC_SB_`
+7. `@__cxa_begin_catch`
+8. `@__cxa_end_catch`
+9. `@__cxa_rethrow`
+10. `_ZdlPv`
+11. `_Znwm`
+
+Now, we will format this into a DOT representation of the call graph, which includes nodes and edges between them based on the function calls.
+
+Here is the output in DOT format:
+
+```dot
+digraph CallGraph {
+    rankdir=LR;
+    node [shape=box];
+
+    int_to_mini_romank [label="_Z18int_to_mini_romankB5cxx11i"];
+    llvm_lifetime_start [label="@llvm.lifetime.start.p0i8"];
+    llvm_lifetime_end [label="@llvm.lifetime.end.p0i8"];
+    gxx_personality [label="@__gxx_personality_v0"];
+    llvm_memcpy [label="@llvm.memcpy.p0i8.p0i8.i64"];
+    uninitialized_copy [label="_ZNSt20__uninitialized_copyILb0EE13__uninit_copyIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPS7_EET0_T_SC_SB_"];
+    cxa_begin_catch [label="@__cxa_begin_catch"];
+    cxa_end_catch [label="@__cxa_end_catch"];
+    cxa_rethrow [label="@__cxa_rethrow"];
+    delete [label="_ZdlPv"];
+    new [label="_Znwm"];
+
+    int_to_mini_romank -> llvm_lifetime_start;
+    int_to_mini_romank -> llvm_lifetime_end;
+    int_to_mini_romank -> gxx_personality;
+    int_to_mini_romank -> llvm_memcpy;
+    int_to_mini_romank -> uninitialized_copy;
+    int_to_mini_romank -> cxa_begin_catch;
+    int_to_mini_romank -> cxa_end_catch;
+    int_to_mini_romank -> cxa_rethrow;
+    int_to_mini_romank -> delete;
+    int_to_mini_romank -> new;
+}
+```
+
+### Explanation:
+- Each function is represented as a node.
+- The arrows (`->`) represent calls made from the `int_to_mini_romank` function to other functions.
+- The `label` attribute gives a descriptive name for each node, which is the mangled name of the C++ function as seen in the IR code.
+- The graph is directed from the calling function to the called function. 
+
+This representation provides a clear view of how functions are interconnected through calls within the given IR code.

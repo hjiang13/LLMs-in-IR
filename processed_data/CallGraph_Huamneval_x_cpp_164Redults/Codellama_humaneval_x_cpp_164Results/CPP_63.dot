@@ -1,0 +1,23 @@
+Based on the provided IR code, we can derive a call graph in the DOT format. The main function defined here is `_Z6fibfibi`, which includes calls to `@llvm.lifetime.start.p0i8` and `@llvm.lifetime.end.p0i8`. We will represent each of these functions as nodes and create edges between them based on the calls.
+
+Here's the corresponding DOT representation of the call graph:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    node [shape=box];
+    fibfibi [label="_Z6fibfibi(i32)"];
+    llvm_lifetime_start [label="@llvm.lifetime.start.p0i8(i64, i8*)"];
+    llvm_lifetime_end [label="@llvm.lifetime.end.p0i8(i64, i8*)"];
+
+    // Edges (function calls)
+    fibfibi -> llvm_lifetime_start;
+    fibfibi -> llvm_lifetime_end;
+}
+```
+
+### Explanation:
+- **Nodes**: Each node in the graph represents a function. The main function is `_Z6fibfibi`, and it calls two LLVM intrinsic functions: `@llvm.lifetime.start.p0i8` and `@llvm.lifetime.end.p0i8`.
+- **Edges**: Directed edges are created from the main function to each of the called functions, indicating the function calls.
+
+You can visualize this graph using any DOT-compatible graph visualization tool (e.g., Graphviz).

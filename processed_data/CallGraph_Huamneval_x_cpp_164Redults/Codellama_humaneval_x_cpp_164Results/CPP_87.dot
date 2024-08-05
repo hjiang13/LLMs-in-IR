@@ -1,0 +1,32 @@
+To create a call graph from the provided Intermediate Representation (IR) code, we will identify the functions that are defined and the functions that are called. The output format will be in DOT language, which is commonly used for representing graphs.
+
+Here is the DOT representation of the call graph based on the provided IR code:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    node [shape=rectangle];
+    get_row [label="_Z7get_rowSt6vectorIS_IiSaIiEESaIS1_EEi"];
+    vector_destructor [label="_ZNSt6vectorIS_IiSaIiEESaIS1_EED2Ev"];
+    memset [label="llvm.memset.p0i8.i64"];
+    gxx_personality [label="__gxx_personality_v0"];
+    throw_length_error [label="_ZSt20__throw_length_errorPKc"];
+    new [label="_Znwm"];
+    delete [label="_ZdlPv"];
+
+    // Edges
+    get_row -> memset;
+    get_row -> vector_destructor;
+    get_row -> new;
+    get_row -> throw_length_error;
+    vector_destructor -> delete;
+    vector_destructor -> gxx_personality;
+}
+```
+
+### Explanation:
+- **Nodes** represent the functions in the program. Each node is labeled with the mangled name of the function.
+- **Edges** represent calls from one function to another. For example, `get_row` calls `memset`, `vector_destructor`, and `new`.
+- The functions `delete` and `gxx_personality` are called from the `vector_destructor`.
+
+You can visualize this graph using tools that support DOT format, such as Graphviz.

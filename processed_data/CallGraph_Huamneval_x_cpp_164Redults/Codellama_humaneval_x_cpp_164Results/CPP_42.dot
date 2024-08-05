@@ -1,0 +1,28 @@
+Based on the provided Intermediate Representation (IR) code, we can extract the functions and their calls to construct a call graph. 
+
+In your IR code, we have the following functions:
+
+1. `_Z9incr_listSt6vectorIiSaIiEE` (This is a mangled name for a C++ function that operates on `std::vector<int>`).
+2. `@llvm.memset.p0i8.i64`
+3. `@llvm.umax.i64`
+
+The main function in this code is `_Z9incr_listSt6vectorIiSaIiEE`, which calls `@llvm.umax.i64` and `@llvm.memset.p0i8.i64`. 
+
+Here’s the call graph in DOT format:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    node [shape=box];
+    
+    incr_list [label="_Z9incr_listSt6vectorIiSaIiEE"];
+    llvm_memset [label="@llvm.memset.p0i8.i64"];
+    llvm_umax [label="@llvm.umax.i64"];
+    
+    // Edges
+    incr_list -> llvm_memset;
+    incr_list -> llvm_umax;
+}
+```
+
+This representation shows that the function `_Z9incr_listSt6vectorIiSaIiEE` calls both `@llvm.memset.p0i8.i64` and `@llvm.umax.i64`. You can visualize this graph using tools that can interpret DOT format, such as Graphviz.

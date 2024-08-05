@@ -1,0 +1,25 @@
+Based on the provided Intermediate Representation (IR) code, we can derive the call graph containing the functions and the calls between them. Here's the call graph represented in DOT format:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    node [shape=box];
+    hex_key [label="_Z7hex_keyNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE"];
+
+    // Edges
+    hex_key -> llvm_lifetime_start;
+    hex_key -> llvm_memcpy;
+    hex_key -> llvm_lifetime_end;
+    hex_key -> __gxx_personality_v0;
+}
+```
+
+### Explanation:
+- The function defined in the IR code is `_Z7hex_keyNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE`, which corresponds to `hex_key`.
+- The calls made within the `hex_key` function include:
+  - `@llvm.lifetime.start.p0i8`
+  - `@llvm.memcpy.p0i8.p0i8.i64`
+  - `@llvm.lifetime.end.p0i8`
+  - `@__gxx_personality_v0`
+
+The edges show which functions are called by the `hex_key` function. Each function is represented as a node, and directed edges indicate the call relationships.

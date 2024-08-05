@@ -1,0 +1,26 @@
+Based on the provided Intermediate Representation (IR) code, we can analyze the function calls and construct a call graph. The code includes one defined function (`_Z7any_intfff`) and a declared function (`@llvm.round.f32`). 
+
+Here's how the call graph can be represented in DOT format:
+
+```dot
+digraph CallGraph {
+    // Define nodes for the functions
+    node [shape=rectangle];
+
+    // Nodes
+    _Z7any_intfff [label="_Z7any_intfff"];
+    @llvm.round.f32 [label="@llvm.round.f32"];
+
+    // Edges representing function calls
+    _Z7any_intfff -> @llvm.round.f32;
+    _Z7any_intfff -> @llvm.round.f32;
+    _Z7any_intfff -> @llvm.round.f32;
+}
+```
+
+### Explanation:
+- The node `_Z7any_intfff` corresponds to the defined function in the IR code.
+- The node `@llvm.round.f32` corresponds to the declared function.
+- Edges from `_Z7any_intfff` to `@llvm.round.f32` indicate that the defined function makes calls to the declared function three times, as evidenced by the three `tail call` instructions in the IR code. 
+
+This representation provides a clear view of the call relationships within the functions as specified in the IR code.

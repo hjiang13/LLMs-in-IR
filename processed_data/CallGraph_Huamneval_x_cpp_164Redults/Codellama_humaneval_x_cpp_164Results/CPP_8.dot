@@ -1,0 +1,29 @@
+Based on the provided Intermediate Representation (IR) code, we can analyze the function calls and represent them in a call graph format using the DOT language. Here's the call graph in DOT format, highlighting the functions and their relationships:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    node [shape=box];
+    sum_product [label="@_Z11sum_productSt6vectorIiSaIiEE"];
+    __gxx_personality_v0 [label="@__gxx_personality_v0"];
+    llvm_memset [label="@llvm.memset.p0i8.i64"];
+    llvm_umax [label="@llvm.umax.i64"];
+    vector_reduce_add [label="@llvm.vector.reduce.add.v4i32"];
+    vector_reduce_mul [label="@llvm.vector.reduce.mul.v4i32"];
+    allocate_memory [label="@_Znwm"];
+
+    // Edges (function calls)
+    sum_product -> llvm_umax;
+    sum_product -> vector_reduce_add;
+    sum_product -> vector_reduce_mul;
+    sum_product -> llvm_memset;
+    sum_product -> allocate_memory;
+    sum_product -> __gxx_personality_v0;
+}
+```
+
+### Explanation:
+- **Nodes**: Each unique function is represented as a node. The `label` attribute specifies the function name.
+- **Edges**: Directed edges indicate function calls. For example, `sum_product -> llvm_umax;` indicates that the `sum_product` function calls the `llvm.umax.i64` function.
+
+You can visualize this graph using tools that support the DOT format, such as Graphviz.

@@ -1,0 +1,34 @@
+Based on the provided Intermediate Representation (IR) code, we can derive a call graph in the DOT format. The call graph will include nodes for each function and edges for the function calls made within the program. 
+
+Here’s the call graph in DOT format:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    node [shape=box];
+    _Z8find_maxSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE;
+    @_ZdlPv;
+    @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm;
+    @llvm.memcpy.p0i8.p0i8.i64;
+    @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc;
+    @memcmp;
+    @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_;
+    @llvm.lifetime.start.p0i8;
+    @llvm.lifetime.end.p0i8;
+
+    // Edges
+    _Z8find_maxSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE -> @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm;
+    _Z8find_maxSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE -> @llvm.memcpy.p0i8.p0i8.i64;
+    _Z8find_maxSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE -> @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc;
+    _Z8find_maxSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE -> @memcmp;
+    _Z8find_maxSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE -> @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_;
+    _Z8find_maxSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE -> @llvm.lifetime.start.p0i8;
+    _Z8find_maxSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE -> @llvm.lifetime.end.p0i8;
+
+}
+```
+
+### Explanation:
+- Each function from the IR code is represented as a node in the graph.
+- The edges represent calls from the function `_Z8find_maxSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE` to other declared functions, such as memory management functions and string manipulation functions.
+- The graph is directed, meaning that the direction of the edge indicates a "call" relationship from one function to another.

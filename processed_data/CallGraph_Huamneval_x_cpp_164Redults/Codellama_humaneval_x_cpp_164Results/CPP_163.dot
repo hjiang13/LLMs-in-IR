@@ -1,0 +1,33 @@
+To create a call graph from the given Intermediate Representation (IR) code, we need to identify the function calls and their corresponding relationships. Based on the provided IR code, we can extract the function definitions and calls to generate the call graph in DOT format.
+
+Here's the call graph represented in DOT format:
+
+```dot
+digraph CallGraph {
+    // Define nodes for the functions
+    node [shape=box];
+    
+    // Function nodes
+    generate_integers [label="_Z17generate_integersii"];
+    llvm_memset [label="llvm.memset.p0i8.i64"];
+    __gxx_personality_v0 [label="__gxx_personality_v0"];
+    dlPv [label="_ZdlPv"];
+    throw_length_error [label="_ZSt20__throw_length_errorPKc"];
+    Znwm [label="_Znwm"];
+    llvm_memmove [label="llvm.memmove.p0i8.p0i8.i64"];
+
+    // Edges for the function calls
+    generate_integers -> llvm_memset;
+    generate_integers -> throw_length_error;
+    generate_integers -> Znwm;
+    generate_integers -> llvm_memmove;
+    generate_integers -> dlPv;
+}
+```
+
+### Explanation:
+- Each function in the IR code is represented as a node in the graph.
+- The edges represent the function calls made within the `generate_integers` function.
+- The labels for the nodes use the mangled names of the functions as they appear in the IR code.
+
+This DOT representation can be visualized using a tool that accepts DOT format, allowing you to see the relationships between the functions in the call graph.

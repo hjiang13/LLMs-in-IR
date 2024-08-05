@@ -1,0 +1,32 @@
+Based on the provided Intermediate Representation (IR) code, the call graph can be represented in the DOT format. This format is often used to visualize graphs, where nodes represent functions and edges represent calls between those functions.
+
+Here's the call graph for the provided IR code in DOT format:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    node [shape=rectangle];
+    _Z17remove_duplicatesSt6vectorIiSaIiEE [label="_Z17remove_duplicatesSt6vectorIiSaIiEE"];
+    @llvm.memset.p0i8.i64 [label="@llvm.memset.p0i8.i64"];
+    __gxx_personality_v0 [label="__gxx_personality_v0"];
+    _ZdlPv [label="_ZdlPv"];
+    _ZSt20__throw_length_errorPKc [label="_ZSt20__throw_length_errorPKc"];
+    _Znwm [label="_Znwm"];
+    @llvm.memmove.p0i8.p0i8.i64 [label="@llvm.memmove.p0i8.p0i8.i64"];
+
+    // Edges
+    _Z17remove_duplicatesSt6vectorIiSaIiEE -> @llvm.memset.p0i8.i64;
+    _Z17remove_duplicatesSt6vectorIiSaIiEE -> _ZdlPv;
+    _Z17remove_duplicatesSt6vectorIiSaIiEE -> _ZSt20__throw_length_errorPKc;
+    _Z17remove_duplicatesSt6vectorIiSaIiEE -> _Znwm;
+    _Z17remove_duplicatesSt6vectorIiSaIiEE -> @llvm.memmove.p0i8.p0i8.i64;
+}
+```
+
+### Explanation:
+- **Nodes**: Each function is represented as a node. The names are derived from the IR code.
+- **Edges**: The arrows represent function calls. For instance, `_Z17remove_duplicatesSt6vectorIiSaIiEE` (the main function) calls various helper functions like `@llvm.memset.p0i8.i64`, `_ZdlPv`, `_ZSt20__throw_length_errorPKc`, `_Znwm`, and `@llvm.memmove.p0i8.p0i8.i64`.
+- **Node Labels**: The labels are simplified for clarity, but they maintain the function names as specified in the IR code.
+- **Graph Type**: This is a directed graph (`digraph`) because function calls have a direction (from caller to callee).
+
+You can use graph visualization tools to render this DOT format into a graphical representation of the call graph.

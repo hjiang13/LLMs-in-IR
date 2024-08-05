@@ -1,0 +1,40 @@
+Based on the provided Intermediate Representation (IR) code, here is the call graph in DOT format. The nodes represent functions, and the edges represent the calls between these functions.
+
+```dot
+digraph CallGraph {
+    // Nodes
+    "_Z14even_odd_counti" [label="_Z14even_odd_counti"];
+    "@llvm.lifetime.start.p0i8" [label="@llvm.lifetime.start.p0i8"];
+    "@llvm.abs.i32" [label="@llvm.abs.i32"];
+    "_ZN9__gnu_cxx12__to_xstringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEET_PFiPT0_mPKS8_P13__va_list_tagEmSB_z" [label="_ZN9__gnu_cxx12__to_xstringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEET_PFiPT0_mPKS8_P13__va_list_tagEmSB_z"];
+    "@vsnprintf" [label="@vsnprintf"];
+    "@llvm.vector.reduce.add.v4i32" [label="@llvm.vector.reduce.add.v4i32"];
+    "@llvm.memset.p0i8.i64" [label="@llvm.memset.p0i8.i64"];
+    "_Znwm" [label="_Znwm"];
+    "_ZdlPv" [label="_ZdlPv"];
+    "@llvm.lifetime.end.p0i8" [label="@llvm.lifetime.end.p0i8"];
+    "@llvm.va_start" [label="@llvm.va_start"];
+    "@llvm.va_end" [label="@llvm.va_end"];
+    "@llvm.memcpy.p0i8.p0i8.i64" [label="@llvm.memcpy.p0i8.p0i8.i64"];
+
+    // Edges (function calls)
+    "_Z14even_odd_counti" -> "@llvm.lifetime.start.p0i8";
+    "_Z14even_odd_counti" -> "@llvm.abs.i32";
+    "_Z14even_odd_counti" -> "_ZN9__gnu_cxx12__to_xstringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEET_PFiPT0_mPKS8_P13__va_list_tagEmSB_z";
+    "_Z14even_odd_counti" -> "@vsnprintf";
+    "_Z14even_odd_counti" -> "@llvm.vector.reduce.add.v4i32";
+    "_Z14even_odd_counti" -> "@llvm.memset.p0i8.i64";
+    "_Z14even_odd_counti" -> "_Znwm";
+    "_Z14even_odd_counti" -> "_ZdlPv";
+    "_Z14even_odd_counti" -> "@llvm.lifetime.end.p0i8";
+    "_Z14even_odd_counti" -> "@llvm.va_start";
+    "_Z14even_odd_counti" -> "@llvm.va_end";
+    "_Z14even_odd_counti" -> "@llvm.memcpy.p0i8.p0i8.i64";
+}
+```
+
+### Explanation:
+- Each function is represented as a node.
+- The directed edges (arrows) show which functions call which other functions.
+- The labels of the nodes correspond to the function names in the IR code. 
+- The `@` symbol indicates external functions or system functions, while the `_Z` prefix indicates mangled names of user-defined functions.

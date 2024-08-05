@@ -1,0 +1,44 @@
+Based on the provided Intermediate Representation (IR) code, I've analyzed the function calls and created a call graph in the DOT format. The nodes represent functions, and edges represent calls between these functions.
+
+Here's the call graph in DOT format:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    node [shape=box];
+    main [label="main"];
+    even_odd_palindrome [label="_Z19even_odd_palindromei"];
+    vsnprintf [label="vsnprintf"];
+    bcmp [label="bcmp"];
+    _Znwm [label="_Znwm"];
+    _ZdlPv [label="_ZdlPv"];
+    llvm_memset [label="llvm.memset.p0i8.i64"];
+    llvm_lifetime_start [label="llvm.lifetime.start.p0i8"];
+    llvm_lifetime_end [label="llvm.lifetime.end.p0i8"];
+    __gnu_cxx_to_xstring [label="_ZN9__gnu_cxx12__to_xstringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEET_PFiPT0_mPKS8_P13__va_list_tagEmSB_z"];
+    _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm"];
+    
+    // Edges (function calls)
+    even_odd_palindrome -> llvm_memset;
+    even_odd_palindrome -> _Znwm;
+    even_odd_palindrome -> llvm_lifetime_start;
+    even_odd_palindrome -> __gnu_cxx_to_xstring;
+    even_odd_palindrome -> llvm_lifetime_start;
+    even_odd_palindrome -> llvm_lifetime_end;
+    even_odd_palindrome -> _ZdlPv;
+    even_odd_palindrome -> bcmp;
+    even_odd_palindrome -> llvm_lifetime_end;
+    
+    __gnu_cxx_to_xstring -> llvm_lifetime_start;
+    __gnu_cxx_to_xstring -> __gnu_cxx_to_xstring;
+    __gnu_cxx_to_xstring -> _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm;
+    __gnu_cxx_to_xstring -> llvm_lifetime_end;
+}
+```
+
+### Explanation:
+- Each function is represented as a node.
+- The edges show the calling relationships between functions, with arrows pointing from caller to callee.
+- The nodes are labeled with the mangled names of the functions as they appear in the IR code. 
+
+This graph visually represents the relationships and dependencies between the functions in the IR code provided. You can render this DOT format using tools like Graphviz to visualize the call graph.

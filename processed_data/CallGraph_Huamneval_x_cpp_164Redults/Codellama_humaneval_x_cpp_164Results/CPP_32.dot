@@ -1,0 +1,53 @@
+Based on the provided Intermediate Representation (IR) code, we can identify the functions defined and their calls. The main functions of interest are:
+
+1. `@_Z4polySt6vectorIdSaIdEEd`
+2. `@_Z9find_zeroSt6vectorIdSaIdEE`
+3. `@pow`
+4. `@llvm.fabs.f64`
+5. `@__gxx_personality_v0`
+6. `@_ZSt17__throw_bad_allocv`
+7. `@_Znwm`
+8. `@llvm.memmove.p0i8.p0i8.i64`
+9. `@_ZdlPv`
+10. `@llvm.umax.i64`
+
+### Call Graph in DOT Format
+
+```dot
+digraph CallGraph {
+    // Title of the graph
+    label="Call Graph";
+
+    // Nodes
+    node [shape=ellipse];
+    poly [label="@_Z4polySt6vectorIdSaIdEEd"];
+    find_zero [label="@_Z9find_zeroSt6vectorIdSaIdEE"];
+    pow [label="@pow"];
+    fabs [label="@llvm.fabs.f64"];
+    personality [label="@__gxx_personality_v0"];
+    throw_bad_alloc [label="@_ZSt17__throw_bad_allocv"];
+    new [label="@_Znwm"];
+    memmove [label="@llvm.memmove.p0i8.p0i8.i64"];
+    delete [label="@_ZdlPv"];
+    umax [label="@llvm.umax.i64"];
+
+    // Edges (function calls)
+    poly -> pow;
+    find_zero -> throw_bad_alloc;
+    find_zero -> new;
+    find_zero -> pow;
+    find_zero -> memmove;
+    find_zero -> delete;
+    find_zero -> umax;
+    find_zero -> pow; // Multiple calls to pow if necessary
+}
+```
+
+### Explanation
+
+- Each function is represented as a node in the graph.
+- The edges indicate function calls based on the IR code analysis.
+- The labels for nodes are derived from the mangled function names used in the IR code.
+- The `@pow` function is called from both the `@_Z4polySt6vectorIdSaIdEEd` and `@_Z9find_zeroSt6vectorIdSaIdEE` functions. 
+
+This DOT representation can be used to visualize the call graph using graph visualization tools such as Graphviz.

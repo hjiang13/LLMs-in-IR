@@ -1,0 +1,28 @@
+Based on the provided Intermediate Representation (IR) code, we can extract the function calls to build a call graph in DOT format. The call graph will include the functions defined in the IR and their relationships based on the function calls.
+
+Here's the call graph in DOT format:
+
+```dot
+digraph CallGraph {
+    rankdir=LR;
+
+    // Functions
+    _Z14circular_shiftB5cxx11ii;
+    _ZN9__gnu_cxx12__to_xstringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEET_PFiPT0_mPKS8_P13__va_list_tagEmSB_z;
+    @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm;
+    @vsnprintf;
+    @_ZdlPv;
+
+    // Edges (function calls)
+    _Z14circular_shiftB5cxx11ii -> _ZN9__gnu_cxx12__to_xstringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEET_PFiPT0_mPKS8_P13__va_list_tagEmSB_z;
+    _Z14circular_shiftB5cxx11ii -> @vsnprintf;
+    _ZN9__gnu_cxx12__to_xstringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEET_PFiPT0_mPKS8_P13__va_list_tagEmSB_z -> @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm;
+    _Z14circular_shiftB5cxx11ii -> @_ZdlPv;
+}
+```
+
+### Description of the Call Graph:
+- **Nodes**: Each unique function in the IR is represented as a node.
+- **Edges**: Directed edges represent function calls. For example, the function `_Z14circular_shiftB5cxx11ii` calls `_ZN9__gnu_cxx12__to_xstringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEET_PFiPT0_mPKS8_P13__va_list_tagEmSB_z` and `@vsnprintf`.
+
+This representation gives a clear overview of how functions are related through calls without delving into the specifics of the code within each function.

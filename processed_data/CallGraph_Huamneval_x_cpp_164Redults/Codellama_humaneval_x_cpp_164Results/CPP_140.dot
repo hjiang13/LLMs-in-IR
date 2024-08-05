@@ -1,0 +1,37 @@
+Based on the provided Intermediate Representation (IR) code, we can create a call graph that captures the function calls. Here's how the call graph can be represented in the DOT format, which is commonly used for graph visualization.
+
+```dot
+digraph CallGraph {
+    // Function nodes
+    node [shape=box];
+    _Z10fix_spacesNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE;
+    @_ZdlPv;
+    @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm;
+    @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc;
+    @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm;
+    @_ZSt20__throw_length_errorPKc;
+    @llvm.lifetime.start.p0i8;
+    @llvm.lifetime.end.p0i8;
+    @llvm.memcpy.p0i8.p0i8.i64;
+    @llvm.experimental.noalias.scope.decl;
+
+    // Edges representing calls
+    _Z10fix_spacesNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm;
+    _Z10fix_spacesNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc;
+    _Z10fix_spacesNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm;
+    _Z10fix_spacesNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> @_ZdlPv;
+    _Z10fix_spacesNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> @_ZSt20__throw_length_errorPKc;
+    _Z10fix_spacesNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> @llvm.lifetime.start.p0i8;
+    _Z10fix_spacesNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> @llvm.lifetime.end.p0i8;
+    _Z10fix_spacesNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> @llvm.memcpy.p0i8.p0i8.i64;
+    _Z10fix_spacesNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> @llvm.experimental.noalias.scope.decl;
+}
+```
+
+### Explanation:
+- Each function is represented as a node in the graph.
+- The arrows (`->`) represent calls from one function to another.
+- The `node [shape=box];` specifies that the nodes should be rectangular boxes, which is a common style for function nodes in call graphs.
+- The main function `_Z10fix_spacesNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE` is the entry point in this graph, and all the functions that it calls are listed as edges stemming from this node. 
+
+You can visualize this DOT representation using graph visualization tools like Graphviz.

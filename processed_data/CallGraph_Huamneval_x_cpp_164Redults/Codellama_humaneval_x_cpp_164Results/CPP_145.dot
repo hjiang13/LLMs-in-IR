@@ -1,0 +1,47 @@
+Based on the provided Intermediate Representation (IR) code, the following is the call graph in DOT format, which includes function nodes and edges representing function calls.
+
+```dot
+digraph CallGraph {
+    // Function nodes
+    node [shape=box];
+    order_by_points [label="_Z15order_by_pointsSt6vectorIiSaIiEE"];
+    to_xstring [label="_ZN9__gnu_cxx12__to_xstringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEET_PFiPT0_mPKS8_P13__va_list_tagEmSB_z"];
+    llvm_abs [label="llvm.abs.i32"];
+    llvm_vector_reduce_add [label="llvm.vector.reduce.add.v4i32"];
+    vsnprintf [label="vsnprintf"];
+    throw_length_error [label="_ZSt20__throw_length_errorPKc"];
+    new [label="_Znwm"];
+    delete [label="_ZdlPv"];
+    llvm_memmove [label="llvm.memmove.p0i8.p0i8.i64"];
+    llvm_memcpy [label="llvm.memcpy.p0i8.p0i8.i64"];
+    llvm_lifetime_start [label="llvm.lifetime.start.p0i8"];
+    llvm_lifetime_end [label="llvm.lifetime.end.p0i8"];
+    llvm_va_start [label="llvm.va_start"];
+    llvm_va_end [label="llvm.va_end"];
+
+    // Function call edges
+    order_by_points -> llvm_lifetime_start;
+    order_by_points -> llvm_lifetime_end;
+    order_by_points -> llvm_abs;
+    order_by_points -> to_xstring;
+    order_by_points -> vsnprintf;
+    order_by_points -> llvm_memmove;
+    order_by_points -> llvm_memcpy;
+    order_by_points -> delete;
+    order_by_points -> throw_length_error;
+    
+    to_xstring -> llvm_lifetime_start;
+    to_xstring -> llvm_lifetime_end;
+    to_xstring -> new;
+    to_xstring -> delete;
+
+    llvm_abs -> llvm_lifetime_start;
+    llvm_vector_reduce_add -> llvm_lifetime_start;
+}
+```
+
+### Explanation:
+- Each function is represented as a node in the graph.
+- Edges are drawn from a function to any functions it calls.
+- The labels of the nodes are the mangled names of the functions as found in the IR code.
+- The visual representation follows the DOT format for easy integration with graph visualization tools.

@@ -1,0 +1,35 @@
+To represent the call graph based on the provided Intermediate Representation (IR) code, we will identify the functions defined and the function calls made within them. The key function in your input is `@_Z21find_closest_elementsSt6vectorIfSaIfEE`, which is the only defined function. It calls several other functions, including `llvm.memset.p0i8.i64`, `llvm.lifetime.start.p0i8`, `llvm.lifetime.end.p0i8`, and others.
+
+Here is the corresponding call graph in the DOT format:
+
+```dot
+digraph CallGraph {
+    // Nodes
+    node [shape=box];
+    find_closest_elements [label="find_closest_elements"];
+    llvm_memset [label="llvm.memset.p0i8.i64"];
+    llvm_lifetime_start [label="llvm.lifetime.start.p0i8"];
+    llvm_lifetime_end [label="llvm.lifetime.end.p0i8"];
+    operator_delete [label="_ZdlPv"];
+    operator_new [label="_Znwm"];
+    llvm_memmove [label="llvm.memmove.p0i8.p0i8.i64"];
+    llvm_memcpy [label="llvm.memcpy.p0i8.p0i8.i64"];
+    llvm_fabs [label="llvm.fabs.v2f32"];
+
+    // Edges
+    find_closest_elements -> llvm_memset;
+    find_closest_elements -> llvm_lifetime_start;
+    find_closest_elements -> llvm_lifetime_end;
+    find_closest_elements -> operator_delete;
+    find_closest_elements -> operator_new;
+    find_closest_elements -> llvm_memmove;
+    find_closest_elements -> llvm_memcpy;
+    find_closest_elements -> llvm_fabs;
+}
+```
+
+In this representation:
+- Each node corresponds to a function.
+- The directed edges indicate the calls made by `find_closest_elements` to the other declared functions.
+
+You can visualize this graph using tools that support the DOT format, such as Graphviz.

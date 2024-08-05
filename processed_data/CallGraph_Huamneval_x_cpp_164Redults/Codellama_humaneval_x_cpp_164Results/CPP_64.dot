@@ -1,0 +1,35 @@
+Based on the provided Intermediate Representation (IR) code, we can analyze the function calls and create a call graph in the DOT format. The main focus is on the function definitions and calls. 
+
+From the IR code, we identify the following functions:
+1. `_Z12vowels_countNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE` (which is the main function in this case)
+2. `@llvm.lifetime.start.p0i8`
+3. `@llvm.lifetime.end.p0i8`
+4. `@llvm.memcpy.p0i8.p0i8.i64`
+5. `@__gxx_personality_v0`
+
+The call graph can be represented as follows:
+
+```dot
+digraph CallGraph {
+    rankdir=LR;
+
+    // Nodes
+    _Z12vowels_countNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE;
+    llvm_lifetime_start;
+    llvm_lifetime_end;
+    llvm_memcpy;
+    __gxx_personality_v0;
+
+    // Edges
+    _Z12vowels_countNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> llvm_lifetime_start;
+    _Z12vowels_countNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> llvm_memcpy;
+    _Z12vowels_countNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> llvm_lifetime_end;
+    _Z12vowels_countNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> __gxx_personality_v0;
+}
+```
+
+### Explanation:
+- **Nodes**: Each function is represented as a node. The names have been adjusted for clarity (e.g., `llvm_lifetime_start` for `@llvm.lifetime.start.p0i8`).
+- **Edges**: The arrows (edges) indicate the calls made from the main function (`_Z12vowels_count...`) to the helper functions and library functions. 
+
+You can visualize this graph using a tool that supports the DOT format, such as Graphviz.

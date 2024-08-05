@@ -1,0 +1,41 @@
+To generate a call graph from the provided Intermediate Representation (IR) code, we need to identify the function definitions and the function calls within the code. The IR code contains two function definitions: `_Z13encode_cyclicNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE` and `_Z13decode_cyclicNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE`, along with calls to external functions such as `@llvm.lifetime.start.p0i8`, `@llvm.lifetime.end.p0i8`, and others.
+
+The output will be formatted in the DOT language, which is used for graph visualization. Here’s the call graph represented in DOT format:
+
+```dot
+digraph CallGraph {
+    // Function definitions as nodes
+    node [shape=rectangle];
+    EncodeCyclic [label="_Z13encode_cyclicNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE"];
+    DecodeCyclic [label="_Z13decode_cyclicNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE"];
+    
+    // External function calls
+    LifetimeStart [label="@llvm.lifetime.start.p0i8"];
+    LifetimeEnd [label="@llvm.lifetime.end.p0i8"];
+    ThrowOutOfRange [label="_ZSt24__throw_out_of_range_fmtPKcz"];
+    MAppend [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm"];
+    MReplaceAux [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc"];
+    Delete [label="_ZdlPv"];
+    
+    // Edges indicating function calls
+    EncodeCyclic -> LifetimeStart;
+    EncodeCyclic -> LifetimeEnd;
+    EncodeCyclic -> ThrowOutOfRange;
+    EncodeCyclic -> MAppend;
+    EncodeCyclic -> MReplaceAux;
+    EncodeCyclic -> Delete;
+
+    DecodeCyclic -> LifetimeStart;
+    DecodeCyclic -> LifetimeEnd;
+    DecodeCyclic -> MAppend;
+    DecodeCyclic -> MReplaceAux;
+    DecodeCyclic -> Delete;
+}
+```
+
+### Explanation:
+- Each function is represented as a node in the graph with a label that corresponds to the function's name.
+- Edges between nodes represent calls made from one function to another. For example, `EncodeCyclic` calls several functions, which are represented by edges leading to those function nodes.
+- The external functions (`@llvm.lifetime.start.p0i8`, `@llvm.lifetime.end.p0i8`, etc.) are included as nodes to show that they are called by the defined functions.
+
+This DOT representation can be used with graph visualization tools like Graphviz to render the call graph visually.

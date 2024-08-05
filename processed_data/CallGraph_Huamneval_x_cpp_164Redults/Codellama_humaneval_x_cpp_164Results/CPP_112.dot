@@ -1,0 +1,43 @@
+To create a call graph from the provided LLVM IR code, we will identify the functions and the calls made to them. Below is the representation of the call graph in DOT format, which includes nodes for each function and edges to represent the calls between those functions.
+
+```dot
+digraph CallGraph {
+    // Nodes
+    node [shape=rectangle];
+    _Z14reverse_deleteNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_ [label="_Z14reverse_deleteNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_"];
+    @_ZNSt20__uninitialized_copyILb0EE13__uninit_copyIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPS7_EET0_T_SC_SB_ [label="@_ZNSt20__uninitialized_copyILb0EE13__uninit_copyIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPS7_EET0_T_SC_SB_"];
+    @_ZdlPv [label="@_ZdlPv"];
+    @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm [label="@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm"];
+    @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc [label="@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc"];
+    @__cxa_begin_catch [label="@__cxa_begin_catch"];
+    @__cxa_end_catch [label="@__cxa_end_catch"];
+    @__cxa_rethrow [label="@__cxa_rethrow"];
+    @__gxx_personality_v0 [label="@__gxx_personality_v0"];
+    @llvm.memcpy.p0i8.p0i8.i64 [label="@llvm.memcpy.p0i8.p0i8.i64"];
+    @llvm.lifetime.start.p0i8 [label="@llvm.lifetime.start.p0i8"];
+    @llvm.lifetime.end.p0i8 [label="@llvm.lifetime.end.p0i8"];
+    @llvm.experimental.noalias.scope.decl [label="@llvm.experimental.noalias.scope.decl"];
+    @bcmp [label="@bcmp"];
+
+    // Edges (calls)
+    _Z14reverse_deleteNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_ -> @_ZNSt20__uninitialized_copyILb0EE13__uninit_copyIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPS7_EET0_T_SC_SB_;
+    _Z14reverse_deleteNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_ -> @_ZdlPv;
+    _Z14reverse_deleteNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_ -> @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm;
+    _Z14reverse_deleteNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_ -> @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc;
+    _Z14reverse_deleteNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_ -> @__cxa_begin_catch;
+    _Z14reverse_deleteNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_ -> @__cxa_end_catch;
+    _Z14reverse_deleteNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_ -> @__cxa_rethrow;
+    _Z14reverse_deleteNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_ -> @llvm.memcpy.p0i8.p0i8.i64;
+    _Z14reverse_deleteNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_ -> @llvm.lifetime.start.p0i8;
+    _Z14reverse_deleteNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_ -> @llvm.lifetime.end.p0i8;
+    _Z14reverse_deleteNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_ -> @llvm.experimental.noalias.scope.decl;
+    _Z14reverse_deleteNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_ -> @bcmp;
+}
+```
+
+### Explanation:
+- Each function is represented as a node in the graph.
+- The arrows (`->`) indicate a function call from one node (function) to another.
+- The labels provide the function names for better readability.
+
+This output can be used to visualize the call graph using tools that support the DOT format, such as Graphviz.

@@ -1,0 +1,38 @@
+Based on the provided Intermediate Representation (IR) code, we can extract the function calls to construct a call graph in DOT format. The call graph will represent the relationships between the various functions defined in the IR.
+
+Here's the call graph in DOT format:
+
+```dot
+digraph CallGraph {
+    rankdir=TB;
+
+    // Nodes
+    _Z13remove_vowelsNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE [label="_Z13remove_vowelsNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE"];
+    @llvm.lifetime.start.p0i8 [label="@llvm.lifetime.start.p0i8"];
+    @llvm.memcpy.p0i8.p0i8.i64 [label="@llvm.memcpy.p0i8.p0i8.i64"];
+    @llvm.lifetime.end.p0i8 [label="@llvm.lifetime.end.p0i8"];
+    _ZdlPv [label="_ZdlPv"];
+    @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm [label="@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm"];
+    @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc [label="@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc"];
+    @__gxx_personality_v0 [label="@__gxx_personality_v0"];
+    @llvm.experimental.noalias.scope.decl [label="@llvm.experimental.noalias.scope.decl"];
+
+    // Edges
+    _Z13remove_vowelsNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> @llvm.lifetime.start.p0i8;
+    _Z13remove_vowelsNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> @llvm.memcpy.p0i8.p0i8.i64;
+    _Z13remove_vowelsNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> @llvm.lifetime.end.p0i8;
+    _Z13remove_vowelsNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> _ZdlPv;
+    _Z13remove_vowelsNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm;
+    _Z13remove_vowelsNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc;
+    _Z13remove_vowelsNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> @__gxx_personality_v0;
+    _Z13remove_vowelsNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE -> @llvm.experimental.noalias.scope.decl;
+}
+```
+
+### Explanation:
+- Each function from the IR code is represented as a node in the graph.
+- The edges represent calls made from one function to another.
+- The graph is directed, indicating the direction of the calls (i.e., from the caller to the callee).
+- The labels of the nodes are extracted from the function declarations and definitions within the IR code. 
+
+You can visualize this DOT representation using tools like Graphviz to see the call relationships in a graphical format.

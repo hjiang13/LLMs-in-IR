@@ -1,0 +1,41 @@
+Based on the provided Intermediate Representation (IR) code, I can extract the functions to construct a call graph. The nodes will represent the functions, while the edges will indicate the calls between them.
+
+Here is the call graph in DOT format:
+
+```dot
+digraph call_graph {
+    rankdir=LR;
+    
+    // Nodes
+    "_Z9odd_countSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE" [label="_Z9odd_countSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE"];
+    "_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev" [label="_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev"];
+    "_ZN9__gnu_cxx12__to_xstringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEET_PFiPT0_mPKS8_P13__va_list_tagEmSB_z" [label="_ZN9__gnu_cxx12__to_xstringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEET_PFiPT0_mPKS8_P13__va_list_tagEmSB_z"];
+    "__clang_call_terminate" [label="__clang_call_terminate"];
+    "_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE17_M_realloc_insertIJRKS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_" [label="_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE17_M_realloc_insertIJRKS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_"];
+    "_ZdlPv" [label="_ZdlPv"];
+    "@llvm.memset.p0i8.i64" [label="@llvm.memset.p0i8.i64"];
+    "@llvm.lifetime.start.p0i8" [label="@llvm.lifetime.start.p0i8"];
+    "@llvm.lifetime.end.p0i8" [label="@llvm.lifetime.end.p0i8"];
+    "@llvm.vector.reduce.add.v4i32" [label="@llvm.vector.reduce.add.v4i32"];
+    "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm" [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm"];
+    "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm" [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm"];
+    "_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc" [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc"];
+
+    // Edges
+    "_Z9odd_countSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE" -> "__clang_call_terminate";
+    "_Z9odd_countSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE" -> "_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE17_M_realloc_insertIJRKS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_";
+    "_Z9odd_countSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE" -> "_ZN9__gnu_cxx12__to_xstringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEET_PFiPT0_mPKS8_P13__va_list_tagEmSB_z";
+    "_Z9odd_countSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE" -> "_ZdlPv";
+    "_Z9odd_countSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE" -> "@llvm.vector.reduce.add.v4i32";
+    "_Z9odd_countSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE" -> "@llvm.memset.p0i8.i64";
+    "_Z9odd_countSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE" -> "@llvm.lifetime.start.p0i8";
+    "_Z9odd_countSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE" -> "@llvm.lifetime.end.p0i8";
+}
+```
+
+### Explanation:
+
+- Each function is represented by a node in the graph.
+- Directed edges indicate calls from one function to another.
+- The nodes are labeled with the mangled names of the functions as they appear in the IR code.
+- The graph can be visualized using any DOT-compatible tool to better understand the call relationships.

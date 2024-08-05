@@ -1,0 +1,46 @@
+Based on the provided intermediate representation (IR) code, I will extract the functions and their calls to create a call graph in the DOT format. Here’s the extracted call graph:
+
+```dot
+digraph CallGraph {
+    // Function nodes
+    node [shape=box];
+    _Z2bfNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_ [label="_Z2bfNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_"];
+    _ZNSt20__uninitialized_copyILb0EE13__uninit_copyIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPS7_EET0_T_SC_SB_ [label="_ZNSt20__uninitialized_copyILb0EE13__uninit_copyIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPS7_EET0_T_SC_SB_"];
+    _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev [label="_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev"];
+    _ZdlPv [label="_ZdlPv"];
+    _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm"];
+    _Znwm [label="_Znwm"];
+    @llvm.memcpy.p0i8.p0i8.i64 [label="@llvm.memcpy.p0i8.p0i8.i64"];
+    @llvm.lifetime.start.p0i8 [label="@llvm.lifetime.start.p0i8"];
+    @llvm.lifetime.end.p0i8 [label="@llvm.lifetime.end.p0i8"];
+    @llvm.memset.p0i8.i64 [label="@llvm.memset.p0i8.i64"];
+    @__cxa_begin_catch [label="@__cxa_begin_catch"];
+    @__cxa_rethrow [label="@__cxa_rethrow"];
+    @__clang_call_terminate [label="@__clang_call_terminate"];
+    @__cxa_end_catch [label="@__cxa_end_catch"];
+    @llvm.umax.i64 [label="@llvm.umax.i64"];
+    @bcmp [label="@bcmp"];
+
+    // Edges representing calls between functions
+    _Z2bfNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_ -> _ZNSt20__uninitialized_copyILb0EE13__uninit_copyIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPS7_EET0_T_SC_SB_;
+    _Z2bfNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_ -> _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev;
+    _Z2bfNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_ -> _ZdlPv;
+    _Z2bfNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_ -> _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm;
+    _Z2bfNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_ -> _Znwm;
+    _Z2bfNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_ -> @llvm.memcpy.p0i8.p0i8.i64;
+    _Z2bfNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_ -> @llvm.lifetime.start.p0i8;
+    _Z2bfNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_ -> @llvm.lifetime.end.p0i8;
+    _Z2bfNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_ -> @llvm.memset.p0i8.i64;
+    _Z2bfNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_ -> @__cxa_begin_catch;
+    _Z2bfNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_ -> @__cxa_rethrow;
+    _Z2bfNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_ -> @__clang_call_terminate;
+    _Z2bfNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_ -> @__cxa_end_catch;
+    _Z2bfNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_ -> @llvm.umax.i64;
+    _Z2bfNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_ -> @bcmp;
+}
+```
+
+### Explanation:
+- Each function is represented as a node in the graph.
+- The edges indicate which functions call other functions.
+- The labels are the mangled names of the functions as they appear in the IR code.

@@ -1,0 +1,31 @@
+Based on the provided Intermediate Representation (IR) code, we can extract the function calls to create a call graph. Below is the representation of the call graph in the DOT format, which includes nodes for each function and edges for each call between functions.
+
+```dot
+digraph CallGraph {
+    // Nodes
+    node [shape=box];
+    intersperse [label="_Z11intersperseSt6vectorIiSaIiEEi"];
+    llvm_memset [label="llvm.memset.p0i8.i64"];
+    gxx_personality [label="__gxx_personality_v0"];
+    delete [label="_ZdlPv"];
+    throw_length_error [label="_ZSt20__throw_length_errorPKc"];
+    new [label="_Znwm"];
+    memmove [label="llvm.memmove.p0i8.p0i8.i64"];
+    
+    // Edges (Function Calls)
+    intersperse -> llvm_memset;
+    intersperse -> new;
+    intersperse -> throw_length_error;
+    intersperse -> delete;
+    intersperse -> memmove;
+    intersperse -> gxx_personality;
+}
+```
+
+### Explanation:
+- Each function is represented as a node in the graph.
+- The edges indicate calls made from one function to another.
+- The function `_Z11intersperseSt6vectorIiSaIiEEi` (which is a mangled name representing the `intersperse` function) is the main function that calls several other functions.
+- The other functions (`llvm_memset`, `__gxx_personality_v0`, `_ZdlPv`, `_ZSt20__throw_length_errorPKc`, and `_Znwm`) are called from within `intersperse`.
+
+You can use this DOT format with Graphviz to visualize the call graph.
