@@ -1,0 +1,89 @@
+To analyze the provided Intermediate Representation (IR) code for data dependencies and generate a corresponding DOT file, we will follow these steps:
+
+1. **Identify Variables and Functions**: We will extract the variables and functions mentioned in the IR code.
+2. **Analyze Dependencies**: We will check for data dependencies among the identified variables.
+3. **Generate DOT File**: We will create a DOT file representation of these dependencies.
+
+### Step 1: Identify Variables and Functions
+
+From the IR code, we can identify the following variables and their scopes:
+
+- Function: `@_Z8is_primex`
+  - Variables:
+    - `%0` (input parameter)
+    - `%2`
+    - `%4`
+    - `%6` (phi variable)
+    - `%7`
+    - `%8`
+    - `%9` (phi variable)
+    - `%10`
+    - `%11`
+    - `%12`
+    - `%14`
+    - `%16` (return value)
+
+### Step 2: Analyze Dependencies
+
+Now we will determine the data dependencies among the variables within the function:
+
+- `%0` is an input parameter, so it does not depend on any other variable.
+- `%2` is dependent on `%0` (via `icmp slt i64 %0, 2`).
+- `%4` is dependent on `%0` (via `icmp slt i64 %0, 4`).
+- `%6` is a phi variable that depends on `%9` and the constant `2`. Thus, it has a data dependency on `%9`.
+- `%7` depends on `%0` and `%6` (via `srem i64 %0, %6`).
+- `%8` depends on `%7`.
+- `%9` is dependent on `%6` (via `add nuw nsw i64 %6, 1`).
+- `%10` depends on `%9` (via `mul nsw i64 %9, %9`).
+- `%11` depends on `%10` and `%0` (via `icmp sgt i64 %10, %0`).
+- `%12` depends on `%8` and `%11`.
+- `%14` depends on `%8`.
+- `%16` is a phi variable that depends on the results from previous blocks, specifically `%14`, `false`, and `true`.
+
+Based on this analysis, we can conclude the following data dependency relationships:
+
+- `%0` → `%2` (yes)
+- `%0` → `%4` (yes)
+- `%6` → `%7` (yes)
+- `%6` → `%9` (yes)
+- `%9` → `%10` (yes)
+- `%10` → `%11` (yes)
+- `%8` → `%12` (yes)
+- `%8` → `%14` (yes)
+- `%14` → `%16` (yes)
+
+### Step 3: Generate DOT File
+
+Based on the dependencies analyzed, we can represent them in a DOT file format as follows:
+
+```dot
+digraph DataDependency {
+    node [shape=box];
+    "is_primex:%0" [label="Variable %0 in is_primex"];
+    "is_primex:%2" [label="Variable %2 in is_primex"];
+    "is_primex:%4" [label="Variable %4 in is_primex"];
+    "is_primex:%6" [label="Variable %6 in is_primex"];
+    "is_primex:%7" [label="Variable %7 in is_primex"];
+    "is_primex:%8" [label="Variable %8 in is_primex"];
+    "is_primex:%9" [label="Variable %9 in is_primex"];
+    "is_primex:%10" [label="Variable %10 in is_primex"];
+    "is_primex:%11" [label="Variable %11 in is_primex"];
+    "is_primex:%12" [label="Variable %12 in is_primex"];
+    "is_primex:%14" [label="Variable %14 in is_primex"];
+    "is_primex:%16" [label="Variable %16 in is_primex"];
+
+    "is_primex:%0" -> "is_primex:%2";
+    "is_primex:%0" -> "is_primex:%4";
+    "is_primex:%6" -> "is_primex:%7";
+    "is_primex:%6" -> "is_primex:%9";
+    "is_primex:%9" -> "is_primex:%10";
+    "is_primex:%10" -> "is_primex:%11";
+    "is_primex:%8" -> "is_primex:%12";
+    "is_primex:%8" -> "is_primex:%14";
+    "is_primex:%14" -> "is_primex:%16";
+}
+```
+
+### Summary
+
+The analysis of the IR code indicates that there are multiple data dependencies among the variables within the function `@_Z8is_primex`, all of which have been documented in the generated DOT file format.

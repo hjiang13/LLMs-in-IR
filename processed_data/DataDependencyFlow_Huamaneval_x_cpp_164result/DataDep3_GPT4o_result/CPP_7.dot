@@ -1,0 +1,57 @@
+To analyze the provided Intermediate Representation (IR) code, we need to identify the variables and functions, determine their dependencies, and then create a DOT file representation of those dependencies. Let's break down the process step-by-step.
+
+### Step 1: Identify Variables and Functions
+
+From the provided IR code, we can identify several functions and the variables within them. Here are the key functions and variables extracted:
+
+#### Functions:
+1. `@_Z19filter_by_substringSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EES5_`
+2. `@_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE17_M_realloc_insertIJRKS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_`
+3. `@_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev`
+4. `@__clang_call_terminate`
+5. `@__cxa_begin_catch`
+6. `@__cxa_rethrow`
+7. `@__cxa_end_catch`
+8. ... (and other functions)
+
+#### Variables:
+- Local variables within functions (e.g., `%0`, `%1`, `%2`, etc.)
+- Temporary variables generated during operations (e.g., `%4`, `%5`, etc.)
+
+### Step 2: Analyze Dependencies
+
+Next, we will analyze the dependencies between variables:
+
+1. **Within the function `_Z19filter_by_substring...`:**
+   - Variables like `%0`, `%1`, `%2`, etc., are utilized in various operations. For instance, `%13` and `%14` are loaded from the vector, and the result of those loads is used in comparisons and conditions.
+   - There are data dependencies between these variables since the output of one operation is an input to another (e.g., `%13` is used to compute `%15`, etc.).
+
+2. **Across Functions:**
+   - There are no direct data dependencies between variables in different functions since they operate on distinct data objects. The functions appear to be self-contained concerning their logic.
+
+### Step 3: Generate DOT File Representation
+
+Based on the analysis, we can conclude that while there are dependencies within the function, there are no dependencies across different functions. Therefore, the output can be summarized as follows:
+
+**Label: unknown**
+
+**Explanation**: The variables within the function have complex dependencies due to their interactions, but there are no dependencies across functions. The dependencies within the function can be intricate and not straightforward.
+
+**DOT File Representation:**
+```dot
+digraph DataDependency {
+    node [shape=box];
+    "filter_by_substring:%0" [label="Variable %0 in filter_by_substring"];
+    "filter_by_substring:%1" [label="Variable %1 in filter_by_substring"];
+    "filter_by_substring:%2" [label="Variable %2 in filter_by_substring"];
+    "filter_by_substring:%4" [label="Variable %4 in filter_by_substring"];
+    "filter_by_substring:%5" [label="Variable %5 in filter_by_substring"];
+    "filter_by_substring:%6" [label="Variable %6 in filter_by_substring"];
+    "filter_by_substring:%7" [label="Variable %7 in filter_by_substring"];
+    "filter_by_substring:%8" [label="Variable %8 in filter_by_substring"];
+    ...
+    // Add all relevant variables based on the dependency analysis
+}
+```
+
+This DOT representation captures the variables and their dependencies within the `filter_by_substring` function. Further details on all variables and their connections can be added as necessary based on the analysis of specific dependencies.

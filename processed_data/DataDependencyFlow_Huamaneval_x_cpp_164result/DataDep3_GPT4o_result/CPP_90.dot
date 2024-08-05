@@ -1,0 +1,55 @@
+To analyze the provided Intermediate Representation (IR) code, we need to identify the variables, functions, and their dependencies. After a thorough examination, we find the following relationships among variables across functions.
+
+### Analysis of Dependencies
+
+1. **Function `@_Z13next_smallestSt6vectorIiSaIiEE`:**
+   - Variables: `%3`, `%5`, `%8`, `%9`, `%10`, `%12`, `%13`, `%14`, `%15`, `%16`, `%18`, `%19`, `%20`, `%21`, `%22`, `%23`, `%26`, `%30`, `%31`, `%32`, `%33`, `%34`, `%36`.
+   - Dependencies:
+     - `%3` and `%5` are loaded from the same vector and are compared (data-dependent).
+     - The values of `%18` and `%19` are determined by the phi function that uses `%3`, `%16`, and `%15`, indicating data dependency.
+
+2. **Function `@_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_`:**
+   - Variables: `%0`, `%1`, `%4`, `%5`, `%10`, `%11`, `%12`, `%16`, `%18`, `%19`, `%20`, `%21`, `%22`, `%23`, `%24`, `%25`, `%26`, `%27`, `%28`, `%29`, `%30`, `%31`, `%32`, `%33`, `%34`, `%35`, `%36`, `%38`, `%39`, `%40`, `%41`, `%42`, `%43`, `%44`, `%45`, `%46`, `%47`, `%48`, `%49`, `%50`, `%51`, `%52`, `%53`, `%54`, `%55`, `%56`, `%57`, `%58`, `%59`, `%60`, `%61`, `%62`, `%63`, `%64`, `%66`, `%67`, `%68`, `%69`, `%70`, `%71`, `%72`, `%73`, `%74`, `%75`, `%76`, `%77`, `%78`, `%79`, `%80`, `%81`, `%82`, `%83`, `%84`, `%85`, `%86`, `%87`, `%88`, `%89`, `%90`, `%91`, `%92`, `%93`, `%94`, `%95`, `%96`, `%97`, `%98`, `%99`, `%100`, `%101`, `%102`, `%103`, `%104`, `%105`, `%106`, `%107`, `%108`, `%109`, `%110`, `%111`, `%112`, `%113`, `%114`, `%115`, `%116`, `%117`, `%118`, `%119`, `%120`, `%121`, `%122`, `%123`.
+   - Dependencies:
+     - The variables `%10`, `%11`, and `%12` are derived from previous computations, showing a chain of dependencies.
+
+3. **Function `@_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_`:**
+   - Variables: `%0`, `%1`, `%3`, `%4`, `%5`, `%6`, `%7`, `%8`, `%9`, `%10`, `%11`, `%12`, `%13`, `%14`, `%15`, `%16`, `%17`, `%18`.
+   - Dependencies:
+     - The variables `%3`, `%4`, `%10`, and `%11` show interdependencies through loads and stores.
+
+### Conclusion
+- The functions exhibit various levels of data dependencies among their variables.
+- The analysis concludes that there are data dependencies among variables in the functions.
+
+### DOT File Representation
+
+```dot
+digraph DataDependency {
+    node [shape=box];
+    "next_smallest:%3" [label="Variable %3 in next_smallest"];
+    "next_smallest:%5" [label="Variable %5 in next_smallest"];
+    "next_smallest:%18" [label="Variable %18 in next_smallest"];
+    "next_smallest:%19" [label="Variable %19 in next_smallest"];
+    
+    "introsort_loop:%10" [label="Variable %10 in introsort_loop"];
+    "introsort_loop:%11" [label="Variable %11 in introsort_loop"];
+    "introsort_loop:%12" [label="Variable %12 in introsort_loop"];
+    
+    "final_insertion_sort:%0" [label="Variable %0 in final_insertion_sort"];
+    "final_insertion_sort:%1" [label="Variable %1 in final_insertion_sort"];
+    "final_insertion_sort:%3" [label="Variable %3 in final_insertion_sort"];
+    
+    // Dependencies
+    "next_smallest:%3" -> "next_smallest:%5" [label="yes"];
+    "next_smallest:%18" -> "next_smallest:%19" [label="yes"];
+    
+    "introsort_loop:%10" -> "introsort_loop:%11" [label="yes"];
+    "introsort_loop:%11" -> "introsort_loop:%12" [label="yes"];
+    
+    "final_insertion_sort:%3" -> "final_insertion_sort:%0" [label="yes"];
+    "final_insertion_sort:%1" -> "final_insertion_sort:%3" [label="yes"];
+}
+```
+
+This dot file represents the variables across the functions and their data dependencies clearly.

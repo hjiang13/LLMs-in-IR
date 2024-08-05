@@ -1,0 +1,60 @@
+### Analysis of Input IR Code
+
+**Input IR Code:**
+```
+b'; ModuleID = \'../../Human_xBenchmarks_164/CPP_2/CPP_2.cpp\'\nsource_filename = "../../Human_xBenchmarks_164/CPP_2/CPP_2.cpp"\ntarget datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-f80:128-n8:16:32:64-S128"\ntarget triple = "x86_64-unknown-linux-gnu"\n\n; Function Attrs: mustprogress nofree norecurse nosync nounwind readnone uwtable willreturn\ndefine dso_local float @_Z15truncate_numberf(float %0) local_unnamed_addr #0 {\n  %2 = fptosi float %0 to i32\n  %3 = sitofp i32 %2 to float\n  %4 = fsub float %0, %3\n  ret float %4\n}\n\nattributes #0 = { mustprogress nofree norecurse nosync nounwind readnone uwtable willreturn "frame-pointer"="none" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }\n\n!llvm.module.flags = !{!0, !1}\n!llvm.ident = !{!2}\n\n!0 = !{i32 1, !"wchar_size", i32 4}\n!1 = !{i32 7, !"uwtable", i32 1}\n!2 = !{!"clang version 13.0.0 (https://github.com/llvm/llvm-project.git d7b669b3a30345cfcdb2fde2af6f48aa4b94845d)"}\n'
+```
+
+### Identified Variables and Functions
+
+- **Function**: `@_Z15truncate_numberf`
+    - **Parameter**: `%0` (input float)
+    - **Intermediate Variables**:
+        - `%2` (result of `fptosi`)
+        - `%3` (result of `sitofp`)
+        - `%4` (result of `fsub`)
+
+### Analyze Dependencies
+
+- **Data Dependency Analysis**:
+  - The input parameter `%0` is used to compute `%2`, `%3`, and `%4`.
+  - The operation `%4` is dependent on `%0` and `%3` (where `%3` is derived from `%0`).
+  - Thus, there is a direct data dependency:
+    - `%0` influences `%2`, `%3`, and `%4`.
+  
+- **Inter-function Dependencies**:
+  - Since there is only one function in the provided IR code, we cannot analyze dependencies across multiple functions.
+  - Therefore, we cannot determine any relationship with non-existent variables or states from other functions.
+
+### Result
+
+1. **Dependency Relationship**:
+   - Between `%0` and `%2`: **yes**
+   - Between `%0` and `%3`: **yes**
+   - Between `%0` and `%4`: **yes**
+   - Between `%2` and `%3`: **no** (as `%2` is used to compute `%3`, but they are not directly dependent)
+   - Between `%2` and `%4`: **no** (as `%4` is computed using `%0` and `%3`)
+   - Between `%3` and `%4`: **yes** (since `%4` uses `%3` directly)
+
+### DOT File Representation
+
+```dot
+digraph DataDependency {
+    node [shape=box];
+    "truncate_numberf:%0" [label="Variable %0 in truncate_numberf"];
+    "truncate_numberf:%2" [label="Variable %2 in truncate_numberf"];
+    "truncate_numberf:%3" [label="Variable %3 in truncate_numberf"];
+    "truncate_numberf:%4" [label="Variable %4 in truncate_numberf"];
+
+    "truncate_numberf:%0" -> "truncate_numberf:%2" [label="yes"];
+    "truncate_numberf:%0" -> "truncate_numberf:%3" [label="yes"];
+    "truncate_numberf:%0" -> "truncate_numberf:%4" [label="yes"];
+    "truncate_numberf:%2" -> "truncate_numberf:%3" [label="no"];
+    "truncate_numberf:%2" -> "truncate_numberf:%4" [label="no"];
+    "truncate_numberf:%3" -> "truncate_numberf:%4" [label="yes"];
+}
+```
+
+### Conclusion
+
+The analysis indicates that there are strong data dependencies among the variables within the function `@_Z15truncate_numberf`, with `%0` being the main input influencing other variables, and `%3` being directly influencing `%4`. The generated DOT file captures these relationships visually.

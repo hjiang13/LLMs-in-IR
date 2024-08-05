@@ -1,0 +1,68 @@
+### Analysis of the Given Intermediate Representation (IR) Code
+
+The provided IR code defines a function that calculates Fibonacci numbers. We will analyze the dependencies among the variables used within this function.
+
+#### Identified Variables
+
+From the given IR code, we can identify the following variables:
+
+- **Function:** `_Z4fib4i(i32 %0)` (Fibonacci function)
+- **Allocations:**
+  - `%2`: Allocated array of size 100 (i32)
+- **Temporary Variables:**
+  - `%3`, `%4`, `%5`, `%7`, `%8`, `%9`, `%11`, `%12`, `%13`, `%15`, `%16`, `%18`, `%19`, `%20`, `%21`, `%22`, `%24`, `%25`, `%26`, `%28`, `%29`, `%30`, `%31`, `%32`, `%33`, `%35`, `%36`, `%37`, `%39`, `%40`, `%41`, `%42`, `%43`, `%44`, `%45`, `%46`, `%48`, `%49`, `%50`, `%51`, `%52`, `%53`, `%54`, `%55`, `%56`, `%57`, `%58`, `%59`, `%60`, `%61`, `%62`, `%63`, `%64`, `%65`, `%66`, `%67`.
+
+#### Dependency Analysis
+
+1. **Variables `%19`, `%21`, `%30`, `%32`, `%33`**: These variables depend on values that are stored in the allocated array `%2` (specifically, the indices of the array depend on previous calculations). They accumulate results based on previously computed Fibonacci values.
+
+2. **Variables `%40`, `%42`, `%50`, `%52`, `%63`**: Similar to the previous set, these variables also depend on values stored in the same array and thus have a data dependency relationship with the variables that they compute from.
+
+3. **Variables `%18`, `%39`, `%43`, `%54`, `%65`**: These variables are used in the computations that lead to the results stored in the array. Their values depend on the previous iterations and the results computed in the loop.
+
+4. **Variables across functions**: There are no other functions or variables present in the provided IR code snippet, so we do not have any inter-function dependencies to consider here.
+
+### Dependency Summary
+
+- The variables mentioned above have a clear data dependency relationship with each other, based on how they are computed and how they interact with the allocated array.
+
+### DOT File Representation
+
+The relationships can be represented in a DOT format for visualization:
+
+```dot
+digraph DataDependency {
+    node [shape=box];
+    "fib_function:%2" [label="Array %2 used for Fibonacci values"];
+    "fib_function:%19" [label="Variable %19 calculated from %18"];
+    "fib_function:%21" [label="Variable %21 calculated from %19"];
+    "fib_function:%30" [label="Variable %30 calculated from %28, %19"];
+    "fib_function:%32" [label="Variable %32 calculated from %30, %21, %29"];
+    "fib_function:%33" [label="Variable %33 stored in %2"];
+    
+    "fib_function:%40" [label="Variable %40 calculated from %39"];
+    "fib_function:%42" [label="Variable %42 calculated from %40"];
+    "fib_function:%50" [label="Variable %50 calculated from %48"];
+    "fib_function:%52" [label="Variable %52 calculated from %50, %42"];
+    "fib_function:%63" [label="Variable %63 calculated from %62, %60"];
+    
+    // Edges representing dependencies
+    "fib_function:%2" -> "fib_function:%19";
+    "fib_function:%19" -> "fib_function:%21";
+    "fib_function:%19" -> "fib_function:%30";
+    "fib_function:%30" -> "fib_function:%32";
+    "fib_function:%21" -> "fib_function:%32";
+    "fib_function:%18" -> "fib_function:%33";
+    
+    "fib_function:%39" -> "fib_function:%40";
+    "fib_function:%40" -> "fib_function:%42";
+    "fib_function:%48" -> "fib_function:%50";
+    "fib_function:%50" -> "fib_function:%52";
+    "fib_function:%62" -> "fib_function:%63";
+}
+```
+
+### Conclusion
+
+- **Data Dependency**: There are multiple data dependencies within the variables of the provided IR code.
+- **DOT Representation**: The DOT file captures the relationships, allowing for visualization of the dependencies in the computation of Fibonacci numbers.

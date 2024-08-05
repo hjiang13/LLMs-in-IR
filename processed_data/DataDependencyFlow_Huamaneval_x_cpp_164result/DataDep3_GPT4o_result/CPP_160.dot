@@ -1,0 +1,53 @@
+### Analysis of Dependencies
+
+In the provided IR code, we need to analyze the dependencies between various variables across functions. The relevant variables are primarily pointers and local variables used in the function `@do_algebra`. 
+
+Here are the key observations for the variables:
+
+1. **Variables in `@do_algebra` function**:
+   - `%5`, `%6`: Both are loaded from pointers that come from `%3` and `%4`, which are derived from the input vectors.
+   - `%12`, `%13`: Loaded from `%10` and `%11`, which are also derived from the input vectors.
+   - `%9`, `%10`, `%11`, `%12`, `%13`: These variables are used to perform comparisons and store results.
+
+2. **Data Dependencies**:
+   - The loading of variables:
+     - `%5` and `%6` are dependent on `%3` and `%4` respectively.
+     - `%12` and `%13` are dependent on `%10` and `%11` respectively.
+   - The various comparison operators (`icmp`) indicate dependencies among the local variables as they influence the flow of control (branches).
+
+3. **Inter-function Dependencies**:
+   - Since the only function is `@do_algebra`, we are concerned only with dependencies within this function. There are no inter-function dependencies to analyze as no other functions directly interact with the variables.
+
+### Conclusion
+
+- The variables within the same function exhibit data dependencies due to the load and store operations and the comparisons made between these variables.
+- Therefore, we can conclude that there are data dependencies among the variables in the `@do_algebra` function.
+
+### DOT File Representation
+
+The DOT file will represent these dependencies as follows:
+
+```dot
+digraph DataDependency {
+    node [shape=box];
+    "do_algebra:%5" [label="Variable %5 in do_algebra"];
+    "do_algebra:%6" [label="Variable %6 in do_algebra"];
+    "do_algebra:%12" [label="Variable %12 in do_algebra"];
+    "do_algebra:%13" [label="Variable %13 in do_algebra"];
+    "do_algebra:%9" [label="Variable %9 in do_algebra"];
+    "do_algebra:%10" [label="Variable %10 in do_algebra"];
+    "do_algebra:%11" [label="Variable %11 in do_algebra"];
+
+    "do_algebra:%5" -> "do_algebra:%3";
+    "do_algebra:%6" -> "do_algebra:%4";
+    "do_algebra:%12" -> "do_algebra:%10";
+    "do_algebra:%13" -> "do_algebra:%11";
+}
+```
+
+### Summary
+
+- The variables are data-dependent due to the load/store and comparison operations.
+- The DOT representation illustrates the dependencies clearly within the `@do_algebra` function. 
+
+The overall conclusion is that the variables within the `@do_algebra` function exhibit dependencies, labeled as 'yes' in terms of data dependency.
