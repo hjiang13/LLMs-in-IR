@@ -1,0 +1,16 @@
+**Label:** yes
+
+**Explanation:** The variable `%25` in the function `_Z18has_close_elementsSt6vectorIfSaIfEEf` is data-dependent on the variable `%1` in the same function. The reason for this is that `%25` is calculated as a result of loading a float value from a specific element of a vector and is subsequently used in the comparison operation `fcmp olt float %33, %1`. Here, `%33` is derived from the absolute difference between `%25` and another loaded value (`%31`). Therefore, since `%1` is directly used in a comparison that involves the outcome of operations on `%25`, they share a data dependency.
+
+**DOT File Representation:**
+```  
+digraph DataDependency {
+    node [shape=box];
+    
+    "[_Z18has_close_elementsSt6vectorIfSaIfEEf]:%25" -> "[_Z18has_close_elementsSt6vectorIfSaIfEEf]:%1" [label="derived from comparison"];
+}
+```
+
+**Additional Considerations:**
+- The use of the load operation on the vector elements and the subsequent calculation of `%25` creates a clear chain of dependency that leads to the comparison using `%1`.
+- The data flow is explicit through the floating-point subtraction operation (`fsub`) and the call to `llvm.fabs.f32`, which ultimately illustrates how the result is affected by both `%25` and `%1` in the context of this function.

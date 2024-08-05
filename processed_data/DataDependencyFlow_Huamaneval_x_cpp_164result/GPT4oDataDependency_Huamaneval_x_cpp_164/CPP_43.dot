@@ -1,0 +1,13 @@
+**Label:** yes
+
+**Explanation:** In the provided IR code, the variable `%30` (which is loaded from the vector) is computed based on a pointer derived from `%5`, and this value is subsequently used in a comparison operation to check against another computed value (`%31`). The flow of data shows that `%30` is dependent on the earlier computations involving `%5`, which is also identified as a load operation from the vector passed as an argument to the function. Since `%30` directly depends on the value loaded from the vector, and since `%5` is loaded from the same vector, we can conclude that there is a data dependency through `%5`. Therefore, the variable from the function `@_Z17pairs_sum_to_zeroSt6vectorIiSaIiEE` is indeed data-dependent on the variable from the same function due to the chain of operations involving loading and comparisons.
+
+**DOT File Representation:**
+```
+digraph DataDependency {
+    node [shape=box];
+    
+    "@_Z17pairs_sum_to_zeroSt6vectorIiSaIiEE:%5" -> "@_Z17pairs_sum_to_zeroSt6vectorIiSaIiEE:%30" [label="load dependency"];
+    "@_Z17pairs_sum_to_zeroSt6vectorIiSaIiEE:%30" -> "@_Z17pairs_sum_to_zeroSt6vectorIiSaIiEE:%31" [label="comparison"];
+}
+```

@@ -1,0 +1,15 @@
+**Label:** yes
+
+**Explanation:** The variable `%10` in the function `_Z11count_upperNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE` is data-dependent on the variable `%46`, which is also derived within the same function. The relationship is evident through the calculations and control flow. Specifically, `%10` is loaded from a particular element in a `basic_string`, and its value influences the calculations of `%46` (as seen in the statement `add nuw nsw i32 %29, %45`, where `%29` is updated based on the condition that involves `%10`). Additionally, `%10` is used in an `icmp` operation that affects the control flow of the function, further establishing the data dependency.
+
+**DOT File Representation:**
+```
+digraph DataDependency {
+    node [shape=box];
+    
+    "[_Z11count_upperNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE]:[%10]" -> "[_Z11count_upperNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE]:[%46]" [label="data dependency"];
+    "[_Z11count_upperNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE]" -> "[_Z11count_upperNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE]" [label="function flow"];
+}
+``` 
+
+This representation clearly outlines the data dependency between `%10` and `%46` within the same function, showcasing how the value of one directly influences the other through operations and control flow.

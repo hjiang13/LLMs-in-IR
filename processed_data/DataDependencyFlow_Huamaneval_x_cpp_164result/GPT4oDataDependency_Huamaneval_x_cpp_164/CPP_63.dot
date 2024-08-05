@@ -1,0 +1,12 @@
+Label: yes
+
+Explanation: The variable `%9` in function `_Z6fibfibi` is data-dependent on the variable `%0`. The value of `%9` is computed directly from `%0` with the operation `%9 = add nuw i32 %0, 1`. This means that any change to `%0` will affect the value of `%9` used in subsequent operations, specifically in the comparisons and stores that depend on `%9`. Additionally, there are multiple uses of `%9` later in the function, such as the comparison `%12 = icmp eq i32 %9, 4` and the conditional branches that follow. Thus, there is a clear data dependency between these two variables.
+
+DOT File Representation:
+```
+digraph DataDependency {
+    node [shape=box];
+
+    "[_Z6fibfibi]:[%0]" -> "[_Z6fibfibi]:[%9]" [label="direct dependency"];
+}
+```

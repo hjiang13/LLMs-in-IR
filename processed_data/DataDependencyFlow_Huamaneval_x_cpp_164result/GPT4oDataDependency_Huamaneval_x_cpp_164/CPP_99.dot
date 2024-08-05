@@ -1,0 +1,14 @@
+Label: yes
+
+Explanation: The variable `%3` in the function `@_Z15closest_integerNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE` is data-dependent on the variable `%0`, which is the input parameter of the same function. The `%3` variable is loaded from the memory address calculated from `%0`, indicating that it directly depends on the content of `%0`. Since `%0` is the input string passed to the function, the operations performed on `%3` (like the subsequent calls to `strtod` and `llvm.round.f64`) rely on the value derived from `%0`. Therefore, there is a clear data dependency from `%0` to `%3`.
+
+DOT File Representation:
+```  
+digraph DataDependency {
+    node [shape=box];
+    
+    "[_Z15closest_integerNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE]:[%0]" -> "[_Z15closest_integerNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE]:[%3]" [label="direct dependency"];
+}
+``` 
+
+In this representation, we show that the input variable `%0` directly influences the variable `%3` through a load operation, thereby establishing a data dependency relationship.

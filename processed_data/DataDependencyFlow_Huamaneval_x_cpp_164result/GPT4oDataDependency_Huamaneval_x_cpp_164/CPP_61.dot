@@ -1,0 +1,12 @@
+Label: no
+
+Explanation: The variable `%3` in the function `_Z18correct_bracketingNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE` is loaded from the address computed by `%2`, which is derived from the input parameter `%0`. However, it does not exhibit a data dependency on `%22`, which is conditionally updated in the loop and is involved in comparisons and arithmetic operations later in the function (specifically in the branches where `%22` is evaluated). The operations on `%3` and `%22` do not directly impact each other; instead, they are used separately in different branches of the function without any shared variable state that would indicate a dependency. As a result, there is no data dependency between the two variables.
+
+DOT File Representation:
+```
+digraph DataDependency {
+    node [shape=box];
+    
+    "[_Z18correct_bracketingNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE]:%3" -> "[_Z18correct_bracketingNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE]:%22" [label="no direct dependency"];
+}
+```

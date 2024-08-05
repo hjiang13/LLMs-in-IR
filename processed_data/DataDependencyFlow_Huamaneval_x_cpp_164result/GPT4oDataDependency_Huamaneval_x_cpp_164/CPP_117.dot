@@ -1,0 +1,14 @@
+Label: yes
+
+Explanation: The variable `%1` from the function `@_Z12select_wordsNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEi` is data-dependent on the variable `%9` from the same function. This is evident from the use of the `load` instruction where `%1` is being loaded into a register, and its value is subsequently used in operations such as `getelementptr` and `store`. The operations that involve `%1` directly impact the flow of data that ultimately influences the computations involving `%9`. The intermediate values derived from `%1` are also stored in various locations that are referred to later in the function, solidifying the data dependency chain.
+
+DOT File Representation:
+```  
+digraph DataDependency {
+    node [shape=box];
+    
+    "@_Z12select_wordsNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEi:%1" -> "@_Z12select_wordsNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEi:%9" [label="direct dependency"];
+}
+``` 
+
+In addition, the operations that involve `%1`, such as loading its values and performing arithmetic or logical comparisons with it, demonstrate that changes to `%1` would directly affect the outcome of computations involving `%9`. Thus, a clear data dependency exists between the two variables within the same function context.

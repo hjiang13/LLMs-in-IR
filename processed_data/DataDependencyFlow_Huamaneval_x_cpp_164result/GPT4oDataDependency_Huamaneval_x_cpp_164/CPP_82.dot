@@ -1,0 +1,15 @@
+Label: no
+
+Explanation: The variable `%4` in the function `@_Z12prime_lengthNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE` is defined as the result of truncating `%3`, which is loaded from `%2`. The variable `%9` is defined as a phi node that takes values from either `%12` or `2`, and `%12` is computed by incrementing `%9`. Since there are no direct or indirect assignments or calculations involving `%4` and `%9` that would create a data dependency, we conclude that `%4` is not data-dependent on `%9`.
+
+DOT File Representation:
+```  
+digraph DataDependency {
+    node [shape=box];
+
+    "[FUNCTION_NAME1]:%4" -> "[FUNCTION_NAME1]:%3" [label="loaded"];
+    "[FUNCTION_NAME1]:%3" -> "[FUNCTION_NAME1]:%2" [label="loaded"];
+    "[FUNCTION_NAME1]:%9" -> "[FUNCTION_NAME1]:%12" [label="phi node"];
+    "[FUNCTION_NAME1]:%12" -> "[FUNCTION_NAME1]:%9" [label="increment"];
+}
+```

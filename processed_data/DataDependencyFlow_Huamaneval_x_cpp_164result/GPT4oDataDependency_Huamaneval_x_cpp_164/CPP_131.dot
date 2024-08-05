@@ -1,0 +1,13 @@
+Label: yes
+
+Explanation: The variable `%5` in the function `@_Z6digitsi` is data-dependent on the variable `%10` in the same function due to the series of operations involving the loading and manipulation of data. Specifically, `%5` is loaded from a memory location and is subsequently used in various arithmetic operations as well as conditional checks (e.g., `%10 = and i64 %5, 1`). The result of this operation influences the control flow and subsequent computations, confirming that there is a clear data dependency relationship between these two variables.
+
+DOT File Representation:
+```  
+digraph DataDependency {
+    node [shape=box];
+    
+    "@_Z6digitsi:%5" -> "@_Z6digitsi:%10" [label="direct dependency"];
+    "@_Z6digitsi" -> "@_Z6digitsi" [label="function execution"];
+}
+```

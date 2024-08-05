@@ -1,0 +1,14 @@
+Label: no
+
+Explanation: In the provided IR code, the variable `%0` (acting as the input parameter) is used within the function `_Z8sum_to_ni` to compute the result, but there are no other variables or functions that directly or indirectly reference it outside of this function. The operations performed are local to the function, and the output value `%4` is returned without any interaction with other functions or variables. Since there are no cross-function dependencies or shared state, we conclude that there is no data dependency between the variables specified, as they do not interact.
+
+DOT File Representation:
+```  
+digraph DataDependency {
+    node [shape=box];
+    
+    "[_Z8sum_to_ni]:[%0]" -> "[_Z8sum_to_ni]:[%2]" [label="local calculation"];
+    "[_Z8sum_to_ni]:[%2]" -> "[_Z8sum_to_ni]:[%3]" [label="local calculation"];
+    "[_Z8sum_to_ni]:[%3]" -> "[_Z8sum_to_ni]:[%4]" [label="final result"];
+}
+```

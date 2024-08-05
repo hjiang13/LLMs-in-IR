@@ -1,0 +1,15 @@
+**Label:** yes
+
+**Explanation:** The variable `%6` in the function `@_Z9incr_listSt6vectorIiSaIiEE` is data-dependent on the variable `%4` in the same function. The dependency is established through a series of operations where both variables are loaded from memory and subsequently involved in arithmetic operations. Specifically, `%6` is loaded with `load i32*, i32** %5`, and `%4` is loaded with `load i32*, i32** %3`. Their values are then used in further calculations to determine the positions in memory where data is stored. In particular, they influence the values stored back into memory via store operations. The flow from loading either variable directly leads to modifications that are interdependent.
+
+**DOT File Representation:**
+```  
+digraph DataDependency {
+    node [shape=box];
+    
+    "[@_Z9incr_listSt6vectorIiSaIiEE]:[%4]" -> "[@_Z9incr_listSt6vectorIiSaIiEE]:[%6]" [label="data dependency"];
+    "[@_Z9incr_listSt6vectorIiSaIiEE]" -> "[@_Z9incr_listSt6vectorIiSaIiEE]" [label="function context"];
+}
+``` 
+
+This representation illustrates the direct data dependency between the variables within the same function, highlighting their interrelation through the data flow of load and store operations.

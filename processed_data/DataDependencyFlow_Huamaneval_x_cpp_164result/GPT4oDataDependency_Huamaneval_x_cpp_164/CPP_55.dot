@@ -1,0 +1,19 @@
+**Label:** yes
+
+**Explanation:** The variable `%32` in the function `@_Z3fibi` is data-dependent on the variable `%31`, which is also within the same function. This is evident from the operations that involve these variables. Specifically, `%31` is loaded from memory and then added to `%26` to compute `%32`:
+
+```llvm
+%31 = load i32, i32* %30, align 4, !tbaa !3
+%32 = add nsw i32 %31, %26
+```
+
+The computation of `%32` directly uses the value loaded into `%31`, establishing a clear data dependency. Additionally, since both variables are within the same function, there are no cross-function complexities that could obscure the dependency. 
+
+**DOT File Representation:**
+```
+digraph DataDependency {
+    node [shape=box];
+    
+    "@_Z3fibi:%31" -> "@_Z3fibi:%32" [label="direct dependency"];
+}
+```
