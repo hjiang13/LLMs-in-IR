@@ -3,8 +3,8 @@ import os
 import subprocess
 
 # Define paths
-benchmarks_dir = "../../Human_xBenchmarks_164"
-processed_data_dir = "../../processed_data/Human_x_164"
+benchmarks_dir = "../../Human_xBenchmarks"
+processed_data_dir = "../../processed_data/Human_x"
 scripts_dir = "."
 
 # Function to compile and generate CFG
@@ -30,7 +30,7 @@ for root, dirs, files in os.walk(benchmarks_dir):
     for dir_name in dirs:
         benchmark_name = dir_name
         benchmark_path = os.path.join(root, dir_name, f"{benchmark_name}.cpp")
-        output_dir = os.path.join(processed_data_dir, dir_name)
+        output_dir = os.path.join(processed_data_dir, dir_ name)
 
         # Ensure the output directory exists
         os.makedirs(output_dir, exist_ok=True)
