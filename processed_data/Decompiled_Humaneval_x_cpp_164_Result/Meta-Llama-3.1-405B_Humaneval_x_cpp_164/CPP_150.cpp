@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the corresponding C source code. Here it is:
-
-```c
 int x_or_y(int a, int b, int c) {
   if (a > 1) {
     if (a < 4) {
@@ -31,6 +28,3 @@ int x_or_y(int a, int b, int c) {
     return b;
   }
 }
-```
-
-Note that the generated C code is a direct translation of the LLVM IR code, without any optimizations or modifications.

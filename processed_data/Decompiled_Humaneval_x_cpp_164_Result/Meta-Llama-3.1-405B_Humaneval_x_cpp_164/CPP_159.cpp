@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the equivalent C source code. Here it is:
-
-```c
 #include <stdlib.h>
 #include <string.h>
 
@@ -32,6 +29,3 @@ void eat(std_vector* v, int a, int b, int c) {
     }
     memset(v, 0, 24);
 }
-```
-
-Note that I've used the `malloc` function from the C standard library to allocate memory, as the IR code uses the `_Znwm` function, which is the LLVM IR equivalent of `malloc`. Also, I've used the `memset` function to initialize the memory, as the IR code uses the `llvm.memset.p0i8.i64` function.

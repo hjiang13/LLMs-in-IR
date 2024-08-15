@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the corresponding C source code. Here it is:
-
-```c
 #include <stdio.h>
 
 int fib(int n) {
@@ -35,6 +32,3 @@ int main() {
     // printf("%d\n", fib(10));
     return 0;
 }
-```
-
-Please note that the generated C code might not be optimal or identical to the original C code that was used to generate the LLVM IR code. The generated code is based on my interpretation of the LLVM IR code and might require further modifications to match the original code's behavior or performance.

@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the corresponding C source code. Here it is:
-
-```c
 #include <stdint.h>
 
 typedef struct {
@@ -45,6 +42,3 @@ int is_sorted(std_Vector* v) {
     }
     return 1;
 }
-```
-
-Note that I've used `uint64_t` to represent 64-bit unsigned integers, as the IR code uses `i64` for 64-bit integers. Also, I've assumed that the `std_Vector` struct has a single member `_M_base` of type `std_Vector_base`, which has a single member `_M_impl` of type `std_Vector_base_impl`. This might not be the actual implementation of the `std::vector` class in C++, but it matches the IR code provided.

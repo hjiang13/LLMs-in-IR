@@ -1,6 +1,3 @@
-Here is the C source code generated from the provided LLVM IR code:
-
-```c
 int fizz_buzz(int n) {
     if (n <= 0) return 0;
 
@@ -19,6 +16,3 @@ int fizz_buzz(int n) {
 
     return count;
 }
-```
-
-Let me know if you have any further requests!

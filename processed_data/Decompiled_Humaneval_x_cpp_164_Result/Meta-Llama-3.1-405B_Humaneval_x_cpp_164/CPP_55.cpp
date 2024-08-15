@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the corresponding C source code. Here it is:
-
-```c
 int f(int n) {
     int a[1000];
     a[0] = 0;
@@ -25,6 +22,3 @@ int f(int n) {
     }
     return a[n];
 }
-```
-
-Please note that this C code is a direct translation of the provided LLVM IR code and may not be optimal or readable. It's a low-level representation of the program, and some variable names and coding styles may not follow common C programming conventions.

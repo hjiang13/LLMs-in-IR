@@ -1,6 +1,3 @@
-Here is the C source code generated from the provided LLVM IR code:
-
-```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -40,6 +37,3 @@ int main() {
 
     return 0;
 }
-```
-
-Note that I had to make some assumptions about the input and output formats, as well as the functionality of the `rolling_max` function, since the LLVM IR code does not provide explicit information about these aspects. The generated C code may not be exactly equivalent to the original code that produced the LLVM IR, but it should be close enough to provide a good starting point for further refinement.

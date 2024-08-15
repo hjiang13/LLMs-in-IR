@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the equivalent C source code. Here it is:
-
-```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -22,6 +19,3 @@ int main() {
     printf("%d\n", result);
     return 0;
 }
-```
-
-Please note that the generated C code is a simplified version and may not be exactly equivalent to the original LLVM IR code, as some details may have been lost during the translation process. Additionally, I have added a `main` function to demonstrate the usage of the `sum_squares` function.

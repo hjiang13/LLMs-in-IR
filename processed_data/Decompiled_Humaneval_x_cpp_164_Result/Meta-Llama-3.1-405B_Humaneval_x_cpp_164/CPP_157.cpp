@@ -1,6 +1,3 @@
-Here is the C source code generated from the provided LLVM IR code:
-
-```c
 #include <math.h>
 
 int right_angle_triangle(float a, float b, float c) {
@@ -25,6 +22,3 @@ int right_angle_triangle(float a, float b, float c) {
 
     return 0;
 }
-```
-
-Note that I've replaced the `llvm.fabs.f32` intrinsic with the standard `fabsf` function from the math library, which achieves the same result.

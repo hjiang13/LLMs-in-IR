@@ -1,7 +1,3 @@
-Based on the provided LLVM IR code, I will generate the corresponding C source code. Please note that the generated C code may not be perfect and might require some manual adjustments.
-
-Here is the generated C source code:
-```c
 #include <string.h>
 
 void string_xor(std::string* result, const std::string& str1, const std::string& str2) {
@@ -23,5 +19,3 @@ void string_xor(std::string* result, const std::string& str1, const std::string&
 
     result->push_back('\0');
 }
-```
-Please note that this code assumes that the `std::string` class is available, which might not be the case in a pure C environment. If you need a pure C version, you would need to replace the `std::string` usage with equivalent C-style string manipulation functions.

@@ -1,6 +1,3 @@
-Based on the provided IR code, I will generate the equivalent C source code. Here it is:
-
-```c
 #include <stdio.h>
 #include <string.h>
 
@@ -51,6 +48,3 @@ void incr_list(vector* result, vector* input) {
     result->base.capacity = input->base.capacity;
     memset(input, 0, sizeof(vector));
 }
-```
-
-Note that I've made some assumptions about the structure of the vector class based on the IR code, as well as the behavior of the `incr_list` function. The generated C code may not be exactly equivalent to the original C++ code, but it should have the same functionality.

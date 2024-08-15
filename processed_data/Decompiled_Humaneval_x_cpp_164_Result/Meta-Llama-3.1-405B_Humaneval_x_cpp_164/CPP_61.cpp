@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the equivalent C source code. Here it is:
-
-```c
 #include <stdbool.h>
 
 bool correct_bracketing(const char* str, int length) {
@@ -17,6 +14,3 @@ bool correct_bracketing(const char* str, int length) {
     }
     return count == 0;
 }
-```
-
-Please note that this C code is a translation of the provided LLVM IR code and may not be the most optimized or idiomatic C code.

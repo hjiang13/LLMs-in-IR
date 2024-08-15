@@ -1,6 +1,3 @@
-Here is the C source code generated from the given LLVM IR:
-
-```c
 #include <stdio.h>
 
 int fib(int n) {
@@ -25,8 +22,3 @@ int fib(int n) {
         }
     }
 }
-```
-
-Note that I've used some basic C programming idioms and naming conventions to make the code more readable. Also, I've removed the unnecessary variables and code blocks to simplify the function. The generated code only includes the necessary logic to implement the `fib` function. 
-
-However, please note that the generated code may not be the most efficient or optimal way to calculate the Fibonacci sequence. The original LLVM IR code appears to be implementing a specific algorithm or logic that may not be immediately apparent from the generated C code.

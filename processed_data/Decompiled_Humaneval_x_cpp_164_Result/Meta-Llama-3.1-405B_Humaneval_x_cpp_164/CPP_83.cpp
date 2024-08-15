@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the equivalent C source code. Here it is:
-
-```c
 #include <stdio.h>
 
 int starts_one_ends(int n) {
@@ -29,6 +26,3 @@ int starts_one_ends(int n) {
     }
     return 18;
 }
-```
-
-Please note that this C code may not be exactly what was originally compiled to produce the LLVM IR, but it should be functionally equivalent.

@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the equivalent C source code. Please note that this code may not be perfect and might require some manual adjustments.
-
-```c
 #include <stdint.h>
 
 int digitSum(const char* str, int64_t length) {
@@ -44,8 +41,3 @@ int digitSum(const char* str, int64_t length) {
 
     return sum;
 }
-```
-
-Please note that this code uses SSE instructions to process the string in chunks of 16 characters. The `_mm_reduce_add_epi32` function is not a standard SSE function, you might need to implement it manually or use a different approach to reduce the sum of the vector elements.
-
-Also, this code assumes that the input string only contains uppercase letters. If the string can contain other characters, you might need to adjust the code accordingly.

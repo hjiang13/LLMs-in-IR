@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the corresponding C source code. Here is the result:
-
-```c
 #include <stdlib.h>
 #include <string.h>
 
@@ -39,6 +36,3 @@ void largest_smallest_integers(std_vector* __result, std_vector* __v) {
     __result->_M_impl[0] = __min;
     __result->_M_impl[1] = __max;
 }
-```
-
-Please note that the generated C code may not be perfect and might require additional modifications to work correctly in your specific environment. Additionally, the original IR code seems to be compiled from C++ code, so the generated C code may not fully represent the original C++ code.

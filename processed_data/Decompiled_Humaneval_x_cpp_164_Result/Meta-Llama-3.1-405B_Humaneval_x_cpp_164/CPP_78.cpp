@@ -1,6 +1,3 @@
-Here is the C source code generated from the provided LLVM IR code:
-
-```c
 #include <string.h>
 
 typedef struct {
@@ -38,6 +35,3 @@ int hex_key(basic_string* input) {
     }
     return match_count;
 }
-```
-
-Please note that this generated C code may not be optimal or idiomatic C code. It's a direct translation of the provided LLVM IR code.

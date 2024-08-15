@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the equivalent C source code. Here it is:
-
-```c
 #include <stdio.h>
 
 int monotonic(float* data, int length) {
@@ -33,6 +30,3 @@ int main() {
 
     return 0;
 }
-```
-
-Please note that the generated C code is based on my interpretation of the provided LLVM IR code, and it may not be perfect or optimal. Additionally, the `main` function is provided as an example usage of the `monotonic` function, and it is not part of the original LLVM IR code.

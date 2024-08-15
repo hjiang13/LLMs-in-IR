@@ -1,6 +1,3 @@
-Here is the C source code generated from the provided LLVM IR code:
-
-```c
 #include <stdint.h>
 
 int can_arrange(int* arr, int n) {
@@ -58,6 +55,3 @@ int can_arrange(int* arr, int n) {
 
     return res;
 }
-```
-
-Please note that the generated C code might not be optimal or as efficient as the original LLVM IR code, as some information might be lost during the translation process. Additionally, the generated code might require manual modifications to match the exact behavior of the original LLVM IR code.

@@ -1,6 +1,3 @@
-Here is the C source code generated from the provided LLVM IR code:
-
-```c
 #include <math.h>
 
 float triangle_area(float a, float b, float c) {
@@ -20,6 +17,3 @@ float triangle_area(float a, float b, float c) {
         return -1.0f;
     }
 }
-```
-
-Note that the generated C code is a direct translation of the LLVM IR code and may not be the most optimal or readable implementation. Additionally, the `pow` function call in the IR code has been replaced with a call to the `sqrt` function in the C code, as the exponent was 0.5.

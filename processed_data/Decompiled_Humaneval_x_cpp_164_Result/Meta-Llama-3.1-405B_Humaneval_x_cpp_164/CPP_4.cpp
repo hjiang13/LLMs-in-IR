@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, here is the equivalent C source code:
-
-```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -27,6 +24,3 @@ int main() {
     printf("Mean Absolute Deviation: %f\n", result);
     return 0;
 }
-```
-
-Please note that the generated C code is based on the provided LLVM IR code and might not be perfect or production-ready. It's recommended to review the code carefully before using it in any production environment.

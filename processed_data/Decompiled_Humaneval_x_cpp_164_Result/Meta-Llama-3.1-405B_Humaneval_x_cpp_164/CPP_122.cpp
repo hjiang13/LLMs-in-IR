@@ -1,6 +1,3 @@
-Here is the C source code generated from the IR code:
-
-```c
 #include <stdio.h>
 #include <stdint.h>
 
@@ -66,4 +63,3 @@ int add_elements(int* data, int size) {
     }
     return result;
 }
-```

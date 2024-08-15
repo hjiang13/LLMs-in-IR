@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the equivalent C source code. Here it is:
-
-```c
 #include <stdint.h>
 
 typedef struct {
@@ -72,6 +69,3 @@ int triples_sum_to_zero(std__vector* _x) {
     }
     return 0;
 }
-```
-
-Please note that the generated C code may not be perfect and might require some adjustments to compile and run correctly.

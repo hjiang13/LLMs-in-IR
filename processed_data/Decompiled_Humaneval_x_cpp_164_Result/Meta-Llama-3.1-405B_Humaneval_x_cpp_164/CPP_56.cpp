@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the equivalent C source code. Here it is:
-
-```c
 #include <stdio.h>
 #include <stdint.h>
 
@@ -33,6 +30,3 @@ int correct_bracketing(basic_string* str) {
 
     return balance == 0;
 }
-```
-
-Please note that I've made some assumptions about the structure of the `basic_string` type, as the IR code only provides a partial definition. The generated C code should be equivalent to the original IR code, but it may not be exactly what the original C++ code looked like.

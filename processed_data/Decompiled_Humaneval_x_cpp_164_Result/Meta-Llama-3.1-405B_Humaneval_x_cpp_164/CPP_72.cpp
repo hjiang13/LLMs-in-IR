@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the equivalent C source code. Here it is:
-
-```c
 #include <stdint.h>
 
 struct VectorImplData {
@@ -50,6 +47,3 @@ int1_t will_it_fly(struct Vector* v, int32_t threshold) {
 
     return result <= threshold;
 }
-```
-
-Note that I've replaced the `llvm.umax.i64` function with a C implementation, as it is not a standard C function. Also, I've assumed that the `int1_t` type is equivalent to a C `_Bool` type, which is the standard type for boolean values in C.

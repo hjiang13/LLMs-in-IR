@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the equivalent C source code. Here it is:
-
-```c
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -80,6 +77,3 @@ void _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_(basic
 void _ZdlPv(void* ptr) {
     free(ptr);
 }
-```
-
-Please note that some parts of the original LLVM IR code are not directly translatable to C (e.g., the `_M_assign` function and the `__gxx_personality_v0` function), and the generated C code may not be fully functional or equivalent to the original IR code.

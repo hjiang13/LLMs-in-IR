@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, here is the equivalent C source code:
-
-```c
 #include <stdbool.h>
 #include <stdint.h>
 
@@ -31,6 +28,3 @@ bool is_nested(const struct basic_string* s) {
 
     return s->length > max_nesting_level;
 }
-```
-
-Please note that the generated C code is a direct translation of the provided LLVM IR code and does not include any additional error handling or boundary checks.

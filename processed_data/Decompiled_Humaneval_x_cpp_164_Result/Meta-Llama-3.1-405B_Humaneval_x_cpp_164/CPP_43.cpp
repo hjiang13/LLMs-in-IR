@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the corresponding C source code. Here it is:
-
-```c
 #include <stdbool.h>
 #include <stdint.h>
 
@@ -64,5 +61,3 @@ bool pairs_sum_to_zero(struct Vector* __hidden this) {
         }
     }
 }
-```
-Note that I've used `int32_t` and `uint64_t` types to match the IR code's type annotations. Also, I've kept the variable names similar to the IR code's names, but with some minor adjustments to follow C naming conventions. The generated C code should be functionally equivalent to the original IR code.

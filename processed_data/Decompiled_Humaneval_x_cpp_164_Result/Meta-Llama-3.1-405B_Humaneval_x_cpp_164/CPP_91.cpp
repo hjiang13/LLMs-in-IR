@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the equivalent C source code. Here it is:
-
-```c
 #include <string.h>
 
 int is_bored(const char* str) {
@@ -34,6 +31,3 @@ int is_bored(const char* str) {
     }
     return result;
 }
-```
-
-Note that I've replaced the `std::__cxx11::basic_string` with a simple `const char*` as the input parameter, since the IR code only uses the string's length and data, which can be easily obtained from a C-style string.

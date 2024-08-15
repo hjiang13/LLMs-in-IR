@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, here is the equivalent C source code:
-
-```c
 #include <stdint.h>
 
 int32_t prod_signs(int32_t* vec, int64_t size) {
@@ -18,6 +15,3 @@ int32_t prod_signs(int32_t* vec, int64_t size) {
     }
     return sum * sign;
 }
-```
-
-Note that the original IR code uses `std::vector` from the C++ Standard Library, which is not directly equivalent to a C array. I've assumed that the input `vec` is an array of `int32_t` values, and the `size` parameter represents the number of elements in the array.

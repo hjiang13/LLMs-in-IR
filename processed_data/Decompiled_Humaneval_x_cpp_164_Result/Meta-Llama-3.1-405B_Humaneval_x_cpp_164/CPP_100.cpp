@@ -1,7 +1,3 @@
-Based on the provided LLVM IR code, I will generate the equivalent C source code. Please note that the generated C code may not be perfect and might require some manual adjustments.
-
-Here is the generated C source code:
-```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -54,5 +50,3 @@ int main() {
     make_a_pile(&v, 10);
     return 0;
 }
-```
-Please note that this generated C code might not be perfect and may require manual adjustments to match the original C++ code. Additionally, some parts of the IR code, such as exception handling and TBAA (Type-Based Alias Analysis) metadata, are not translated to C code as they are specific to C++ and LLVM IR.

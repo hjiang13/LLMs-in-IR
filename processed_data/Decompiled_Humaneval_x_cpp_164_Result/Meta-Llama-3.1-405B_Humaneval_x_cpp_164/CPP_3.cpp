@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the corresponding C source code. Here it is:
-
-```c
 #include <stdbool.h>
 #include <stdint.h>
 
@@ -42,6 +39,3 @@ bool below_zero(Vector* v) {
 
     return size > max;
 }
-```
-
-Please note that I've used the `__builtin_umax` function to replicate the behavior of the `@llvm.umax.i64` intrinsic, as it is not directly available in C. This function is a part of the GCC and Clang compilers, so you might need to adjust the code if you're using a different compiler.

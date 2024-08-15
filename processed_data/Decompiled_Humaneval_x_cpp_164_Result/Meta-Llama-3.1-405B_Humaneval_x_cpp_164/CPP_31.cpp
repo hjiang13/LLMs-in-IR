@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the corresponding C source code. Here it is:
-
-```c
 int is_prime(long long x) {
     if (x < 2) {
         return 0;
@@ -20,6 +17,3 @@ int is_prime(long long x) {
     } while (1);
     return 1;
 }
-```
-
-Please note that this C code is a direct translation of the provided LLVM IR code, without any optimizations or improvements.

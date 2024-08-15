@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the equivalent C source code. Here it is:
-
-```c
 #include <stdint.h>
 
 struct VectorImplData {
@@ -34,6 +31,3 @@ int below_threshold(struct Vector* vec, int threshold) {
     }
     return 0;
 }
-```
-
-Please note that I had to make some assumptions about the struct layouts, as the IR code does not provide explicit type definitions. The generated C code should be equivalent to the IR code, but might not be exactly what the original C++ code looked like.

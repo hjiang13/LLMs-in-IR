@@ -1,5 +1,3 @@
-Here is the generated C source code:
-```
 int is_multiply_prime(int n) {
   if (n < 4) {
     int count = 0;
@@ -28,4 +26,3 @@ int is_multiply_prime(int n) {
     }
   }
 }
-```

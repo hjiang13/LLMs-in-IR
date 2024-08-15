@@ -1,8 +1,3 @@
-Based on the provided LLVM IR code, I will generate the equivalent C source code. Please note that the generated C code may not be perfect and may require some manual adjustments.
-
-Here is the generated C source code:
-
-```c
 #include <stdio.h>
 #include <string.h>
 
@@ -51,6 +46,3 @@ int main() {
 
     return 0;
 }
-```
-
-Note that the generated C code assumes that the input arrays `arr1` and `arr2` have the same structure as the ones in the LLVM IR code, i.e., the first element of each array represents the length of the array. The `intersection` function calculates the intersection of the two arrays and stores the result in the `result` string. The `main` function demonstrates how to use the `intersection` function.

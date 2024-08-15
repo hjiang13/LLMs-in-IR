@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the equivalent C source code. Here it is:
-
-```c
 #include <stdio.h>
 
 float max_element(float* data, int size) {
@@ -44,6 +41,3 @@ float max_element(float* data, int size) {
 
     return max_val;
 }
-```
-
-Note that I've assumed the input `float* data` is a pointer to an array of `float` values, and `int size` represents the number of elements in the array. Also, I've used a simple loop unrolling technique to process 4 elements at a time, as indicated by the IR code. If the array size is not a multiple of 4, the remaining elements are processed individually.
