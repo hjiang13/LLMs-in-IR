@@ -3,14 +3,14 @@ import os
 import subprocess
 
 # Define paths
-benchmarks_dir = "../../Human_xBenchmarks"
-processed_data_dir = "../../processed_data/Human_x_164_O0"
+benchmarks_dir = "../../Human_xBenchmarks_164"
+processed_data_dir = "../../processed_data/Human_x_164_O2"
 scripts_dir = "."
 
 # Function to compile and generate CFG
 def process_benchmark(benchmark_path, output_dir, benchmark_name):
     # Compile the benchmark to LLVM IR
-    clang_command = f"clang++ -O0 -emit-llvm {benchmark_path} -Xclang -disable-O0-optnone -S -o {output_dir}/{benchmark_name}.bc"
+    clang_command = f"clang++ -O2 -emit-llvm {benchmark_path} -S -o {output_dir}/{benchmark_name}.bc"
     subprocess.run(clang_command, shell=True, check=True)
 
     # Generate the CFG dot file
