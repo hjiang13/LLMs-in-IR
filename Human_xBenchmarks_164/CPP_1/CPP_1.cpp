@@ -1,4 +1,4 @@
-/*
+ /*
 Input to this function is a string containing multiple groups of nested parentheses. Your goal is to
 separate those group into separate strings and return the vector of those.
 Separate groups are balanced (each open brace is properly closed) and not nested within each other
