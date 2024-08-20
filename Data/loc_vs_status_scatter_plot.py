@@ -2,6 +2,10 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
+# Use a generic serif font if Times New Roman is not found
+plt.rcParams['font.family'] = 'serif'
+plt.rcParams['font.serif'] = ['Times New Roman', 'Liberation Serif', 'serif']
+
 # Load the merged CSV file
 df_sorted_loc = pd.read_csv('decompilationResult_O3.csv')
 
@@ -43,7 +47,7 @@ color_mapping = {
 }
 
 # Creating the scatter plot
-plt.figure(figsize=(8, 6))
+plt.figure(figsize=(6, 4))
 
 # Plot each status with corresponding color and offset y-axis
 for source in status_columns:
@@ -51,16 +55,16 @@ for source in status_columns:
     plt.scatter(subset['LOC'], subset['Status_offset'], color=color_mapping[source], label=source, alpha=0.6)
 
 # Adding labels and title
-plt.xlabel('LOC')
-plt.ylabel('Status Type')
-plt.yticks(ticks=[1, 2, 3, 4], labels=['Passed', 'Execution Failed', 'Compilation Failed', 'Decompilation Failed'])
-plt.title('Scatter Plot of LOC vs Status Type with Vertical Separation')
-plt.legend(title='Source')
+plt.xlabel('LOC of IR code', fontsize=10)
+#plt.ylabel('Status Type')
+plt.yticks(ticks=[1, 2, 3, 4], labels=['Passed', 'Execution Failed', 'Compilation Failed', 'Decompilation Failed'], rotation=75, fontsize=10)
+plt.title('Scatter Plot of decompilation results vs LOC of IR across LLMs', fontsize=12)
+plt.legend(title='LLMs', fontsize=10)
 
 # Save the plot as an image file with vertical separation
 output_plot_with_vertical_separation_path = "loc_vs_status_scatter_plot_with_vertical_separation.png"
 plt.tight_layout()
-plt.savefig(output_plot_with_vertical_separation_path)
+plt.savefig(output_plot_with_vertical_separation_path, dpi=1200)
 plt.close()
 
 print(f"Scatter plot with vertical separation saved to {output_plot_with_vertical_separation_path}")
