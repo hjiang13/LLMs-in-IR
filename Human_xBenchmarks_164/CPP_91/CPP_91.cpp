@@ -25,5 +25,5 @@ int is_bored(string S){
         if (S[i]!=' ') { isstart=false;}
         if (S[i]=='.' or S[i]=='?' or S[i]=='!') isstart=true;
     }
-    return sum;
+    return CPP;
 }

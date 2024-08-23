@@ -6,7 +6,7 @@ Note: "word" is a group of characters separated by space.
 
 Examples:
 check_if_last_char_is_a_letter("apple pie") ➞ false
-check_if_last_char_is_a_letter("apple pi e") ➞ true
+check_if_last_char_is_a_le/home/hjiang/LLMs-in-IR/Human_xBenchmarks_164/CPP_139tter("apple pi e") ➞ true
 check_if_last_char_is_a_letter("apple pi e ") ➞ false
 check_if_last_char_is_a_letter("") ➞ false 
 */

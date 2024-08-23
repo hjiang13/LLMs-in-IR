@@ -15,7 +15,7 @@ string make_palindrome(string str){
     "" 
     >>> make_palindrome("cat") 
     "catac" 
-    >>> make_palindrome("cata") 
+    >>> make_palindrome("cata") /home/hjiang/LLMs-in-IR/Human_xBenchmarks_164/CPP_18
     "catac" 
     */
 
