@@ -1,0 +1,61 @@
+assert_statement,result,comments
+"assert (issame(filter_by_substring({}, ""john""),{}));",Fail,"- Step 1: Simulate the IR-based function `filter_by_substring({}, ""john"")`.
+- Step 2: The function is designed to filter a collection (in this case, an empty dictionary or set) based on whether its elements contain the substring ""john"".
+- Step 3: Since the input collection is empty, there are no elements to filter. Therefore, the result of the function will also be an empty collection.
+- Step 4: The result of `filter_by_substring({}, ""john"")` is `{}`.
+- Step 5: Now, compare the result with `{}` using the `issame` function. Since both are empty collections, they match.
+
+**Final Output:**
+true"
+"assert (issame(filter_by_substring({""xxx"", ""asd"", ""xxy"", ""john doe"", ""xxxAAA"", ""xxx""}, ""xxx""), {""xxx"", ""xxxAAA"", ""xxx""}));",Fail,"**Function Call:**
+assert (issame(filter_by_substring({""xxx"", ""asd"", ""xxy"", ""john doe"", ""xxxAAA"", ""xxx""}, ""xxx""), {""xxx"", ""xxxAAA"", ""xxx""}));
+
+**Expected Result:**
+filter_by_substring({""xxx"", ""asd"", ""xxy"", ""john doe"", ""xxxaaa"", ""xxx""}, ""xxx"")
+
+**LLM Simulation:**
+- Step 1: Simulate the IR-based function `filter_by_substring({""xxx"", ""asd"", ""xxy"", ""john doe"", ""xxxAAA"", ""xxx""}, ""xxx"")`.
+- Step 2: The function scans through the set `{""xxx"", ""asd"", ""xxy"", ""john doe"", ""xxxAAA"", ""xxx""}` and filters for elements that contain the substring `""xxx""`.
+- Step 3: The elements that contain the substring `""xxx""` are `""xxx""`, `""xxxAAA""`, and `""xxx""`. Note that sets do not allow duplicate entries, so we only keep unique entries.
+- Step 4: The result of the filtering process is `{""xxx"", ""xxxAAA""}`.
+- Step 5: Now we compare this result with the set `{""xxx"", ""xxxAAA"", ""xxx""}` using `issame`.
+- Step 6: The sets `{""xxx"", ""xxxAAA""}` and `{""xxx"", ""xxxAAA"", ""xxx""}` are considered equivalent because sets ignore duplicates and the contents match.
+
+**Final Output:**
+true"
+"assert (issame(filter_by_substring({""xxx"", ""asd"", ""aaaxxy"", ""john doe"", ""xxxAAA"", ""xxx""}, ""xx""),{""xxx"", ""aaaxxy"", ""xxxAAA"", ""xxx""}));",Fail,"### Task Simulation
+
+**Function Call:**
+assert (issame(filter_by_substring({""xxx"", ""asd"", ""aaaxxy"", ""john doe"", ""xxxAAA"", ""xxx""}, ""xx""),{""xxx"", ""aaaxxy"", ""xxxAAA"", ""xxx""}));
+
+**Expected Result:**
+filter_by_substring({""xxx"", ""asd"", ""aaaxxy"", ""john doe"", ""xxxaaa"", ""xxx""}, ""xx"")
+
+**LLM Simulation:**
+- Step 1: Simulate the IR-based function `filter_by_substring({""xxx"", ""asd"", ""aaaxxy"", ""john doe"", ""xxxAAA"", ""xxx""}, ""xx"")`.
+- Step 2: The function iterates through each string in the set and checks if ""xx"" is a substring of each string.
+    - ""xxx"" contains ""xx"" (include)
+    - ""asd"" does not contain ""xx"" (exclude)
+    - ""aaaxxy"" contains ""xx"" (include)
+    - ""john doe"" does not contain ""xx"" (exclude)
+    - ""xxxAAA"" contains ""xx"" (include)
+    - ""xxx"" contains ""xx"" (include)
+- Step 3: The resulting filtered set is `{""xxx"", ""aaaxxy"", ""xxxAAA"", ""xxx""}`.
+- Step 4: Compare this result with the expected set `{""xxx"", ""aaaxxy"", ""xxxAAA"", ""xxx""}` using `issame`.
+- Step 5: The sets match, so `issame` returns `true`.
+
+**Final Output:**
+true"
+"assert (issame(filter_by_substring({""grunt"", ""trumpet"", ""prune"", ""gruesome""}, ""run"") ,{""grunt"", ""prune""}));",Pass,"### LLM Simulation:
+- Step 1: Simulate the IR-based function `filter_by_substring({""grunt"", ""trumpet"", ""prune"", ""gruesome""}, ""run"")`.
+- Step 2: The function filters the input set for strings that contain the substring ""run"".
+    - Check ""grunt"": contains ""run"" (true).
+    - Check ""trumpet"": does not contain ""run"" (false).
+    - Check ""prune"": contains ""run"" (true).
+    - Check ""gruesome"": does not contain ""run"" (false).
+- Step 3: The filtered result is `{""grunt"", ""prune""}`.
+- Step 4: Compare the result with `{""grunt"", ""prune""}` using `issame`.
+- Step 5: The sets match, so `issame` returns `true`.
+
+**Final Output:**
+true"
