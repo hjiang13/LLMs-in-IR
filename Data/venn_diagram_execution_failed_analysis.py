@@ -1,4 +1,4 @@
-from matplotlib_venn import venn4
+from matplotlib_venn import venn3
 import matplotlib.pyplot as plt
 
 import pandas as pd
@@ -18,7 +18,7 @@ set_gemma27b = set(data[data['Gemma27b'].isin(failure_terms)]['Number'])
 
 # Plot the Venn diagram
 plt.figure(figsize=(8, 8))
-venn = venn4([set_gpt4o, set_gpt3_5, set_metaLlama, set_gemma27b],
+venn = venn3([set_gpt4o, set_gpt3_5, set_metaLlama, set_gemma27b],
              ('GPT4o', 'GPT3.5', 'Meta-Llama', 'Gemma27b'))
 
 plt.title('Venn Diagram of "Execution Failed" Results')
