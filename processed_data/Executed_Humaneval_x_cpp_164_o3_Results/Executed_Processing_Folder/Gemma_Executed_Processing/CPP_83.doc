@@ -1,0 +1,266 @@
+Assert Statement: assert (starts_one_ends(1) == 1);
+Execution Result:
+Let's break down the execution of the given IR code step by step for the input `starts_one_ends(1)`.
+
+**Understanding the Code:**
+
+The IR code defines a function `starts_one_ends` that seems to be checking a property of a number. It likely determines if a number starts and ends with the digit '1'.
+
+**Step-by-Step Execution:**
+
+1. **Input:** The input to the function is `1`.
+
+2. **Initial Check (`%2`):**
+   - The code first checks if the input (`%0`, which holds the value 1) is less than 1. This condition (`icmp slt i32 %0, 1`) is false, so the execution jumps to block `3`.
+
+3. **Check for 1 (`%4`):**
+   - Block `3` checks if the input is equal to 1 (`icmp eq i32 %0, 1`). This condition is true, so the execution jumps to block `57`.
+
+4. **Return Value (`%58`):**
+   - Block `57` is the final block. Since the input was 1, the value `1` is assigned to `%58` and returned as the result.
+
+**Final Output:**
+
+The function `starts_one_ends(1)` returns `1`.
+
+**Verification:**
+
+The output `1` is correct because the input `1` indeed starts and ends with the digit '1'.
+
+**Therefore, the execution of the IR code with the input `1` is successful, and the result is verified to be correct.**
+
+Assert Statement: assert (starts_one_ends(2) == 18);
+Execution Result:
+Let's break down the execution of the IR code step by step for the input `starts_one_ends(2)`.
+
+**Understanding the Code:**
+
+The IR code defines a function `starts_one_ends` which aims to calculate a result based on the input integer. The logic involves several branches and calculations.
+
+**Execution Trace:**
+
+1. **Input:** `starts_one_ends(2)`
+
+2. **Entry Block:** The execution starts at the entry point of the function.
+
+3. **Comparison 1:**
+   - `%2 = icmp slt i32 %0, 1`: This compares the input (2) with 1. Since 2 is not less than 1, `%2` will be false (0).
+   - `br i1 %2, label %57, label %3`: The branch instruction jumps to label `%3` because `%2` is false.
+
+4. **Comparison 2:**
+   - `%4 = icmp eq i32 %0, 1`: This checks if the input (2) is equal to 1. Since it's not, `%4` will be false (0).
+   - `br i1 %4, label %57, label %5`: Again, the branch jumps to label `%5` because `%4` is false.
+
+5. **Comparison 3:**
+   - `%6 = icmp sgt i32 %0, 2`: This checks if the input (2) is greater than 2. Since it's not, `%6` will be false (0).
+   - `br i1 %6, label %7, label %57`: The branch jumps to label `%57` because `%6` is false.
+
+6. **Calculation Block:**
+
+7. **Subtraction:**
+   - `%8 = add i32 %0, -2`: Calculates `2 - 2 = 0`.
+   - `%9 = icmp ult i32 %8, 8`: Checks if 0 is less than 8. This is true (1).
+
+8. **Branch on Result:**
+   - `br i1 %9, label %48, label %10`: Since `%9` is true, the branch jumps to label `%48`.
+
+9. **Loop Initialization:**
+
+10. **Loop Setup:**
+    - `%48`: This label marks the start of a loop.
+
+11. **Initialization:**
+    - `%49 = phi i32 [ 2, %7 ], [ %12, %42 ]`: This instruction initializes `%49` with the value 2.
+
+12. **Initialization:**
+    - `%50 = phi i32 [ 18, %7 ], [ %46, %42 ]`: This initializes `%50` with the value 18.
+
+13. **Loop Body:**
+
+14. **Multiplication:**
+    - `%54 = mul nsw i32 %53, 10`: Multiplies the current value of `%53` (initially 18) by 10.
+    - `%55 = add nuw nsw i32 %52, 1`: Increments the loop counter `%52`.
+
+15. **Loop Condition:**
+    - `%56 = icmp eq i32 %55, %0`: Checks if the loop counter `%55` is equal to the input (2).
+
+16. **Loop Exit:**
+    - `br i1 %56, label %57, label %51`: If the loop condition is true, the branch jumps to label `%57` (exit). Otherwise, it continues to the next iteration of the loop (`%51`).
+
+17. **Exit Block:**
+    - `%57`: This is the exit point of the function.
+
+18. **Return Value:**
+    - `%58 = phi i32 [ 0, %1 ], [ 1, %3 ], [ 18, %5 ], [ %46, %42 ], [ %54, %51 ]`: This instruction selects the appropriate return value based on the path taken through the function. In this case, it will select `%54`, which holds the result of the loop calculation.
+    - `ret i32 %58`: Returns the calculated value.
+
+**Output:**
+
+The function `starts_one_ends(2)` will return the value **18**.
+
+
+
+Let me know if you'd like to see the execution trace for a different input value.
+
+Assert Statement: assert (starts_one_ends(3) == 180);
+Execution Result:
+Let's break down the execution of the provided IR code step-by-step, focusing on the input `starts_one_ends(3)`.
+
+**Step 1: Function Entry**
+
+* The code starts at the `_Z15starts_one_endsi` function.
+
+**Step 2: Initial Checks**
+
+* **`%2 = icmp slt i32 %0, 1`**:  Compares the input (`%0`, which is 3) with 1. Since 3 is not less than 1, `%2` is set to `false` (0).
+* **`br i1 %2, label %57, label %3`**: This branch instruction checks `%2`. Since `%2` is false, execution jumps to label `%3`.
+
+**Step 3: More Checks**
+
+* **`%4 = icmp eq i32 %0, 1`**: Compares the input (3) with 1. Since they are not equal, `%4` is set to `false` (0).
+* **`br i1 %4, label %57, label %5`**: Again, a branch based on `%4`. Execution jumps to label `%5` because `%4` is false.
+
+**Step 4: Further Comparisons**
+
+* **`%6 = icmp sgt i32 %0, 2`**: Checks if 3 is greater than 2. This is true, so `%6` is set to `true` (1).
+* **`br i1 %6, label %7, label %57`**: Execution jumps to label `%7` because `%6` is true.
+
+**Step 5: Calculation Setup**
+
+* **`%8 = add i32 %0, -2`**: Subtracts 2 from the input (3), resulting in 1.
+* **`%9 = icmp ult i32 %8, 8`**: Checks if 1 is less than 8. This is true, so `%9` is set to `true` (1).
+* **`br i1 %9, label %48, label %10`**: Since `%9` is true, execution jumps to label `%48`.
+
+**Step 6: Loop Preparation**
+
+* **`%48`**: Execution arrives here, with `%8` holding the value 1.
+
+* **`%49 = phi i32 [ 2, %7 ], [ %12, %42 ]`**: This is a PHI node (phi instruction). It merges values from different paths. Since we're entering `%48` for the first time, it takes the value 2 from the `%7` label.
+
+* **`%50 = phi i32 [ 18, %7 ], [ %46, %42 ]`**: Another PHI node, taking the initial value 18 from `%7`.
+
+**Step 7: Loop Iteration**
+
+* **`%51`**: The loop starts here.
+* **`%52 = phi i32 [ %55, %51 ], [ %49, %48 ]`**: PHI node, taking the initial value 2 from `%48`.
+* **`%53 = phi i32 [ %54, %51 ], [ %50, %48 ]`**: PHI node, taking the initial value 18 from `%48`.
+* **`%54 = mul nsw i32 %53, 10`**: Multiplies 18 by 10, resulting in 180.
+* **`%55 = add nuw nsw i32 %52, 1`**: Adds 1 to 2, resulting in 3.
+* **`%56 = icmp eq i32 %55, %0`**: Checks if 3 is equal to the input (3). This is true.
+* **`br i1 %56, label %57, label %51`**: Since the comparison is true, execution jumps to label `%57`.
+
+**Step 8: Return**
+
+* **`%57`**: Execution reaches the end of the function.
+* **`%58 = phi i32 [ 0, %1 ], [ 1, %3 ], [ 18, %5 ], [ %46, %42 ], [ %54, %51 ]`**: This PHI node selects the final result. Because we came from `%51`, it takes the value 180.
+* **`ret i32 %58`**: The function returns the value 180.
+
+**Verification**
+
+The final output of the function is 180, which matches the expected result from the assertion `assert (starts_one_ends(3) == 180);`. Therefore, the execution is correct.
+
+Assert Statement: assert (starts_one_ends(4) == 1800);
+Execution Result:
+Let's break down the execution of this IR code step-by-step for the input `starts_one_ends(4)`.
+
+**Understanding the Function**
+
+The function `starts_one_ends` seems to calculate a value based on the input integer. It involves a series of comparisons, multiplications, and loops.
+
+**Step-by-Step Execution**
+
+1. **Input:** The input value is `4`.
+
+2. **Initial Checks:**
+
+   - `%2 = icmp slt i32 %0, 1`: Compares if the input (4) is less than 1. This is false, so the execution jumps to label `3`.
+   - `%4 = icmp eq i32 %0, 1`: Compares if the input (4) is equal to 1. This is false, so the execution jumps to label `5`.
+
+3. **Check for Value Greater than 2:**
+
+   - `%6 = icmp sgt i32 %0, 2`: Compares if the input (4) is greater than 2. This is true, so the execution jumps to label `7`.
+
+4. **Calculations:**
+
+   - `%8 = add i32 %0, -2`: Subtracts 2 from the input (4 - 2 = 2).
+   - `%9 = icmp ult i32 %8, 8`: Compares if the result (2) is less than 8. This is true, so the execution jumps to label `48`.
+
+5. **Loop for Larger Values:**
+
+   - Since the input is 4, this loop is skipped.
+
+6. **Handling Smaller Values:**
+
+   - `%49 = phi i32 [ 2, %7 ], [ %12, %42 ]`:  This line initializes a variable with the value 2.
+   - `%50 = phi i32 [ 18, %7 ], [ %46, %42 ]`: This line initializes another variable with the value 18.
+
+7. **Loop for Smaller Values:**
+
+   - `%52 = phi i32 [ %55, %51 ], [ %49, %48 ]`: This line initializes a loop counter variable.
+   - `%53 = phi i32 [ %54, %51 ], [ %50, %48 ]`: This line initializes another variable used in the loop.
+   - The loop multiplies the value in `%53` by 10 and adds 1 to the loop counter (`%52`). This process continues until the loop counter reaches the input value (4).
+
+8. **Final Calculation:**
+
+   - `%54 = mul nsw i32 %53, 10`: Multiplies the current value of `%53` by 10.
+   - `%55 = add nuw nsw i32 %52, 1`: Increments the loop counter.
+   - `%56 = icmp eq i32 %55, %0`: Checks if the loop counter is equal to the input value.
+
+9. **Return Value:**
+
+   - `%58 = phi i32 [ 0, %1 ], [ 1, %3 ], [ 18, %5 ], [ %46, %42 ], [ %54, %51 ]`: This line selects the final value to be returned based on the execution path. In this case, it will return the value of `%54`.
+
+**Final Output:**
+
+The function will return the value of `%54` after the loop completes. Since the loop multiplies by 10 in each iteration and runs for 4 iterations, the final value will be 1800.
+
+
+
+Let me know if you'd like a more detailed explanation of any specific part of the code!
+
+Assert Statement: assert (starts_one_ends(5) == 18000);
+Execution Result:
+Let's break down the execution of the provided LLVM IR code step by step, focusing on the input `starts_one_ends(5)`.
+
+**1. Initial Setup:**
+
+* The function `starts_one_ends` takes an integer argument (`%0`). In our case, this argument is `5`.
+
+**2. Branching Logic (Basic Checks):**
+
+* **Block 1:** The code first checks if `%0` is less than 1. Since 5 is not less than 1, we skip to the next block.
+* **Block 3:** It checks if `%0` is equal to 1. Since 5 is not equal to 1, we proceed to the next block.
+* **Block 5:** It checks if `%0` is greater than 2. Since 5 is greater than 2, we move to the next block.
+
+**3. Handling Larger Numbers:**
+
+* **Block 7:** We enter this block since `%0` (which is 5) is greater than 2.
+* **%8 = add i32 %0, -2:**  Calculate `5 - 2 = 3` and store it in `%8`.
+* **%9 = icmp ult i32 %8, 8:** Check if `3` is less than 8. This is true, so we move to block 48.
+
+**4. Loop for Multiplication (Block 48):**
+
+* **%49 = phi i32 [ 2, %7 ], [ %12, %42 ]:** Initialize `%49` with 2 (from block 7).
+* **%50 = phi i32 [ 18, %7 ], [ %46, %42 ]:** Initialize `%50` with 18 (from block 7).
+
+* **Loop:** The code enters a loop that continues as long as `%55` (initialized to `%49`, which is 2) is less than `%0` (which is 5).
+
+* **Inside the Loop:**
+    * **%54 = mul nsw i32 %53, 10:** Multiply the current value of `%53` (initially `%50`, which is 18) by 10.
+    * **%55 = add nuw nsw i32 %52, 1:** Increment `%52` (initially `%49`, which is 2) by 1.
+    * **%56 = icmp eq i32 %55, %0:** Check if `%55` is equal to `%0` (5).
+
+* **Loop Exit:** When `%55` becomes 5, the loop terminates.
+
+**5. Final Result:**
+
+* **%58 = phi i32 [ 0, %1 ], [ 1, %3 ], [ 18, %5 ], [ %46, %42 ], [ %54, %51 ]:**  The final value of `%58` is determined based on which block led to the end of the execution. In this case, it's `%54` from the loop's final iteration.
+
+* **ret i32 %58:** The function returns the value of `%58`.
+
+**Calculation:**
+
+The loop essentially calculates: 18 * 10 * 10 * 10 = 18000
+
+**Therefore, `starts_one_ends(5)` returns 18000, which satisfies the assertion `assert (starts_one_ends(5) == 18000);`.**
+

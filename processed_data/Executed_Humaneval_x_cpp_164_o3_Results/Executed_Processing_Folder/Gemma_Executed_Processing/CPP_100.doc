@@ -1,0 +1,293 @@
+Assert Statement: assert (issame(make_a_pile(3) , {3, 5, 7}));
+Execution Result:
+Let's break down the execution of this IR code step by step.
+
+**Understanding the Code**
+
+This IR code implements a function called `make_a_pile`. This function takes an integer (`%1`) as input and creates a vector containing a sequence of numbers, starting from 1 and incrementing by 2, up to the input value.
+
+**Step-by-Step Execution**
+
+1. **Initialization:**
+   - The function starts by allocating memory for a vector (`%"class.std::vector"`) and initializing it with zeros.
+
+2. **Memory Allocation:**
+   - It allocates memory for the first element of the vector using `@Znwm(i64 4)`, which likely calls `malloc` to allocate 4 bytes (size of an integer).
+   - The address of this allocated memory is stored in `%4` and cast to an integer pointer `%5`.
+
+3. **Setting Up Vector Data:**
+   - The memory address `%4` is stored as the beginning of the vector's data (`%6`).
+   - The end of the vector's data is set to be 4 bytes after the beginning (`%7`).
+   - These addresses are stored in the vector's internal data structure.
+
+4. **Storing the First Element:**
+   - The input value `%1` is stored in the first element of the vector (`%5`).
+
+5. **Looping to Build the Sequence:**
+   - The code enters a loop (`br i1 %13, label %15, label %73`) that continues as long as the input value is greater than 1.
+
+6. **Iteration:**
+   - Inside the loop:
+     - It calculates the difference between the current element pointer (`%18`) and the beginning pointer (`%17`).
+     - It calculates the index of the last element in the current sequence.
+     - It loads the value at that index, adds 2 to it, and stores it in the next element of the vector.
+     - It updates the pointers to point to the next elements in the vector.
+
+7. **Memory Reallocation (if needed):**
+   - If the vector needs to grow (the loop condition is still true), it might reallocate memory using `@_Znwm` to accommodate more elements. The code handles potential memory allocation errors.
+
+8. **Return:**
+
+   - Once the loop completes (when the input value is reached or exceeded), the function returns.
+
+**Applying the Assertion:**
+
+The assertion `assert(issame(make_a_pile(3), {3, 5, 7}))` checks if calling `make_a_pile` with the input `3` results in a vector containing the sequence `{3, 5, 7}`.
+
+**Output:**
+
+The function `make_a_pile(3)` should indeed return a vector containing `{3, 5, 7}`.
+
+
+
+Let me know if you'd like me to elaborate on any specific part of the code or the execution process.
+
+Assert Statement: assert (issame(make_a_pile(4) , {4,6,8,10}));
+Execution Result:
+Let's break down the execution of this IR code step-by-step.
+
+**Understanding the Code**
+
+This IR code defines a function `make_a_pile` which takes an integer `%1` as input and constructs a vector (similar to C++'s `std::vector`) containing a sequence of numbers.
+
+**Step-by-Step Execution**
+
+1. **Initialization:**
+
+   - `%0`: This represents the output vector, passed by reference (noalias nocapture sret(%"class.std::vector") align 8).
+
+   - `%1`: This is the input integer (the size of the sequence).
+
+   -  The code starts by zeroing out the memory allocated for the vector `%0`.
+
+2. **Memory Allocation:**
+
+   - `@Znwm(i64 4)`: This allocates 4 bytes of memory (enough for one integer) on the heap and returns a pointer to it.
+   - `%5`: This pointer is cast to an integer pointer (`i32*`). This will be the first element in our vector.
+
+3. **Setting up the Vector:**
+
+   - The code stores the pointer `%5` in the vector's data members:
+     - `%6`: This stores the pointer to the beginning of the allocated memory.
+     - `%8`: This stores the pointer to the end of the allocated memory (initially the same as the beginning).
+
+4. **Storing the First Element:**
+
+   - The first element of the sequence (`%1`) is stored in the allocated memory.
+
+5. **Looping to Fill the Vector:**
+
+   - The code enters a loop (`br i1 %13, label %15, label %73`) which continues as long as the loop counter (`%19`) is less than the input `%1`.
+   - Inside the loop:
+     - It calculates the memory address of the next element to be filled.
+     - It loads the value at the previous element's memory address.
+     - It adds 2 to this value.
+     - It stores the new value in the next element's memory address.
+     - It updates the pointers within the vector to reflect the new element.
+     - It increments the loop counter.
+
+6. **Exiting the Loop:**
+
+   - Once the loop completes (when the counter reaches `%1`), the function returns.
+
+**Assert Statement Verification**
+
+The assert statement `assert (issame(make_a_pile(4) , {4,6,8,10}));` checks if calling `make_a_pile` with an input of 4 results in a vector containing the elements {4, 6, 8, 10}.
+
+**Step-by-Step Execution for the Assert Statement:**
+
+1. `make_a_pile(4)` is called.
+2. The function executes as described above, filling the vector with {4, 6, 8, 10}.
+3. The resulting vector is compared to {4, 6, 8, 10}.
+4. Since they are the same, the assertion passes.
+
+**Conclusion:**
+
+The IR code correctly implements the logic to create a vector containing a sequence of numbers. The assert statement verifies that the function produces the expected output for an input of 4.
+
+Assert Statement: assert (issame(make_a_pile(5) , {5, 7, 9, 11, 13}));
+Execution Result:
+Let's break down the execution of the provided IR code step-by-step.
+
+**Understanding the Code**
+
+This IR code defines a function called `make_a_pile` that takes an integer `n` as input and constructs a vector containing the first `n` odd numbers.
+
+**Step-by-Step Execution**
+
+1. **Initialization:**
+   - The function starts by allocating memory for a vector of integers.
+
+2. **Memory Allocation:**
+   - `call noalias nonnull i8* @_Znwm(i64 4)`: This line allocates 4 bytes of memory (enough for a single integer) on the heap using the `malloc` equivalent in LLVM. The returned pointer is stored in `%4`.
+
+3. **Vector Setup:**
+   - `%5 = bitcast i8* %4 to i32*`: This casts the allocated memory to a pointer to an integer (`i32*`).
+   - `%6 = bitcast %"class.std::vector"* %0 to i8**`: This gets a pointer to the beginning of the vector object.
+   - `store i8* %4, i8** %6, align 8`: This stores the memory address (`%4`) in the vector object, essentially setting the vector's data pointer to the allocated memory.
+   - The code then sets up the `end` and `capacity` pointers of the vector, but we'll skip the details since they're not crucial for understanding the core logic.
+
+4. **First Element:**
+   - `store i32 %1, i32* %5, align 4`: This stores the input value `n` (the first odd number) into the allocated memory.
+
+5. **Looping to Fill the Vector:**
+   - The code enters a loop (`br i1 %13, label %15, label %73`) that continues as long as `n` is greater than 1.
+   - Inside the loop:
+     - It calculates the address of the next element in the vector.
+     - It loads the value at that address.
+     - It increments the value by 2 (to get the next odd number).
+     - It stores the new value back into the vector.
+
+6. **Return:**
+   - Once the loop finishes, the function returns.
+
+**Execution with Input n=5**
+
+Let's trace the code with `n=5`:
+
+1. **Initialization:** A vector is created.
+
+2. **Memory Allocation:** 4 bytes are allocated.
+
+3. **Vector Setup:** The vector's data pointer is set to the allocated memory.
+
+4. **First Element:** The value 5 is stored in the first element of the vector.
+
+5. **Loop:** The loop runs four times (for n=5):
+   - **Iteration 1:** The value 7 is calculated and stored.
+   - **Iteration 2:** The value 9 is calculated and stored.
+   - **Iteration 3:** The value 11 is calculated and stored.
+   - **Iteration 4:** The value 13 is calculated and stored.
+
+6. **Return:** The function returns the vector containing {5, 7, 9, 11, 13}.
+
+**Verification**
+
+The output of the function `make_a_pile(5)` is indeed {5, 7, 9, 11, 13}, confirming the correctness of our step-by-step analysis.
+
+Assert Statement: assert (issame(make_a_pile(6) , {6, 8, 10, 12, 14, 16}));
+Execution Result:
+Let's break down the execution of this IR code step by step.
+
+**Understanding the Code**
+
+This IR code defines a function called `make_a_pile`. Its purpose is to create a vector (a dynamic array) of integers and populate it with a sequence of even numbers starting from 2 and ending at twice the input value.
+
+**Step-by-Step Execution**
+
+1. **Initialization:**
+
+   - The function starts by allocating memory for a `std::vector` object. This vector will store integers.
+
+2. **Memory Allocation:**
+
+   -  It allocates memory for the vector's internal data using `malloc` (`@_Znwm`). This memory will hold the integer values.
+
+3. **Setting Up the Vector:**
+
+   - The function sets up pointers within the `std::vector` object to point to the beginning, end, and capacity of the allocated memory.
+
+4. **Input Processing:**
+
+   - The input value (`%1`) determines the upper limit of the sequence.
+
+5. **Looping and Calculation:**
+
+   - The function enters a loop that iterates from 2 up to twice the input value (inclusive).
+
+6. **Generating Even Numbers:**
+
+   - Inside the loop, it calculates the next even number and stores it in the vector.
+
+7. **Memory Management:**
+
+   - If the vector needs more space to store elements, it dynamically resizes itself by allocating more memory.
+
+8. **Returning the Vector:**
+
+   - After generating all the even numbers, the function returns the populated vector.
+
+**Applying the Assertion**
+
+The assertion `assert (issame(make_a_pile(6) , {6, 8, 10, 12, 14, 16}))` checks if the `make_a_pile` function, when called with the input 6, produces the expected vector containing the even numbers from 6 to 16.
+
+**Verification**
+
+The output of `make_a_pile(6)` should indeed be `{6, 8, 10, 12, 14, 16}`. This is because the function generates a sequence of even numbers starting from 2 * input value (2 * 6 = 12) up to 2 * input value (2 * 6 = 12).
+
+**Conclusion**
+
+The IR code correctly implements the logic for generating a sequence of even numbers and storing them in a vector. The assertion verifies that the function produces the expected output for the given input.
+
+Assert Statement: assert (issame(make_a_pile(8) , {8, 10, 12, 14, 16, 18, 20, 22}));
+Execution Result:
+Let's break down the execution of this IR code step-by-step.
+
+**Understanding the Function**
+
+The IR code defines a function called `_Z11make_a_pilei`, which seems to be designed to create a vector (dynamic array) of integers and populate it with a sequence of even numbers.
+
+**Step-by-Step Execution**
+
+1. **Initialization:**
+   - The function starts by allocating memory for a `std::vector` object and initializing its members to zero.
+
+2. **Memory Allocation:**
+   - It allocates memory for the first element of the vector using `_Znwm(i64 4)`. This allocates 4 bytes (enough for a single integer).
+
+3. **Setting Up the Vector:**
+   - The allocated memory address is stored as the beginning of the vector's data (`%5`).
+   - The end pointer of the vector is set to point to the byte after the allocated memory (`%7`).
+
+4. **Storing the First Element:**
+   - The input value (`%1`) is stored as the first element of the vector.
+
+5. **Looping to Populate the Vector:**
+   - The code enters a loop (`%15`) that iterates from 1 to the input value (`%1`).
+   - In each iteration:
+     - It calculates the memory address of the next element to be added.
+     - It copies the previous element's value, adds 2, and stores it at the calculated address.
+     - It updates pointers to reflect the new end of the vector.
+
+6. **Return:**
+   - After the loop completes, the function returns, leaving the vector populated with the sequence of even numbers.
+
+**Example Execution with Input 8:**
+
+Let's trace the execution with the input value `8`:
+
+1. Memory is allocated for a vector.
+2. The first element is set to `8`.
+3. The loop iterates 7 times (from 1 to 7):
+   - 1st iteration: `10` is added.
+   - 2nd iteration: `12` is added.
+   - 3rd iteration: `14` is added.
+   - 4th iteration: `16` is added.
+   - 5th iteration: `18` is added.
+   - 6th iteration: `20` is added.
+   - 7th iteration: `22` is added.
+
+4. The function returns the vector containing `{8, 10, 12, 14, 16, 18, 20, 22}`.
+
+**Verification:**
+
+The output matches the expected result specified in the assertion:
+
+```
+assert (issame(make_a_pile(8) , {8, 10, 12, 14, 16, 18, 20, 22}));
+```
+
+Therefore, the execution of the IR code is correct.
+
+**Note:** This explanation assumes a basic understanding of C++ and memory management concepts.
+

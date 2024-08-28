@@ -1,0 +1,254 @@
+Assert Statement: assert (largest_divisor(3) == 1);
+Execution Result:
+Let's break down the execution of this IR code step-by-step.
+
+**Understanding the Code**
+
+The provided IR code defines a function named `largest_divisor` which aims to find the largest divisor of a given integer input. Here's a breakdown of the code structure:
+
+* **Function Definition:**
+   - `define dso_local i32 @_Z15largest_divisori(i32 %0) local_unnamed_addr #0`: This line defines the function named `_Z15largest_divisori` (which is likely mangled from `largest_divisor` by the compiler). It takes an integer argument (`i32 %0`) and returns an integer (`i32`).
+
+* **Basic Blocks:** The code is organized into basic blocks, labeled 1, 3, 8, and 12. Basic blocks are sequences of instructions that are executed sequentially.
+
+* **Instructions:** Each basic block contains instructions. Some key instructions include:
+    - `icmp`: Integer comparison instructions (e.g., `slt` for signed less than).
+    - `br`: Branch instructions, used for conditional jumps between basic blocks.
+    - `phi`:  Phi nodes are used to merge values from different branches.
+    - `srem`: Signed remainder (modulo) operation.
+    - `sdiv`: Signed division operation.
+
+**Execution with Input: 3**
+
+Let's trace the execution of the code with the input `3`:
+
+1. **Entry (Block 1):**
+   - `%2 = icmp slt i32 %0, 4`: Compare if the input (3) is less than 4. This condition is false.
+   - `br i1 %2, label %12, label %3`: Since the condition is false, we jump to block 3.
+
+2. **Block 3:**
+   - `%4 = phi i32 [ %9, %8 ], [ 2, %1 ]`: This is a phi node. Since we entered block 3 from block 1, the initial value of `%4` is 2.
+   - `%5 = srem i32 %0, %4`: Calculate the remainder when 3 is divided by 2 (result is 1).
+   - `%6 = sdiv i32 %0, %4`: Calculate the quotient when 3 is divided by 2 (result is 1).
+   - `%7 = icmp eq i32 %5, 0`: Check if the remainder is 0 (false in this case).
+   - `br i1 %7, label %12, label %8`: Since the remainder is not 0, we jump to block 8.
+
+3. **Block 8:**
+   - `%9 = add nuw nsw i32 %4, 1`: Increment `%4` by 1 (now `%4` is 3).
+   - `%10 = mul nsw i32 %9, %9`: Multiply `%9` by itself (result is 9).
+   - `%11 = icmp sgt i32 %10, %0`: Check if 9 is greater than 3 (true).
+   - `br i1 %11, label %12, label %3`: Since 9 is greater than 3, we jump to block 12.
+
+4. **Block 12 (Exit):**
+   - `%13 = phi i32 [ 1, %1 ], [ %6, %3 ], [ 1, %8 ]`: This phi node selects the value 1 (from the entry block 1) as the final result.
+   - `ret i32 %13`: Return the value 1.
+
+**Verification**
+
+The function correctly returns 1, which is indeed the largest divisor of 3.
+
+
+
+Let me know if you'd like to analyze the code with a different input value or have any other IR code snippets you'd like to execute!
+
+Assert Statement: assert (largest_divisor(7) == 1);
+Execution Result:
+Let's break down the execution of this IR code step-by-step for the input `largest_divisor(7)`.
+
+**Understanding the Code**
+
+This IR code defines a function `largest_divisor` that aims to find the largest divisor of a given integer.
+
+**Step-by-Step Execution**
+
+1. **Function Entry:**
+   - The function starts at the `entry` block (implicitly).
+   - The input argument `%0` holds the value 7.
+
+2. **Initial Check (`%2 = icmp slt i32 %0, 4`):**
+   - This instruction compares if the input `%0` (7) is less than 4.
+   - The result is `false` (0) because 7 is greater than 4.
+
+3. **Branching (`br i1 %2, label %12, label %3`):**
+   - Since the comparison result is `false`, the execution jumps to the `label %3`.
+
+4. **Initialization (`%4 = phi i32 [ %9, %8 ], [ 2, %1 ]`):**
+   - This is a PHI node, which merges values from different paths. In this case, it initializes `%4` to 2.
+
+5. **Remainder Calculation (`%5 = srem i32 %0, %4`):**
+   - Calculates the remainder when 7 is divided by 2, resulting in 1.
+
+6. **Quotient Calculation (`%6 = sdiv i32 %0, %4`):**
+   - Calculates the quotient when 7 is divided by 2, resulting in 3.
+
+7. **Equality Check (`%7 = icmp eq i32 %5, 0`):**
+   - Checks if the remainder (`%5`, which is 1) is equal to 0. 
+   - The result is `false` (0).
+
+8. **Branching (`br i1 %7, label %12, label %8`):**
+   - Since the remainder is not 0, the execution jumps to `label %8`.
+
+9. **Increment and Check (`%9 = add nuw nsw i32 %4, 1`):**
+   - Increments `%4` (which was 2) by 1, resulting in 3.
+   - `%10 = mul nsw i32 %9, %9`: Multiplies `%9` (3) by itself, resulting in 9.
+   - `%11 = icmp sgt i32 %10, %0`: Checks if 9 is greater than 7. The result is `true` (1).
+
+10. **Branching (`br i1 %11, label %12, label %3`, !llvm.loop !3):**
+    - Since 9 is greater than 7, the execution jumps to `label %12`.
+
+11. **Result Selection (`%13 = phi i32 [ 1, %1 ], [ %6, %3 ], [ 1, %8 ]`):**
+    - This PHI node selects the final result. Since the last branch was from `label %12`, it selects the value 1.
+
+12. **Return (`ret i32 %13`):**
+    - The function returns the value 1.
+
+**Final Output:**
+
+The function `largest_divisor(7)` returns **1**.
+
+**Verification:**
+
+The largest divisor of 7 is indeed 1. Our step-by-step execution aligns with the expected result.
+
+Assert Statement: assert (largest_divisor(10) == 5);
+Execution Result:
+Let's break down the execution of the provided IR code step-by-step for the input `largest_divisor(10)`.
+
+**Understanding the Code**
+
+The IR code defines a function `largest_divisor` that calculates the largest divisor of a given integer.
+
+**Step-by-Step Execution**
+
+1. **Function Entry:**
+   - The function starts execution with the input value `10` passed as the argument `%0`.
+
+2. **Initial Check (Basic Block 1):**
+   - `%2 = icmp slt i32 %0, 4`: This instruction compares if the input `%0` (which is 10) is less than 4. The result is stored in `%2`. Since 10 is not less than 4, `%2` will be false (0).
+   - `br i1 %2, label %12, label %3`: This is a branch instruction. Because `%2` is false, the execution jumps to basic block 3.
+
+3. **Loop Initialization (Basic Block 3):**
+   - `%4 = phi i32 [ %9, %8 ], [ 2, %1 ]`: This is a PHI node. It initializes `%4` to 2 (the starting divisor) since we are entering this block for the first time.
+
+4. **Divisor Check (Basic Block 3):**
+   - `%5 = srem i32 %0, %4`: This calculates the remainder when `%0` (10) is divided by `%4` (2). The result (0) is stored in `%5`.
+   - `%6 = sdiv i32 %0, %4`: This calculates the quotient when `%0` (10) is divided by `%4` (2). The result (5) is stored in `%6`.
+   - `%7 = icmp eq i32 %5, 0`: This compares if the remainder `%5` (0) is equal to 0. The result (true) is stored in `%7`.
+
+5. **Found Divisor (Basic Block 3):**
+   - `br i1 %7, label %12, label %8`: Since `%7` is true (remainder is 0), the execution jumps to basic block 12, indicating we've found a divisor.
+
+6. **Increment and Continue (Basic Block 8):**
+   -  This block is skipped because we jumped to block 12.
+
+7. **Return Result (Basic Block 12):**
+   - `%13 = phi i32 [ 1, %1 ], [ %6, %3 ], [ 1, %8 ]`: This PHI node selects the largest divisor found. Since we jumped from block 3, it selects `%6` which holds the value 5.
+   - `ret i32 %13`: The function returns the value of `%13` (5).
+
+**Final Output:**
+
+The function `largest_divisor(10)` returns the value **5**.
+
+**Verification:**
+
+The result is correct. 5 is indeed the largest divisor of 10.
+
+Assert Statement: assert (largest_divisor(100) == 50);
+Execution Result:
+Let's break down the execution of this IR code step-by-step for the input `largest_divisor(100)`.
+
+**Understanding the Code**
+
+This IR code defines a function called `largest_divisor` that takes an integer as input and returns its largest divisor (excluding itself).  Let's analyze the code structure:
+
+* **Basic Blocks:** The code is divided into basic blocks:
+    * **Entry Block (label 1):** This is where execution starts.
+    * **Block 3:** This block handles the main loop for finding divisors.
+    * **Block 8:** This block increments the potential divisor and checks if it's still within the range.
+    * **Block 12:** This block returns the largest divisor found.
+
+* **Instructions:** Each block contains instructions:
+    * **icmp slt:** Signed less than comparison.
+    * **br:** Branch instruction, controlling the flow of execution.
+    * **phi:**  Phi nodes merge values from different paths (used for loop variables).
+    * **srem:** Signed remainder after division.
+    * **sdiv:** Signed division.
+    * **icmp eq:** Signed equality comparison.
+    * **add nuw nsw:** Addition with no unsigned wrap and no signed wrap flags.
+    * **mul nsw:** Multiplication with no signed wrap flag.
+    * **ret:** Return instruction.
+
+**Step-by-Step Execution**
+
+1. **Entry Block (label 1):**
+   - Input: `%0 = 100`
+   - `%2 = icmp slt i32 %0, 4`: Check if 100 is less than 4 (false).
+   - `br i1 %2, label %12, label %3`: Since 100 is not less than 4, branch to block 3.
+
+2. **Block 3:**
+   - `%4 = phi i32 [ %9, %8 ], [ 2, %1 ]`: Initialize `%4` to 2 (the starting divisor).
+   - `%5 = srem i32 %0, %4`: Calculate the remainder when 100 is divided by 2 (remainder is 0).
+   - `%6 = sdiv i32 %0, %4`: Calculate 100 divided by 2 (result is 50).
+   - `%7 = icmp eq i32 %5, 0`: Check if the remainder is 0 (true).
+   - `br i1 %7, label %12, label %8`: Since the remainder is 0, branch to block 12.
+
+3. **Block 12 (Return Block):**
+   - `%13 = phi i32 [ 1, %1 ], [ %6, %3 ], [ 1, %8 ]`: Select the largest divisor found. In this case, it's 50 from block 3.
+   - `ret i32 %13`: Return the value 50.
+
+**Final Output:**
+
+The function `largest_divisor(100)` returns **50**.
+
+
+**Verification:**
+
+The result is correct. 50 is indeed the largest divisor of 100 (excluding 100 itself).
+
+Assert Statement: assert (largest_divisor(49) == 7);
+Execution Result:
+Let's break down the execution of this IR code step-by-step for the input `largest_divisor(49)`.
+
+**Understanding the Code**
+
+This IR code defines a function `largest_divisor` that aims to find the largest divisor of a given integer. Here's a high-level explanation:
+
+* **Input:** The function takes a 32-bit integer (`i32`) as input.
+* **Logic:** It iterates through potential divisors, starting from 2, and checks if they divide the input evenly. The largest divisor found is returned.
+* **Output:** It returns a 32-bit integer (`i32`) representing the largest divisor.
+
+**Step-by-Step Execution**
+
+1. **Entry:** The execution begins at the entry point of the `largest_divisor` function. The input value, 49, is passed to the function.
+
+2. **Initial Check:**
+   - `%2 = icmp slt i32 %0, 4`: This compares the input (49) with 4. Since 49 is greater than 4, the condition is false.
+   - `br i1 %2, label %12, label %3`: The execution jumps to label `3`.
+
+3. **Initialization:**
+   - `%4 = phi i32 [ %9, %8 ], [ 2, %1 ]`:  This initializes a variable `%4` with the value 2. This variable will represent the current divisor being tested.
+
+4. **Iteration Loop:**
+   - `%5 = srem i32 %0, %4`: This calculates the remainder when the input (49) is divided by the current divisor (`%4`, initially 2).
+   - `%6 = sdiv i32 %0, %4`: This performs integer division of the input (49) by the current divisor (`%4`).
+   - `%7 = icmp eq i32 %5, 0`: This checks if the remainder (`%5`) is equal to 0. If it is, it means `%4` is a divisor of the input.
+   - `br i1 %7, label %12, label %8`: If the remainder is 0 (divisor found), the execution jumps to label `12`. Otherwise, it jumps to label `8`.
+
+5. **Increment Divisor:**
+   - `%9 = add nuw nsw i32 %4, 1`: This increments the current divisor (`%4`) by 1.
+   - `%10 = mul nsw i32 %9, %9`: This calculates the square of the incremented divisor.
+   - `%11 = icmp sgt i32 %10, %0`: This checks if the square of the divisor is greater than the input (49).
+   - `br i1 %11, label %12, label %3`: If the square of the divisor is greater than the input, the loop ends, and the execution jumps to label `12`. Otherwise, it jumps back to label `3` to continue the loop.
+
+6. **Return Value:**
+   - `%13 = phi i32 [ 1, %1 ], [ %6, %3 ], [ 1, %8 ]`: This selects the appropriate return value based on which label was reached last. In this case, since a divisor was found, it will be `%6` (the result of the integer division when the divisor was found).
+   - `ret i32 %13`: This returns the selected value (`%13`) as the result of the function.
+
+**Final Output:**
+
+The function `largest_divisor(49)` will return the value **7**.
+
+
+
+Let me know if you'd like a more detailed explanation of any specific part of the code or the execution process!
+

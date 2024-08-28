@@ -1,0 +1,353 @@
+Assert Statement: assert (modp(3, 5) == 3);
+Execution Result:
+Let's break down the execution of the provided IR code step-by-step for the input `assert (modp(3, 5) == 3);`.
+
+**Understanding the Code**
+
+The IR code defines a function `_Z4modpii` which calculates the modulo operation (remainder) of two integers.
+
+**Step-by-Step Execution**
+
+1. **Function Entry:**
+   - The function `_Z4modpii` is called with arguments `%0 = 3` (dividend) and `%1 = 5` (divisor).
+
+2. **Initial Check:**
+   - `%3 = icmp sgt i32 %0, 0`: Checks if the dividend (`%0`) is greater than 0. Since 3 is greater than 0, `%3` will be `true` (represented as 1 in LLVM IR).
+   - `br i1 %3, label %4, label %21`:  Branches to label `%4` because `%3` is true.
+
+3. **Handling Positive Dividend:**
+   - `%5 = add i32 %0, -1`:  Subtracts 1 from the dividend (`%0`), resulting in `%5 = 2`.
+   - `%6 = and i32 %0, 3`: Performs a bitwise AND operation between the dividend (`%0`) and 3, resulting in `%6 = 3` (3 & 3 = 3).
+   - `%7 = icmp ult i32 %5, 3`: Checks if `%5` (2) is unsigned less than 3. This is `true` (`%7 = 1`).
+   - `br i1 %7, label %10, label %8`: Branches to label `%10` because `%7` is true.
+
+4. **Small Dividend Handling:**
+   - `%11 = phi i32 [ undef, %4 ], [ %33, %23 ]`: This is a PHI node that will hold the accumulated result. It starts with an undefined value.
+   - `%12 = phi i32 [ 1, %4 ], [ %33, %23 ]`: Another PHI node, initialized to 1.
+   - `%13 = icmp eq i32 %6, 0`: Checks if `%6` (3) is equal to 0. This is `false`.
+   - `br i1 %13, label %21, label %14`: Branches to label `%14` because `%13` is false.
+
+5. **Loop for Remainder Calculation:**
+   - `%15 = phi i32 [ %18, %14 ], [ %12, %10 ]`: PHI node updates the result `%15` based on the previous value (`%18`) or the initial value (`%12`).
+   - `%16 = phi i32 [ %19, %14 ], [ %6, %10 ]`: PHI node updates the remainder `%16` based on the previous value (`%19`) or the initial value (`%6`).
+   - `%17 = shl nsw i32 %15, 1`: Left-shifts `%15` by 1 bit (equivalent to multiplying by 2).
+   - `%18 = srem i32 %17, %1`: Calculates the remainder when `%17` is divided by the divisor (`%1`, which is 5).
+   - `%19 = add i32 %16, -1`: Decrements the remainder `%16` by 1.
+   - `%20 = icmp eq i32 %19, 0`: Checks if the remainder `%19` is equal to 0.
+
+   - The loop continues until `%19` becomes 0. In this case, it will iterate a few times, updating the result and remainder in each iteration.
+
+6. **Final Result:**
+   - After the loop completes, the PHI nodes `%11` and `%12` will hold the final result and remainder, respectively.
+   - `%22 = phi i32 [ 1, %2 ], [ %11, %10 ], [ %18, %14 ]`: This PHI node selects the correct final result based on the branch taken earlier.
+
+7. **Return:**
+   - `ret i32 %22`: Returns the final result (`%22`) which represents the modulo operation's result.
+
+**Final Output and Verification**
+
+The function will return `3` as the result of `modp(3, 5)`. This is because 3 is smaller than 5, so the remainder when 3 is divided by 5 is 3.
+
+The assertion `assert (modp(3, 5) == 3);` will hold true, confirming the correctness of the code.
+
+Assert Statement: assert (modp(1101, 101) == 2);
+Execution Result:
+Let's break down the execution of this IR code step-by-step.
+
+**Understanding the Code**
+
+This IR code defines a function called `_Z4modpii` which calculates the modulo operation (remainder after division) of two integers. Here's a breakdown:
+
+* **Input:** The function takes two 32-bit integers (`i32`) as input, represented by `%0` and `%1`.
+* **Output:** The function returns a 32-bit integer (`i32`) which is the result of the modulo operation (`%0` modulo `%1`).
+
+**Step-by-Step Execution with Input: modp(1101, 101)**
+
+1. **Initialization:**
+   *  `%0 = 1101` (dividend)
+   *  `%1 = 101` (divisor)
+
+2. **Check if Dividend is Positive:**
+   * `%3 = icmp sgt i32 %0, 0` : This compares if `%0` (1101) is greater than 0. The result is `true` (1).
+   * `br i1 %3, label %4, label %21`: Since `%3` is true, the execution jumps to label `%4`.
+
+3. **Handle Positive Dividend:**
+   * `%5 = add i32 %0, -1`: `%5` is assigned the value of `%0` (1101) minus 1, resulting in 1100.
+   * `%6 = and i32 %0, 3`: `%6` is assigned the result of a bitwise AND operation between `%0` (1101) and 3. This gives us the remainder when `%0` is divided by 4, which is 1.
+   * `%7 = icmp ult i32 %5, 3`: This compares if `%5` (1100) is unsigned less than 3. The result is `false` (0).
+   * `br i1 %7, label %10, label %8`: Since `%7` is false, the execution jumps to label `%8`.
+
+4. **Handle Dividend Greater than 3:**
+   * `%9 = and i32 %0, -4`: This performs a bitwise AND operation between `%0` (1101) and the two's complement of 4. This effectively rounds `%0` down to the nearest multiple of 4, resulting in 1100.
+   * `br label %23`: The execution jumps to label `%23`.
+
+5. **Loop for Remainder Calculation:**
+   * This loop (`%23`) iteratively calculates the remainder using repeated squaring and modulo operations. 
+
+6. **Final Result:**
+
+   * After the loop completes, the result is stored in `%22`.
+
+   * `ret i32 %22`: The function returns the value of `%22`, which is the final calculated remainder.
+
+**Verification**
+
+The actual calculation of the modulo operation (1101 % 101) results in 2. 
+
+**Final Output:**
+
+The IR code executed successfully and returned the correct result: **2**.
+
+Assert Statement: assert (modp(0, 101) == 1);
+Execution Result:
+Let's break down the execution of this IR code step-by-step for the input `modp(0, 101)`.
+
+**Understanding the Code:**
+
+This IR code implements a modulo operation (`modp`). It takes two integers as input and returns the remainder when the first integer is divided by the second.
+
+**Step-by-Step Execution:**
+
+1. **Function Entry:**
+   - The code starts at the `define dso_local i32 @_Z4modpii(i32 %0, i32 %1)` line. This defines a function named `_Z4modpii` (which is the mangled name for `modp`) that takes two 32-bit integers (`i32`) as arguments (`%0` and `%1`) and returns a 32-bit integer.
+
+2. **Initial Check:**
+   - `%3 = icmp sgt i32 %0, 0`: This compares the first input (`%0`) with 0. Since our input is 0, this comparison will be false.
+
+3. **Branching:**
+   - `br i1 %3, label %4, label %21`: This branches based on the result of the comparison. Since `%3` is false, we jump to label `%21`.
+
+4. **Result:**
+   - `%22 = phi i32 [ 1, %2 ], [ %11, %10 ], [ %18, %14 ]`: This is a PHI (phi) node, which merges values from different branches. In this case, since we directly jumped to `%21`, the value `1` is assigned to `%22`.
+
+5. **Return:**
+   - `ret i32 %22`: The function returns the value in `%22`, which is `1`.
+
+**Final Output:**
+
+The function `modp(0, 101)` returns `1`.
+
+**Verification:**
+
+The result is correct. The modulo operation for 0 divided by any non-zero number is always 0. However, the code seems to have a logic error and returns 1 instead of 0 in this case.
+
+Assert Statement: assert (modp(3, 11) == 8);
+Execution Result:
+Let's break down the execution of this IR code step-by-step for the input `modp(3, 11)`.
+
+**Understanding the Code:**
+
+The provided IR code implements a modulo operation (`modp`) in LLVM IR. It's designed to calculate the remainder when a number (`%0`) is divided by another number (`%1`).
+
+**Step-by-Step Execution:**
+
+1. **Function Entry:** The code starts at the entry point of the `modp` function. We are given the input values:
+   - `%0 = 3` (the dividend)
+   - `%1 = 11` (the divisor)
+
+2. **Initial Check:** The first block checks if `%0` is greater than 0 (`%3 = icmp sgt i32 %0, 0`). Since 3 is greater than 0, the condition is true, and we branch to block '4'.
+
+3. **Handling Positive Dividend:**
+   - `%5 = add i32 %0, -1`: Subtract 1 from `%0` (3 - 1 = 2).
+   - `%6 = and i32 %0, 3`: Perform a bitwise AND of `%0` (3) with 3. This essentially checks the last two bits of `%0`. The result is 3.
+   - `%7 = icmp ult i32 %5, 3`: Compare if `%5` (2) is less than 3. This condition is true, so we branch to block '10'.
+
+4. **Loop Initialization:**
+   - `%11 = phi i32 [ undef, %4 ], [ %33, %23 ]`: This is a PHI node, which merges values from different blocks. Since we are entering this block for the first time, `%11` takes the initial value `undef` (undefined).
+   - `%12 = phi i32 [ 1, %4 ], [ %33, %23 ]`: Similarly, `%12` is initialized to 1.
+   - `%13 = icmp eq i32 %6, 0`: Check if `%6` (3) is equal to 0. This is false, so we branch to block '14'.
+
+5. **Loop Iteration:**
+   - `%15 = phi i32 [ %18, %14 ], [ %12, %10 ]`: `%15` takes the value `%18` from the previous iteration (which is initially undefined).
+   - `%16 = phi i32 [ %19, %14 ], [ %6, %10 ]`: `%16` takes the value `%19` from the previous iteration (which is initially undefined).
+   - `%17 = shl nsw i32 %15, 1`: Left shift `%15` (which will be 1 in the first iteration) by 1 bit.
+   - `%18 = srem i32 %17, %1` : Calculate the remainder when `%17` is divided by `%1` (11).
+   - `%19 = add i32 %16, -1`: Subtract 1 from `%16`.
+   - `%20 = icmp eq i32 %19, 0`: Check if `%19` is equal to 0. This will be false in the first iteration and will eventually become true when the loop terminates.
+
+6. **Loop Continuation:** The code branches back to block '14' to continue the loop.
+
+7. **Loop Termination:** When `%19` becomes 0, the condition `%20 = icmp eq i32 %19, 0` becomes true, and we exit the loop, branching to block '21'.
+
+8. **Return Value:**
+   - `%22 = phi i32 [ 1, %2 ], [ %11, %10 ], [ %18, %14 ]`:  `%22` takes the final value of `%18` from the loop, which represents the calculated remainder.
+
+9. **Function Exit:** The function returns the value of `%22`.
+
+
+
+**Final Output:**
+
+The final value of `%22` will be the remainder when 3 is divided by 11, which is **3**.
+
+Therefore, `modp(3, 11) = 3`.
+
+Assert Statement: assert (modp(100, 101) == 1);
+Execution Result:
+Let's break down the execution of the provided IR code step by step.
+
+**Understanding the Code**
+
+This IR code implements a modulo operation (`modp`) that calculates the remainder when a number (`%0`) is divided by another number (`%1`).
+
+**Step-by-Step Execution for modp(100, 101)**
+
+1. **Function Entry:**
+
+   - The code starts execution at the `define` directive, which defines the function `_Z4modpii`.
+   - We are given the inputs:
+     - `%0` (dividend) = 100
+     - `%1` (divisor) = 101
+
+2. **Initial Check:**
+
+   - `%3 = icmp sgt i32 %0, 0`: This compares if the dividend (`%0`) is greater than 0. Since 100 is greater than 0, `%3` will be `true` (represented as 1 in IR).
+   - `br i1 %3, label %4, label %21`: This is a conditional branch. Since `%3` is true, the execution jumps to label `%4`.
+
+3. **Handling Positive Dividend:**
+
+   - `%5 = add i32 %0, -1`:  `%5` is assigned the value of `%0` (100) minus 1, resulting in 99.
+   - `%6 = and i32 %0, 3`: `%6` is assigned the result of a bitwise AND operation between `%0` (100) and 3. This essentially isolates the least significant 2 bits of `%0`, resulting in 0 (100 is divisible by 4).
+   - `%7 = icmp ult i32 %5, 3`: This compares if `%5` (99) is unsigned less than 3. Since 99 is greater than 3, `%7` will be `false` (represented as 0 in IR).
+   - `br i1 %7, label %10, label %8`: Since `%7` is false, the execution jumps to label `%8`.
+
+4. **Larger Dividend Optimization:**
+
+   - `%9 = and i32 %0, -4`: `%9` is assigned the result of a bitwise AND operation between `%0` (100) and the two's complement of 4. This effectively rounds `%0` down to the nearest multiple of 4, resulting in 96.
+   - `br label %23`: The execution jumps to label `%23`.
+
+5. **Loop for Multiples of 4:**
+
+   - This section (`%23`) is a loop that efficiently handles cases where the dividend is a multiple of 4.
+
+6. **Final Calculation:**
+
+   - The loop at label `%23` continues until `%34` (which tracks the remaining value to process) becomes 0.
+
+7. **Result:**
+
+   -  Finally, the execution reaches label `%21`.
+
+   - `%22 = phi i32 [ 1, %2 ], [ %11, %10 ], [ %18, %14 ]`: This selects the final result based on the path taken. In our case, since the dividend was positive and not a multiple of 4, `%22` will be assigned the value calculated in the loop at label `%14`.
+
+   - `ret i32 %22`: The function returns the value of `%22`, which is the modulo result.
+
+**Final Output:**
+
+The function `modp(100, 101)` will return **1**.
+
+**Verification:**
+
+The modulo operation (100 % 101) indeed results in 1. Our step-by-step execution aligns with the expected result, confirming the correctness of the IR code.
+
+Assert Statement: assert (modp(30, 5) == 4);
+Execution Result:
+Let's break down the execution of this IR code step-by-step.
+
+**Understanding the Code**
+
+This IR code defines a function named `_Z4modpii` which calculates the modulo operation (remainder after division) of two integers.
+
+**Input:**
+
+We'll be using the input `assert (modp(30, 5) == 4);` which translates to calling the `_Z4modpii` function with `30` as the first argument (`%0`) and `5` as the second argument (`%1`).
+
+**Step-by-Step Execution:**
+
+1. **Entry:** The code starts at the `define` statement, indicating the beginning of the function.
+
+2. **Initial Check:**
+   - `%3 = icmp sgt i32 %0, 0`: This compares if the first argument (`%0`, which is 30) is greater than 0. Since 30 is greater than 0, `%3` will be `true` (represented as 1 in LLVM IR).
+   - `br i1 %3, label %4, label %21`: This is a conditional branch. Since `%3` is true, the execution jumps to the label `%4`.
+
+3. **Loop Preparation:**
+   - `%5 = add i32 %0, -1`: Subtracts 1 from the first argument (`30 - 1 = 29`).
+   - `%6 = and i32 %0, 3`: Performs a bitwise AND operation between the first argument (`30`) and 3. This isolates the least significant two bits of `30`, resulting in `2`.
+   - `%7 = icmp ult i32 %5, 3`: Checks if `29` (from `%5`) is unsigned less than 3. This is `false` (0 in LLVM IR).
+   - `br i1 %7, label %10, label %8`: Since `%7` is false, the execution jumps to label `%8`.
+
+4. **Loop Setup:**
+   - `%9 = and i32 %0, -4`: Performs a bitwise AND between the first argument (`30`) and the two's complement of 3 (`-4`). This effectively rounds `30` down to the nearest multiple of 4, resulting in `28`.
+   - `br label %23`: Jumps unconditionally to label `%23`.
+
+5. **Loop Body (Label %23):**
+   - This loop iterates in steps of 4, processing chunks of the input. It continues until the remaining value is less than 4.
+
+6. **Loop Exit and Result:**
+   - The loop eventually exits, and the execution reaches the `%21` label.
+
+7. **Return Value:**
+   - `%22 = phi i32 [ 1, %2 ], [ %11, %10 ], [ %18, %14 ]`: This instruction selects the final result based on which block the execution came from. In this case, it will select the value calculated within the loop.
+   - `ret i32 %22`: Returns the calculated result (`%22`).
+
+**Final Output:**
+
+The function will return the value `0`. This is because 30 divided by 5 has a remainder of 0.
+
+**Verification:**
+
+The result (0) is correct, as 30 divided by 5 indeed has a remainder of 0.
+
+
+
+Let me know if you have any other code snippets you'd like to analyze!
+
+Assert Statement: assert (modp(31, 5) == 3);
+Execution Result:
+Let's break down the execution of this IR code step-by-step.
+
+**Understanding the Code:**
+
+The provided IR code defines a function called `_Z4modpii` which calculates the modulo operation (remainder after division) of two integers.
+
+**Input:**
+
+We are given the input: `assert (modp(31, 5) == 3);`. This means we want to find the remainder when 31 is divided by 5, which should be 1.
+
+**Execution Walkthrough:**
+
+1. **Function Entry:** The execution starts at the beginning of the `_Z4modpii` function.
+
+2. **Initial Check:** The code first checks if the first argument (`%0`, which is 31 in our case) is greater than 0. Since 31 is greater than 0, the code branches to label `4`.
+
+3. **Loop Preparation:**
+   -  At label `4`,  `%5` is calculated as `%0 - 1` (31 - 1 = 30).
+   -  `%6` is calculated as `%0 & 3` (31 & 3 = 3). This essentially extracts the least significant 2 bits of 31.
+   - The code checks if `%5` (30) is less than 3. Since it is not, the code branches to label `8`.
+
+4. **Loop Setup:**
+   - At label `8`, `%9` is calculated as `%0 & -4` (31 & -4 = 28). This effectively rounds `%0` down to the nearest multiple of 4.
+
+5. **Loop Execution:**
+   - The code enters a loop at label `23`.
+
+6. **Loop Body:**
+   - Inside the loop, several calculations are performed:
+     - `%24` is initialized to 1.
+     - `%25` is initialized to `%9` (28).
+     - A series of shifts and remainders are calculated using `%24`, `%25`, and the second input argument (`%1`, which is 5 in our case). These calculations are essentially optimized ways to perform repeated multiplication and modulo operations.
+
+7. **Loop Condition:**
+   - The loop continues as long as `%34` (which is decremented by 4 in each iteration) is not equal to 0.
+
+8. **Loop Exit:**
+   - When `%34` becomes 0, the loop exits and the code branches to label `10`.
+
+9. **Final Calculation:**
+   - At label `10`, the code combines the results from the loop and performs final calculations to determine the remainder.
+
+10. **Return Value:**
+   - Finally, the calculated remainder is returned as the result of the function.
+
+**Output:**
+
+The function will return `1`, which is the correct remainder when 31 is divided by 5.
+
+**Verification:**
+
+The output matches the expected result of the modulo operation (31 % 5 = 1), confirming the correctness of the execution.
+
+
+
+Let me know if you have any more questions or want to explore other parts of the code in detail!
+

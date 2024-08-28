@@ -1,0 +1,346 @@
+Assert Statement: assert (issame(compare({1,2,3,4,5,1},{1,2,3,4,2,-2}),{0,0,0,0,3,3}));
+Execution Result:
+Let's break down the execution of the provided IR code step-by-step.
+
+**Understanding the Code**
+
+The IR code defines a function `compare` that takes two vectors as input and returns a new vector containing the absolute differences between corresponding elements of the input vectors.
+
+**Step-by-step Execution**
+
+1. **Initialization:**
+   - The function starts by initializing an empty vector `result` to store the differences.
+   - It then retrieves pointers to the beginning and end of the input vectors `v1` and `v2`.
+
+2. **Iteration:**
+   - The code enters a loop that iterates through the elements of the input vectors simultaneously.
+   - In each iteration:
+     - It retrieves the corresponding elements from `v1` and `v2`.
+     - It calculates the absolute difference between these elements using the `abs` function.
+     - It appends the calculated difference to the `result` vector.
+
+3. **Loop Termination:**
+   - The loop continues until it reaches the end of either input vector.
+
+4. **Return:**
+   - After processing all elements, the function returns the `result` vector containing the absolute differences.
+
+**Applying to the Assert Statement**
+
+The assert statement provides two input vectors: `{1,2,3,4,5,1}` and `{1,2,3,4,2,-2}`.
+
+Following the steps outlined above, the `compare` function would perform the following calculations:
+
+- `{1 - 1 = 0}`
+- `{2 - 2 = 0}`
+- `{3 - 3 = 0}`
+- `{4 - 4 = 0}`
+- `{5 - 2 = 3}`
+- `{1 - (-2) = 3}`
+
+The resulting `result` vector would be `{0, 0, 0, 0, 3, 3}`, which matches the expected output in the assert statement.
+
+**Verification**
+
+The output of the IR code execution matches the expected output specified in the assert statement, confirming the correctness of the implementation.
+
+**Note:**
+
+This explanation assumes a basic understanding of vector operations and absolute value calculations.
+
+Let me know if you have any more questions or would like to explore specific parts of the code in more detail!
+
+Assert Statement: assert (issame(compare({0,5,0,0,0,4},{4,1,1,0,0,-2}),{4,4,1,0,0,6}));
+Execution Result:
+Let's break down the execution of this IR code step-by-step. 
+
+**Understanding the Code**
+
+This IR code defines a function `compare` that takes two vectors of integers as input and returns a new vector containing the absolute differences between corresponding elements of the input vectors.
+
+**Step-by-Step Execution**
+
+1. **Initialization:**
+
+   - The function starts by initializing a new vector (`%0`) to store the result. This vector is zero-initialized using `llvm.memset.p0i8.i64`.
+   - It then extracts pointers to the beginning and end of the input vectors (`%1` and `%2`) using `getelementptr`.
+
+2. **Iteration:**
+
+   - The code enters a loop (`br i1 %13, label %91, label %14`) that iterates through the elements of the input vectors.
+
+3. **Element Comparison:**
+
+   - Inside the loop, it retrieves the current elements from both input vectors (`%21` and `%24`).
+   - It calculates the absolute difference between these elements using `llvm.abs.i32`.
+
+4. **Storing the Difference:**
+
+   - The calculated absolute difference is stored in the result vector (`%19`).
+   - The pointers in the result vector are updated to point to the next available location.
+
+5. **Loop Termination:**
+
+   - The loop continues until all elements of the input vectors have been processed.
+
+6. **Return:**
+
+   - Once the loop completes, the function returns the constructed result vector (`ret void`).
+
+ **Applying the Input**
+
+Let's apply the input `{0,5,0,0,0,4},{4,1,1,0,0,-2}`:
+
+- **Iteration 1:**
+    - Element 1 of vector 1: 0
+    - Element 1 of vector 2: 4
+    - Absolute difference: 4
+    - Result vector: {4}
+
+- **Iteration 2:**
+    - Element 2 of vector 1: 5
+    - Element 2 of vector 2: 1
+    - Absolute difference: 4
+    - Result vector: {4, 4}
+
+- **Iteration 3:**
+    - Element 3 of vector 1: 0
+    - Element 3 of vector 2: 1
+    - Absolute difference: 1
+    - Result vector: {4, 4, 1}
+
+- **Iteration 4 - 6:**
+
+    - Similar calculations are performed for the remaining elements, resulting in the final result vector: {4, 4, 1, 0, 0, 6}.
+
+**Verification**
+
+The final result vector matches the expected output: `{4, 4, 1, 0, 0, 6}`.
+
+
+
+Let me know if you have any other IR code snippets you'd like to analyze!
+
+Assert Statement: assert (issame(compare({1,2,3,4,5,1},{1,2,3,4,2,-2}),{0,0,0,0,3,3}));
+Execution Result:
+Let's break down the execution of this IR code step by step.
+
+**Understanding the Code**
+
+This IR code implements a function called `compare` that takes two vectors as input and returns a new vector containing the absolute differences between corresponding elements of the input vectors.
+
+**Step-by-Step Execution**
+
+1. **Initialization:**
+   - The function begins by initializing a new empty vector `%0` to store the results. 
+   - It retrieves pointers to the beginning and end of the input vectors `%1` and `%2`.
+
+2. **Iteration:**
+   - The code enters a loop that iterates through the elements of the input vectors.
+   - It compares the elements at the current index in both input vectors.
+   - It calculates the absolute difference between these elements using the `llvm.abs.i32` intrinsic function.
+   - The calculated absolute difference is stored in the result vector `%0`.
+
+3. **Memory Allocation (if needed):**
+   - If the result vector `%0` needs to be resized to accommodate more elements, memory is allocated dynamically using `_Znwm`.
+
+4. **Copying Data:**
+   - If memory is allocated, the existing elements of the result vector are copied to the new memory location.
+
+5. **Loop Termination:**
+   - The loop continues until all elements of the input vectors have been processed.
+
+6. **Return:**
+   - Finally, the function returns the result vector `%0`.
+
+**Applying the Input**
+
+In the provided assert statement:
+
+```c++
+assert(issame(compare({1,2,3,4,5,1},{1,2,3,4,2,-2}),{0,0,0,0,3,3}));
+```
+
+We see two input vectors:
+
+- Vector 1: `{1, 2, 3, 4, 5, 1}`
+- Vector 2: `{1, 2, 3, 4, 2, -2}`
+
+The expected output is: `{0, 0, 0, 0, 3, 3}`.
+
+By carefully stepping through the code, comparing elements, calculating absolute differences, and storing the results, you would arrive at this expected output.
+
+**Verification**
+
+The provided assert statement is used to verify that the output of the `compare` function matches the expected result. If the output is not as expected, the assert statement will fail, indicating an issue in the code's logic or implementation.
+
+
+Let me know if you'd like me to elaborate on a specific part of the code or the execution process.
+
+Assert Statement: assert (issame(compare({0,0,0,0,0,0},{0,0,0,0,0,0}),{0,0,0,0,0,0}));
+Execution Result:
+Let's break down the execution of this C++ code snippet.
+
+**Understanding the Code**
+
+This IR code implements a function called `compare` that takes two vectors as input and returns a new vector containing the absolute differences between corresponding elements of the input vectors.
+
+**Step-by-Step Execution**
+
+1. **Initialization:**
+   - The function starts by zeroing out the memory allocated for the output vector (`%0`).
+
+2. **Iterating Through Vectors:**
+   - The code then proceeds to iterate through the elements of the input vectors (`%1` and `%2`).
+
+3. **Calculating Differences:**
+   - For each pair of corresponding elements, it calculates the absolute difference using the `llvm.abs.i32` intrinsic function.
+
+4. **Storing Results:**
+   - The calculated absolute differences are stored in the output vector (`%0`).
+
+5. **Handling Different Vector Sizes:**
+   - The code includes logic to handle cases where the input vectors have different sizes. If one vector is shorter than the other, the remaining elements of the longer vector are ignored.
+
+6. **Returning the Result:**
+   - Finally, the function returns the output vector containing the absolute differences.
+
+**Applying the Assertion**
+
+The assertion `assert (issame(compare({0,0,0,0,0,0},{0,0,0,0,0,0}),{0,0,0,0,0,0}));` checks if the output of the `compare` function for two identical input vectors is indeed a vector containing all zeros.
+
+**Verification**
+
+Given that the input vectors are identical, the absolute difference between corresponding elements will always be zero. Therefore, the `compare` function should indeed return a vector containing all zeros.
+
+**Conclusion**
+
+The provided IR code correctly implements a function to calculate the element-wise absolute differences between two vectors. The assertion holds true, confirming the correctness of the code's implementation.
+
+Assert Statement: assert (issame(compare({1,2,3},{-1,-2,-3}),{2,4,6}));
+Execution Result:
+Let's break down the execution of this C++ IR code step-by-step.
+
+**Understanding the Code**
+
+This IR code implements a function `compare` that takes two vectors of integers as input and returns a new vector. The new vector contains the absolute differences between corresponding elements of the input vectors. 
+
+**Step-by-Step Execution**
+
+1. **Initialization:**
+   - The function `compare` is called with two input vectors. We'll assume these vectors are:
+     - `vec1`: {1, 2, 3}
+     - `vec2`: {-1, -2, -3}
+   -  The function begins by initializing an empty output vector `result`.
+
+2. **Iteration:**
+   - The code iterates through the elements of the input vectors using a loop.
+   - In each iteration:
+     - It retrieves the corresponding elements from `vec1` and `vec2`.
+     - It calculates the absolute difference between these elements using the `abs` function.
+     - This absolute difference is then appended to the `result` vector.
+
+3. **Result:**
+   - After processing all elements, the `result` vector will contain the absolute differences: {2, 4, 6}.
+
+**Detailed IR Code Walkthrough (Simplified)**
+
+Since the full IR code is quite extensive, I'll highlight key parts relevant to the execution:
+
+- **Loading Input Vectors:**
+
+ ```llvm
+ %5 = getelementptr inbounds %"class.std::vector", %"class.std::vector"* %1, i64 0, i32 0, i32 0, i32 0, i32 1
+ %6 = getelementptr inbounds %"class.std::vector", %"class.std::vector"* %1, i64 0, i32 0, i32 0, i32 0, i32 0
+ %7 = getelementptr inbounds %"class.std::vector", %"class.std::vector"* %2, i64 0, i32 0, i32 0, i32 0, i32 0 
+ ```
+ - These lines access the data pointers of the input vectors `vec1` and `vec2`.
+
+- **Iteration and Calculation:**
+ ```llvm
+ %21 = getelementptr inbounds i32, i32* %15, i64 %20
+ %22 = load i32, i32* %21, align 4, !tbaa !9
+ %23 = load i32*, i32** %7, align 8, !tbaa !8
+ %24 = getelementptr inbounds i32, i32* %23, i64 %20
+ %25 = load i32, i32* %24, align 4, !tbaa !9
+ %26 = sub nsw i32 %22, %25
+ %27 = tail call i32 @llvm.abs.i32(i32 %26, i1 true)
+ ```
+ - These lines demonstrate the element retrieval, subtraction, and absolute value calculation within the loop.
+
+- **Storing Results:**
+ ```llvm
+ %55 = getelementptr inbounds i32, i32* %54, i64 %35
+ store i32 %27, i32* %55, align 4, !tbaa !9
+ ```
+ - This line stores the calculated absolute difference into the `result` vector.
+
+**Verification**
+
+The output of the `compare` function will indeed be `{2, 4, 6}`, as shown in the provided assert statement.
+
+
+
+Let me know if you'd like me to elaborate on any specific part of the code or the execution process!
+
+Assert Statement: assert (issame(compare({1,2,3,5},{-1,2,3,4}),{2,0,0,1}));
+Execution Result:
+Let's break down the execution of this IR code step by step.
+
+**Understanding the Context**
+
+This IR code implements a function `compare` that takes two vectors as input and calculates the element-wise absolute difference between them. The result is a new vector containing these differences.
+
+**Step-by-Step Execution**
+
+1. **Initialization:**
+
+   - The function starts by allocating memory for the output vector (`%0`) and initializes it with zeros.
+
+2. **Input Access:**
+   - It retrieves pointers to the beginning and end of the input vectors (`%1` and `%2`).
+
+3. **Iteration:**
+   - The core logic resides in a loop that iterates through the elements of the input vectors.
+
+4. **Difference Calculation:**
+   - Inside the loop, for each corresponding pair of elements from the input vectors, it calculates the absolute difference using `llvm.abs.i32`.
+
+5. **Storage:**
+   - The calculated difference is stored in the output vector.
+
+6. **Memory Management:**
+   - The code handles memory allocation and deallocation using `_Znwm` (for allocation) and `_ZdlPv` (for deallocation). This ensures proper memory management.
+
+7. **Return:**
+   - Finally, the function returns the output vector (`%0`).
+
+**Applying the Assertion**
+
+The assertion `issame(compare({1,2,3,5},{-1,2,3,4}),{2,0,0,1})` checks if the output of the `compare` function with the given input vectors matches the expected result.
+
+Let's trace the execution for this specific input:
+- **Input Vector 1:** {1, 2, 3, 5}
+- **Input Vector 2:** {-1, 2, 3, 4}
+
+The `compare` function would calculate the element-wise absolute differences:
+
+- |1 - (-1)| = 2
+- |2 - 2| = 0
+- |3 - 3| = 0
+- |5 - 4| = 1
+
+Therefore, the expected output is {2, 0, 0, 1}, which matches the assertion.
+
+**Verification**
+
+The assertion holds true, confirming that the `compare` function correctly calculates the element-wise absolute differences between the input vectors.
+
+**Important Notes:**
+
+
+
+- This analysis assumes a standard C++ environment and the availability of the necessary libraries.
+
+- The IR code snippet provides a low-level view of the function's implementation. Higher-level languages like C++ would abstract away some of these details.
+

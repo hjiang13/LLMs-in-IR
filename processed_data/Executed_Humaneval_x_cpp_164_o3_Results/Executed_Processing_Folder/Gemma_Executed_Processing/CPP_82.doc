@@ -1,0 +1,871 @@
+Assert Statement: assert (prime_length("Hello") == true);
+Execution Result:
+Let's break down the execution of the provided IR code step-by-step.
+
+**Understanding the IR Code**
+
+This IR code defines a function called `prime_length` that takes a string as input and determines if its length is a prime number. 
+
+Here's a high-level explanation:
+
+* **Input:** The function takes a `basic_string` (a C++ string) as input, represented by the `%"class.std::__cxx11::basic_string"*` argument.
+
+* **Length Calculation:** The code first extracts the length of the string.
+
+* **Primality Test:** It then uses a loop to check if the length is a prime number. The loop iterates through potential divisors, checking if the length is divisible by any of them.
+
+* **Output:** The function returns `true` if the length is prime, and `false` otherwise.
+
+**Step-by-Step Execution for "Hello"**
+
+1. **Input:** The input string is "Hello".
+
+2. **Length Extraction:**
+   - The code accesses the length of the string using `getelementptr` and `load` instructions.  
+
+   - For "Hello", the length is 5.
+
+3. **Primality Check:**
+   - The loop starts checking for divisibility by numbers starting from 2.
+
+   - 5 is not divisible by 2.
+
+   - 5 is not divisible by 3.
+
+   - 5 is not divisible by 4.
+
+4. **Result:** Since 5 is not divisible by any number less than itself (except 1), it is a prime number. The function returns `true`.
+
+**Final Output:**
+
+```
+true
+```
+
+**Verification:**
+
+The output is correct. The length of "Hello" is 5, which is indeed a prime number.
+
+
+
+Let me know if you'd like a more detailed explanation of any specific part of the code or the execution process!
+
+Assert Statement: assert (prime_length("abcdcba") == true);
+Execution Result:
+Let's break down the execution of this IR code step-by-step.
+
+**Understanding the Code**
+
+This IR code defines a function named `prime_length` that determines if the length of a given string is a prime number. Here's a simplified explanation:
+
+* **Input:** The function takes a string as input (represented by the `%"class.std::__cxx11::basic_string"` type).
+* **Length Calculation:** It first extracts the length of the string.
+* **Primality Check:** It then uses a loop and some arithmetic operations to check if the length is a prime number.
+* **Output:** The function returns `true` if the length is prime, and `false` otherwise.
+
+**Step-by-Step Execution with Input "abcdcba"**
+
+1. **Input:** The input string is "abcdcba", which has a length of 7.
+
+2. **Length Extraction:** The code extracts the length (7) and stores it in a variable.
+
+3. **Initial Checks:**
+   * It checks if the length is less than 2. Since 7 is greater than 2, this condition is false.
+   * It checks if the length is less than 4. Since 7 is greater than 4, this condition is also false.
+
+4. **Primality Loop:** The code enters a loop that iterates to check for primality:
+   * **Initialization:** A variable `i` is initialized to 2.
+   * **Iteration:** The loop continues as long as `i * i` is less than or equal to the length (7).
+   * **Divisibility Check:** Inside the loop, it checks if the length is divisible by `i`. If it is, the length is not prime, and the loop breaks.
+   * **Increment:** If the length is not divisible by `i`, `i` is incremented.
+
+5. **Loop Termination:** The loop will iterate with `i` values of 2 and 3. Since 7 is not divisible by 2 or 3, the loop completes.
+
+6. **Prime Determination:** Since the loop completed without finding any divisors, the length (7) is determined to be prime.
+
+7. **Return Value:** The function returns `true`, indicating that the length of the input string "abcdcba" is a prime number.
+
+**Verification**
+
+The result is correct. The length of "abcdcba" is indeed 7, which is a prime number.
+
+**Final Output:**
+```
+true
+```
+
+Assert Statement: assert (prime_length("kittens") == true);
+Execution Result:
+Let's break down the execution of the provided IR code step-by-step.
+
+**Understanding the Code**
+
+This IR code defines a function named `prime_length` that takes a C++ string as input and determines if its length is a prime number. 
+
+**Input:**
+
+The assertion statement `assert (prime_length("kittens") == true);` tells us that the input string to our function is "kittens".
+
+**Step-by-Step Execution**
+
+1. **Function Entry:** The execution starts at the beginning of the `prime_length` function.
+
+2. **Length Retrieval:**
+   - `%2 = getelementptr inbounds %"class.std::__cxx11::basic_string", %"class.std::__cxx11::basic_string"* %0, i64 0, i32 1` : This line calculates the memory address of the length field within the string object.
+   - `%3 = load i64, i64* %2, align 8, !tbaa !3`: This loads the actual length of the string (the number of characters) from the calculated memory address into the `%3` register.
+
+3. **Length Truncation:**
+   - `%4 = trunc i64 %3 to i32`:  The length, which is initially stored as a 64-bit integer (`i64`), is converted to a 32-bit integer (`i32`) and stored in `%4`. This is likely done for efficiency or compatibility reasons.
+
+4. **Initial Checks:**
+   - `%5 = icmp slt i32 %4, 2`: This compares the string length (`%4`) with 2. If the length is less than 2, the result is `true` (1), otherwise `false` (0).
+   - `br i1 %5, label %18, label %6`: This is a conditional branch. If the length is less than 2, the execution jumps to label `%18`. Otherwise, it proceeds to label `%6`.
+
+5. **Further Checks:**
+   - `%6`: This label is reached if the length is not less than 2.
+   - `%7 = icmp slt i32 %4, 4`: This compares the string length with 4. If the length is less than 4, the result is `true` (1), otherwise `false` (0).
+   - `br i1 %7, label %18, label %8`:  Another conditional branch. If the length is less than 4, jump to label `%18`. Otherwise, proceed to label `%8`.
+
+6. **Primality Check Loop:**
+   - `%8`: This label marks the beginning of a loop that checks for primality.
+   - `%9 = phi i32 [ %12, %8 ], [ 2, %6 ]`: This is a PHI (phi) node, which merges values from different paths. In this case, it initializes `%9` to 2 if coming from label `%6`, or to the value of `%12` if coming from within the loop.
+   - `%10 = srem i32 %4, %9`: This calculates the remainder when the string length (`%4`) is divided by `%9`.
+   - `%11 = icmp eq i32 %10, 0`: This checks if the remainder is 0. If it is, the string length is divisible by `%9`, indicating it's not prime.
+   - `%12 = add nuw nsw i32 %9, 1`: Increment `%9` by 1.
+   - `%13 = mul nsw i32 %12, %12`: Calculate the square of `%12`.
+   - `%14 = icmp sgt i32 %13, %4`: Compare the square of `%12` with the string length.
+   - `%15 = select i1 %11, i1 true, i1 %14`: This selects `true` if the remainder was 0 (not prime) or if the square of `%12` is greater than the length (we've checked enough divisors). Otherwise, it selects `false`.
+   - `br i1 %15, label %16, label %8`: Conditional branch. If `%15` is `true`, jump to label `%16`. Otherwise, loop back to label `%8` to continue checking divisors.
+
+7. **Result Determination:**
+   - `%16`: This label is reached if the loop determines the string length is prime.
+   - `%17 = xor i1 %11, true`: This inverts the value of `%11`. Since `%11` was `true` if the remainder was 0 (not prime), inverting it gives `true` for prime.
+   - `br label %18`: Unconditional jump to label `%18`.
+
+8. **Function Exit:**
+   - `%18`: This label gathers the results from different paths.
+   - `%19 = phi i1 [ false, %1 ], [ true, %6 ], [ %17, %16 ]`: This PHI node selects the appropriate boolean result based on which path was taken: `false` if the length was less than 2, `true` if the length was between 2 and 3, or the result from `%17` if the primality check loop was executed.
+   - `ret i1 %19`: The function returns the boolean result (`%19`).
+
+**Final Output:**
+
+In our case, the input string "kittens" has a length of 7. The code will execute the primality check loop, and since 7 is a prime number, the function will return `true`.
+
+
+
+**Verification:**
+
+The assertion statement `assert (prime_length("kittens") == true);` is indeed `true` because the length of "kittens" is 7, which is a prime number.
+
+Assert Statement: assert (prime_length("orange") == false);
+Execution Result:
+Let's break down the execution of this IR code step-by-step.
+
+**Understanding the Code**
+
+This IR code defines a function called `prime_length` that takes a string as input (represented as a `std::__cxx11::basic_string`) and determines if the length of the string is a prime number.
+
+**Step-by-Step Execution with Input "orange"**
+
+1. **Initialization:**
+
+   - The input string "orange" is passed to the `prime_length` function.
+   - Inside the function, the `getelementptr` instruction locates the memory address of the string's length.
+
+2. **Length Retrieval:**
+
+   - The `load` instruction retrieves the length of the string (6 in this case) and stores it in the `%3` register.
+   - The `trunc` instruction converts the length (which might be a 64-bit integer) to a 32-bit integer and stores it in `%4`.
+
+3. **Initial Checks:**
+
+   - The `icmp slt` instruction compares the string length (6) with 2. Since 6 is greater than 2, the branch instruction jumps to label `6`.
+
+4. **Further Checks:**
+
+   - At label `6`, the `icmp slt` instruction compares the string length (6) with 4. Since 6 is greater than 4, the branch instruction jumps to label `8`.
+
+5. **Primality Test Loop:**
+
+   - Label `8` marks the start of a loop that checks for primality.
+     - The `phi` instruction initializes a variable `%9` with the value 2. This variable will be used to check divisibility.
+     - The `srem` instruction calculates the remainder when the string length (6) is divided by `%9` (2).
+
+6. **Divisibility Check:**
+
+   - The `icmp eq` instruction checks if the remainder is 0. In this case, 6 divided by 2 has a remainder of 0, so the result is `true`.
+
+7. **Increment and Continue:**
+
+   - The `add nuw nsw` instruction increments `%9` by 1, making it 3.
+   - The `mul nsw` instruction calculates the square of `%9` (3 * 3 = 9).
+   - The `icmp sgt` instruction compares the square of `%9` (9) with the string length (6). Since 9 is greater than 6, the result is `true`.
+   - The `select` instruction chooses `true` because the remainder was 0 (indicating divisibility) and the square of `%9` is greater than the length.
+
+8. **Loop Exit:**
+
+   - The `br i1` instruction jumps to label `16` because the `select` instruction returned `true`.
+
+9. **Result Determination:**
+
+   - At label `16`, the `xor` instruction flips the boolean value `true` to `false`.
+
+10. **Return Value:**
+
+   - The `phi` instruction combines the results from different branches and sets the return value `%19` to `false`.
+
+11. **Function Return:**
+
+   - The `ret` instruction returns the value `false`, indicating that the length of the string "orange" (6) is not a prime number.
+
+**Final Output:**
+
+The function `prime_length("orange")` returns `false`.
+
+**Verification:**
+
+The result is correct because 6 is not a prime number (it's divisible by 2 and 3).
+
+Assert Statement: assert (prime_length("wow") == true);
+Execution Result:
+Let's break down the execution of this IR code step-by-step.
+
+**Understanding the Code**
+
+The provided IR code is a function named `prime_length` which takes a C++ string as input and determines whether its length is a prime number. Here's a breakdown:
+
+* **Input:** The function takes a `%"class.std::__cxx11::basic_string"` as input, representing a C++ string.
+* **Functionality:** It checks if the length of the input string is a prime number.
+* **Output:** The function returns `true` if the length is prime, and `false` otherwise.
+
+**Step-by-Step Execution**
+
+Let's assume the input string is "wow".
+
+1. **Input String:** The string "wow" is passed to the `prime_length` function.
+
+2. **Length Calculation:**
+   -  The code first accesses the length of the string. In C++, the `.length()` method returns the number of characters in a string.
+
+3. **Initial Checks:**
+   -  The code checks if the length is less than 2. If it is, the length is not prime (prime numbers are greater than 1), so the function returns `false`.
+
+4. **Prime Check Loop:**
+   - If the length is 2 or greater, the code enters a loop to check for primality.
+   - It starts by assuming the length is prime (`%11` is initially `true`).
+   - The loop iterates, incrementally checking divisibility by numbers from 2 up to the square root of the length.
+   - If the length is divisible by any number in this range, it's not prime, and `%11` is set to `false`.
+
+5. **Result:**
+   - After the loop completes, the value of `%11` (which indicates whether the length is prime) is returned.
+
+**Applying to "wow"**
+
+1. **Length:** The string "wow" has a length of 3.
+
+2. **Initial Checks:** The length (3) is greater than 2, so the code proceeds to the loop.
+
+3. **Prime Check Loop:**
+   - The loop will check divisibility by 2. Since 3 is not divisible by 2, `%11` remains `true`.
+
+4. **Result:** The function returns `true` because the length (3) is a prime number.
+
+
+
+**Verification**
+
+The result is correct. The length of the string "wow" is 3, and 3 is indeed a prime number. Therefore, the function correctly returns `true`.
+
+Assert Statement: assert (prime_length("world") == true);
+Execution Result:
+Let's break down the execution of this IR code step by step.
+
+**Understanding the Code**
+
+The provided IR code represents a function named `prime_length` written in C++. This function takes a string as input (represented by the `%"class.std::__cxx11::basic_string"` type) and determines if the length of the string is a prime number. 
+
+**Step-by-Step Execution**
+
+We'll execute the code with the input "world".
+
+1. **Input:** The input string "world" is passed to the `prime_length` function.
+
+2. **Length Calculation:**
+   * The code first retrieves the length of the string. In IR, this is done through getelementptr and load instructions.
+   * `%2 = getelementptr inbounds %"class.std::__cxx11::basic_string", %"class.std::__cxx11::basic_string"* %0, i64 0, i32 1`: This instruction calculates the memory address of the length field within the string object.
+   * `%3 = load i64, i64* %2, align 8, !tbaa !3`: This instruction loads the value at the calculated address (the string's length) into the `%3` register.
+   * `%4 = trunc i64 %3 to i32`: This instruction truncates the length (which is a 64-bit integer) to a 32-bit integer and stores it in `%4`.
+
+3. **Initial Checks:**
+   * `%5 = icmp slt i32 %4, 2`: This compares the length (`%4`) with 2. If the length is less than 2, the code jumps to label `%18` (meaning the length is not prime).
+   * `br i1 %5, label %18, label %6`: This conditional branch decides which path to take based on the comparison result.
+
+4. **Prime Check Loop:**
+   * If the length is 2 or greater, the code enters a loop (starting at label `%6`).
+   * `%7 = icmp slt i32 %4, 4`: This checks if the length is less than 4. If it is, the code jumps to label `%18`.
+   * The loop iterates, attempting to find a divisor of the length.
+     * `%9 = phi i32 [ %12, %8 ], [ 2, %6 ]`: This instruction initializes a variable (`%9`) to 2 (the first potential divisor) if this is the first iteration of the loop, or to the value of `%12` from the previous iteration.
+     * `%10 = srem i32 %4, %9`: This calculates the remainder when the length (`%4`) is divided by the current divisor (`%9`).
+     * `%11 = icmp eq i32 %10, 0`: This checks if the remainder is 0 (meaning `%9` is a divisor of the length).
+     * `%12 = add nuw nsw i32 %9, 1`: This increments the divisor (`%9`) for the next iteration.
+     * `%13 = mul nsw i32 %12, %12`: This squares the incremented divisor.
+     * `%14 = icmp sgt i32 %13, %4`: This checks if the square of the divisor is greater than the length.
+     * `%15 = select i1 %11, i1 true, i1 %14`: This selects `true` if the remainder was 0 (a divisor was found) or if the square of the divisor is greater than the length (we've checked all potential divisors).
+     * `br i1 %15, label %16, label %8`: This conditional branch decides whether to exit the loop (if a divisor was found or all potential divisors have been checked) or continue to the next iteration.
+
+5. **Result:**
+   * `%17 = xor i1 %11, true`: This XORs the result of the divisor check (`%11`) with `true`. If a divisor was found, `%11` is true, and the result is `false` (not prime). If no divisor was found, `%11` is false, and the result is `true` (prime).
+   * `br label %18`: This jumps to the final label.
+   * `%19 = phi i1 [ false, %1 ], [ true, %6 ], [ %17, %16 ]`: This instruction selects the final result based on which path was taken through the code.
+
+6. **Return:**
+   * `ret i1 %19`: This returns the final result (`%19`), indicating whether the length of the string is prime.
+
+**Final Output**
+
+The length of the string "world" is 5. The code will determine that 5 is a prime number and return `true`.
+
+Assert Statement: assert (prime_length("MadaM") == true);
+Execution Result:
+Let's break down the execution of this IR code step by step.
+
+**Understanding the Code**
+
+The provided IR code defines a function named `prime_length`. This function takes a string as input (represented by the `%"class.std::__cxx11::basic_string"` type) and determines if the length of the string is a prime number. 
+
+Here's a high-level explanation of the code:
+
+1. **Length Extraction:** The code first extracts the length of the input string and stores it in a variable.
+
+2. **Initial Checks:** It performs some initial checks:
+   - If the length is less than 2, it's not prime (returns `false`).
+   - If the length is 2, 3, it's prime (returns `true`).
+
+3. **Primality Test Loop:** For lengths greater than 3, it enters a loop that tests for divisibility by numbers from 2 up to the square root of the length. If it finds a divisor, the length is not prime (`false`).
+
+4. **Result:** If the loop completes without finding a divisor, the length is prime (`true`).
+
+**Executing with Input "MadaM"**
+
+Let's execute the code with the input string "MadaM":
+
+1. **Input:** `"MadaM"`
+
+2. **Length:** The length of "MadaM" is 5.
+
+3. **Initial Checks:**
+   - 5 is greater than 2, so we proceed to the loop.
+
+4. **Loop:**
+   - Iteration 1: `i = 2`, `5 % 2 != 0` (not divisible), continue.
+   - Iteration 2: `i = 3`, `5 % 3 != 0` (not divisible), continue.
+   - The loop terminates because the square root of 5 is less than 3.
+
+5. **Result:** Since no divisors were found, the function returns `true`.
+
+
+
+**Final Output**
+
+The function `prime_length("MadaM")` returns `true`.
+
+**Verification**
+
+The result is correct because 5 is indeed a prime number.
+
+Assert Statement: assert (prime_length("Wow") == true);
+Execution Result:
+Let's break down the execution of this IR code step-by-step.
+
+**Understanding the Code**
+
+This IR code defines a function named `prime_length` that takes a string as input and determines if its length is a prime number. Here's a high-level overview:
+
+1. **Input:** The function receives a `basic_string` object (a C++ string) as input.
+2. **Length Calculation:** It retrieves the length of the string.
+3. **Primality Check:** It uses a loop to check if the length is a prime number.
+4. **Output:** It returns `true` if the length is prime, `false` otherwise.
+
+**Step-by-Step Execution for Input "Wow"**
+
+1. **Input:** The input string is "Wow", which has a length of 3.
+
+2. **Length Retrieval:**
+   - `%2 = getelementptr inbounds %"class.std::__cxx11::basic_string", %"class.std::__cxx11::basic_string"* %0, i64 0, i32 1`: This line calculates the memory address of the length field within the string object.
+   - `%3 = load i64, i64* %2, align 8, !tbaa !3`: This line loads the length (3) from the calculated memory address.
+
+3. **Initial Checks:**
+   - `%4 = trunc i64 %3 to i32`: Converts the length (3) to a 32-bit integer.
+   - `%5 = icmp slt i32 %4, 2`: Checks if the length (3) is less than 2. This condition is false.
+   - `br i1 %5, label %18, label %6`: Since the condition is false, the code jumps to label `6`.
+
+4. **Loop for Primality Check:**
+   - `%7 = icmp slt i32 %4, 4`: Checks if the length (3) is less than 4. This condition is also false.
+   - `br i1 %7, label %18, label %8`: Jumps to label `8`.
+
+5. **Loop Body:**
+   - `%9 = phi i32 [ %12, %8 ], [ 2, %6 ]`: Initializes a loop variable `%9` with the value 2.
+   - `%10 = srem i32 %4, %9`: Calculates the remainder when the length (3) is divided by `%9` (initially 2). The remainder is 1.
+   - `%11 = icmp eq i32 %10, 0`: Checks if the remainder is 0. This condition is false.
+   - `%12 = add nuw nsw i32 %9, 1`: Increments `%9` by 1 (now `%9` is 3).
+   - `%13 = mul nsw i32 %12, %12`: Multiplies `%12` (3) by itself (3 * 3 = 9).
+   - `%14 = icmp sgt i32 %13, %4`: Checks if 9 is greater than the length (3). This condition is true.
+   - `%15 = select i1 %11, i1 true, i1 %14`: Since `%11` (remainder is 0) is false and `%14` (9 > 3) is true, this selects `true`.
+   - `br i1 %15, label %16, label %8`: Jumps to label `16`.
+
+6. **Prime Determination:**
+   - `%17 = xor i1 %11, true`: This line performs an XOR operation between `%11` (false) and `true`, resulting in `true`.
+   - `br label %18`: Jumps to label `18`.
+
+7. **Result:**
+   - `%19 = phi i1 [ false, %1 ], [ true, %6 ], [ %17, %16 ]`: Selects the final result. Since we reached label `16`, the result is `true`.
+   - `ret i1 %19`: Returns `true`, indicating that the length of the string "Wow" (which is 3) is a prime number.
+
+
+
+**Verification**
+
+The result is correct. The length of the string "Wow" is 3, and 3 is indeed a prime number.
+
+Assert Statement: assert (prime_length("") == false);
+Execution Result:
+Let's break down the execution of this IR code step by step.
+
+**Understanding the Code**
+
+This IR code defines a function called `prime_length`. It takes a string (represented as a `class.std::__cxx11::basic_string`) as input and returns `true` if the length of the string is a prime number, otherwise `false`.
+
+**Step 1: Function Entry**
+
+* The function starts by retrieving the length of the input string. This is done by accessing the second field of the `basic_string` structure (index 1), which stores the length.
+
+```c++
+  %2 = getelementptr inbounds %"class.std::__cxx11::basic_string", %"class.std::__cxx11::basic_string"* %0, i64 0, i32 1
+  %3 = load i64, i64* %2, align 8, !tbaa !3
+```
+
+* The loaded length is stored in the `%3` register.
+
+**Step 2: Initial Checks**
+
+* The code then performs two initial checks:
+    * **Check 1:** If the length is less than 2, it's not prime, so the function returns `false`.
+
+```c++
+  %4 = trunc i64 %3 to i32
+  %5 = icmp slt i32 %4, 2
+  br i1 %5, label %18, label %6 
+```
+
+    * **Check 2:** If the length is less than 4, it's prime (2 and 3 are prime).
+
+```c++
+6:                                                ; preds = %1
+  %7 = icmp slt i32 %4, 4
+  br i1 %7, label %18, label %8
+```
+
+**Step 3: Primality Test Loop**
+
+* If the length is 4 or greater, the code enters a loop to test for primality.
+
+```c++
+8:                                                ; preds = %6, %8
+  %9 = phi i32 [ %12, %8 ], [ 2, %6 ]
+  %10 = srem i32 %4, %9
+  %11 = icmp eq i32 %10, 0
+  %12 = add nuw nsw i32 %9, 1
+  %13 = mul nsw i32 %12, %12
+  %14 = icmp sgt i32 %13, %4
+  %15 = select i1 %11, i1 true, i1 %14
+  br i1 %15, label %16, label %8, !llvm.loop !10
+```
+
+* **Loop Logic:**
+    * `%9`: This variable holds the current divisor being tested. It starts at 2 and increments in each iteration.
+    * `%10`: Calculates the remainder when the length (`%4`) is divided by the current divisor (`%9`).
+    * `%11`: Checks if the remainder is 0 (indicating the length is divisible by the current divisor).
+    * `%12`: Increments the divisor for the next iteration.
+    * `%13`: Calculates the square of the next divisor.
+    * `%14`: Checks if the square of the next divisor is greater than the length. This is an optimization – if the square of a divisor is greater than the length, we know the number is prime.
+    * `%15`: Determines whether the length is divisible by the current divisor (`%11`) or if the square of the next divisor is greater than the length (`%14`).
+
+* **Loop Condition:** The loop continues as long as the length is not divisible by the current divisor and the square of the next divisor is less than or equal to the length.
+
+**Step 4: Primality Result**
+
+* **If the loop completes without finding a divisor:** The length is prime, and the function returns `true`. This is handled by the `br i1 %15, label %16, label %8` instruction, where `%16` is the label for the "prime" case.
+
+```c++
+16:                                               ; preds = %8
+  %17 = xor i1 %11, true
+  br label %18
+```
+
+* **If a divisor is found:** The function returns `false`.
+
+**Step 5: Return Value**
+
+* The final result (`true` or `false`) is stored in the `%19` register and returned.
+
+```c++
+18:                                               ; preds = %16, %6, %1
+  %19 = phi i1 [ false, %1 ], [ true, %6 ], [ %17, %16 ]
+  ret i1 %19
+```
+
+**Executing with the Input: ""**
+
+1. **Input:** The input string is empty (""), so its length is 0.
+2. **Initial Checks:** Since the length is less than 2, the function immediately returns `false`.
+
+
+
+**Final Output:**
+
+```
+false
+```
+
+**Verification:**
+
+The function correctly identifies that an empty string (length 0) is not a prime number.
+
+Assert Statement: assert (prime_length("HI") == true);
+Execution Result:
+Let's break down the execution of this IR code step-by-step.
+
+**Understanding the Code**
+
+This IR code defines a function called `prime_length` that takes a string as input and determines if the length of the string is a prime number. Here's a breakdown of the code:
+
+* **Function Signature:**
+   - `define dso_local zeroext i1 @_Z12prime_lengthNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(%"class.std::__cxx11::basic_string"* nocapture readonly %0) local_unnamed_addr #0`
+
+   This line defines the function `prime_length`. 
+   - `dso_local`: Indicates the function is local to the current shared object.
+   - `zeroext i1`: Specifies the return type is a single bit (i1) and it's zero-extended. This means the function returns `true` (1) or `false` (0).
+   - `@_Z12prime_lengthNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE`: This is the mangled name of the function (how C++ names are represented in the IR).
+   - `%"class.std::__cxx11::basic_string"* nocapture readonly %0`: The function takes a single argument, a pointer to a `std::string` object.  
+      - `nocapture`: Indicates the function doesn't capture the string pointer.
+      - `readonly`: Indicates the function doesn't modify the string.
+   - `local_unnamed_addr #0`: This is a function attribute.
+
+* **Function Body:**
+
+   The rest of the code within the curly braces `{` and `}` defines the function's body.
+
+**Step-by-Step Execution with Input "HI"**
+
+1. **Input:** The input string is "HI".  In the IR, this is represented as a `std::string` object.
+
+2. **Length Calculation:**
+   - `%2 = getelementptr inbounds %"class.std::__cxx11::basic_string", %"class.std::__cxx11::basic_string"* %0, i64 0, i32 1`
+     - This line calculates the address of the length field within the `std::string` object.
+   - `%3 = load i64, i64* %2, align 8, !tbaa !3`
+     - This loads the length of the string (which is 2 for "HI") into the `%3` register.
+   - `%4 = trunc i64 %3 to i32`
+     - This converts the length from a 64-bit integer to a 32-bit integer.
+
+3. **Initial Primality Checks:**
+   - `%5 = icmp slt i32 %4, 2`
+     - This checks if the length is less than 2. Since 2 is not less than 2, this condition is false.
+   - `br i1 %5, label %18, label %6`
+     - This branches to label `%6` because the condition is false.
+
+4. **More Primality Checks:**
+   - `%7 = icmp slt i32 %4, 4`
+     - This checks if the length is less than 4. Since 2 is less than 4, this condition is true.
+   - `br i1 %7, label %18, label %8`
+     - This branches to label `%18` because the condition is true.
+
+5. **Primality Loop:**
+   - The code would enter a loop if the length was greater than or equal to 4. Since our length is 2, we skip this loop.
+
+6. **Result:**
+   - `%19 = phi i1 [ false, %1 ], [ true, %6 ], [ %17, %16 ]`
+     - This selects the appropriate result based on the previous branch conditions. Since we branched to label `%18` after checking if the length was less than 4, the result `%19` will be `true`.
+   - `ret i1 %19`
+     - The function returns the result, which is `true`.
+
+**Final Output:**
+
+The function `prime_length("HI")` returns `true` because the length of the string "HI" (which is 2) is a prime number.
+
+Assert Statement: assert (prime_length("go") == true);
+Execution Result:
+Let's break down the execution of the provided IR code step-by-step.
+
+**Understanding the Code**
+
+This IR code defines a function named `prime_length` that determines if the length of a given string is a prime number. It takes a string as input and returns `true` if the length is prime, and `false` otherwise.
+
+**Step-by-Step Execution with Input "go"**
+
+1. **Input:** The input string is "go", which has a length of 2.
+
+2. **Initialization:**
+   - The function starts by accessing the length of the input string. In this case, the length is 2.
+
+3. **Initial Checks:**
+   - The code first checks if the length is less than 2 (`icmp slt i32 %4, 2`). Since 2 is not less than 2, this condition is false.
+   - The code then checks if the length is less than 4 (`icmp slt i32 %4, 4`). Since 2 is less than 4, this condition is true, and the code proceeds to the next block.
+
+4. **Prime Check Loop:**
+   - The code enters a loop that iterates to check for primality.
+   - Inside the loop:
+     - `%9` is initialized to 2 (the starting divisor).
+     - The remainder when the length (2) is divided by `%9` is calculated (`srem i32 %4, %9`). This remainder is 0.
+     - The code checks if the remainder is 0 (`icmp eq i32 %10, 0`). Since it is 0, the condition is true.
+     - `%12` is incremented to 3 (the next divisor to check).
+     - The square of `%12` (9) is calculated and compared to the length (2). Since 9 is greater than 2, the condition (`icmp sgt i32 %13, %4`) is true.
+     - The `select` instruction chooses `true` because the remainder was 0 and the square of the divisor is greater than the length.
+
+5. **Loop Exit and Result:**
+   - The loop terminates because the `select` instruction returned `true`.
+   - The code branches to the end of the function.
+   - The value `true` is assigned to `%19` because the loop exited due to the `select` instruction returning `true`, indicating the length is not prime.
+
+6. **Return:**
+   - The function returns `false` (`ret i1 %19`).
+
+**Final Output:**
+
+The function `prime_length("go")` returns `false` because the length of the string "go" is 2, which is not a prime number.
+
+
+
+**Verification:**
+
+The result is correct. The length of the string "go" is 2, which is not a prime number.
+
+Assert Statement: assert (prime_length("gogo") == false);
+Execution Result:
+Let's break down the execution of the provided IR code step-by-step for the input string "gogo".
+
+**Understanding the Code**
+
+This IR code defines a function `prime_length` that checks if the length of a given string is a prime number. Here's a breakdown of the key parts:
+
+* **Input:** The function takes a `std::string` as input (represented by the `%"class.std::__cxx11::basic_string"` type).
+
+* **Length Calculation:**  
+   * `%2 = getelementptr inbounds %"class.std::__cxx11::basic_string", %"class.std::__cxx11::basic_string"* %0, i64 0, i32 1`: This line accesses the length of the string stored within the `basic_string` object.
+   * `%3 = load i64, i64* %2, align 8, !tbaa !3`: This loads the length (a 64-bit integer) into the `%3` register.
+   * `%4 = trunc i64 %3 to i32`: The length is truncated to a 32-bit integer and stored in `%4`.
+
+* **Primality Check:** The code then uses a loop to check for divisibility. It iterates through potential divisors starting from 2 up to the square root of the length. If the length is divisible by any of these numbers, it's not prime.
+
+* **Return Value:** The function returns `true` if the length is prime and `false` otherwise.
+
+**Step-by-Step Execution for "gogo"**
+
+1. **Input:** The input string is "gogo". Its length is 4.
+
+2. **Length Calculation:**
+   * The code retrieves the length (4) and stores it in `%4`.
+
+3. **Primality Check:**
+   * The loop starts with `%9` initialized to 2.
+   * **Iteration 1:**
+     * `%10 = srem i32 %4, %9`: 4 divided by 2 has a remainder of 0.
+     * `%11 = icmp eq i32 %10, 0`: This comparison is true (remainder is 0).
+     * `%15 = select i1 %11, i1 true, i1 %14`: Since the remainder is 0, `%15` is set to `true`.
+     * The loop exits because `%15` is `true`.
+
+4. **Result:**  Since the length (4) is divisible by 2, the function returns `false`.
+
+**Final Output:**
+
+The function `prime_length("gogo")` returns `false`.
+
+**Verification:**
+
+The result is correct. The length of "gogo" is 4, which is not a prime number (it's divisible by 2).
+
+Assert Statement: assert (prime_length("aaaaaaaaaaaaaaa") == false);
+Execution Result:
+Let's break down the execution of this IR code step-by-step.
+
+**Understanding the Code**
+
+The provided IR code defines a function `prime_length` that takes a C++ string as input and determines if the length of the string is a prime number.
+
+**Step-by-Step Execution**
+
+1. **Input:** The input string is "aaaaaaaaaaaaaaa", which has a length of 13.
+
+2. **Initialization:**
+   -  `%2 = getelementptr inbounds %"class.std::__cxx11::basic_string", %"class.std::__cxx11::basic_string"* %0, i64 0, i32 1`: This line calculates the address of the length field within the string object.
+   - `%3 = load i64, i64* %2, align 8, !tbaa !3`: This loads the length of the string (13) into the `%3` register.
+   - `%4 = trunc i64 %3 to i32`: This truncates the length (13) to a 32-bit integer and stores it in the `%4` register.
+
+3. **Initial Checks:**
+   - `%5 = icmp slt i32 %4, 2`: This checks if the length (13) is less than 2. Since 13 is not less than 2, the condition is false, and the code jumps to the next block.
+
+4. **Looping for Primality Test:**
+   - `%7 = icmp slt i32 %4, 4`: This checks if the length (13) is less than 4. Since 13 is not less than 4, the code proceeds to the next block.
+
+   - **Loop Initialization:**
+     - `%9 = phi i32 [ %12, %8 ], [ 2, %6 ]`: This initializes the loop counter `%9` to 2.
+
+   - **Loop Body:**
+     - `%10 = srem i32 %4, %9`: This calculates the remainder when the length (13) is divided by the loop counter `%9`.
+     - `%11 = icmp eq i32 %10, 0`: This checks if the remainder is 0.
+     - `%12 = add nuw nsw i32 %9, 1`: This increments the loop counter `%9` by 1.
+     - `%13 = mul nsw i32 %12, %12`: This calculates the square of the loop counter `%12`.
+     - `%14 = icmp sgt i32 %13, %4`: This checks if the square of the loop counter is greater than the length.
+
+     - `%15 = select i1 %11, i1 true, i1 %14`: This selects `true` if the remainder is 0 or the square of the loop counter is greater than the length, otherwise `false`.
+     - The loop continues until the condition `%15` becomes `true` or the loop counter exceeds the length.
+
+5. **Result:**
+   - `%17 = xor i1 %11, true`: This inverts the value of `%11` (the remainder check). If the remainder was 0, `%17` will be `false`, otherwise `true`.
+
+   - `%19 = phi i1 [ false, %1 ], [ true, %6 ], [ %17, %16 ]`: This selects the final result based on the conditions encountered during the execution. In this case, since 13 is a prime number, the result will be `true`.
+
+6. **Return:**
+   - `ret i1 %19`: The function returns the boolean result (`true`) indicating that the length of the input string is a prime number.
+
+**Final Output:**
+
+The function `prime_length("aaaaaaaaaaaaaaa")` returns `true` because 13 is a prime number.
+
+Assert Statement: assert (prime_length("Madam") == true);
+Execution Result:
+Let's break down the execution of this IR code step by step.
+
+**Understanding the Code**
+
+The provided IR code defines a function called `prime_length` that takes a string as input and determines if its length is a prime number. Here's a high-level explanation:
+
+* **Input:** The function takes a `basic_string` (a C++ string) as input.
+* **Logic:**
+    * It first checks if the string's length is less than 2. If so, it returns `false` (lengths 0 and 1 are not prime).
+    * If the length is 2 or 3, it returns `true` (2 and 3 are prime).
+    * For lengths greater than 3, it iterates, checking if the length is divisible by any number from 2 up to the square root of the length. If it finds a divisor, it returns `false` (not prime).
+    * If no divisors are found, it returns `true` (prime).
+* **Output:** The function returns a boolean value (`true` if the length is prime, `false` otherwise).
+
+**Step-by-Step Execution for Input "Madam"**
+
+1. **Function Call:** The code `assert(prime_length("Madam") == true);` calls the `prime_length` function with the string "Madam" as input.
+
+2. **String Length:** The length of the string "Madam" is 5.
+
+3. **Initial Checks:**
+   * The length (5) is greater than 3, so the code proceeds to the iteration loop.
+
+4. **Iteration Loop:**
+   * **Initialization:** The loop starts with `i = 2`.
+   * **Divisibility Check:** The code checks if 5 is divisible by `i` (which is 2 in the first iteration). Since 5 is not divisible by 2, the loop continues.
+   * **Increment:** The loop counter `i` is incremented to 3.
+   * **Divisibility Check:** The code checks if 5 is divisible by 3. Again, 5 is not divisible by 3.
+   * **Loop Termination:** Since the square root of 5 is less than 3, the loop terminates.
+
+5. **Prime Determination:** Because the loop completed without finding any divisors of 5, the function determines that the length 5 is prime and returns `true`.
+
+6. **Assertion:** The `assert` statement verifies that the result returned by `prime_length("Madam")` is indeed `true`. Since the result is correct, the assertion passes.
+
+
+
+**Final Output:**
+
+The function `prime_length("Madam")` returns `true`, indicating that the length of the string "Madam" is a prime number. The assertion succeeds.
+
+Let me know if you'd like me to analyze a different input string or delve deeper into any specific part of the IR code!
+
+Assert Statement: assert (prime_length("M") == false);
+Execution Result:
+Let's break down the execution of the given IR code step-by-step for the input "M".
+
+**Step 1: Input and Function Call**
+
+* We are given the input string "M". This string will be represented as a `std::string` object in C++.
+
+* The code calls the function `prime_length` with this string as an argument.
+
+**Step 2:  Analyzing the IR Code**
+
+The IR code defines the `prime_length` function. Let's understand its structure:
+
+* **Input:**  It takes a `std::string` object as input, represented by the `%"class.std::__cxx11::basic_string"*` type.
+* **Length Calculation:**
+
+   * It first retrieves the length of the input string using `getelementptr` and `load` instructions. The length is stored in the `%3` variable.
+   * The length is then truncated to a 32-bit integer (`%4`).
+
+* **Primality Check:**
+   * The code then checks if the length is less than 2. If it is, the function returns `false` (not a prime number).
+
+* **Loop for Primality Test:**
+   * If the length is 2 or greater, the code enters a loop.
+
+   * Inside the loop:
+      * It checks if the length is divisible by the current loop counter (`%9`).
+      * If divisible, it sets a flag (`%11`) to `true`, indicating the length is not prime.
+      * It increments the loop counter.
+
+* **Result:**
+   * After the loop, the function returns `true` if the flag (`%11`) is `false` (meaning the length was not divisible by any number in the loop), indicating the length is prime. Otherwise, it returns `false`.
+
+**Step 3: Execution with Input "M"**
+
+1. **Length:** The length of the string "M" is 1.
+
+2. **Initial Checks:** Since the length (1) is less than 2, the code directly jumps to the `false` return statement.
+
+**Step 4: Output**
+
+* The function `prime_length("M")` returns `false`.
+
+**Verification:** The output is correct because the length of the string "M" is 1, which is not a prime number.
+
+
+
+Let me know if you'd like me to elaborate on any specific part of the code or the execution process!
+
+Assert Statement: assert (prime_length("0") == false);
+Execution Result:
+Let's break down the execution of this IR code step-by-step.
+
+**Understanding the Code**
+
+This IR code defines a function called `prime_length` which takes a string as input and determines if its length is a prime number. Here's a high-level explanation:
+
+1. **Input:** The function takes a `basic_string` (a C++ string) as input, represented by the `%0` argument.
+
+2. **Length Calculation:**
+   - It first extracts the length of the string using `getelementptr` and `load` instructions. The length is stored in the `%3` variable.
+
+3. **Prime Check:**
+
+   - The code then uses a loop to check if the length is prime. It iterates through potential divisors starting from 2.
+   - `icmp slt` instructions compare the length with 2 and 4. If the length is less than 2, it's not prime (`false`). If it's 2 or 3, it's prime (`true`).
+   - For lengths greater than 3, the loop iterates, checking if the length is divisible by any number from 2 up to the square root of the length.
+
+4. **Output:** The function returns `true` if the length is prime, and `false` otherwise.
+
+**Executing with Input "0"**
+
+Now, let's execute the code with the input string "0".
+
+1. **Input:** `%"class.std::__cxx11::basic_string"* %0` will hold the string "0".
+
+2. **Length Calculation:** The length of the string "0" is 1.
+
+3. **Prime Check:**
+   - The length (1) is less than 2, so the `icmp slt` instruction at the beginning will evaluate to `true`.
+
+4. **Output:** The function returns `false` because the length (1) is not prime.
+
+
+
+**Verification**
+
+The result matches the assertion: `assert (prime_length("0") == false);`
+
+**Final Output:**
+
+`false`
+

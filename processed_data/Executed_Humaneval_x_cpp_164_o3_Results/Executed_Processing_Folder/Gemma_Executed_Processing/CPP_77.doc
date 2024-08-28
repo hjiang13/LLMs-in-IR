@@ -1,0 +1,472 @@
+Assert Statement: assert (iscuber(1) == true);
+Execution Result:
+Let's analyze the provided IR code step-by-step using the given input `iscuber(1)`.
+
+**Step 1: Function Call and Initialization**
+
+* The code starts with a function call `iscuber(1)`. This means we're invoking the function `iscuber` and passing the integer value `1` as an argument.
+
+* Inside the `iscuber` function, the argument `%0` (representing the input `1`) is used as the input to the `llvm.abs.i32` intrinsic function.
+
+*  `llvm.abs.i32` calculates the absolute value of `%0`. Since `%0` is `1`, its absolute value is also `1`. This result is stored in the `%2` register.
+
+**Step 2: Loop Initialization**
+
+* The code then branches to label `3`, which marks the beginning of a loop.
+
+* Inside the loop, we initialize a counter variable `%4` to `0`.
+
+**Step 3: Loop Iteration**
+
+*  The loop iterates as follows:
+    * `%5 = mul nsw i32 %4, %4`:  Multiply the current value of `%4` by itself (squaring).
+    * `%6 = mul nsw i32 %5, %4`: Multiply the result from the previous step by `%4` again (cubing).
+    * `%7 = icmp ult i32 %6, %2`: Compare if the cubed value `%6` is less than the absolute input value `%2` (which is `1`).
+    * `%8 = add nuw nsw i32 %4, 1`: Increment the counter `%4` by `1`.
+    * `br i1 %7, label %3, label %9`: If `%6` is less than `%2`, jump back to the beginning of the loop (label `3`). Otherwise, proceed to label `9`.
+
+**Step 4: Loop Termination and Result**
+
+* Since `1` cubed (`1 * 1 * 1`) is `1`, which is equal to the input, the loop will terminate after the first iteration.
+
+* The code jumps to label `9`.
+
+* `%10 = icmp ule i32 %6, %2`: This compares if the cubed value `%6` is less than or equal to the absolute input value `%2`. In this case, `%6` is `1`, which is equal to `%2`.
+
+* `ret i1 %10`: The function returns the boolean value `true` because `%6` is less than or equal to `%2`.
+
+**Final Output:**
+
+The function `iscuber(1)` returns `true`.
+
+**Verification:**
+
+The result is correct because 1 is indeed a perfect cube (1 * 1 * 1 = 1).
+
+Let me know if you have any more IR code snippets you'd like to analyze!
+
+Assert Statement: assert (iscuber(2) == false);
+Execution Result:
+Let's break down the execution of the provided LLVM IR code for the input `iscuber(2)`.
+
+**Understanding the Code**
+
+The IR code defines a function called `_Z7iscuberi` which aims to determine if a given integer is a perfect cube. Here's a breakdown:
+
+* **Function Signature:** `define dso_local zeroext i1 @_Z7iscuberi(i32 %0) local_unnamed_addr #0`
+   - `dso_local`:  Indicates the function has local scope.
+   - `zeroext i1`: Specifies the function returns a single-bit integer (i1) with zero extension.
+   - `_Z7iscuberi`: The mangled name of the function.
+   - `(i32 %0)`: The function takes a 32-bit integer argument (`%0`).
+   - `local_unnamed_addr`:  Indicates the function doesn't have an externally visible name.
+
+* **Body of the Function:**
+   1. **Absolute Value:**
+     - `%2 = tail call i32 @llvm.abs.i32(i32 %0, i1 true)`: Calculates the absolute value of the input argument (`%0`) using the `llvm.abs.i32` intrinsic function. The result is stored in `%2`.
+
+   2. **Loop:**
+     - `br label %3`: Unconditional branch to the label `%3`, which marks the beginning of a loop.
+     - **Loop Header (%3):**
+       - `%4 = phi i32 [ 0, %1 ], [ %8, %3 ]`: This is a PHI node, which merges values from different blocks.
+         - If coming from the initial entry point (`%1`), `%4` is initialized to 0.
+         - If coming from within the loop (`%3`), `%4` takes the value of `%8` from the previous iteration.
+       - `%5 = mul nsw i32 %4, %4`: Multiplies `%4` by itself (squares it), storing the result in `%5`.
+       - `%6 = mul nsw i32 %5, %4`: Multiplies `%5` (the square) by `%4` again (cubes it), storing the result in `%6`.
+       - `%7 = icmp ult i32 %6, %2`: Compares if the cubed value (`%6`) is less than the absolute value of the input (`%2`). The result (true or false) is stored in `%7`.
+       - `%8 = add nuw nsw i32 %4, 1`: Increments `%4` by 1, storing the result in `%8`.
+       - `br i1 %7, label %3, label %9`: Conditional branch:
+         - If `%7` is true (cubed value is less than the absolute input), branch back to the loop header (`%3`).
+         - If `%7` is false (cubed value is not less than the absolute input), branch to label `%9`.
+
+     - **Exit Block (%9):**
+       - `%10 = icmp ule i32 %6, %2`: Compares if the cubed value (`%6`) is less than or equal to the absolute value of the input (`%2`). The result is stored in `%10`.
+       - `ret i1 %10`: Returns the boolean value in `%10`.
+
+**Execution with Input 2**
+
+1. **Input:** `iscuber(2)`
+
+2. **Absolute Value:** `%2` will be 2 (absolute value of 2).
+
+3. **Loop:**
+   - Iteration 1:
+     - `%4 = 0`
+     - `%5 = 0 * 0 = 0`
+     - `%6 = 0 * 0 = 0`
+     - `%7 = 0 < 2` (true)
+     - `%8 = 0 + 1 = 1`
+     - Branch back to the loop header.
+   - Iteration 2:
+     - `%4 = 1`
+     - `%5 = 1 * 1 = 1`
+     - `%6 = 1 * 1 = 1`
+     - `%7 = 1 < 2` (true)
+     - `%8 = 1 + 1 = 2`
+     - Branch back to the loop header.
+
+   - Iteration 3:
+     - `%4 = 2`
+     - `%5 = 2 * 2 = 4`
+     - `%6 = 4 * 2 = 8`
+     - `%7 = 8 < 2` (false)
+     - `%8 = 2 + 1 = 3`
+     - Branch to label `%9`.
+
+4. **Exit:**
+   - `%10 = 8 <= 2` (false)
+   - Return `false`.
+
+**Final Output:**
+
+`iscuber(2) == false`
+
+Assert Statement: assert (iscuber(-1) == true);
+Execution Result:
+Let's break down the execution of the provided IR code step-by-step for the input `iscuber(-1)`.
+
+**Understanding the Code**
+
+This IR code defines a function called `iscuber` which aims to determine if the input integer is a perfect cube. Here's a breakdown:
+
+* **`%2 = tail call i32 @llvm.abs.i32(i32 %0, i1 true)`:** This line calculates the absolute value of the input `%0` (which is -1 in our case) and stores it in `%2`. The `llvm.abs.i32` is an intrinsic function for calculating the absolute value.
+
+* **`br label %3`:** This is an unconditional branch, jumping to the label `%3`.
+
+* **Loop (`%3`):** This is the core of the function, a loop that iterates to find the cube of a number (`%4`).
+
+    * **`%4 = phi i32 [ 0, %1 ], [ %8, %3 ]`:** This is a PHI node, which merges values from different basic blocks. Here, it initializes `%4` to 0 at the beginning of the loop and updates it with `%8` in subsequent iterations.
+    * **`%5 = mul nsw i32 %4, %4`:** Calculates the square of `%4`.
+    * **`%6 = mul nsw i32 %5, %4`:** Calculates the cube of `%4`.
+    * **`%7 = icmp ult i32 %6, %2`:** Compares the cube (`%6`) with the absolute input (`%2`). 
+    * **`%8 = add nuw nsw i32 %4, 1`:** Increments `%4` for the next iteration.
+    * **`br i1 %7, label %3, label %9`:**  Branches back to the beginning of the loop (`%3`) if the cube is less than the absolute input, otherwise jumps to label `%9`.
+
+* **`%9`:** This label is reached when the cube is greater than or equal to the absolute input.
+
+    * **`%10 = icmp ule i32 %6, %2`:** Checks if the cube is less than or equal to the absolute input.
+    * **`ret i1 %10`:** Returns the result (`%10`), which is true if the cube is equal to the absolute input, indicating a perfect cube.
+
+**Execution with Input -1**
+
+1. **`%2 = tail call i32 @llvm.abs.i32(i32 -1, i1 true)`:** `%2` will be 1 (absolute value of -1).
+
+2. **Loop Iteration 1:**
+   * `%4 = 0` (initial value)
+   * `%5 = 0 * 0 = 0`
+   * `%6 = 0 * 0 = 0`
+   * `%7 = icmp ult i32 0, i32 1` (true, 0 is less than 1)
+   * Loop continues
+
+3. **Loop Iteration 2:**
+   * `%4 = 1`
+   * `%5 = 1 * 1 = 1`
+   * `%6 = 1 * 1 = 1`
+   * `%7 = icmp ult i32 1, i32 1` (false, 1 is not less than 1)
+   * Jump to label `%9`
+
+4. **`%9`:**
+   * `%10 = icmp ule i32 1, i32 1` (true, 1 is less than or equal to 1)
+
+5. **`ret i1 %10`:** Returns `true`
+
+
+
+**Final Output:**
+
+The function `iscuber(-1)` returns `true` because 1 (the cube of 1) is equal to the absolute value of the input (-1).
+
+Assert Statement: assert (iscuber(64) == true);
+Execution Result:
+Let's break down the execution of the provided LLVM IR code snippet for the input `iscuber(64)`.
+
+**Understanding the Code**
+
+The LLVM IR code defines a function named `iscuber` that checks if a given integer is a perfect cube. Here's a breakdown:
+
+* **Function Signature:**
+    * `define dso_local zeroext i1 @_Z7iscuberi(i32 %0) local_unnamed_addr #0`: This line defines the function `iscuber` which takes a 32-bit integer (`i32`) as input (`%0`) and returns a 1-bit integer (`i1`), likely representing true (1) or false (0).
+
+* **Absolute Value:**
+    * `%2 = tail call i32 @llvm.abs.i32(i32 %0, i1 true)`: This line calculates the absolute value of the input `%0` using the `llvm.abs.i32` intrinsic function. The result is stored in `%2`.
+
+* **Loop:**
+    * The code then enters a loop (labeled `3`). This loop iteratively checks if the cube of the current value (`%4`) is less than the absolute value of the input (`%2`).
+
+* **Loop Body:**
+    * `%4 = phi i32 [ 0, %1 ], [ %8, %3 ]`: This is a PHI node, which merges values from different basic blocks. It initializes `%4` to 0 at the beginning of the loop and updates it with the value of `%8` in subsequent iterations.
+    * `%5 = mul nsw i32 %4, %4`: Calculates the square of `%4`.
+    * `%6 = mul nsw i32 %5, %4`: Calculates the cube of `%4`.
+    * `%7 = icmp ult i32 %6, %2`: Compares the cube of `%4` with the absolute value of the input. If the cube is less than the absolute value, it sets `%7` to true (1), otherwise false (0).
+    * `%8 = add nuw nsw i32 %4, 1`: Increments `%4` by 1.
+    * `br i1 %7, label %3, label %9, !llvm.loop !3`: Branches to the beginning of the loop (`label %3`) if `%7` is true (cube is less than the absolute value), otherwise it jumps to `label %9`.
+
+* **Post-Loop:**
+    * `%10 = icmp ule i32 %6, %2`: Checks if the cube of `%4` is less than or equal to the absolute value of the input.
+    * `ret i1 %10`: Returns the result of the comparison (`%10`) as a 1-bit integer.
+
+**Execution with Input 64**
+
+1. **Input:** `iscuber(64)` means the input `%0` is 64.
+
+2. **Absolute Value:** `%2` is set to `abs(64)`, which is 64.
+
+3. **Loop Execution:**
+   * **Iteration 1:**
+      * `%4` is initialized to 0.
+      * `%6` (cube of `%4`) is 0.
+      * `%7` is false (0 because 0 < 64 is true).
+      * The loop continues.
+   * **Iteration 2:**
+      * `%4` is incremented to 1.
+      * `%6` (cube of `%4`) is 1.
+      * `%7` is false (1 < 64 is true).
+      * The loop continues.
+   * ... (Iterations continue until `%4` reaches 4)
+   * **Iteration 5:**
+      * `%4` is 4.
+      * `%6` (cube of `%4`) is 64.
+      * `%7` is false (64 <= 64 is true).
+      * The loop terminates and jumps to `label %9`.
+
+4. **Post-Loop:**
+   * `%10` is set to true (64 <= 64 is true).
+   * The function returns `true` (1).
+
+
+
+**Final Output:**
+
+The function `iscuber(64)` returns `true` because 64 is a perfect cube (4 * 4 * 4 = 64).
+
+Assert Statement: assert (iscuber(180) == false);
+Execution Result:
+Let's break down the execution of the provided LLVM IR code step-by-step for the input `iscuber(180)`.
+
+**Understanding the Code**
+
+The IR code defines a function named `iscuber` that takes an integer argument and determines if it's a perfect cube. Here's a high-level explanation:
+
+1. **Absolute Value:** It starts by calculating the absolute value of the input using the `llvm.abs.i32` intrinsic function.
+
+2. **Iteration:** It enters a loop that iterates, incrementally increasing a counter (`%4`).
+
+3. **Cube Calculation:** Inside the loop, it calculates the cube of the counter (`%5 * %4`).
+
+4. **Comparison:** It compares the cube with the absolute value of the input. If the cube is less than the absolute input, the loop continues.
+
+5. **Result:** Once the cube becomes greater than or equal to the absolute input, the loop terminates, and the function returns `true` if the cube is equal to the absolute input, otherwise `false`.
+
+**Step-by-Step Execution for `iscuber(180)`**
+
+1. **Input:** `%0` (the input argument) is set to 180.
+
+2. **Absolute Value:** `%2 = tail call i32 @llvm.abs.i32(i32 %0, i1 true)` calculates the absolute value of 180, which is 180.
+
+3. **Initialization:** `%4` is initialized to 0.
+
+4. **Loop Iteration 1:**
+   - `%5 = mul nsw i32 %4, %4` : %5 is 0 (0 * 0).
+   - `%6 = mul nsw i32 %5, %4` : %6 is 0 (0 * 0).
+   - `%7 = icmp ult i32 %6, %2` : %7 is true (0 < 180).
+   - `%8 = add nuw nsw i32 %4, 1` : %8 is 1 (0 + 1).
+
+5. **Loop Iteration 2:**
+   - `%4` is now 1.
+   - `%5 = mul nsw i32 %4, %4` : %5 is 1 (1 * 1).
+   - `%6 = mul nsw i32 %5, %4` : %6 is 1 (1 * 1).
+   - `%7 = icmp ult i32 %6, %2` : %7 is true (1 < 180).
+   - `%8 = add nuw nsw i32 %4, 1` : %8 is 2.
+
+6. **Loop Iteration 3:**
+   - `%4` is now 2.
+   - ... (similar calculations)
+   - ... %7 is true.
+
+7. **Loop Continues:** The loop continues in this manner, incrementing `%4` and calculating its cube.
+
+8. **Loop Termination:** Eventually, the cube of `%4` will exceed 180, and `%7` will become false.
+
+9. **Final Comparison:**
+   - `%10 = icmp ule i32 %6, %2` : This compares the last calculated cube with 180. Since the cube will be greater than 180, %10 will be false.
+
+10. **Return:** The function returns `false` because the input 180 is not a perfect cube.
+
+
+
+**Final Output:**
+
+The function `iscuber(180)` returns `false`.
+
+**Verification:**
+
+The result is correct because 180 is not a perfect cube (the cube root of 180 is not an integer).
+
+Assert Statement: assert (iscuber(1000) == true);
+Execution Result:
+Let's break down the execution of the provided IR code step-by-step.
+
+**Understanding the Code**
+
+The IR code defines a function named `iscuber` which aims to determine if a given integer is a perfect cube. Here's a breakdown:
+
+* **Input:** The function takes a signed 32-bit integer (`i32`) as input, represented by the argument `%0`.
+* **Functionality:**
+
+    * It first calculates the absolute value of the input using the `llvm.abs.i32` intrinsic function.
+    * Then, it enters a loop that iteratively:
+        * Calculates the cube of the current loop counter (`%4`).
+        * Compares this cube to the absolute value of the input.
+        * If the cube is less than the absolute input, it increments the counter and continues the loop.
+        * If the cube is greater than or equal to the absolute input, it exits the loop.
+    * Finally, it returns `true` if the cube of the last counter value is less than or equal to the absolute input, otherwise it returns `false`.
+
+**Executing with Input 1000**
+
+Let's execute the code with the input `1000`:
+
+1. **Input:** `%0 = 1000`
+
+2. **Absolute Value:** `%2 = tail call i32 @llvm.abs.i32(i32 %0, i1 true)` 
+   * `%2` will be 1000 (absolute value of 1000).
+
+3. **Loop Initialization:**
+   * `%4 = phi i32 [ 0, %1 ], [ %8, %3 ]` 
+     *  `%4` is initialized to 0.
+
+4. **Loop Iteration 1:**
+   * `%5 = mul nsw i32 %4, %4`  (`%5 = 0`)
+   * `%6 = mul nsw i32 %5, %4` (`%6 = 0`)
+   * `%7 = icmp ult i32 %6, %2` (`%7 = true` since 0 < 1000)
+   * `%8 = add nuw nsw i32 %4, 1` (`%8 = 1`)
+
+5. **Loop Iteration 2:**
+   * `%4 = phi i32 [ 0, %1 ], [ 1, %3 ]` (`%4 = 1`)
+   * `%5 = mul nsw i32 %4, %4` (`%5 = 1`)
+   * `%6 = mul nsw i32 %5, %4` (`%6 = 1`)
+   * `%7 = icmp ult i32 %6, %2` (`%7 = true` since 1 < 1000)
+   * `%8 = add nuw nsw i32 %4, 1` (`%8 = 2`)
+
+6. **... Subsequent Iterations ...**
+
+   The loop continues, incrementing `%4` and calculating its cube (`%6`) until `%6` becomes greater than or equal to 1000.
+
+7. **Loop Exit:**
+
+   Eventually, the loop will terminate when `%4` reaches 10, as 10 * 10 * 10 = 1000. At this point, `%7` will be `false`.
+
+8. **Final Comparison:**
+   * `%10 = icmp ule i32 %6, %2` (`%10 = true` since 1000 <= 1000)
+
+9. **Return:**
+   * `ret i1 %10` The function returns `true`.
+
+**Output:** 
+The function `iscuber(1000)` returns `true`, confirming that 1000 is indeed a perfect cube.
+
+Assert Statement: assert (iscuber(0) == true);
+Execution Result:
+Let's break down the execution of this IR code step-by-step.
+
+**Understanding the Code**
+
+The provided code defines a function `iscuber` that checks if a given integer is a perfect cube. Here's a breakdown:
+
+* **Input:** The function takes a signed 32-bit integer (`i32`) as input.
+* **Logic:** It iteratively calculates the cube of numbers starting from 0 and compares it with the absolute value of the input. If the cube becomes greater than or equal to the absolute input, it stops and returns `true` if the cube is equal to the absolute input, otherwise `false`.
+* **Output:** The function returns a boolean value (`i1`), `true` if the input is a perfect cube, `false` otherwise.
+
+**Step-by-Step Execution for Input 0**
+
+1. **Function Call:**  `iscuber(0)` is called.
+
+2. **Absolute Value:** 
+   - `%2 = tail call i32 @llvm.abs.i32(i32 %0, i1 true)` calculates the absolute value of the input, which is 0 in this case.
+
+3. **Initialization:**
+   - `%4 = phi i32 [ 0, %1 ], [ %8, %3 ]` initializes a loop counter `%4` to 0.
+
+4. **Loop Iteration 1:**
+   - `%5 = mul nsw i32 %4, %4` calculates `%4 * %4` (0 * 0 = 0).
+   - `%6 = mul nsw i32 %5, %4` calculates `%5 * %4` (0 * 0 = 0).
+   - `%7 = icmp ult i32 %6, %2` compares `%6` (0) with `%2` (0). Since 0 is not less than 0, `%7` is `false`.
+   - `%8 = add nuw nsw i32 %4, 1` increments `%4` to 1.
+   - As `%7` is `false`, the loop continues.
+
+5. **Loop Iteration 2:**
+   - The loop repeats steps 4a-4e with `%4` now being 1.
+
+6. **Loop Exit:**
+   - After several iterations, the loop will eventually terminate because `%6` (the cube of `%4`) will become greater than `%2` (0).
+
+7. **Final Comparison:**
+   - `%10 = icmp ule i32 %6, %2` compares the final value of `%6` with `%2`. Since `%6` will be greater than `%2`, `%10` will be `false`.
+
+8. **Return:**
+   - `ret i1 %10` returns `false` as the final result.
+
+
+
+**Final Output:**
+
+The function `iscuber(0)` returns `false`.
+
+**Verification:**
+
+The output is correct because 0 is not a perfect cube of any integer.
+
+Assert Statement: assert (iscuber(1729) == false);
+Execution Result:
+Let's break down the execution of the provided LLVM IR code step-by-step for the input `iscuber(1729)`.
+
+**Understanding the Code**
+
+The code defines a function `iscuber` which aims to determine if a given integer is a perfect cube. Here's a breakdown:
+
+* **Function Signature:**  `define dso_local zeroext i1 @_Z7iscuberi(i32 %0) local_unnamed_addr #0`
+   - `dso_local`: Indicates the function is locally visible.
+   - `zeroext i1`: Specifies the return type as a single-bit integer (i.e., a boolean value: `true` or `false`).
+   - `@_Z7iscuberi`: The function's mangled name.
+   - `(i32 %0)`:  Takes a 32-bit integer as input, referred to as `%0` within the function.
+
+* **Body:**
+
+   1. **Absolute Value:** 
+      - `%2 = tail call i32 @llvm.abs.i32(i32 %0, i1 true)`:  Calculates the absolute value of the input `%0` using the `llvm.abs.i32` intrinsic function. The `true` argument indicates that the result should be a signed integer.
+
+   2. **Loop:**
+      - `br label %3`: Unconditional branch to the loop header labeled `3`.
+
+      - **Loop Header (Label 3):**
+         - `%4 = phi i32 [ 0, %1 ], [ %8, %3 ]`: This is a PHI (phi) node. It merges values from different predecessor blocks.
+            - If coming from the entry block (`%1`), `%4` is initialized to 0.
+            - If coming from within the loop (`%3`), `%4` takes the value of `%8` from the previous iteration.
+         - `%5 = mul nsw i32 %4, %4`: Multiplies `%4` by itself (squares it). `nsw` indicates "no signed wrap" - overflow is not handled.
+         - `%6 = mul nsw i32 %5, %4`: Cubes `%4` by multiplying it by `%5`.
+         - `%7 = icmp ult i32 %6, %2`: Compares `%6` (the cube) with `%2` (the absolute input). Sets a flag based on whether `%6` is unsigned less than `%2`.
+         - `%8 = add nuw nsw i32 %4, 1`: Increments `%4` by 1. `nuw` means "no unsigned wrap," `nsw` means "no signed wrap."
+         - `br i1 %7, label %3, label %9, !llvm.loop !3`: Conditional branch. If `%7` is true (cube is less than the absolute input), loop back to label `3`. Otherwise, jump to label `9`.
+
+      - **Exit Block (Label 9):**
+         - `%10 = icmp ule i32 %6, %2`: Compares `%6` (the cube) with `%2` (the absolute input). Sets a flag based on whether `%6` is unsigned less than or equal to `%2`.
+         - `ret i1 %10`: Returns the boolean value represented by `%10`.
+
+**Execution for `iscuber(1729)`**
+
+1. **Input:** `%0 = 1729`
+
+2. **Absolute Value:** `%2 = abs(1729) = 1729`
+
+3. **Loop Iterations:** The loop will iterate, incrementing `%4` until `%6` (the cube of `%4`) becomes greater than or equal to `%2` (1729).
+
+4. **Finding the Cube:** The loop will continue until `%4` reaches 12, at which point `%6` will be 1728.
+
+5. **Comparison:** In the exit block, `%10` will be `false` because `1728` is less than `1729`.
+
+6. **Return:** The function returns `false` because 1729 is not a perfect cube.
+
+**Final Output:** `iscuber(1729) = false`
+
+
+
+Let me know if you'd like a more detailed breakdown of any specific part of the execution!
+

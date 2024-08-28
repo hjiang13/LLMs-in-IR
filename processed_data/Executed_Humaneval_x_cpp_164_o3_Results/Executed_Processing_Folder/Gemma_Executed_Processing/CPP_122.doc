@@ -1,0 +1,337 @@
+Assert Statement: assert (add_elements({1,-2,-3,41,57,76,87,88,99}, 3) == -4);
+Execution Result:
+Let's break down the execution of this IR code step-by-step.
+
+**Understanding the Code**
+
+This IR code implements a function called `add_elements`. It takes a vector of integers (`std::vector<int>`) and an integer (`i32`) as input. The function iterates through the vector, adds 99 to each element, and returns the sum of all the modified elements.
+
+**Step-by-Step Execution**
+
+Since we need to execute this code with the input `add_elements({1,-2,-3,41,57,76,87,88,99}, 3)`, let's focus on the relevant parts of the code.
+
+1. **Input:**
+   - `%0`: This represents the vector `{1,-2,-3,41,57,76,87,88,99}`.
+   - `%1`: This represents the integer `3`.
+
+2. **Initial Checks:**
+
+   - The code first checks if `%1` (3) is greater than 0. It is, so the execution proceeds.
+
+3. **Vector Access:**
+   - `%5 = getelementptr inbounds %"class.std::vector", %"class.std::vector"* %0, i64 0, i32 0, i32 0, i32 0, i32 0`: This line retrieves a pointer to the beginning of the vector's data.
+
+4. **Loop Setup:**
+   - The code then enters a loop that iterates over the vector elements. The loop structure is optimized for performance using vector instructions.
+
+5. **Vectorized Operations:**
+
+   - The code uses SIMD (Single Instruction, Multiple Data) instructions to process multiple elements of the vector simultaneously. For example, it loads four elements at a time into `<4 x i32>` registers.
+
+6. **Adding 99:**
+   - Inside the loop, each loaded set of four elements is added to 99.
+
+7. **Conditional Accumulation:**
+   -  The code checks if the result of adding 99 is less than 199. If it is, the element is added to an accumulator.
+
+8. **Loop Termination:**
+
+   - The loop continues until all elements of the vector have been processed.
+
+9. **Final Reduction:**
+   - After the loop, the accumulated values are added together to get the final sum.
+
+10. **Return Value:**
+
+   - The final sum is returned as the result of the `add_elements` function.
+
+**Calculating the Result**
+
+Given the input vector `{1,-2,-3,41,57,76,87,88,99}` and the integer 3, the function will perform the following:
+
+1. Add 99 to each element of the vector.
+2. Sum the modified elements.
+
+The final result will be the sum of the modified elements.
+
+**Important Notes:**
+
+- The actual calculations involve vector instructions and SIMD operations, which are optimized for performance.
+- The code is designed to handle vectors of various sizes efficiently.
+
+Let me know if you'd like me to elaborate on any specific part of the code or the execution process.
+
+Assert Statement: assert (add_elements({111,121,3,4000,5,6}, 2) == 0);
+Execution Result:
+Let's break down the execution of this IR code step by step.
+
+**Understanding the Function**
+
+The IR code defines a function named `add_elements`. This function takes a vector of integers (`std::vector<int>`) and an integer (`int`) as input. It iterates through the vector, adds 99 to each element, and then sums up all the modified elements.
+
+**Input:**
+
+The assert statement provides us with the input:
+
+*  `{111, 121, 3, 4000, 5, 6}` (The vector)
+*  `2` (The integer)
+
+**Step-by-Step Execution**
+
+1. **Initialization:**
+
+   * The function starts by checking if the input integer (`2` in our case) is greater than 0. Since it is, the code proceeds.
+
+2. **Vector Access:**
+
+   * The code retrieves a pointer to the beginning of the vector data.
+
+3. **Looping:**
+
+   * The code enters a loop that iterates through the vector. 
+   *  It checks if the number of elements to process (`2`) is less than 8. Since it's less than 8, it takes a specific branch.
+
+4. **Vectorized Operations:**
+
+   * The code uses vector instructions to process multiple elements simultaneously. It loads 4 integers at a time from the vector, adds 99 to each, and checks if the result is less than 199. If it is, the modified value is accumulated.
+
+5. **Remainder Handling:**
+
+   * After processing multiples of 4 elements, the code handles any remaining elements individually.
+
+6. **Summation:**
+
+   * The code sums up all the accumulated values from the vectorized and individual element processing.
+
+7. **Return:**
+
+   * The function returns the final sum.
+
+**Output:**
+
+The result of executing this code with the given input will be the sum of the modified elements in the vector.
+
+**Verification:**
+
+To verify the correctness, you would need to manually perform the following:
+
+1. Add 99 to each element in the vector: `{210, 220, 102, 4099, 104, 105}`.
+2. Sum up all the elements: 210 + 220 + 102 + 4099 + 104 + 105 = **4640**.
+
+**Therefore, the expected output of the function `add_elements({111, 121, 3, 4000, 5, 6}, 2)` should be 4640.**
+
+Assert Statement: assert (add_elements({11,21,3,90,5,6,7,8,9}, 4) == 125);
+Execution Result:
+Let's break down the execution of this IR code step by step.
+
+**Understanding the Code**
+
+This IR code implements a function called `add_elements` that takes a vector of integers (`std::vector<int>`) and an integer (`i32`) as input. It iterates through the vector, adds a constant value (99) to each element, and returns the sum of all the modified elements.
+
+**Step-by-Step Execution**
+
+1. **Function Entry:**
+
+   - We start at the beginning of the `add_elements` function.
+   - The input vector is passed in as `%0` and the integer value is passed in as `%1`.
+
+2. **Initial Check:**
+
+   - The code first checks if the integer value (`%1`) is greater than 0.
+
+   ```assembly
+   %3 = icmp sgt i32 %1, 0
+   br i1 %3, label %4, label %86
+   ```
+
+   - If `%1` is not greater than 0, it jumps to the end of the function (`label %86`), effectively returning 0.
+
+3. **Vector Access:**
+
+   - If `%1` is greater than 0, the code proceeds to access the data within the vector.
+
+   ```assembly
+   %5 = getelementptr inbounds %"class.std::vector", %"class.std::vector"* %0, i64 0, i32 0, i32 0, i32 0, i32 0
+   %6 = load i32*, i32** %5, align 8, !tbaa !3
+   ```
+
+   - `%5` calculates the address of the beginning of the vector's data.
+   - `%6` loads a pointer to the first element of the vector.
+
+4. **Loop Setup:**
+
+   - The code then enters a loop to iterate through the vector.
+
+   ```assembly
+   %7 = zext i32 %1 to i64
+   %8 = icmp ult i32 %1, 8
+   br i1 %8, label %83, label %9
+   ```
+
+   - `%7` converts `%1` (the integer value) to a 64-bit integer.
+   - `%8` checks if `%1` is less than 8.
+
+5. **Small Vector Optimization:**
+
+   - If `%1` is less than 8, a different loop (`label %83`) is used, likely optimized for smaller vectors.
+
+6. **Large Vector Loop:**
+
+   - If `%1` is 8 or greater, the main loop (`label %9`) is executed. This loop uses vector instructions to process multiple elements at a time.
+
+   - The loop iterates through the vector in chunks of 4 elements. It adds 99 to each element, checks if the result is less than 199, and accumulates the sum.
+
+7. **Loop Exit and Sum Calculation:**
+
+   - After the loop completes, the accumulated sum is calculated and returned.
+
+**Applying the Input**
+
+For the input `add_elements({11,21,3,90,5,6,7,8,9}, 4)`, the code would:
+
+1. Iterate through the first 4 elements of the vector (11, 21, 3, 90).
+2. Add 99 to each element.
+3. Accumulate the sum of the modified elements.
+
+The final sum would be returned.
+
+**Verification**
+
+
+
+Let me know if you'd like me to walk through the execution with a specific input vector and value, or if you have any other questions about the code!
+
+Assert Statement: assert (add_elements({111,21,3,4000,5,6,7,8,9}, 4) == 24);
+Execution Result:
+Let's break down the execution of this IR code step by step.
+
+**Understanding the Code**
+
+This IR code represents a function named `add_elements` that takes a vector of integers (`std::vector<int>`) and an integer (`i32`) as input. It adds a constant value (99) to each element of the vector and then sums up all the elements.
+
+**Step-by-Step Execution**
+
+We'll use the input provided in the assertion:
+
+```
+assert (add_elements({111,21,3,4000,5,6,7,8,9}, 4) == 24);
+```
+
+1. **Initialization:**
+
+   - The function receives a vector containing the elements: {111, 21, 3, 4000, 5, 6, 7, 8, 9}
+   - The integer input is 4.
+
+2. **Check for Empty Vector:**
+
+   - The code first checks if the input integer (`i1`) is greater than 0. Since it is 4, the code proceeds.
+
+3. **Vector Access:**
+
+   - The code retrieves the pointer to the beginning of the vector data (`%6`).
+
+4. **Looping through the Vector:**
+
+   - The code enters a loop that iterates through the vector elements.
+   - It checks if the number of elements to process (`i1`) is less than 8. Since it's 4, it enters a specialized loop for smaller vectors.
+
+5. **Processing Elements:**
+
+   - Inside the loop, the code loads four elements at a time from the vector into SIMD registers (`<4 x i32>`).
+   - It adds 99 to each element in these registers.
+   - It checks if the resulting values are less than 199 (likely to prevent overflow).
+   - If the values are less than 199, it accumulates the sum in separate SIMD registers.
+
+6. **Handling Remaining Elements:**
+
+   - After processing elements in groups of four, the code checks for any remaining elements.
+   - If there are remaining elements, it processes them individually, adding 99 and accumulating the sum.
+
+7. **Final Summation:**
+
+   - The code combines the sums from the SIMD registers and any remaining elements to get the total sum.
+
+8. **Return Value:**
+
+   - The function returns the final sum.
+
+**Verification**
+
+- The expected output is 24.
+
+- Let's manually verify the calculation:
+   - The first four elements of the vector are {111, 21, 3, 4000}.
+
+   - Adding 99 to each: {210, 120, 102, 4099}.
+
+   - The sum of these elements is 4511.
+
+**Discrepancy:**
+
+- There seems to be a discrepancy between the expected output (24) and the actual calculation result (4511).
+
+- This indicates a potential error in either the assertion statement or the code itself.
+
+
+Let me know if you'd like me to investigate further or explore other aspects of the IR code.
+
+Assert Statement: assert (add_elements({1}, 1) == 1);
+Execution Result:
+Let's break down the execution of the provided IR code step-by-step, keeping in mind the assertion `assert (add_elements({1}, 1) == 1);`.
+
+**Understanding the Code**
+
+The IR code defines a function `add_elements` that takes a vector of integers (`std::vector<int>`) and an integer as input. It iterates over the vector, adds 99 to each element, and returns the sum of all modified elements.
+
+**Step-by-Step Execution**
+
+1. **Initialization:**
+
+   - We are calling `add_elements({1}, 1)`. This means the input vector contains a single element, `1`, and the integer argument is also `1`.
+
+2. **Function Entry:**
+
+   - Execution starts at the beginning of the `add_elements` function.
+
+3. **Input Check:**
+
+   - The code first checks if the integer argument (`1` in our case) is greater than 0. Since it is, we proceed.
+
+4. **Vector Access:**
+
+   - The code retrieves a pointer to the beginning of the input vector's data using `%6 = load i32*, i32** %5, align 8`.
+
+5. **Loop Setup:**
+
+   - The code prepares for a loop to iterate through the vector elements.
+
+6. **Loop Condition:**
+
+   - The loop condition checks if we've processed all elements. In our case, since the vector has only one element, the loop will run once.
+
+7. **Element Access and Modification:**
+
+   - Inside the loop, the code loads the first element (`1`) from the vector, adds 99 to it (resulting in 100), and then performs a comparison to check if the modified value is less than 199.
+
+8. **Sum Calculation:**
+
+   - Since the modified value (100) is less than 199, it's added to a running sum.
+
+9. **Loop Exit:**
+
+   - The loop completes after processing the single element.
+
+10. **Return Value:**
+
+    - The function returns the calculated sum.
+
+**Verification**
+
+- The sum calculated by the function will be `100`.
+
+- The assertion `assert (add_elements({1}, 1) == 1);` will **fail** because the expected result is `1`, but the function returns `100`.
+
+
+
+Let me know if you'd like a more detailed breakdown of any specific part of the code or the execution process!
+

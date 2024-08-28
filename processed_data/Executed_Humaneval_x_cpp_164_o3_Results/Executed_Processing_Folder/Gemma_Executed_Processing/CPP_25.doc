@@ -1,0 +1,461 @@
+Assert Statement: assert (issame(factorize(2) , {2}));
+Execution Result:
+Let's break down the execution of this IR code step by step.
+
+**Understanding the Code**
+
+This IR code represents a function called `factorize` written in C++. The function takes an integer as input and aims to calculate its prime factors. It uses a vector to store these factors.
+
+**Step-by-Step Execution**
+
+1. **Initialization:**
+
+   - The code starts by allocating memory for a vector `v` (represented by the `%"class.std::vector"` structure) to store the prime factors.
+
+2. **Input Handling:**
+
+   - The input integer (`%1`) is passed to the function.
+
+3. **Special Case Handling:**
+
+   - The code first checks if the input integer is less than 4. If it is, it directly returns the input as a single-element vector. This is because numbers less than 4 are prime themselves.
+
+4. **Prime Factorization Loop:**
+
+   - If the input is 4 or greater, the code enters a loop to find its prime factors.
+
+   - **Iteration:** In each iteration, the code:
+     - Divides the input number by the current factor (`%55`).
+     - If the division results in no remainder, the current factor is a prime factor, and it's added to the vector `v`.
+     - The input number is updated by dividing it by the current factor.
+     - The loop continues until the input number becomes 1.
+
+5. **Return:**
+
+   - Finally, the function returns the vector `v` containing the prime factors of the input integer.
+
+**Applying the Assertion:**
+
+The assertion `assert (issame(factorize(2) , {2}));` checks if the output of `factorize(2)` is equal to the vector `{2}`.
+
+- Since 2 is a prime number, its only prime factor is itself. 
+- Therefore, `factorize(2)` should return a vector containing only the element 2.
+
+- The assertion will pass because the output of `factorize(2)` matches the expected vector `{2}`.
+
+**Important Notes:**
+
+- This code demonstrates a basic prime factorization algorithm. More efficient algorithms exist for larger numbers.
+- The IR code is a low-level representation of the C++ code. It provides detailed instructions for a compiler or interpreter to execute the program.
+
+Assert Statement: assert (issame(factorize(4) , {2, 2}));
+Execution Result:
+Let's break down the execution of the provided LLVM IR code step-by-step.
+
+**Understanding the Code**
+
+This LLVM IR code implements a function named `factorize`. It takes an integer as input and aims to return a vector containing the prime factors of that integer.
+
+**Step-by-Step Execution**
+
+1. **Initialization:**
+   - The function starts by allocating memory for a vector (using `std::vector`) to store the prime factors.
+
+2. **Handling Small Inputs:**
+   - If the input integer is less than 4, the function directly returns a vector containing the input itself. This handles the base cases.
+
+3. **Iterative Factorization:**
+   - For larger inputs, the code enters a loop. 
+   - It repeatedly checks if the input integer is divisible by an increasing sequence of numbers (starting from 2).
+   - If divisible, the current number is added to the vector of prime factors, and the input integer is divided by that number.
+
+4. **Loop Termination:**
+   - The loop continues until the input integer is reduced to 1, indicating that all prime factors have been found.
+
+5. **Return:**
+   - Finally, the function returns the vector containing the prime factors.
+
+**Applying the Assertion**
+
+Now, let's apply this to the assertion `assert(issame(factorize(4), {2, 2}));`.
+
+1. **Input:** The input to the `factorize` function is 4.
+
+2. **Execution:** The code will enter the iterative factorization loop.
+
+3. **Iterations:** 
+   - In the first iteration, 4 is divisible by 2. So, 2 is added to the vector, and 4 is divided by 2, resulting in 2.
+   - In the second iteration, 2 is divisible by 2. So, 2 is added to the vector, and 2 is divided by 2, resulting in 1.
+
+4. **Result:** The loop terminates, and the function returns a vector containing {2, 2}.
+
+5. **Assertion:** The assertion `issame(factorize(4), {2, 2})` checks if the returned vector is equal to {2, 2}. Since our execution resulted in {2, 2}, the assertion holds true.
+
+**Conclusion**
+
+The LLVM IR code correctly implements the factorization process, and the assertion is satisfied.
+
+Let me know if you'd like a more detailed walkthrough of any specific part of the code or have other IR snippets you want to analyze!
+
+Assert Statement: assert (issame(factorize(8) , {2, 2, 2}));
+Execution Result:
+```
+; Function Attrs: uwtable
+define dso_local void @_Z9factorizei(%"class.std::vector"* noalias nocapture sret(%"class.std::vector") align 8 %0, i32 %1) local_unnamed_addr #0 personality i8* bitcast (i32 (...)* @__gxx_personality_v0 to i8*) {
+  %3 = getelementptr inbounds %"class.std::vector", %"class.std::vector"* %0, i64 0, i32 0, i32 0, i32 0, i32 1
+  %4 = getelementptr inbounds %"class.std::vector", %"class.std::vector"* %0, i64 0, i32 0, i32 0, i32 0, i32 2
+  %5 = getelementptr inbounds %"class.std::vector", %"class.std::vector"* %0, i64 0, i32 0, i32 0, i32 0, i32 0
+  %6 = icmp slt i32 %1, 4
+  %7 = bitcast %"class.std::vector"* %0 to i8*
+  call void @llvm.memset.p0i8.i64(i8* noundef nonnull align 8 dereferenceable(24) %7, i8 0, i64 24, i1 false)
+  br i1 %6, label %12, label %51
+
+8:                                               ; preds = %109
+  %9 = icmp eq i32* %112, %111
+  br i1 %9, label %12, label %10
+
+10:                                              ; preds = %8
+  store i32 %113, i32* %112, align 4, !tbaa !3
+  %11 = getelementptr inbounds i32, i32* %112, i64 1
+  store i32* %11, i32** %3, align 8, !tbaa !7
+  br label %120
+
+12:                                              ; preds = %2, %8
+  %13 = phi i32 [ %113, %8 ], [ %1, %2 ]
+  %14 = phi i32* [ %111, %8 ], [ null, %2 ]
+  %15 = phi i32* [ %110, %8 ], [ null, %2 ]
+  %16 = ptrtoint i32* %14 to i64
+  %17 = ptrtoint i32* %15 to i64
+  %18 = sub i64 %16, %17
+  %19 = ashr exact i64 %18, 2
+  %20 = icmp eq i64 %18, 9223372036854775804
+  br i1 %20, label %21, label %23
+
+21:                                              ; preds = %12
+  invoke void @_ZSt20__throw_length_errorPKc(i8* getelementptr inbounds ([26 x i8], [26 x i8]* @.str, i64 0, i64 0)) #6
+          to label %22 unwind label %118
+
+22:                                              ; preds = %21
+  unreachable
+
+23:                                              ; preds = %12
+  %24 = icmp eq i64 %18, 0
+  %25 = select i1 %24, i64 1, i64 %19
+  %26 = add nsw i64 %25, %19
+  %27 = icmp ult i64 %26, %19
+  %28 = icmp ugt i64 %26, 2305843009213693951
+  %29 = or i1 %27, %28
+  %30 = select i1 %29, i64 2305843009213693951, i64 %26
+  %31 = icmp eq i64 %30, 0
+  br i1 %31, label %37, label %32
+
+32:                                              ; preds = %23
+  %33 = shl nuw nsw i64 %30, 2
+  %34 = invoke noalias nonnull i8* @_Znwm(i64 %33) #7
+          to label %35 unwind label %118
+
+35:                                              ; preds = %32
+  %36 = bitcast i8* %34 to i32*
+  br label %37
+
+37:                                              ; preds = %35, %23
+  %38 = phi i32* [ %36, %35 ], [ null, %23 ]
+  %39 = getelementptr inbounds i32, i32* %38, i64 %19
+  store i32 %13, i32* %39, align 4, !tbaa !3
+  %40 = icmp sgt i64 %18, 0
+  br i1 %40, label %41, label %44
+
+41:                                              ; preds = %37
+  %42 = bitcast i32* %38 to i8*
+  %43 = bitcast i32* %15 to i8*
+  tail call void @llvm.memmove.p0i8.p0i8.i64(i8* align 4 %42, i8* align 4 %43, i64 %18, i1 false) #8
+  br label %44
+
+44:                                              ; preds = %41, %37
+  %45 = getelementptr inbounds i32, i32* %39, i64 1
+  %46 = icmp eq i32* %15, null
+  br i1 %46, label %49, label %47
+
+47:                                              ; preds = %44
+  %48 = bitcast i32* %15 to i8*
+  tail call void @_ZdlPv(i8* nonnull %48) #8
+  br label %49
+
+49:                                              ; preds = %47, %44
+  store i32* %38, i32** %5, align 8, !tbaa !10
+  store i32* %45, i32** %3, align 8, !tbaa !7
+  %50 = getelementptr inbounds i32, i32* %38, i64 %30
+  store i32* %50, i32** %4, align 8, !tbaa !11
+  br label %120
+
+51:                                              ; preds = %2, %109
+  %52 = phi i32* [ %110, %109 ], [ null, %2 ]
+  %53 = phi i32* [ %111, %109 ], [ null, %2 ]
+  %54 = phi i32* [ %112, %109 ], [ null, %2 ]
+  %55 = phi i32 [ %115, %109 ], [ 2, %2 ]
+  %56 = phi i32 [ %113, %109 ], [ %1, %2 ]
+  %57 = srem i32 %56, %5
+
+Assert Statement: assert (issame(factorize(3 * 19) , {3, 19}));
+Execution Result:
+Let's break down the execution of the provided LLVM IR code step by step.
+
+**Understanding the Code**
+
+The code implements a function `factorize` in C++ that takes an integer as input and returns a vector containing its prime factors. 
+
+**Step-by-Step Execution**
+
+We'll simulate the execution for the input `3 * 19 = 57`.
+
+1. **Initialization:**
+
+   - The `factorize` function is called with the argument 57.
+   - A `std::vector` object `result` is created to store the prime factors.
+
+2. **Initial Checks:**
+
+   - The code checks if the input (57) is less than 4. Since 57 is greater than 4, this condition is false, and the code proceeds to the main factorization loop.
+
+3. **Factorization Loop:**
+
+   - The loop starts with an initial divisor of 2.
+
+   - **Iteration 1:** 57 is not divisible by 2, so the divisor is incremented to 3.
+
+   - **Iteration 2:** 57 is divisible by 3. 57 / 3 = 19. 
+     - The divisor (3) is added to the `result` vector.
+     - The input value (57) is updated to 19.
+
+   - **Iteration 3:** 19 is a prime number itself. It is added to the `result` vector.
+
+4. **Loop Termination:**
+
+   - The loop terminates because the input value (19) is now a prime number.
+
+5. **Return:**
+
+   - The `result` vector, containing the prime factors {3, 19}, is returned.
+
+**Verification**
+
+The `assert` statement `assert(issame(factorize(3 * 19) , {3, 19}));` checks if the output of `factorize(3 * 19)` is equal to the vector {3, 19}. Since our step-by-step execution resulted in the correct output, the assertion will hold true.
+
+**Conclusion**
+
+The LLVM IR code successfully factorizes the input 57 (3 * 19) and returns the correct vector of prime factors {3, 19}.
+
+Assert Statement: assert (issame(factorize(3 * 19 * 3 * 19) , {3, 3, 19, 19}));
+Execution Result:
+```cpp
+#include <vector>
+
+std::vector<int> factorize(int n) {
+  std::vector<int> factors;
+  for (int i = 2; i * i <= n; ++i) {
+    while (n % i == 0) {
+      factors.push_back(i);
+      n /= i;
+    }
+  }
+  if (n > 1) {
+    factors.push_back(n);
+  }
+  return factors;
+}
+
+int main() {
+  std::vector<int> result = factorize(3 * 19 * 3 * 19);
+  // Output: {3, 3, 19, 19}
+  return 0;
+}
+
+```
+
+**Execution Breakdown:**
+
+1. **Initialization:**
+   - A `std::vector<int>` named `factors` is created to store the prime factors.
+
+2. **Iteration:**
+   - The code iterates through potential divisors `i` from 2 up to the square root of `n`.
+   - **Divisibility Check:** For each `i`, it checks if `n` is divisible by `i` (`n % i == 0`).
+   - **Factor Extraction:** If divisible, `i` is added to the `factors` vector, and `n` is divided by `i`. This process repeats until `n` is no longer divisible by `i`.
+
+3. **Handling Remaining Factor:**
+   - After the loop, if `n` is still greater than 1, it means `n` itself is a prime factor and is added to the `factors` vector.
+
+4. **Return:**
+   - The function returns the `factors` vector containing the prime factorization of the input `n`.
+
+**Applying to the Assertion:**
+
+- When `factorize(3 * 19 * 3 * 19)` is called, the function correctly identifies the prime factors as 3, 3, 19, and 19, resulting in the output `{3, 3, 19, 19}`.
+
+- This matches the assertion `issame(factorize(3 * 19 * 3 * 19) , {3, 3, 19, 19})`, confirming the correctness of the implementation.
+
+Assert Statement: assert (issame(factorize(3 * 19 * 3 * 19 * 3 * 19) , {3, 3, 3, 19, 19, 19}));
+Execution Result:
+Let's break down the execution of the provided IR code step by step.
+
+**Understanding the Code**
+
+The IR code defines a function `factorize` that takes an integer as input and returns a vector containing its prime factors.
+
+**Step-by-Step Execution**
+
+1. **Initialization:**
+   - The function starts by initializing a vector `v` to store the prime factors.
+   - It then checks if the input number (`n`) is less than 4. If it is, the function returns a vector containing `n` as the only element.
+
+2. **Prime Factorization Loop:**
+   - If `n` is greater than or equal to 4, the function enters a loop that continues until `n` becomes 1.
+   - Inside the loop:
+     - It finds the smallest prime factor `p` of `n`.
+     - It adds `p` to the vector `v`.
+     - It divides `n` by `p`.
+   - This process repeats until `n` is reduced to 1.
+
+3. **Return:**
+   - Finally, the function returns the vector `v` containing the prime factors of the input number.
+
+**Example Execution with Input 3 * 19 * 3 * 19 * 3 * 19**
+
+1. **Initialization:**
+   - A vector `v` is created.
+   - Since the input is greater than 4, the loop begins.
+
+2. **Loop Iterations:**
+   - **Iteration 1:**
+     - The smallest prime factor of 3 * 19 * 3 * 19 * 3 * 19 is 3.
+     - `p = 3` is added to `v`.
+     - `n` is divided by 3, becoming 19 * 19 * 19.
+   - **Iteration 2:**
+     - The smallest prime factor of 19 * 19 * 19 is 19.
+     - `p = 19` is added to `v`.
+     - `n` is divided by 19, becoming 19 * 19.
+   - **Iteration 3:**
+     - The smallest prime factor of 19 * 19 is 19.
+     - `p = 19` is added to `v`.
+     - `n` is divided by 19, becoming 19.
+   - **Iteration 4:**
+     - The smallest prime factor of 19 is 19.
+     - `p = 19` is added to `v`.
+     - `n` is divided by 19, becoming 1.
+
+3. **Return:**
+   - The loop terminates because `n` is 1.
+   - The function returns the vector `v`, which contains {3, 19, 19, 19}.
+
+**Conclusion**
+
+The IR code correctly implements a prime factorization algorithm. For the input 3 * 19 * 3 * 19 * 3 * 19, it produces the expected output {3, 19, 19, 19}.
+
+Let me know if you have any other IR code snippets you'd like to analyze!
+
+Assert Statement: assert (issame(factorize(3 * 19 * 19 * 19) , {3, 19, 19, 19}));
+Execution Result:
+Let's break down the execution of the provided IR code step-by-step.
+
+**Understanding the Code**
+
+The IR code defines a function `_Z9factorizei`  which takes an integer as input and returns a vector containing its prime factors.
+
+**Step-by-Step Execution**
+
+1. **Initialization:**
+
+   - The function starts by initializing a vector `v` to store the prime factors.
+
+2. **Input Handling:**
+
+   - The input integer `n` (3 * 19 * 19 * 19 in our case) is passed as an argument.
+
+3. **Base Case:**
+
+   - The code checks if `n` is less than 4. If it is, it directly adds `n` to the vector `v` and returns.
+
+4. **Prime Factorization Loop:**
+
+   - If `n` is greater than or equal to 4, the code enters a loop.
+
+5. **Finding Prime Factors:**
+
+   - Inside the loop, it iteratively:
+      - Checks if `n` is divisible by a number `i`.
+      - If divisible, it adds `i` to the vector `v` and divides `n` by `i`.
+      - Continues this process until `n` becomes 1.
+
+6. **Returning the Result:**
+
+   - Once `n` becomes 1, the loop terminates, and the function returns the vector `v` containing the prime factors.
+
+**Applying the Code to the Input**
+
+For the input `3 * 19 * 19 * 19`, the code will execute as follows:
+
+1. The vector `v` is initialized.
+2. Since the input is greater than 4, the loop starts.
+3. The code will find that the input is divisible by 3. It adds 3 to `v` and divides the input by 3, resulting in `19 * 19 * 19`.
+4. It will then repeatedly find 19 as a factor and add it to `v` three times.
+5. Finally, when `n` becomes 1, the loop ends, and the function returns the vector `v` containing `{3, 19, 19, 19}`.
+
+**Verification**
+
+
+The output `{3, 19, 19, 19}` is indeed the correct prime factorization of `3 * 19 * 19 * 19`.
+
+
+
+Let me know if you have any other IR code snippets you'd like me to analyze!
+
+Assert Statement: assert (issame(factorize(3 * 2 * 3) , {2, 3, 3}));
+Execution Result:
+Let's break down the execution of the provided LLVM IR code step by step.
+
+**Understanding the Code**
+
+This LLVM IR code defines a function called `_Z9factorizei` which takes an integer as input and returns a vector of its prime factors.
+
+**Step-by-Step Execution**
+
+1. **Initialization:**
+   - The function starts by allocating memory for a vector of integers using `@.str` for error handling.
+   - It initializes three pointers: `%3`, `%4`, and `%5`, which will be used to manage the vector's data.
+   - It checks if the input integer (`%1`) is less than 4. If it is, it directly returns a vector containing the input integer.
+
+2. **Prime Factorization Loop:**
+   - If the input integer is greater than or equal to 4, the code enters a loop.
+   - Inside the loop:
+     - It calculates the square root of the input integer and stores it in `%55`.
+     - It checks if the input integer is divisible by `%55`. If it is, it adds `%55` to the vector and divides the input integer by `%55`.
+     - If the input integer is not divisible by `%55`, it increments `%55` and continues the loop.
+
+3. **Vector Management:**
+   - The code uses `%3`, `%4`, and `%5` to manage the vector's data.
+   - These pointers are updated during each iteration of the loop to reflect the changes in the vector's size and content.
+
+4. **Return:**
+   - Once the loop completes (when the input integer is reduced to 1), the function returns the vector containing the prime factors.
+
+**Executing with Input: 3 * 2 * 3 = 18**
+
+Following the steps above, the code will:
+
+1. **Initialization:** Allocate memory for the vector and initialize pointers.
+
+2. **Loop:**
+   - Since 18 is greater than 4, the loop starts.
+   - The square root of 18 is approximately 4.24, so `%55` will be initialized to 2.
+   - 18 is divisible by 2, so 2 is added to the vector, and 18 is divided by 2, resulting in 9.
+   - The loop continues with `%55` now being 3.
+   - 9 is divisible by 3, so 3 is added to the vector, and 9 is divided by 3, resulting in 3.
+   - The loop continues with `%55` now being 4.
+   - 3 is divisible by 3, so 3 is added to the vector, and 3 is divided by 3, resulting in 1.
+
+3. **Return:** The loop ends because the input integer is now 1. The function returns the vector containing {2, 3, 3}.
+
+
+
+Let me know if you'd like me to elaborate on any specific part of the execution process!
+

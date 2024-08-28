@@ -1,0 +1,231 @@
+Assert Statement: assert (greatest_common_divisor(3, 7) == 1);
+Execution Result:
+Let's break down the execution of the provided IR code step-by-step for the input `greatest_common_divisor(3, 7)`.
+
+**Understanding the Code**
+
+The IR code defines a function `greatest_common_divisor` that calculates the greatest common divisor (GCD) of two integers using Euclid's algorithm. 
+
+**Step-by-Step Execution**
+
+1. **Initialization:**
+   - The function starts with two input parameters, `%0` (representing 3) and `%1` (representing 7).
+
+2. **Loop Entry (Block 3):**
+   - We jump to block `3`, the start of a loop.
+   - `%4` is initialized with the value of `%1` (7).
+   - `%5` is initialized with the value of `%0` (3).
+
+3. **Comparison and Selection (Within Block 3):**
+   - `%6` checks if `%5` (3) is less than `%4` (7). This condition is true.
+   - `%7` is assigned the smaller value, which is `%5` (3).
+   - `%8` is assigned the larger value, which is `%4` (7).
+
+4. **Remainder Calculation:**
+   - `%9` calculates the remainder when `%8` (7) is divided by `%7` (3), resulting in `1`.
+
+5. **Loop Continuation Condition:**
+   - `%10` checks if `%9` (1) is equal to 0. This condition is false.
+
+6. **Loop Iteration:**
+   - Since `%10` is false, we jump back to block `3`, continuing the loop with updated values:
+     - `%4` now holds the previous value of `%7` (3).
+     - `%5` now holds the previous value of `%9` (1).
+
+7. **Loop Termination:**
+   - In the next iteration of the loop, `%5` (1) is less than `%4` (3), so `%7` will be assigned 1.
+   - The remainder (`%9`) will be 0.
+   - `%10` will be true, and we exit the loop.
+
+8. **Return Value:**
+   - We jump to block `11`.
+   - The function returns the value of `%7`, which is 1.
+
+**Final Output:**
+
+The function `greatest_common_divisor(3, 7)` returns the value **1**.
+
+**Verification:**
+
+The output (1) is indeed the greatest common divisor of 3 and 7, confirming the correctness of our step-by-step execution.
+
+Assert Statement: assert (greatest_common_divisor(10, 15) == 5);
+Execution Result:
+Let's break down the execution of this IR code step by step.
+
+**Understanding the Code**
+
+The provided IR code represents a function named `greatest_common_divisor` which calculates the greatest common divisor (GCD) of two integers using Euclid's algorithm. Here's a breakdown:
+
+* **Input:** The function takes two 32-bit integers (`%0` and `%1`) as input.
+* **Algorithm:** It uses a loop to repeatedly find the remainder (`srem`) of the larger number divided by the smaller number. The process continues until the remainder is 0. The last non-zero remainder is the GCD.
+* **Output:** The function returns the calculated GCD as a 32-bit integer.
+
+**Execution with Input (10, 15)**
+
+1. **Initialization:**
+   * `%4` and `%5` are initialized with the input values: `%4 = 15`, `%5 = 10`.
+
+2. **Loop Iteration 1:**
+   * `%6 = icmp slt i32 %5, %4` : Compares `%5` (10) and `%4` (15). Since 10 is less than 15, `%6` is set to `true` (1).
+   * `%7 = select i1 %6, i32 %5, i32 %4` : Selects the smaller value. Since `%6` is true, `%7` is assigned the value of `%5` (10).
+   * `%8 = select i1 %6, i32 %4, i32 %5`: Selects the larger value. Since `%6` is true, `%8` is assigned the value of `%4` (15).
+   * `%9 = srem i32 %8, %7`: Calculates the remainder of 15 divided by 10, which is 5. `%9` is set to 5.
+   * `%10 = icmp eq i32 %9, 0`: Checks if the remainder (`%9`) is 0. Since it's not 0, `%10` is set to `false` (0).
+   * The loop continues because `%10` is false.
+
+3. **Loop Iteration 2:**
+   * `%4` is updated to the previous value of `%7` (10).
+   * `%5` is updated to the previous value of `%9` (5).
+   * The comparison, selection, remainder calculation, and check for 0 remainder are repeated.
+
+4. **Loop Iteration 3:**
+   * `%4` is now 5, `%5` is now 0.
+   * The remainder of 5 divided by 0 is undefined, but the loop condition (`%10 = icmp eq i32 %9, 0`) will be true, causing the loop to exit.
+
+5. **Return:**
+   * The function returns the value of `%7`, which is 5.
+
+**Final Output:**
+
+The function `greatest_common_divisor(10, 15)` returns **5**.
+
+**Verification:**
+
+The result is correct. The greatest common divisor of 10 and 15 is indeed 5.
+
+Assert Statement: assert (greatest_common_divisor(49, 14) == 7);
+Execution Result:
+Let's break down the execution of this IR code step-by-step.
+
+**Understanding the Code**
+
+The provided IR code defines a function called `greatest_common_divisor` which calculates the greatest common divisor (GCD) of two integers using Euclid's algorithm.
+
+**Initialization:**
+
+* We are given the input `greatest_common_divisor(49, 14)`.  This means `%0` will be initialized with 49 and `%1` with 14.
+
+**Step-by-Step Execution**
+
+1. **Entry Point:** The code starts at label `3`.
+2. **Phi Instructions:**
+   * `%4 = phi i32 [ %1, %2 ], [ %7, %3 ]` :  This instruction initializes `%4` with the value of `%1` (which is 14) since we are entering the loop for the first time.
+   * `%5 = phi i32 [ %0, %2 ], [ %9, %3 ]`: Similarly, `%5` is initialized with the value of `%0` (which is 49).
+3. **Comparison:**
+   * `%6 = icmp slt i32 %5, %4`: This compares if `%5` (49) is less than `%4` (14). The result is `false`.
+4. **Selection:**
+   * `%7 = select i1 %6, i32 %5, i32 %4`: Since `%6` is false, `%7` is assigned the value of `%4` (14).
+   * `%8 = select i1 %6, i32 %4, i32 %5`: Since `%6` is false, `%8` is assigned the value of `%5` (49).
+5. **Remainder:**
+   * `%9 = srem i32 %8, %7`: This calculates the remainder when `%8` (49) is divided by `%7` (14), which is 11.
+6. **Check for Zero Remainder:**
+   * `%10 = icmp eq i32 %9, 0`: This checks if the remainder (`%9`, which is 11) is equal to 0. The result is `false`.
+7. **Loop Continuation:**
+   * Since `%10` is false, the code jumps back to label `3`, continuing the loop.
+
+8. **Repeat Steps 2-7:** The process repeats with the new values of `%4` (14) and `%5` (11).
+
+9. **Loop Termination:**
+   * This process continues until the remainder becomes 0. At that point, the value in `%7` will hold the GCD.
+
+10. **Return:**
+   * When the remainder is 0, the code jumps to label `11` and returns the value in `%7`, which will be the GCD.
+
+**Final Output:**
+
+The function will return the value 7, which is the greatest common divisor of 49 and 14.
+
+**Verification:**
+
+The output (7) matches the expected result from the assert statement `assert (greatest_common_divisor(49, 14) == 7);`. Therefore, the execution is correct.
+
+Assert Statement: assert (greatest_common_divisor(144, 60) == 12);
+Execution Result:
+## Step-by-Step Execution of IR Code
+
+The provided IR code implements Euclid's algorithm for finding the greatest common divisor (GCD) of two integers. Let's execute it step-by-step with the input `greatest_common_divisor(144, 60)`.
+
+**Initialization:**
+
+* `%0 = 144` (first input)
+* `%1 = 60` (second input)
+
+**Loop Iteration 1:**
+
+1. **Phi Instructions:**
+    * `%4 = phi i32 [ %1, %2 ], [ %7, %3 ]` initializes `%4` with the value of `%1` (60) since this is the first iteration.
+    * `%5 = phi i32 [ %0, %2 ], [ %9, %3 ]` initializes `%5` with the value of `%0` (144).
+
+2. **Comparison:**
+    * `%6 = icmp slt i32 %5, %4` compares `%5` (144) and `%4` (60). Since 144 is not less than 60, `%6` will be `false` (0).
+
+3. **Select Instructions:**
+    * `%7 = select i1 %6, i32 %5, i32 %4` selects `%4` (60) as `%6` is false.
+    * `%8 = select i1 %6, i32 %4, i32 %5` selects `%5` (144) as `%6` is false.
+
+4. **Remainder:**
+    * `%9 = srem i32 %8, %7` calculates the remainder when `%8` (144) is divided by `%7` (60), which is 24.
+
+5. **Check for Zero Remainder:**
+    * `%10 = icmp eq i32 %9, 0` checks if `%9` (24) is equal to 0. This is false.
+
+6. **Loop Condition:**
+    * The `br i1 %10, label %11, label %3` instruction branches back to the beginning of the loop (`label %3`) as `%10` is false.
+
+**Loop Iteration 2:**
+
+1. **Phi Instructions:**
+    * `%4` is now 60 (from previous iteration).
+    * `%5` is now 24 (from previous iteration).
+
+2. **Comparison:**
+    * `%6 = icmp slt i32 %5, %4` compares `%5` (24) and `%4` (60). Since 24 is less than 60, `%6` will be `true` (1).
+
+3. **Select Instructions:**
+    * `%7 = select i1 %6, i32 %5, i32 %4` selects `%5` (24) as `%6` is true.
+    * `%8 = select i1 %6, i32 %4, i32 %5` selects `%4` (60) as `%6` is true.
+
+4. **Remainder:**
+    * `%9 = srem i32 %8, %7` calculates the remainder when `%8` (60) is divided by `%7` (24), which is 12.
+
+5. **Check for Zero Remainder:**
+    * `%10 = icmp eq i32 %9, 0` checks if `%9` (12) is equal to 0. This is false.
+
+6. **Loop Condition:**
+    * The `br i1 %10, label %11, label %3` instruction branches back to the beginning of the loop (`label %3`) as `%10` is false.
+
+**Loop Iteration 3:**
+
+1. **Phi Instructions:**
+    * `%4` is now 24 (from previous iteration).
+    * `%5` is now 12 (from previous iteration).
+
+2. **Comparison:**
+    * `%6 = icmp slt i32 %5, %4` compares `%5` (12) and `%4` (24). Since 12 is less than 24, `%6` will be `true` (1).
+
+3. **Select Instructions:**
+    * `%7 = select i1 %6, i32 %5, i32 %4` selects `%5` (12) as `%6` is true.
+    * `%8 = select i1 %6, i32 %4, i32 %5` selects `%4` (24) as `%6` is true.
+
+4. **Remainder:**
+    * `%9 = srem i32 %8, %7` calculates the remainder when `%8` (24) is divided by `%7` (12), which is 0.
+
+5. **Check for Zero Remainder:**
+    * `%10 = icmp eq i32 %9, 0` checks if `%9` (0) is equal to 0. This is true.
+
+6. **Loop Condition:**
+    * The `br i1 %10, label %11, label %3` instruction branches to `label %11` as `%10` is true.
+
+**Return Value:**
+
+* `ret i32 %7` returns the value of `%7`, which is 12.
+
+**Final Result:**
+
+The function `greatest_common_divisor(144, 60)` returns **12**.
+
+**Verification:**
+
+The result is correct as 12 is indeed the greatest common divisor of 144 and 60.
+

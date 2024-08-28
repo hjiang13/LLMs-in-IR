@@ -1,0 +1,291 @@
+Assert Statement: assert (issame(f(5) , {1, 2, 6, 24, 15}));
+Execution Result:
+Let's break down the execution of the provided IR code step-by-step.
+
+**Understanding the Code**
+
+The code defines a function `_Z1fi` that constructs a `std::vector` of integers. It takes an integer `%1` as input, which determines the size of the vector.
+
+**Step-by-Step Execution**
+
+1. **Initialization:**
+
+   - The function begins by initializing a `std::vector` object (`%0`).
+
+2. **Size Check:**
+
+   - It checks if the input size (`%1`) is less than 1. If it is, the function returns an empty vector.
+
+3. **Vector Allocation:**
+
+   - If the size is greater than or equal to 1, the function allocates memory for the vector elements.
+
+4. **Element Insertion:**
+
+   - The code enters a loop that iterates `%1` times (the desired size of the vector).
+
+5. **Calculation:**
+
+   - Inside the loop:
+     - It calculates the current element value using a formula: `%17 = mul nsw i32 %13, %14`, where `%13` is the loop counter and `%14` is initialized to 1.
+
+6. **Storage:**
+
+   - The calculated element value (`%17`) is stored in the vector.
+
+7. **Loop Continuation:**
+
+   - The loop counter is incremented, and the process repeats until all elements are added to the vector.
+
+8. **Return:**
+
+   - Finally, the function returns the constructed `std::vector`.
+
+**Assert Statement Analysis**
+
+The assert statement `assert (issame(f(5) , {1, 2, 6, 24, 15}));` checks if the output of the function `f` (which is our `_Z1fi` function) with an input of 5 matches the expected vector `{1, 2, 6, 24, 15}`.
+
+**Expected Output**
+
+Based on the code logic, the function should produce the following vector when called with an input of 5:
+
+```
+{1, 2, 6, 24, 120} 
+```
+
+**Verification**
+
+The assert statement would **fail** because the expected output `{1, 2, 6, 24, 15}` does not match the actual output calculated by the code.
+
+**Important Notes:**
+
+- The code calculates element values using a specific formula involving multiplication.
+- The assert statement uses a function `issame` which is not defined in the provided IR code. Its implementation would be needed for a complete verification.
+
+
+
+Let me know if you have any other code snippets you'd like me to analyze!
+
+Assert Statement: assert (issame(f(7) , {1, 2, 6, 24, 15, 720, 28}));
+Execution Result:
+Let's break down the execution of this IR code step-by-step.
+
+**Understanding the Code**
+
+This IR code represents a C++ function that constructs a vector of integers. The `f(7)` in the assertion means we're calling this function with the argument `7`. Here's a simplified explanation:
+
+* **`@.str = private unnamed addr constant [26 x i8] c"vector::_M_realloc_insert\00", align 1`:** This defines a string constant used for error messages.
+
+* **`define dso_local void @_Z1fi(%"class.std::vector"* noalias nocapture sret(%"class.std::vector") align 8 %0, i32 %1) local_unnamed_addr #0 personality i8* bitcast (i32 (...)* @__gxx_personality_v0 to i8*) { ... }`:** This is the definition of our function. It takes a pointer to a `std::vector` object (`%0`) and an integer (`%1`) as input. The `noalias`, `nocapture`, and `sret` attributes are related to memory management and how the function interacts with its arguments.
+
+* **The rest of the code:** This is the body of the function, which contains a series of instructions to allocate memory, store values in the vector, and resize the vector as needed.
+
+**Step-by-Step Execution with Input 7**
+
+1. **Initialization:** The function starts by initializing several pointers within the `std::vector` object. These pointers represent the beginning, end, and capacity of the vector.
+2. **Input Check:** The code checks if the input value (`%1`, which is 7) is less than 1. Since 7 is not less than 1, this condition is false.
+
+3. **Loop:** The code enters a loop that continues as long as the number of elements in the vector is less than the input value (7).
+
+4. **Memory Allocation:** Inside the loop, the code checks if there's enough space in the vector to add a new element. If not, it allocates more memory.
+
+5. **Element Insertion:** A new element is inserted into the vector. The value of the element is calculated based on the loop index.
+
+6. **Loop Continuation:** The loop counter is incremented, and the process repeats until 7 elements have been added to the vector.
+
+7. **Return:** Finally, the function returns the modified `std::vector` object.
+
+**Verification**
+
+The assertion `assert(issame(f(7), {1, 2, 6, 24, 120, 720, 5040}))` checks if the output of the function `f(7)` is equal to the expected vector `{1, 2, 6, 24, 120, 720, 5040}`.
+
+* **Expected Output:** The vector should contain the factorials of the numbers from 1 to 7.
+
+* **Verification Result:** The assertion should pass, confirming that the function correctly calculates and stores the factorials in the vector.
+
+**Important Notes:**
+
+* **IR Code Complexity:** IR code can be quite complex, and understanding it requires knowledge of low-level programming concepts and compiler internals.
+
+* **Optimization:** Compilers often optimize IR code, so the actual execution may differ slightly from a line-by-line interpretation.
+* **Tools:** There are tools available (like LLVM's `llc` and `clang`) that can help you convert IR code to assembly language or machine code for further analysis.
+
+Assert Statement: assert (issame(f(1) , {1}));
+Execution Result:
+Let's break down the execution of this C++ code snippet step by step.
+
+**Understanding the Code**
+
+The provided IR code defines a function `_Z1fi` which constructs a vector of integers. It takes two arguments:
+
+* `%0`: A pointer to a `std::vector<int>` object (the output vector).
+* `%1`: An integer representing the size of the vector to be created.
+
+The function initializes the vector with the given size.
+
+**Step-by-Step Execution**
+
+1. **Initialization and Memory Allocation:**
+
+   - The function starts by obtaining pointers to the internal data structures of the `std::vector` object (`%3`, `%4`, `%5`).
+   - It checks if the requested size (`%1`) is less than 1. If so, it skips the allocation step and proceeds directly to the final return.
+
+2. **Vector Construction Loop:**
+
+   - If the size is greater than or equal to 1, the code enters a loop (`loop %8`) to construct the vector.
+   - Inside the loop, it calculates the current element's index (`%13`), the total capacity (`%17`), and checks if the current element index is even (`%18`).
+
+3. **Memory Allocation and Data Copying:**
+
+   - If the element index is even, it allocates new memory for the vector elements using `_Znwm`. The size of the allocated memory depends on the vector's capacity.
+   - It then copies the existing vector elements to the new memory location.
+   - Finally, it updates the internal pointers of the `std::vector` object to point to the new memory location.
+
+4. **Loop Termination:**
+
+   - The loop continues until the number of elements added to the vector equals the requested size (`%1`).
+
+5. **Return:**
+
+   - Once the loop completes, the function returns, leaving the constructed vector in the `%0` argument.
+
+**Illustrative Example:**
+
+Let's say the input size (`%1`) is 3. The function would perform the following:
+
+1. Allocate memory for 3 integers.
+2. Set the first element to 1 (since the loop starts with index 1).
+3. Allocate more memory if needed based on the vector's capacity.
+4. Copy existing elements to the new memory location.
+5. Update the internal pointers of the `std#vector` object.
+6. Repeat steps 2-5 for the remaining elements (2 and 3).
+7. Return the constructed vector containing {1, 2, 3}.
+
+**Verification and Output:**
+
+The output of the `_Z1fi` function would be a `std::vector<int>` containing the integers from 1 to the specified size.
+
+
+Let me know if you have any specific parts of the code you'd like me to elaborate on further!
+
+Assert Statement: assert (issame(f(3) , {1, 2, 6}));
+Execution Result:
+```
+; Function Attrs: uwtable
+define dso_local void @_Z1fi(%"class.std::vector"* noalias nocapture sret(%"class.std::vector") align 8 %0, i32 %1) local_unnamed_addr #0 personality i8* bitcast (i32 (...)* @__gxx_personality_v0 to i8*) {
+  %3 = getelementptr inbounds %"class.std::vector", %"class.std::vector"* %0, i64 0, i32 0, i32 0, i32 0, i32 1
+  %4 = getelementptr inbounds %"class.std::vector", %"class.std::vector"* %0, i64 0, i32 0, i32 0, i32 0, i32 2
+  %5 = getelementptr inbounds %"class.std::vector", %"class.std::vector"* %0, i64 0, i32 0, i32 0, i32 0, i32 0
+  %6 = icmp slt i32 %1, 1
+  %7 = bitcast %"class.std::vector"* %0 to i8*
+  call void @llvm.memset.p0i8.i64(i8* noundef nonnull align 8 dereferenceable(24) %7, i8 0, i64 24, i1 false)
+  br i1 %6, label %117, label %8
+
+8:                                               ; preds = %2, %110
+  %9 = phi i32* [ %111, %110 ], [ null, %2 ]
+  %10 = phi i32* [ %112, %110 ], [ null, %2 ]
+  %11 = phi i32* [ %113, %110 ], [ null, %2 ]
+  %12 = phi i32* [ %114, %110 ], [ null, %2 ]
+  %13 = phi i32 [ %115, %110 ], [ 1, %2 ]
+  %14 = phi i32 [ %17, %110 ], [ 1, %2 ]
+  %15 = phi i32 [ %16, %110 ], [ 0, %2 ]
+  %16 = add nuw nsw i32 %13, %15
+  %17 = mul nsw i32 %13, %14
+  %18 = and i32 %13, 1
+  %19 = icmp eq i32 %18, 0
+  br i1 %19, label %20, label %70
+
+20:                                              ; preds = %8
+  %21 = icmp eq i32* %12, %9
+  br i1 %21, label %24, label %22
+
+22:                                              ; preds = %20
+  store i32 %17, i32* %12, align 4, !tbaa !3
+  %23 = getelementptr inbounds i32, i32* %12, i64 1
+  store i32* %23, i32** %3, align 8, !tbaa !7
+  br label %110
+
+24:                                              ; preds = %20
+  %25 = ptrtoint i32* %9 to i64
+  %26 = ptrtoint i32* %10 to i64
+  %27 = sub i64 %25, %26
+  %28 = ashr exact i64 %27, 2
+  %29 = icmp eq i64 %27, 9223372036854775804
+  br i1 %29, label %30, label %32
+
+30:                                              ; preds = %24
+  invoke void @_ZSt20__throw_length_errorPKc(i8* getelementptr inbounds ([26 x i8], [26 x i8]* @.str, i64 0, i64 0)) #6
+          to label %31 unwind label %62
+
+31:                                              ; preds = %30
+  unreachable
+
+32:                                              ; preds = %24
+  %33 = icmp eq i64 %27, 0
+  %34 = select i1 %33, i64 1, i64 %28
+  %35 = add nsw i64 %34, %28
+  %36 = icmp ult i64 %35, %28
+  %37 = icmp ugt i64 %35, 2305843009213693951
+  %38 = or i1 %36, %37
+  %39 = select i1 %38, i64 2305843009213693951, i64 %35
+  %40 = icmp eq i64 %39, 0
+  br i1 %40, label %46, label %41
+
+41:                                              ; preds = %32
+  %42 = shl nuw nsw i64 %39, 2
+  %43 = invoke noalias nonnull i8* @_Znwm(i64 %42) #7
+          to label %44 unwind label %60
+
+44:                                              ; preds = %41
+  %45 = bitcast i8* %43 to i32*
+  br label %46
+
+46:                                              ; preds = %44, %32
+  %47 = phi i32* [ %45, %44 ], [ null, %32 ]
+  %48 = getelementptr inbounds i32, i32* %47, i64 %28
+  store i32 %17, i32* %48, align 4, !tbaa !3
+  %49 = icmp sgt i64 %27, 0
+  br i1 %49, label %50, label %53
+
+50:                                              ; preds = %46
+  %51 = bitcast i32* %47 to i8*
+  %52 = bitcast i32* %10 to i8*
+  tail call void @llvm.memmove.p0i8.p0i8.i64(i8* align 4 %51, i8* align 4 %52, i64 %27, i1 false) #8
+  br label %53
+
+53:                                              ; preds = %50, %46
+  %54 = getelementptr inbounds i32, i32* %48, i64 1
+  %55 = icmp eq i32* %10, null
+  br i1 %55, label %58, label %56
+
+56:                                              ; preds = %53
+  %57 = bitcast i32* %10 to i8*
+  tail call void @_ZdlPv(i8* nonnull %57) #8
+  br label %58
+
+58:                                              ; preds = %56, %53
+  store i32* %47, i32** %5, align 8, !tbaa !10
+  store i32* %54, i32** %3, align 8, !tbaa !7
+  %59 = getelementptr inbounds i32, i32* %47, i64 %39
+  store i32* %59, i32** %4, align 8, !tbaa !11
+  br label %110
+
+60:                                              ; preds = %41, %91
+  %61 = landingpad { i8*, i32 }
+          cleanup
+  br label %64
+
+62:                                              ; preds = %30, %80
+  %63 = landingpad { i8*, i32 }
+          cleanup
+  br label %64
+
+64:                                              ; preds = %62, %60
+  %65 = phi { i8*, i32 } [ %61, %60 ], [ %63, %62 ]
+  %66 = icmp eq i32* %10, null
+  br i1 %66, label %69, label %67
+
+67:                                              ; preds = %64
+  %68 = bitcast i32* %10 to i8*
+  tail call void @_ZdlPv(
+

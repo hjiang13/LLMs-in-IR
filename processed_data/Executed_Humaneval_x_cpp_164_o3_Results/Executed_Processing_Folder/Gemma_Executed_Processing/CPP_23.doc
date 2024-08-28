@@ -1,0 +1,145 @@
+Assert Statement: assert (strlen("") == 0);
+Execution Result:
+Let's break down the execution of this IR code step by step.
+
+**Understanding the Code**
+
+This IR code represents a function named `_Z6strlenNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE`.  This function calculates the length of a C++ string. Here's a breakdown:
+
+* **Function Signature:**
+
+   * `dso_local i32 @_Z6strlenNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(%"class.std::__cxx11::basic_string"* nocapture readonly %0) local_unnamed_addr #0`
+
+     * `dso_local`: Indicates the function has local dynamic scope.
+     * `i32`: The function returns a 32-bit integer (the length of the string).
+     * `@_Z6strlenNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE`: This is the mangled name of the function.
+     * `%"class.std::__cxx11::basic_string"* nocapture readonly %0`: The function takes a pointer to a `std::string` object as input.  `nocapture` and `readonly` mean the function won't modify the string.
+     * `local_unnamed_addr #0`:  Specifies attributes for the function, including optimization hints.
+
+* **Function Body:**
+
+   1. `%2 = getelementptr inbounds %"class.std::__cxx11::basic_string", %"class.std::__cxx11::basic_string"* %0, i64 0, i32 1`
+
+      * This line calculates the address of the second element within the `std::string` object. The `std::string` structure likely has a member variable at offset 1 that stores the length of the string.
+
+   2. `%3 = load i64, i64* %2, align 8, !tbaa !3`
+
+      * This line loads the 64-bit integer value stored at the address calculated in the previous step (the length of the string).
+
+   3. `%4 = trunc i64 %3 to i32`
+
+      * This line truncates the 64-bit integer length to a 32-bit integer.
+
+   4. `ret i32 %4`
+
+      * This line returns the 32-bit integer representing the length of the string.
+
+**Executing with the Input**
+
+The input is `assert (strlen("") == 0);`. This means we're testing the function with an empty string.
+
+1. **Input String:** The empty string `""` is passed as the argument to the `strlen` function.
+
+2. **Finding the Length:**
+
+   *  The code will calculate the address of the length member within the empty string object.
+
+   *  It will load the value from that address. Since the string is empty, this value will be 0.
+
+3. **Return Value:** The function will return the value 0.
+
+4. **Assertion:** The assertion `strlen("") == 0` will evaluate to `true`.
+
+**Final Output:** The function correctly returns 0, indicating the length of the empty string. The assertion passes.
+
+**Verification:** The execution matches the expected behavior of the `strlen` function for an empty string.
+
+Assert Statement: assert (strlen("x") == 1);
+Execution Result:
+Let's break down the execution of this IR code step by step.
+
+**Understanding the Code**
+
+This IR code defines a function `strlen` which calculates the length of a C++ string. Here's a breakdown:
+
+* **Function Signature:**
+   - `dso_local i32 @_Z6strlenNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(%"class.std::__cxx11::basic_string"* nocapture readonly %0) local_unnamed_addr #0`
+     - `dso_local`: Indicates the function has local scope (only visible within the current shared library).
+     - `i32`: The function returns a 32-bit integer (the string length).
+     - `@_Z6strlenNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE`: This is the mangled name of the function.
+     - `%"class.std::__cxx11::basic_string"* nocapture readonly %0`: The function takes a pointer to a C++ string object (`basic_string`) as input. `nocapture` means the function won't capture the string object, and `readonly` indicates it won't modify the string.
+     - `local_unnamed_addr`: The function doesn't have an externally visible name.
+     - `#0`: Refers to a set of function attributes (see later).
+
+* **Function Body:**
+   - `%2 = getelementptr inbounds %"class.std::__cxx11::basic_string", %"class.std::__cxx11::basic_string"* %0, i64 0, i32 1`: This line calculates the address of the `size` member within the string object. It uses `getelementptr` (get element pointer) to navigate the object's structure.
+
+   - `%3 = load i64, i64* %2, align 8, !tbaa !3`: This line loads the value of the `size` member (a 64-bit integer) from the calculated address into register `%3`.
+
+   - `%4 = trunc i64 %3 to i32`: This line truncates the 64-bit `size` value to a 32-bit integer and stores it in register `%4`.
+
+   - `ret i32 %4`: This line returns the 32-bit length value.
+
+**Executing with the Input `strlen("x")`**
+
+1. **Input:** The input string "x" is passed to the `strlen` function as a C++ `basic_string` object.
+
+2. **Accessing the Size:** The code calculates the address of the `size` member within the string object.
+
+3. **Loading the Size:** The 64-bit value of the `size` member is loaded into a register.
+
+4. **Truncation:** The 64-bit size is truncated to a 32-bit integer.
+
+5. **Return:** The 32-bit length (which is 1 in this case) is returned.
+
+**Verification:**
+
+The `assert (strlen("x") == 1);` statement would pass because the function correctly calculates the length of the string "x" as 1.
+
+
+Let me know if you'd like me to elaborate on any specific part or have other IR code snippets to analyze!
+
+Assert Statement: assert (strlen("asdasnakj") == 9);
+Execution Result:
+Let's break down the execution of this LLVM IR code step by step.
+
+**Understanding the Code**
+
+The provided LLVM IR code defines a function `_Z6strlenNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE`. This function calculates the length of a C++ string. Here's a breakdown:
+
+* **Function Signature:**
+    * `dso_local i32 @_Z6strlenNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(%"class.std::__cxx11::basic_string"* nocapture readonly %0) local_unnamed_addr #0`
+        * `dso_local`: Indicates the function has local dynamic linkage.
+        * `i32`: The function returns a 32-bit integer (the string length).
+        * `_Z6strlenNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE`:  This is the mangled name of the function.
+        * `%"class.std::__cxx11::basic_string"* nocapture readonly %0`: The function takes a single argument, a pointer to a C++ string object (`%"class.std::__cxx11::basic_string"`). The `nocapture` and `readonly` attributes specify that the function does not modify the string object passed to it.
+        * `local_unnamed_addr #0`:  Indicates the function's address is local to the current module and doesn't have a specific name.
+
+* **Function Body:**
+    * `%2 = getelementptr inbounds %"class.std::__cxx11::basic_string", %"class.std::__cxx11::basic_string"* %0, i64 0, i32 1`: This instruction calculates the address of the second field within the string object. This field typically stores the length of the string.
+    * `%3 = load i64, i64* %2, align 8, !tbaa !3`: This instruction loads the 64-bit integer value representing the string length from the address calculated in the previous step.
+    * `%4 = trunc i64 %3 to i32`: This instruction truncates the 64-bit length value to a 32-bit integer.
+    * `ret i32 %4`: This instruction returns the truncated string length.
+
+**Executing the Code with Input "asdasnakj"**
+
+1. **Input:** The input string "asdasnakj" would be represented as a C++ `std::string` object.
+
+2. **Function Call:** The `strlen` function would be called with this string object as an argument.
+
+3. **Accessing Length:** Inside the function, the `getelementptr` instruction would calculate the address of the length field within the string object.
+
+4. **Loading Length:** The `load` instruction would retrieve the 64-bit integer value representing the length of the string "asdasnakj" (which is 9).
+
+5. **Truncation:** The `trunc` instruction would convert the 64-bit length to a 32-bit integer (still 9).
+
+6. **Return:** The function would return the value 9.
+
+**Verification:**
+
+The assert statement `assert (strlen("asdasnakj") == 9);` would evaluate to true because the `strlen` function correctly returned 9 as the length of the string "asdasnakj".
+
+**Final Output:**
+
+The execution of the code would result in the value 9 being returned, confirming that the length of the input string is indeed 9.
+
