@@ -1,0 +1,35 @@
+digraph CallGraph {
+    // Nodes representing functions
+    node [shape=box];
+    
+    // Functions
+    sort_array;
+    __introsort_loop;
+    __final_insertion_sort;
+    __make_heap;
+    llvm_memset;
+    llvm_ctlz;
+    llvm_memmove;
+    __gxx_personality_v0;
+    __throw_length_error;
+    operator_new;
+    operator_delete;
+
+    // Edges representing function calls
+    sort_array -> __introsort_loop;
+    sort_array -> __final_insertion_sort;
+    sort_array -> llvm_memset;
+    sort_array -> llvm_ctlz;
+
+    __introsort_loop -> __make_heap;
+    __introsort_loop -> __final_insertion_sort;
+
+    __final_insertion_sort -> __introsort_loop;
+
+    // Declarations for external calls
+    llvm_memset -> llvm_memset;
+    llvm_ctlz -> llvm_ctlz;
+    llvm_memmove -> llvm_memmove;
+    operator_new -> operator_new;
+    operator_delete -> operator_delete;
+}

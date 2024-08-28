@@ -1,0 +1,22 @@
+digraph CallGraph {
+    node [shape=box];
+
+    // Nodes
+    encrypt [label="encrypt"];
+    llvm_lifetime_start [label="llvm.lifetime.start.p0i8"];
+    llvm_lifetime_end [label="llvm.lifetime.end.p0i8"];
+    gxx_personality [label="__gxx_personality_v0"];
+    operator_delete [label="_ZdlPv"];
+    basic_string_create [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm"];
+    memcpy [label="llvm.memcpy.p0i8.p0i8.i64"];
+    basic_string_replace [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE14_M_replace_auxEmmmc"];
+
+    // Edges
+    encrypt -> llvm_lifetime_start;
+    encrypt -> llvm_lifetime_end;
+    encrypt -> gxx_personality;
+    encrypt -> operator_delete;
+    encrypt -> basic_string_create;
+    encrypt -> memcpy;
+    encrypt -> basic_string_replace;
+}

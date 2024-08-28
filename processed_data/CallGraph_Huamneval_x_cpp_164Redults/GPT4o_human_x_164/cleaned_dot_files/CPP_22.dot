@@ -1,0 +1,31 @@
+digraph CallGraph {
+    node [shape=box];
+
+    // Function Definitions
+    filter_integers [label="filter_integers"];
+    throw_exception [label="throw_exception"];
+    clone_impl [label="clone_impl"];
+    error_info_injector [label="error_info_injector"];
+    copy_boost_exception [label="copy_boost_exception"];
+    bad_any_cast_what [label="bad_any_cast::what"];
+    __clang_call_terminate [label="__clang_call_terminate"];
+    terminate [label="terminate"];
+    throw_length_error [label="throw_length_error"];
+    strcmp [label="strcmp"];
+    __cxa_throw [label="__cxa_throw"];
+    __cxa_allocate_exception [label="__cxa_allocate_exception"];
+    __cxa_begin_catch [label="__cxa_begin_catch"];
+    __cxa_free_exception [label="__cxa_free_exception"];
+    bad_cast_dtor [label="bad_cast::dtor"];
+    boost_exception_dtor [label="boost::exception::dtor"];
+    
+    // Function Calls
+    filter_integers -> throw_exception;
+    filter_integers -> strcmp;
+    filter_integers -> throw_length_error;
+    throw_exception -> __cxa_begin_catch;
+    throw_exception -> terminate;
+    clone_impl -> copy_boost_exception;
+    clone_impl -> error_info_injector;
+    bad_any_cast_what -> throw_exception;
+}

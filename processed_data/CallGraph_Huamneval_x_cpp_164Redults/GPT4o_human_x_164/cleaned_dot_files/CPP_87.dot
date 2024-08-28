@@ -1,0 +1,21 @@
+digraph CallGraph {
+    // Nodes
+    node [shape=box];
+    
+    get_row [label="_Z7get_rowSt6vectorIS_IiSaIiEESaIS1_EEi"];
+    vector_destructor [label="_ZNSt6vectorIS_IiSaIiEESaIS1_EED2Ev"];
+    memset [label="llvm.memset.p0i8.i64"];
+    gxx_personality [label="__gxx_personality_v0"];
+    throw_length_error [label="_ZSt20__throw_length_errorPKc"];
+    allocate_memory [label="_Znwm"];
+    deallocate_memory [label="_ZdlPv"];
+    
+    // Edges (function calls)
+    get_row -> memset;
+    get_row -> vector_destructor;
+    get_row -> allocate_memory;
+    get_row -> deallocate_memory;
+    get_row -> throw_length_error;
+    
+    vector_destructor -> deallocate_memory;
+}

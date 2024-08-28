@@ -1,0 +1,25 @@
+digraph CallGraph {
+    // Nodes
+    node [shape=box];
+    parse_nested_parens [label="_Z19parse_nested_parens"];
+    llvm_memset [label="llvm.memset.p0i8.i64"];
+    llvm_lifetime_start [label="llvm.lifetime.start.p0i8"];
+    llvm_lifetime_end [label="llvm.lifetime.end.p0i8"];
+    operator_delete [label="_ZdlPv"];
+    basic_string_mutate [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_mutateEmmPKcm"];
+    throw_length_error [label="_ZSt20__throw_length_errorPKc"];
+    new_memory [label="_Znwm"];
+    memmove [label="llvm.memmove.p0i8.p0i8.i64"];
+    basic_string_replace [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm"];
+
+    // Edges
+    parse_nested_parens -> llvm_memset;
+    parse_nested_parens -> llvm_lifetime_start;
+    parse_nested_parens -> llvm_lifetime_end;
+    parse_nested_parens -> operator_delete;
+    parse_nested_parens -> basic_string_mutate;
+    parse_nested_parens -> throw_length_error;
+    parse_nested_parens -> new_memory;
+    parse_nested_parens -> memmove;
+    parse_nested_parens -> basic_string_replace;
+}

@@ -1,0 +1,37 @@
+digraph CallGraph {
+    // Nodes
+    "filter_by_substring" [label="_Z19filter_by_substringSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EES5_"];
+    "vector_destructor" [label="_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev"];
+    "clang_call_terminate" [label="__clang_call_terminate"];
+    "string_find" [label="_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEPKcmm"];
+    "vector_realloc_insert" [label="_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE17_M_realloc_insertIJRKS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_"];
+    "string_create" [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm"];
+    "throw_length_error" [label="_ZSt20__throw_length_errorPKc"];
+    "memory_allocate" [label="_Znwm"];
+    "memory_copy" [label="llvm.memcpy.p0i8.p0i8.i64"];
+    "memory_set" [label="llvm.memset.p0i8.i64"];
+    "lifetime_start" [label="llvm.lifetime.start.p0i8"];
+    "lifetime_end" [label="llvm.lifetime.end.p0i8"];
+    "cxa_begin_catch" [label="__cxa_begin_catch"];
+    "cxa_end_catch" [label="__cxa_end_catch"];
+    "cxa_rethrow" [label="__cxa_rethrow"];
+    "terminate" [label="_ZSt9terminatev"];
+    
+    // Edges
+    "filter_by_substring" -> "string_find";
+    "filter_by_substring" -> "vector_realloc_insert";
+    "filter_by_substring" -> "vector_destructor";
+    "filter_by_substring" -> "memory_set";
+    "vector_realloc_insert" -> "vector_destructor";
+    "vector_realloc_insert" -> "string_find";
+    "vector_realloc_insert" -> "string_create";
+    "vector_realloc_insert" -> "throw_length_error";
+    "string_find" -> "memory_allocate";
+    "string_create" -> "memory_allocate";
+    
+    // Exception Handling
+    "vector_realloc_insert" -> "cxa_begin_catch";
+    "vector_realloc_insert" -> "cxa_end_catch";
+    "cxa_begin_catch" -> "terminate";
+    "cxa_rethrow" -> "terminate";
+}

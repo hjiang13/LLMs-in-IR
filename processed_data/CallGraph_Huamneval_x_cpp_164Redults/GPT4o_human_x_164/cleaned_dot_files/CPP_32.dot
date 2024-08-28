@@ -1,0 +1,24 @@
+digraph CallGraph {
+    // Function nodes
+    node [shape=ellipse];
+    poly [label="_Z4polySt6vectorIdSaIdEEd"];
+    find_zero [label="_Z9find_zeroSt6vectorIdSaIdEE"];
+    pow [label="@pow"];
+    fabs [label="@llvm.fabs.f64"];
+    personality [label="@__gxx_personality_v0"];
+    throw_bad_alloc [label="@_ZSt17__throw_bad_allocv"];
+    malloc [label="@_Znwm"];
+    memmove [label="@llvm.memmove.p0i8.p0i8.i64"];
+    free [label="@_ZdlPv"];
+    umax [label="@llvm.umax.i64"];
+
+    // Function calls (edges)
+    poly -> pow;
+    poly -> fabs;
+    find_zero -> throw_bad_alloc;
+    find_zero -> malloc;
+    find_zero -> memmove;
+    find_zero -> free;
+    find_zero -> pow;
+    find_zero -> fabs;
+}

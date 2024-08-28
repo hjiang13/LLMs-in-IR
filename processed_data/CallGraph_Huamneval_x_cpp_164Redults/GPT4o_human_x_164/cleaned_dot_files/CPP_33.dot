@@ -1,0 +1,26 @@
+digraph CallGraph {
+    // Function Nodes
+    node [shape=box];
+    sort_third [label="_Z10sort_thirdSt6vectorIiSaIiEE"];
+    __introsort_loop [label="_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_"];
+    __final_insertion_sort [label="_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_"];
+    __make_heap [label="_ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_RT0_"];
+    throw_length_error [label="_ZSt20__throw_length_errorPKc"];
+    allocate [label="_Znwm"];
+    deallocate [label="_ZdlPv"];
+    memmove [label="llvm.memmove.p0i8.p0i8.i64"];
+    memset [label="llvm.memset.p0i8.i64"];
+    ctlz [label="llvm.ctlz.i64"];
+
+    // Edges (Function Calls)
+    sort_third -> __introsort_loop;
+    sort_third -> __final_insertion_sort;
+    sort_third -> allocate;
+    sort_third -> deallocate;
+    sort_third -> memmove;
+    sort_third -> memset;
+    sort_third -> throw_length_error; // Invoked in error handling
+
+    __introsort_loop -> __make_heap;
+    __final_insertion_sort -> __introsort_loop; // Recursive call
+}

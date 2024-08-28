@@ -1,0 +1,34 @@
+digraph CallGraph {
+    node [shape=box];
+
+    // Function nodes
+    CircularShift [label="_Z14circular_shiftB5cxx11ii"];
+    LifetimeStart [label="@llvm.lifetime.start.p0i8"];
+    LifetimeEnd [label="@llvm.lifetime.end.p0i8"];
+    Personality [label="@__gxx_personality_v0"];
+    ToXString [label="_ZN9__gnu_cxx12__to_xstringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEET_PFiPT0_mPKS8_P13__va_list_tagEmSB_z"];
+    VSNPrintf [label="@vsnprintf"];
+    CreateString [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm"];
+    DeleteMemory [label="_ZdlPv"];
+    ReplaceString [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm"];
+    AppendString [label="_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm"];
+    MemCpy [label="@llvm.memcpy.p0i8.p0i8.i64"];
+    VAStart [label="@llvm.va_start"];
+    VAEnd [label="@llvm.va_end"];
+    NoAliasScopeDecl [label="@llvm.experimental.noalias.scope.decl"];
+
+    // Edges (function calls)
+    CircularShift -> ToXString;
+    CircularShift -> VSNPrintf;
+    CircularShift -> LifetimeStart;
+    CircularShift -> LifetimeEnd;
+    CircularShift -> DeleteMemory;
+    CircularShift -> CreateString;
+    CircularShift -> AppendString;
+    CircularShift -> ReplaceString;
+    CircularShift -> MemCpy;
+    CircularShift -> VAStart;
+    CircularShift -> VAEnd;
+    ToXString -> VAStart;
+    ToXString -> VAEnd;
+}

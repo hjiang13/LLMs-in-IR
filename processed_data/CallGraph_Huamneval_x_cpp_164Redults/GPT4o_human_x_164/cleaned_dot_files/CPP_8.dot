@@ -1,0 +1,17 @@
+digraph CallGraph {
+    // Nodes
+    node [shape=rectangle];
+    sum_product [label="_Z11sum_productSt6vectorIiSaIiEE"];
+    llvm_umax [label="@llvm.umax.i64"];
+    llvm_reduce_mul [label="@llvm.vector.reduce.mul.v4i32"];
+    llvm_reduce_add [label="@llvm.vector.reduce.add.v4i32"];
+    llvm_memset [label="@llvm.memset.p0i8.i64"];
+    new_alloc [label="_Znwm"];
+
+    // Edges
+    sum_product -> llvm_umax;
+    sum_product -> llvm_reduce_mul;
+    sum_product -> llvm_reduce_add;
+    sum_product -> llvm_memset;
+    sum_product -> new_alloc;
+}
