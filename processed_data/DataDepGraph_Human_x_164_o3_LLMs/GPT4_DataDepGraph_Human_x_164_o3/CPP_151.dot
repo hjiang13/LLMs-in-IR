@@ -1,0 +1,63 @@
+digraph "DFG for'double_the_difference' function" {
+ Node0x55ad3df2a950[shape=record, label="  %2 = getelementptr inbounds %"class.std::vector", %"class.std::vector"* %0, i64 0, i32 0, i32 0, i32 0, i32 1"];
+ Node0x55ad3df2aa30[shape=record, label="  %3 = load float*, float** %2, align 8, !tbaa !3"];
+ Node0x55ad3df2ab50[shape=record, label="  %4 = getelementptr inbounds %"class.std::vector", %"class.std::vector"* %0, i64 0, i32 0, i32 0, i32 0, i32 0"];
+ Node0x55ad3df2ac50[shape=record, label="  %5 = load float*, float** %4, align 8, !tbaa !8"];
+ Node0x55ad3df2ad20[shape=record, label="  %6 = ptrtoint float* %3 to i64"];
+ Node0x55ad3df2ae10[shape=record, label="  %7 = ptrtoint float* %5 to i64"];
+ Node0x55ad3df2af00[shape=record, label="  %8 = sub i64 %6, %7"];
+ Node0x55ad3df2b000[shape=record, label="  %9 = icmp eq i64 %8, 0"];
+ Node0x55ad3df2b100[shape=record, label="  %11 = ashr exact i64 %8, 2"];
+ Node0x55ad3df2b200[shape=record, label="  %12 = call i64 @llvm.umax.i64(i64 %11, i64 1)"];
+ Node0x55ad3df2b300[shape=record, label="  %14 = phi i64 [ 0, %1 ], [ %35, %34 ]"];
+ Node0x55ad3df2b400[shape=record, label="  %16 = phi i64 [ 0, %10 ], [ %36, %34 ]"];
+ Node0x55ad3df2b500[shape=record, label="  %17 = phi i64 [ 0, %10 ], [ %35, %34 ]"];
+ Node0x55ad3df2b600[shape=record, label="  %18 = getelementptr inbounds float, float* %5, i64 %16"];
+ Node0x55ad3df2b700[shape=record, label="  %19 = load float, float* %18, align 4, !tbaa !9"];
+ Node0x55ad3df2b800[shape=record, label="  %20 = tail call float @llvm.round.f32(float %19) #3"];
+ Node0x55ad3df2b900[shape=record, label="  %21 = fsub float %19, %20"];
+ Node0x55ad3df2ba00[shape=record, label="  %22 = fpext float %21 to double"];
+ Node0x55ad3df2bb00[shape=record, label="  %23 = fcmp olt double %22, 1.000000e-04"];
+ Node0x55ad3df2bc00[shape=record, label="  %24 = fcmp ogt float %19, 0.000000e+00"];
+ Node0x55ad3df2bd00[shape=record, label="  %25 = select i1 %23, i1 %24, i1 false"];
+ Node0x55ad3df2be00[shape=record, label="  %27 = fptosi float %20 to i32"];
+ Node0x55ad3df2bf00[shape=record, label="  %28 = srem i32 %27, 2"];
+ Node0x55ad3df2c000[shape=record, label="  %29 = icmp eq i32 %28, 1"];
+ Node0x55ad3df2c100[shape=record, label="  %31 = mul nsw i32 %27, %27"];
+ Node0x55ad3df2c200[shape=record, label="  %32 = zext i32 %31 to i64"];
+ Node0x55ad3df2c300[shape=record, label="  %33 = add nsw i64 %17, %32"];
+ Node0x55ad3df2c400[shape=record, label="  %35 = phi i64 [ %33, %30 ], [ %17, %26 ], [ %17, %15 ]"];
+ Node0x55ad3df2c500[shape=record, label="  %36 = add nuw nsw i64 %16, 1"];
+ Node0x55ad3df2c600[shape=record, label="  %37 = icmp eq i64 %36, %12"];
+ Node0x55ad3df2c700[shape=record, label="  ret i64 %14"];
+ Node0x55ad3df2c800[shape=record, label="  br i1 %9, label %13, label %10"];
+ Node0x55ad3df2c900[shape=record, label="  br label %15"];
+ Node0x55ad3df2ca00[shape=record, label="  br i1 %25, label %26, label %34"];
+ Node0x55ad3df2cb00[shape=record, label="  br i1 %29, label %30, label %34"];
+ Node0x55ad3df2cc00[shape=record, label="  br label %34"];
+ Node0x55ad3df2cd00[shape=record, label="  br i1 %37, label %13, label %15, !llvm.loop !11"];
+
+ Node0x55ad3df2a950 -> Node0x55ad3df2aa30
+ Node0x55ad3df2aa30 -> Node0x55ad3df2ad20
+ Node0x55ad3df2ad20 -> Node0x55ad3df2af00
+ Node0x55ad3df2af00 -> Node0x55ad3df2ab50
+ Node0x55ad3df2ab50 -> Node0x55ad3df2ac50
+ Node0x55ad3df2ac50 -> Node0x55ad3df2b000
+ Node0x55ad3df2b000 -> Node0x55ad3df2b100
+ Node0x55ad3df2b100 -> Node0x55ad3df2b200
+ Node0x55ad3df2b200 -> Node0x55ad3df2c600
+ Node0x55ad3df2b400 -> Node0x55ad3df2c400
+ Node0x55ad3df2b500 -> Node0x55ad3df2c500
+ Node0x55ad3df2b600 -> Node0x55ad3df2c600
+ Node0x55ad3df2b700 -> Node0x55ad3df2c700
+ Node0x55ad3df2b800 -> Node0x55ad3df2c800
+ Node0x55ad3df2b900 -> Node0x55ad3df2c900
+ Node0x55ad3df2ba00 -> Node0x55ad3df2ca00
+ Node0x55ad3df2bb00 -> Node0x55ad3df2ca00
+ Node0x55ad3df2c000 -> Node0x55ad3df2cb00
+ Node0x55ad3df2c100 -> Node0x55ad3df2c200
+ Node0x55ad3df2c200 -> Node0x55ad3df2c300
+ Node0x55ad3df2c300 -> Node0x55ad3df2c400
+ Node0x55ad3df2c400 -> Node0x55ad3df2c600
+ Node0x55ad3df2c600 -> Node0x55ad3df2c700
+}
