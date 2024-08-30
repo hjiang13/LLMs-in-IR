@@ -20,10 +20,10 @@ gpt4o_data = pd.read_csv('GPT4o.summary.csv')
 gemma_data = pd.read_csv('Gemma.summary.csv')
 meta_llama_data = pd.read_csv('Meta_Llama.summary.csv')
 
-# Filter for Overall_Result = Pass
-gpt4o_pass = set(gpt4o_data[gpt4o_data['Overall_Result'] == 'Pass']['CPP_number'])
-gemma_pass = set(gemma_data[gemma_data['Overall_Result'] == 'Pass']['CPP_number'])
-meta_llama_pass = set(meta_llama_data[meta_llama_data['Overall_Result'] == 'Pass']['CPP_number'])
+# Filter for Result = Pass
+gpt4o_pass = set(gpt4o_data[gpt4o_data['Result'] == 'pass']['CPP_number'])
+gemma_pass = set(gemma_data[gemma_data['Result'] == 'pass']['CPP_number'])
+meta_llama_pass = set(meta_llama_data[meta_llama_data['Result'] == 'pass']['CPP_number'])
 
 # Define the sections
 sections = {
