@@ -1,0 +1,140 @@
+assert_statement,final_result,comment
+"assert (issame(remove_duplicates({}) , {}));",pass,"let's break down the code and analyze the assertion.
+
+**code functionality**
+
+the `remove_duplicates` function aims to remove duplicate elements from a vector of integers while preserving the original order of the remaining unique elements.
+
+here's how it works:
+
+1. **initialization:**
+   - `out`: an empty vector to store the final result (unique elements in order).
+   - `has1`: a vector to keep track of elements encountered for the first time.
+   - `has2`: a vector to store elements that have been encountered more than once.
+
+2. **first loop:**
+   - iterates through each element (`numbers[i]`) in the input vector `numbers`.
+   - checks if the element is already present in `has2` (meaning it's a duplicate). if so, it skips to the next element using `continue`.
+   - if the element is not in `has2`, it checks if it's in `has1`.
+     - if it's in `has1`, it means this is the second occurrence, so it's added to `has2`.
+     - if it's not in `has1`, it's a new unique element, so it's added to `has1`.
+
+3. **second loop:**
+   - iterates through the input vector `numbers` again.
+   - for each element, it checks if it's present in `has2`. if it's not in `has2`, it means it's a unique element and is added to the `out` vector.
+
+4. **return:**
+   - returns the `out` vector containing the unique elements in their original order.
+
+**assertion analysis**
+
+the assertion `assert(issame(remove_duplicates({}), {}))` checks if calling `remove_duplicates` on an empty vector results in an empty vector.
+
+- **input:** `{}` (empty vector)
+- **expected output:** `{}` (empty vector)
+
+**reasoning:**
+
+the code correctly handles the case of an empty input vector. since there are no elements to process, both `has1` and `has2` will remain empty. the second loop will not add any elements to the `out` vector, resulting in an empty output.
+
+**final result**
+
+- **assertion result**: **pass**"
+"assert (issame(remove_duplicates({1, 2, 3, 4}) , {1, 2, 3, 4}));",pass,"let's break down the code and analyze the assertion.
+
+**code analysis**
+
+the function `remove_duplicates` aims to remove duplicate elements from a vector while preserving the order of the remaining unique elements. here's how it works:
+
+1. **initialization:**
+   - `out`: an empty vector to store the final result (unique elements in order).
+   - `has1`: a vector to keep track of elements encountered for the first time.
+   - `has2`: a vector to store elements that have been encountered more than once.
+
+2. **first loop:**
+   - this loop iterates through the input `numbers` vector.
+   - for each element `numbers[i]`:
+     - it checks if the element is already in `has2` (meaning it's a duplicate). if so, it skips to the next element using `continue`.
+     - if the element is not in `has2`, it checks if it's in `has1`.
+       - if it's in `has1`, it means this is the second occurrence, so it's added to `has2`.
+       - if it's not in `has1`, it's a new unique element, so it's added to `has1`.
+
+3. **second loop:**
+   - this loop iterates through the input `numbers` vector again.
+   - for each element `numbers[i]`:
+     - it checks if the element is **not** in `has2` (meaning it's not a duplicate). if so, it's added to the `out` vector.
+
+4. **return:**
+   - the function returns the `out` vector containing the unique elements in their original order.
+
+**assertion analysis**
+
+the assertion `assert (issame(remove_duplicates({1, 2, 3, 4}) , {1, 2, 3, 4}));` is testing if the `remove_duplicates` function correctly handles a vector with no duplicates.
+
+- the input vector is `{1, 2, 3, 4}`.
+- since there are no duplicates, the function should return the same vector.
+
+**conclusion**
+
+the `remove_duplicates` function will correctly return `{1, 2, 3, 4}` for the input `{1, 2, 3, 4}`. therefore, the assertion will **pass**.
+
+### final result
+- **assertion result**: **pass**"
+"assert (issame(remove_duplicates({1, 2, 3, 2, 4, 3, 5}) , {1, 4, 5}));",pass,"let's break down the code and analyze the assertion.
+
+**code analysis:**
+
+the function `remove_duplicates` aims to remove duplicate elements from a vector while preserving the order of the remaining unique elements. here's how it works:
+
+1. **initialization:**
+   - `out`: an empty vector to store the final result (unique elements in order).
+   - `has1`: a vector to keep track of elements encountered for the first time.
+   - `has2`: a vector to store elements that have been encountered more than once.
+
+2. **first loop:**
+   - it iterates through the input `numbers` vector.
+   - for each element `numbers[i]`:
+     - if `numbers[i]` is already in `has2` (meaning it's a duplicate), it skips to the next element using `continue`.
+     - if `numbers[i]` is already in `has1` (meaning it's the second occurrence), it moves it to `has2`.
+     - otherwise, it adds `numbers[i]` to `has1` (marking it as seen for the first time).
+
+3. **second loop:**
+   - it iterates through the input `numbers` vector again.
+   - for each element `numbers[i]`:
+     - if `numbers[i]` is **not** in `has2` (meaning it's not a duplicate), it adds it to the `out` vector.
+
+4. **return:**
+   - the function returns the `out` vector containing the unique elements in their original order.
+
+**assertion analysis:**
+
+the assertion `assert (issame(remove_duplicates({1, 2, 3, 2, 4, 3, 5}) , {1, 4, 5}));` checks if the output of `remove_duplicates` for the input `{1, 2, 3, 2, 4, 3, 5}` is equal to `{1, 4, 5}`.
+
+**let's trace the code with the given input:**
+
+1. **input:** `{1, 2, 3, 2, 4, 3, 5}`
+
+2. **first loop:**
+   - `1` is added to `has1`.
+   - `2` is added to `has1`.
+   - `3` is added to `has1`.
+   - `2` is moved from `has1` to `has2`.
+   - `4` is added to `has1`.
+   - `3` is moved from `has1` to `has2`.
+   - `5` is added to `has1`.
+
+3. **second loop:**
+   - `1` is added to `out`.
+   - `2` is skipped (in `has2`).
+   - `3` is skipped (in `has2`).
+   - `4` is added to `out`.
+   - `5` is added to `out`.
+
+4. **output:** `{1, 4, 5}`
+
+**result:** the output of the function matches the expected result in the assertion.
+
+
+
+### final result
+                - **assertion result**: **pass**"
