@@ -3,10 +3,10 @@ import numpy as np
 import matplotlib.patches as patches
 
 # 设置全局字体
-plt.rcParams['font.size'] = 10  # 字体大小
+plt.rcParams['font.size'] = 14  # 字体大小
 
 # Reorder the labels and corresponding data
-labels = ['GPT4o-only', 'GPT4o x Gemma', 'Gemma-only', 'Gemma x Meta', 'Meta-only', 'Meta x GPT4o']
+labels = ['GPT-4-only', 'GPT-4 \n x \n Gemma 2', 'Gemma-only', 'Gemma 2 \n x \n LlaMa 3.1', 'LlaMa 3.1-only', 'LlaMa 3.1 \n x \n GPT4o']
 overall_avg = [0.0918, 0.183, 0.107, np.nan, 0.0215, 0.0510]
 overall_min = [0.041, 0.072, 0.054, np.nan, 0.0, 0.0]
 overall_max = [0.179, 0.3, 0.267, np.nan, 0.083, 0.081]
@@ -18,7 +18,7 @@ x = np.arange(len(labels))  # the label locations
 width = 0.35  # the width of the bars
 
 # Plotting
-fig, ax = plt.subplots(figsize=(8, 6))
+fig, ax = plt.subplots(figsize=(8, 5))
 
 # Function to draw small rectangles
 def draw_rectangles(ax, x, y, width, height, color, label=None):
@@ -29,11 +29,11 @@ def draw_rectangles(ax, x, y, width, height, color, label=None):
             label = None  # Only label the first rectangle to avoid duplicate labels in the legend
 
 # Draw small rectangles for Overall Complete
-draw_rectangles(ax, x - width/2, overall_avg, width/4, 0.01, 'blue', label='Overall Complete')
+draw_rectangles(ax, x - width/2, overall_avg, width/4, 0.01, 'blue', label='Completed CFG Accuracy')
 ax.errorbar(x - width/2, overall_avg, yerr=[np.subtract(overall_avg, overall_min), np.subtract(overall_max, overall_avg)], fmt='none', capsize=5, color='blue')
 
 # Draw small rectangles for Wrong
-draw_rectangles(ax, x + width/2, wrong_avg, width/4, 0.01, 'orange', label='Wrong')
+draw_rectangles(ax, x + width/2, wrong_avg, width/4, 0.01, 'orange', label='Incorrect Node Construction')
 ax.errorbar(x + width/2, wrong_avg, yerr=[np.subtract(wrong_avg, wrong_min), np.subtract(wrong_max, wrong_avg)], fmt='none', capsize=5, color='orange')
 
 # Add dotted lines for example one and example two
@@ -41,9 +41,9 @@ ax.axhline(y=0.11, color='r', linestyle='--', label='Example One (y=0.11)')
 ax.axhline(y=0.020, color='g', linestyle='--', label='Example Two (y=0.020)')
 
 # Labels and Titles
-ax.set_xlabel('LLMs')
+#ax.set_xlabel('LLMs')
 ax.set_ylabel('Density')
-ax.set_title('Comparison of Overall Complete and Wrong Densities Across LLMs')
+ax.set_title('(C) CFG Density of IRs in CCA and INC across LLMs')
 ax.set_xticks(x)
 ax.set_xticklabels(labels)
 ax.legend(loc='upper left')
