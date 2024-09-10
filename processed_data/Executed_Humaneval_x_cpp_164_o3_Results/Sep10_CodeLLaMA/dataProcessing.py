@@ -22,7 +22,7 @@ for folder_name in os.listdir(root_dir):
         cpp_number = int(folder_name.split("_")[1])
         found_cpp_numbers.append(cpp_number)
         
-        csv_file_path = os.path.join(folder_path, "results.csv")
+        csv_file_path = os.path.join(folder_path, "assertion_results.csv")
         
         # Check if the CSV file exists
         if os.path.exists(csv_file_path):
@@ -34,9 +34,9 @@ for folder_name in os.listdir(root_dir):
             with open(csv_file_path, mode='r') as csv_file:
                 reader = csv.DictReader(csv_file)
                 for row in reader:
-                    if row['result'].lower() == 'pass':
+                    if row['final_result'].lower() == 'pass':
                         has_pass = True
-                    elif row['result'].lower() == 'fail':
+                    elif row['final_result'].lower() == 'fail':
                         has_fail = True
             
             # Determine the overall result for this CPP_number
