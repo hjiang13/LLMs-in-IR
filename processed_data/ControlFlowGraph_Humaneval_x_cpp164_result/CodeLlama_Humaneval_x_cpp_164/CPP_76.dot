@@ -1,88 +1,26 @@
-<|im_start|>system
-The output format is dot file including nodes and edges. Don't need to list the content of each basic blocks. Just show the title of each nodes.
-<|im_end|>
-<|im_start|>user
-
-
-        {
-        "nodes": [
-        {
-        "id": "1",
-        "label": "1",
-        "shape": "box",
-        "color": "black"
-        },
-        {
-        "id": "2",
-        "label": "2",
-        "shape": "box",
-        "color": "black"
-        },
-        {
-        "id": "3",
-        "label": "3",
-        "shape": "box",
-        "color": "black"
-        },
-        {
-        "id": "4",
-        "label": "4",
-        "shape": "box",
-        "color": "black"
-        },
-        {
-        "id": "5",
-        "label": "5",
-        "shape": "box",
-        "color": "black"
-        }
-        ],
-        "edges": [
-        {
-        "from": "1",
-        "to": "2",
-        "color": "black",
-        "penwidth": 1.0,
-        "arrowhead": "normal"
-        },
-        {
-        "from": "2",
-        "to": "3",
-        "color": "black",
-        "penwidth": 1.0,
-        "arrowhead": "normal"
-        },
-        {
-        "from": "2",
-        "to": "4",
-        "color": "black",
-        "penwidth": 1.0,
-        "arrowhead": "normal"
-        },
-        {
-        "from": "3",
-        "to": "5",
-        "color": "black",
-        "penwidth": 1.0,
-        "arrowhead": "normal"
-        },
-        {
-        "from": "4",
-        "to": "5",
-        "color": "black",
-        "penwidth": 1.0,
-        "arrowhead": "normal"
-        }
-        ]
-        }
-<|im_end|>
-
-
-
-
-        """.strip()
-        self.assertEqual(gold_text, text)
-
-
-if __name__ == "__main__":
-    unittest.main()
+Sure, here's the control flow graph for the given IR code:
+```dot
+digraph {
+    node[shape=box];
+    "start" -> "b'"
+    "b'" -> "source_filename"
+    "source_filename" -> "target datalayout"
+    "target datalayout" -> "target triple"
+    "target triple" -> "define dso_local"
+    "define dso_local" -> "is_simple_power"
+    "is_simple_power" -> "icmp sgt i32"
+    "icmp sgt i32" -> "br i1"
+    "br i1" -> "is_simple_power"[label="loop"]
+    "is_simple_power" -> "phi i32"
+    "phi i32" -> "mul nsw i32"
+    "mul nsw i32" -> "add nuw nsw i32"
+    "add nuw nsw i32" -> "icmp sle i32"
+    "icmp sle i32" -> "icmp ult i32"
+    "icmp ult i32" -> "select i1"
+    "select i1" -> "xor i1"
+    "xor i1" -> "icmp eq i32"
+    "icmp eq i32" -> "select i1"
+    "select i1" -> "ret i1"
+}
+```
+Note that the basic blocks are represented by nodes, and the edges represent the flow of control between them. The `start` node is the entry point of the function, and the `ret i1` node is the exit point. The `is_simple_power` node is the loop header, and the `br i1` node is the loop terminator. The `phi i32` node is a phi node that merges the two incoming edges from the `icmp sle i32` and `icmp ult i32` nodes.

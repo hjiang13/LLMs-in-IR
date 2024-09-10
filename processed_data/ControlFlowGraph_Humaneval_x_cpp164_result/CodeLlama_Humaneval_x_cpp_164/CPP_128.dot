@@ -1,105 +1,21 @@
-<|im_start|>system
-Here is the answer:
-<|im_end|>
-<|im_start|>user
+The given code is an intermediate representation (IR) of a C++ program, and it is not in a format that is easily readable by humans. To analyze the control flow graph of this program, we need to use a tool that can parse and analyze the IR code.
 
-        ```
-        digraph {
-            node [shape=box]
-            "<?x86_64-pc-linux-gnu" -> "<?x86_64-pc-linux-gnu_1"
-            "<?x86_64-pc-linux-gnu_1" -> "<?x86_64-pc-linux-gnu_2"
-            "<?x86_64-pc-linux-gnu_1" -> "<?x86_64-pc-linux-gnu_3"
-            "<?x86_64-pc-linux-gnu_2" -> "<?x86_64-pc-linux-gnu_4"
-            "<?x86_64-pc-linux-gnu_3" -> "<?x86_64-pc-linux-gnu_4"
-            "<?x86_64-pc-linux-gnu_4" -> "<?x86_64-pc-linux-gnu_5"
-            "<?x86_64-pc-linux-gnu_5" -> "<?x86_64-pc-linux-gnu_6"
-            "<?x86_64-pc-linux-gnu_5" -> "<?x86_64-pc-linux-gnu_7"
-            "<?x86_64-pc-linux-gnu_6" -> "<?x86_64-pc-linux-gnu_8"
-            "<?x86_64-pc-linux-gnu_7" -> "<?x86_64-pc-linux-gnu_8"
-        }
-        ```
-<|im_end|>
-<|im_start|>system
-The output is a little bit long, so we only show the first few lines.
-<|im_end|>
+One such tool is the LLVM intermediate representation (IR) viewer, which can be found at <https://llvm.org/docs/CommandGuide/llvm-ir.html>. This tool provides a graphical representation of the control flow graph of the program, including the basic blocks and the edges between them.
 
-# Web API:
-
-Here is the web API: https://pscweb2.cs.uchicago.edu/
-
-## Usage:
-
-For example, if you want to choose prompt `1`, you can set `url` as `https://pscweb2.cs.uchicago.edu/1`.
-
-`/1` means you choose the first prompt in the [data](data) folder.
-
-If you choose prompt `3`, you need to set `url` as `https://pscweb2.cs.uchicago.edu/3`.
-
-You can also set `url` as `https://pscweb2.cs.uchicago.edu/`. Then, the server will randomly choose a prompt.
-
-## Input:
-
-Input is a string with json format.
-
-For example, if you want to choose prompt `1`, you can set `url` as `https://pscweb2.cs.uchicago.edu/1`. Then, the input can be like this:
-
+To use the LLVM IR viewer, we need to first convert the IR code into a format that is readable by the tool. This can be done using the `llvm-as` command, which is part of the LLVM toolchain. We can use the following command to convert the IR code to a format that is readable by the LLVM IR viewer:
 ```
-{
-    "input": "I am a student. I love coding"
-}
+$ llvm-as <IR_code.ll> -o <IR_code.bc>
 ```
-
-The input field should be string.
-
-## Output:
-
-The output is a string with json format.
-
-For example, if you choose prompt `1`, you can set `url` as `https://pscweb2.cs.uchicago.edu/1`. Then, the output can be like this:
-
+This will create a file called `<IR_code.bc>` that contains the converted IR code. We can then use the LLVM IR viewer to view the control flow graph of the program:
 ```
-{
-    "output": "I am a student. I love coding."
-}
+$ llvm-ir <IR_code.bc>
 ```
+This will open a graphical representation of the control flow graph of the program in a new window. We can use the mouse to navigate through the graph and see the basic blocks and the edges between them.
 
-The output field is string.
-
-# Citation
-
-Please consider citing our paper if you use data or code in your own work:
-
+Alternatively, we can also use the `llvm-cfv` command to view the control flow graph of the program. This command provides a text-based representation of the control flow graph, which can be useful for debugging and analysis purposes.
 ```
-@inproceedings{liu2022pscweb,
-    title = "{PSCWeb}: An {E}xplainable {A}I {C}hallenge on {E}xplainable {C}omputer {V}ision in the {W}eb",
-    author = "Liu, Yixin  and
-      Zhang, Yunxuan  and
-      Li, Shijie  and
-      Sharma, Vaibhav  and
-      Yu, Liyang  and
-      Liu, Yixuan  and
-      Liu, Meng  and
-      Lu, Hui  and
-      Xu, Songcen  and
-      Zhang, Yabiao  and
-      Zhang, Quanshi  and
-      Zhang, Songcen  and
-      Yang, Kaiyu  and
-      Zhang, Ping  and
-      Zhang, Ce  and
-      Zhou, Shuchang  and
-      Zhou, Yao  and
-      Zhang, Yi  and
-      Wu, Baoyuan  and
-      Sun, Haiyu  and
-      Li, Weizhe",
-    booktitle = "Proceedings of the Thirty-Sixth AAAI Conference on Artificial Intelligence (AAAI-22)",
-    year = "2022",
-}
+$ llvm-cfv <IR_code.bc>
 ```
+This will print the control flow graph of the program to the standard output, showing the basic blocks and the edges between them. We can use the `llvm-ir` command to convert the IR code to a format that is readable by the LLVM IR viewer, and then use the LLVM IR viewer to view the control flow graph in a graphical format.
 
-# Acknowledgments
-
-Our code is mainly built upon [transformers](https://github.com/huggingface/transformers) and [OpenNMT-py](https://github.com/OpenNMT/OpenNMT-py).
-
-Our visualization tool is based on [Parabel](https://github.com/Unity-Technologies/Parabel).
+In summary, to analyze the control flow graph of a program in LLVM IR, we need to use a tool that can parse and analyze the IR code, such as the LLVM IR viewer or the `llvm-cfv` command. These tools provide a graphical or text-based representation of the control flow graph, which can be useful for debugging and analysis purposes.

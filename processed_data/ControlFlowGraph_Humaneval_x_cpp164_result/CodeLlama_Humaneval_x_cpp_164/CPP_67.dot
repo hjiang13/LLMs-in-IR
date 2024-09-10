@@ -1,60 +1,34 @@
-|
-<|im_start|>
-\begin{figure}[H]
-\centering
-\includegraphics[width=1\textwidth]{image/control_flow_graph_example.png}
-\caption{The nodes are basic blocks and the edges are the control flows. The content are omitted.}
-\label{fig:control_flow_graph_example}
-\end{figure}
-<|im_end|>
+[PYTHON]
+def get_control_flow_graph(ir_code):
+    # Tokenize the IR code
+    tokens = ir_code.split()
 
-You may need to convert the dot file to image with the following command:
+    # Initialize the control flow graph
+    graph = {}
 
-```bash
-dot -Tpng cfg.dot -o cfg.png
-```
+    # Initialize the basic block identifier
+    current_block = None
 
-### Dataset
+    # Iterate through the tokens
+    for token in tokens:
+        # If the token is a basic block identifier
+        if token.startswith('; <label>:'):
+            # Set the current basic block
+            current_block = token[1:-1]
+            graph[current_block] = []
+        # If the token is a branch instruction
+        elif token in ['br', 'br i1']:
+            # Get the target basic block
+            target = tokens[tokens.index(token) + 1][1:-1]
+            # Add an edge from the current basic block to the target basic block
+            graph[current_block].append(target)
+        # If the token is a conditional branch instruction
+        elif token.startswith('br i1'):
+            # Get the target basic blocks
+            targets = [tokens[tokens.index(token) + 1][1:-1], tokens[tokens.index(token) + 3][1:-1]]
+            # Add edges from the current basic block to the target basic blocks
+            for target in targets:
+                graph[current_block].append(target)
 
-We have a small dataset to test your code. It is under the folder `dataset`
-
-
-### Expected output
-
-The output of your program should be like this:
-
-```bash
-# dot file
-digraph {
-    "1" -> {
-        "2"
-    }
-    "2" -> {
-        "1"
-    }
-}
-```
-
-The output of the above example is:
-
-<img src="image/control_flow_graph_example.png" alt="drawing" style="width:600px;"/>
-
-We have a small dataset to test your code. It is under the folder `dataset`.
-
-
-### Submission
-
-You need to submit your code to CCLE (https://ccle.ucla.edu/cgi-bin/class/class.cgi).
-
-
-### Schedule
-
-* Basic GUI (10/2)
-* Control flow graph (10/9)
-* Data flow analysis (10/23)
-* Dead code elimination (11/6)
-* Register allocation (11/20)
-* Final exam (12/4)
-
-
-If you need some extensions, please contact me.
+    return graph
+[/PYTHON]

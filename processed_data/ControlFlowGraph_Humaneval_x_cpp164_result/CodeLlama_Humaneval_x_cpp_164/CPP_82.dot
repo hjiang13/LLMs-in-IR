@@ -1,26 +1,16 @@
+Here is the control flow graph for the given IR code:
 ```
-    '''
-
-    def __init__(self, data_dir, split):
-        # 1000000
-        self.data_dir = data_dir
-        self.split = split
-        self.c_files = glob.glob(os.path.join(data_dir, split, '*.c'))
-
-    def __getitem__(self, index):
-        c_file = self.c_files[index]
-        with open(c_file) as f:
-            text = f.read()
-
-        # 1024
-        text_tokens = re.split(r'\s+', text)[:1024]
-        source = ' '.join(text_tokens)
-
-        # 512
-        text_tokens = re.split(r'\s+', text)[:512]
-        target = ' '.join(text_tokens)
-
-        return source, target, c_file
-
-    def __len__(self):
-        return len(self.c_files)
+digraph {
+    "main" -> "prime_length";
+    "prime_length" -> "prime_length_entry";
+    "prime_length_entry" -> "prime_length_loop";
+    "prime_length_loop" -> "prime_length_loop_cond";
+    "prime_length_loop_cond" -> "prime_length_loop_body";
+    "prime_length_loop_body" -> "prime_length_loop_inc";
+    "prime_length_loop_inc" -> "prime_length_loop_cond";
+    "prime_length_loop_cond" -> "prime_length_loop_exit";
+    "prime_length_loop_exit" -> "prime_length_exit";
+    "prime_length_exit" -> "main";
+}
+```
+Note: The above graph is a simplified representation of the control flow graph, and it does not include the contents of each basic block. The graph is represented using the dot language, which is a graph description language. The nodes in the graph represent the basic blocks in the IR code, and the edges represent the control flow between the basic blocks.

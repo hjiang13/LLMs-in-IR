@@ -1,83 +1,28 @@
-<|im_start|>system
-Here is your output:
+Here is the control flow graph for the given IR code program:
 ```
 digraph G {
     node [shape=box];
-    bb0 [label = "bb0: 0->1"];
-    bb1 [label = "bb1: 1->2,3"];
-    bb2 [label = "bb2: 2->4,5"];
-    bb3 [label = "bb3: 3->4"];
-    bb4 [label = "bb4: 4->6"];
-    bb5 [label = "bb5: 5->6"];
-    bb6 [label = "bb6: 6->"];
-
-    bb0 -> bb1;
-    bb1 -> bb2;
-    bb1 -> bb3;
-    bb2 -> bb4;
-    bb2 -> bb5;
-    bb3 -> bb4;
-    bb4 -> bb6;
-    bb5 -> bb6;
+    0 [label="entry"];
+    1 [label="x_or_y"];
+    2 [label="phi"];
+    3 [label="icmp"];
+    4 [label="zext"];
+    5 [label="icmp"];
+    6 [label="br"];
+    7 [label="phi"];
+    8 [label="and"];
+    9 [label="icmp"];
+    10 [label="select"];
+    11 [label="ret"];
+    12 [label="phi"];
+    13 [label="srem"];
+    14 [label="icmp"];
+    15 [label="select"];
+    16 [label="phi"];
+    17 [label="add"];
+    18 [label="mul"];
+    19 [label="icmp"];
+    20 [label="br"];
 }
 ```
-<|im_end|>
-<|im_start|>user
-
-        Your output is correct.
-        Now I give you a C code program and you give me the control flow graph. 
-        
-        Here is the C code input:
-        ```
-        #include <stdio.h>
-        int max(int x, int y, int z)
-        {
-            if (x >= y && x >= z)
-            {
-                return x;
-            }
-            else if (y >= x && y >= z)
-            {
-                return y;
-            }
-            else
-            {
-                return z;
-            }
-        }
-        int main()
-        {
-            int a, b, c;
-            printf("Enter three numbers: ");
-            scanf("%d%d%d", &a, &b, &c);
-            printf("Maximum of the numbers = %d\n", max(a, b, c));
-            return 0;
-        }
-        ```
-       Your task is to The output format is dot file including nodes and edges. Don't need to list the content of each basic blocks. Just show the title of each nodes.
-       <|im_end|>
-<|im_start|>system
-Here is your output:
-```
-digraph G {
-    node [shape=box];
-    bb0 [label = "bb0: 0->1,2"];
-    bb1 [label = "bb1: 1->3"];
-    bb2 [label = "bb2: 2->3"];
-    bb3 [label = "bb3: 3->4"];
-    bb4 [label = "bb4: 4->5"];
-    bb5 [label = "bb5: 5->"];
-
-    bb0 -> bb1;
-    bb0 -> bb2;
-    bb1 -> bb3;
-    bb2 -> bb3;
-    bb3 -> bb4;
-    bb4 -> bb5;
-}
-```
-<|im_end|>
-<|im_start|>user
-
-        Your output is correct.
-        <|im_end|>
+Note that each node in the graph is labeled with a number, which corresponds to the order in which the basic blocks appear in the original code. The edges between nodes represent the control flow between the basic blocks. For example, the edge from node 0 to node 1 represents the control flow from the entry basic block to the x_or_y basic block.

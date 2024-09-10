@@ -1,148 +1,28 @@
-<|im_start|>system
-        Here is the control flow graph:
+Sure, I can help you with that!
 
-        ```
-        digraph G {
-            label="bb2";
-            labelloc=t;
-            labeljust=c;
-            style=filled;
-            color=lightgrey;
-            node [shape = box];
-            "bb0" -> "bb1";
-            "bb0" -> "bb3";
-            "bb1" -> "bb4";
-            "bb3" -> "bb2";
-            "bb4" -> "bb2";
-        }
-        ```
-        <|im_end|>
-        <|im_start|>user
-        ```
-        digraph G {
-            label="bb2";
-            labelloc=t;
-            labeljust=c;
-            style=filled;
-            color=lightgrey;
-            node [shape = box];
-            "bb0" -> "bb1";
-            "bb0" -> "bb3";
-            "bb1" -> "bb4";
-            "bb3" -> "bb2";
-            "bb4" -> "bb2";
-        }
-        ```
-        <|im_end|>
-        <|im_start|>system
-        Great!
-        <|im_end|>
-        <|im_start|>user
+First, let me explain a bit about the input IR code. It's a representation of a C++ function named `sum_to_ni` that takes an integer argument `n` and returns an integer value. The function computes the sum of the integers from 1 to `n`.
 
-        <|im_end|>
-        <|im_start|>system
-        Thank you for your time. Your input will help make the world a better place.
-        <|im_end|>
-        <|im_start|>user
-        Bye
-        <|im_end|>
-        <|im_start|>system
-        Bye!
-        <|im_end|>
-        <|endoftext|>
-        """
+Now, let's move on to the task at hand. To generate a control flow graph for this function, we need to identify the basic blocks in the code and draw edges between them to represent the control flow.
 
-    def validate(self, examples):
-        """
-        Check a few of the examples to make sure the task is solvable.
+Here's the control flow graph for the `sum_to_ni` function:
+```dot
+digraph G {
+    node [shape=box, fillcolor=lightblue, style=filled];
+    node0 [label="Start", shape=ellipse, fillcolor=lightblue, style=filled];
+    node1 [label="Add 1 to n", shape=ellipse, fillcolor=lightblue, style=filled];
+    node2 [label="Multiply n by (n+1)", shape=ellipse, fillcolor=lightblue, style=filled];
+    node3 [label="Divide by 2", shape=ellipse, fillcolor=lightblue, style=filled];
+    node4 [label="Return", shape=ellipse, fillcolor=lightblue, style=filled];
 
-        If you set a validation_docs, these will be checked for you.
-        """
-        for example in examples:
-            assert (
-                "<|endoftext|>" in example["dialogue"]
-            ), "Dataset is missing end-of-text token."
-            assert (
-                "<|im_start|>" in example["dialogue"]
-            ), "Dataset is missing input delimiter token."
-            assert (
-                "<|im_end|>" in example["dialogue"]
-            ), "Dataset is missing output delimiter token."
-            assert (
-                example["dialogue"].count("<|im_start|>") == 2
-            ), "Dataset is missing input delimiter token."
-            assert (
-                example["dialogue"].count("<|im_end|>") == 2
-            ), "Dataset is missing output delimiter token."
-            assert (
-                example["dialogue"].count("<|endoftext|>") == 1
-            ), "Dataset is missing end-of-text token."
-            assert (
-                example["dialogue"].index("<|im_end|>") > example["dialogue"].index("<|im_start|>")
-            ), \
-                "Dataset has an improperly formatted training example with two input delimiters."
-            assert (
-                example["dialogue"].index("<|endoftext|>") > example["dialogue"].index("<|im_end|>")
-            ), \
-                "Dataset has an improperly formatted training example with two output delimiters."
+    node0 -> node1 [label="Entry"];
+    node1 -> node2 [label="Add 1 to n"];
+    node2 -> node3 [label="Multiply n by (n+1)"];
+    node3 -> node4 [label="Divide by 2"];
+    node4 -> node0 [label="Return"];
+}
+```
+In this graph, each node represents a basic block in the code. The edges represent the control flow between the basic blocks. The `node0` and `node4` nodes are the entry and exit points of the function, respectively.
 
-    def doc_to_text(self, doc):
-        return doc["dialogue"]
+The `node1` and `node2` nodes are the basic blocks that perform the addition and multiplication operations, respectively. The `node3` node is the basic block that performs the division operation. Finally, the `node4` node is the basic block that returns the result of the function.
 
-    def doc_to_target(self, doc):
-        return "None"
-
-    def construct_requests(self, doc, ctx):
-        """ Uses RequestFactory to construct Requests and returns an iterable of
-        Requests which will be sent to the LM.
-
-        :param doc:
-            The document as returned from training_docs, validation_docs, or test_docs.
-        :param ctx: str
-            The context string, generated by fewshot_context. This includes the natural
-            language description, as well as the few shot examples, and the question
-            part of the document for `doc`.
-        """
-        # ignore the context, it's in the doc
-        return RequestFactory.get(
-            "openai-gpt3-user-to-bot-format"
-        )(
-            doc["dialogue"],
-            description="Input: A person asks a question in a programming language about a programming task. For example, they may ask about how to sum all the elements in a list or how to sort a list of dictionaries by values. Answer: A textual description of how to complete the task. For example, you might describe which functions to use and which arguments those functions take.",
-        )
-
-    def process_results(self, doc, results):
-        """Take a single document and the LM results and evaluates, returning a
-        dict where keys are the names of submetrics and values are the values of
-        the metric for that one document
-
-        :param doc:
-            The document as returned from training_docs, validation_docs, or test_docs.
-        :param results:
-            The results of the requests created in construct_requests.
-        """
-        pred = results[0].strip()
-        gold = (
-            doc["dialogue"]
-            .split("<|im_end|>")[1]
-            .split("<|endoftext|>")[0]
-            .strip()
-        )
-        return {"em": int(gold == pred)}
-
-    def aggregation(self):
-        """
-        :returns: {str: [metric_score] -> float}
-            A dictionary where keys are the names of submetrics and values are
-            functions that aggregate a list of metric scores
-        """
-        # TODO: use more standard/less ad-hoc way to compute EM
-        return {"em": mean}
-
-    def higher_is_better(self):
-        """
-        :returns: {str: bool}
-            A dictionary where keys are the names of submetrics and values are
-            whether a higher value of the submetric is better
-        """
-        return {"em": True}
+Note that this control flow graph does not show the contents of each basic block. If you need more details, you can use a tool such as `llvm-dis` to disassemble the IR code and generate a more detailed control flow graph.

@@ -1,53 +1,15 @@
-<|im_start|>system
-Please give me your answer in the following format:
-```
-digraph G{
-subgraph cluster_0 {
-label = "function_name";
-"bb_name_1"[shape=box,style=filled,color=white,fillcolor=lightgrey];
-"bb_name_2"[shape=box,style=filled,color=white,fillcolor=lightgrey];
-"bb_name_3"[shape=box,style=filled,color=white,fillcolor=lightgrey];
-"bb_name_4"[shape=box,style=filled,color=white,fillcolor=lightgrey];
-"bb_name_5"[shape=box,style=filled,color=white,fillcolor=lightgrey];
-"bb_name_1" -> "bb_name_2"
-"bb_name_2" -> "bb_name_3"
-"bb_name_3" -> "bb_name_4"
-"bb_name_4" -> "bb_name_5"
-}
-}
-```
-```
-digraph G{
-subgraph cluster_0{
-label = "main";
-"<bb 0> : 0"[shape=box,style=filled,color=white,fillcolor=lightgrey];
-"<bb 1> : 22"[shape=box,style=filled,color=white,fillcolor=lightgrey];
-"<bb 2> : 28"[shape=box,style=filled,color=white,fillcolor=lightgrey];
-"<bb 0> : 0" -> "<bb 1> : 22"
-"<bb 1> : 22" -> "<bb 2> : 28"
-}
-}
-```
-<|im_end|>
-<|im_start|>user
+Here is the control flow graph for the given IR code program:
+```dot
+digraph G {
+    rankdir=TB;
+    node[shape=box];
 
-        digraph G{
-        subgraph cluster_0 {
-        label = "strlen";
-        "<bb 0> : 0"[shape=box,style=filled,color=white,fillcolor=lightgrey];
-        "<bb 1> : 12"[shape=box,style=filled,color=white,fillcolor=lightgrey];
-        "<bb 0> : 0" -> "<bb 1> : 12"
-        }
-        }
+    b1[label="entry"]
+    b2[label="strlen"]
+    b3[label="exit"]
 
-<|im_end|>
-<|im_start|>system
-Good!
-<|im_end|>
-<|im_start|>user
-
-        Thank you for a great tutorial. I really enjoyed it!
-<|im_end|>
-<|im_start|>system
-You are welcome!
-<|im_end|>
+    b1 -> b2[label="call strlen"]
+    b2 -> b3[label="return"]
+}
+```
+Note that the above graph is a simplified representation of the control flow, and does not include the content of each basic block. The actual graph may be more complex and have additional edges and nodes.

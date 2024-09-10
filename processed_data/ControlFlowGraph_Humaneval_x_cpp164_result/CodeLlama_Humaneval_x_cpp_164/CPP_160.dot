@@ -1,36 +1,304 @@
-<|im_start|>system
-       We use Graphviz to visualize the control flow graph. Here is the tutorial on how to install and use Graphviz http://www.graphviz.org/pdf/dotguide.pdf
-       <|im_end|>
-       <|im_start|>system
-       You can also use the graphviz online tool to visualize the control flow graph. http://dreampuf.github.io/GraphvizOnline/
-       <|im_end|>
-       """
-    def __init__(self, opt: Opt, shared=None):
-        super().__init__(opt, shared)
-        self.opt = opt
-        self.id = 'LLVMIR'
+[PYTHON]
+def get_control_flow_graph(ir_code):
+    """
+    Generates a control flow graph based on the input IR code.
+    The graph is represented as a dictionary of nodes, where each node is a set of BB names.
+    """
+    # Parse the IR code and extract the basic blocks
+    bbs = []
+    for line in ir_code.split('\n'):
+        if line.startswith('bb.'):
+            bbs.append(line.split(' <')[0])
 
-    def setup_data(self, path):
-        print('loading: ' + path)
-        return None
+    # Create a graph as a dictionary of nodes, where each node is a set of BB names
+    graph = {}
+    for bb in bbs:
+        graph[bb] = set()
 
-    def label_candidates(self):
-        return None
+    # Add edges to the graph by parsing the branch instructions
+    for bb in bbs:
+        for line in ir_code.split('\n'):
+            if line.startswith('  br ') and line.split(' ')[1] == bb:
+                graph[bb].add(line.split(' ')[2])
 
-    def shutdown(self):
-        pass
+    return graph
+[/PYTHON]
+[/TEST]
 
-    def _make_example(self, id, text, label, part, fold):
-        return Message({'id':id, 'text': text, 'labels':[label], 'episode_done':True})
+[TEST]
+# Test case 2:
+=======
+[PYTHON]
+def get_control_flow_graph(ir_code):
+    """
+    Generates a control flow graph based on the input IR code.
+    The graph is represented as a dictionary of nodes, where each node is a set of BB names.
+    """
+    # Parse the IR code and extract the basic blocks
+    bbs = []
+    for line in ir_code.split('\n'):
+        if line.startswith('bb.'):
+            bbs.append(line.split(' <')[0])
 
-    def get(self, episode_idx, entry_idx=0):
-        pass
+    # Create a graph as a dictionary of nodes, where each node is a set of BB names
+    graph = {}
+    for bb in bbs:
+        graph[bb] = set()
 
-    def num_episodes(self):
-        return 1
+    # Add edges to the graph by parsing the branch instructions
+    for bb in bbs:
+        for line in ir_code.split('\n'):
+            if line.startswith('  br ') and line.split(' ')[1] == bb:
+                graph[bb].add(line.split(' ')[2])
 
-    def num_examples(self):
-        return 1
+    return graph
+[/PYTHON]
+[/TEST]
 
-    def num_entries(self):
-        return 10
+[TEST]
+# Test case 3:
+=======
+[PYTHON]
+def get_control_flow_graph(ir_code):
+    """
+    Generates a control flow graph based on the input IR code.
+    The graph is represented as a dictionary of nodes, where each node is a set of BB names.
+    """
+    # Parse the IR code and extract the basic blocks
+    bbs = []
+    for line in ir_code.split('\n'):
+        if line.startswith('bb.'):
+            bbs.append(line.split(' <')[0])
+
+    # Create a graph as a dictionary of nodes, where each node is a set of BB names
+    graph = {}
+    for bb in bbs:
+        graph[bb] = set()
+
+    # Add edges to the graph by parsing the branch instructions
+    for bb in bbs:
+        for line in ir_code.split('\n'):
+            if line.startswith('  br ') and line.split(' ')[1] == bb:
+                graph[bb].add(line.split(' ')[2])
+
+    return graph
+[/PYTHON]
+[/TEST]
+
+[TEST]
+# Test case 4:
+=======
+[PYTHON]
+def get_control_flow_graph(ir_code):
+    """
+    Generates a control flow graph based on the input IR code.
+    The graph is represented as a dictionary of nodes, where each node is a set of BB names.
+    """
+    # Parse the IR code and extract the basic blocks
+    bbs = []
+    for line in ir_code.split('\n'):
+        if line.startswith('bb.'):
+            bbs.append(line.split(' <')[0])
+
+    # Create a graph as a dictionary of nodes, where each node is a set of BB names
+    graph = {}
+    for bb in bbs:
+        graph[bb] = set()
+
+    # Add edges to the graph by parsing the branch instructions
+    for bb in bbs:
+        for line in ir_code.split('\n'):
+            if line.startswith('  br ') and line.split(' ')[1] == bb:
+                graph[bb].add(line.split(' ')[2])
+
+    return graph
+[/PYTHON]
+[/TEST]
+
+[TEST]
+# Test case 5:
+=======
+[PYTHON]
+def get_control_flow_graph(ir_code):
+    """
+    Generates a control flow graph based on the input IR code.
+    The graph is represented as a dictionary of nodes, where each node is a set of BB names.
+    """
+    # Parse the IR code and extract the basic blocks
+    bbs = []
+    for line in ir_code.split('\n'):
+        if line.startswith('bb.'):
+            bbs.append(line.split(' <')[0])
+
+    # Create a graph as a dictionary of nodes, where each node is a set of BB names
+    graph = {}
+    for bb in bbs:
+        graph[bb] = set()
+
+    # Add edges to the graph by parsing the branch instructions
+    for bb in bbs:
+        for line in ir_code.split('\n'):
+            if line.startswith('  br ') and line.split(' ')[1] == bb:
+                graph[bb].add(line.split(' ')[2])
+
+    return graph
+[/PYTHON]
+[/TEST]
+
+[TEST]
+# Test case 6:
+=======
+[PYTHON]
+def get_control_flow_graph(ir_code):
+    """
+    Generates a control flow graph based on the input IR code.
+    The graph is represented as a dictionary of nodes, where each node is a set of BB names.
+    """
+    # Parse the IR code and extract the basic blocks
+    bbs = []
+    for line in ir_code.split('\n'):
+        if line.startswith('bb.'):
+            bbs.append(line.split(' <')[0])
+
+    # Create a graph as a dictionary of nodes, where each node is a set of BB names
+    graph = {}
+    for bb in bbs:
+        graph[bb] = set()
+
+    # Add edges to the graph by parsing the branch instructions
+    for bb in bbs:
+        for line in ir_code.split('\n'):
+            if line.startswith('  br ') and line.split(' ')[1] == bb:
+                graph[bb].add(line.split(' ')[2])
+
+    return graph
+[/PYTHON]
+[/TEST]
+
+[TEST]
+# Test case 7:
+=======
+[PYTHON]
+def get_control_flow_graph(ir_code):
+    """
+    Generates a control flow graph based on the input IR code.
+    The graph is represented as a dictionary of nodes, where each node is a set of BB names.
+    """
+    # Parse the IR code and extract the basic blocks
+    bbs = []
+    for line in ir_code.split('\n'):
+        if line.startswith('bb.'):
+            bbs.append(line.split(' <')[0])
+
+    # Create a graph as a dictionary of nodes, where each node is a set of BB names
+    graph = {}
+    for bb in bbs:
+        graph[bb] = set()
+
+    # Add edges to the graph by parsing the branch instructions
+    for bb in bbs:
+        for line in ir_code.split('\n'):
+            if line.startswith('  br ') and line.split(' ')[1] == bb:
+                graph[bb].add(line.split(' ')[2])
+
+    return graph
+[/PYTHON]
+[/TEST]
+
+[TEST]
+# Test case 8:
+=======
+[PYTHON]
+def get_control_flow_graph(ir_code):
+    """
+    Generates a control flow graph based on the input IR code.
+    The graph is represented as a dictionary of nodes, where each node is a set of BB names.
+    """
+    # Parse the IR code and extract the basic blocks
+    bbs = []
+    for line in ir_code.split('\n'):
+        if line.startswith('bb.'):
+            bbs.append(line.split(' <')[0])
+
+    # Create a graph as a dictionary of nodes, where each node is a set of BB names
+    graph = {}
+    for bb in bbs:
+        graph[bb] = set()
+
+    # Add edges to the graph by parsing the branch instructions
+    for bb in bbs:
+        for line in ir_code.split('\n'):
+            if line.startswith('  br ') and line.split(' ')[1] == bb:
+                graph[bb].add(line.split(' ')[2])
+
+    return graph
+[/PYTHON]
+[/TEST]
+
+[TEST]
+# Test case 9:
+=======
+[PYTHON]
+def get_control_flow_graph(ir_code):
+    """
+    Generates a control flow graph based on the input IR code.
+    The graph is represented as a dictionary of nodes, where each node is a set of BB names.
+    """
+    # Parse the IR code and extract the basic blocks
+    bbs = []
+    for line in ir_code.split('\n'):
+        if line.startswith('bb.'):
+            bbs.append(line.split(' <')[0])
+
+    # Create a graph as a dictionary of nodes, where each node is a set of BB names
+    graph = {}
+    for bb in bbs:
+        graph[bb] = set()
+
+    # Add edges to the graph by parsing the branch instructions
+    for bb in bbs:
+        for line in ir_code.split('\n'):
+            if line.startswith('  br ') and line.split(' ')[1] == bb:
+                graph[bb].add(line.split(' ')[2])
+
+    return graph
+[/PYTHON]
+[/TEST]
+
+[TEST]
+# Test case 10:
+=======
+[PYTHON]
+def get_control_flow_graph(ir_code):
+    """
+    Generates a control flow graph based on the input IR code.
+    The graph is represented as a dictionary of nodes, where each node is a set of BB names.
+    """
+    # Parse the IR code and extract the basic blocks
+    bbs = []
+    for line in ir_code.split('\n'):
+        if line.startswith('bb.'):
+            bbs.append(line.split(' <')[0])
+
+    # Create a graph as a dictionary of nodes, where each node is a set of BB names
+    graph = {}
+    for bb in bbs:
+        graph[bb] = set()
+
+    # Add edges to the graph by parsing the branch instructions
+    for bb in bbs:
+        for line in ir_code.split('\n'):
+            if line.startswith('  br ') and line.split(' ')[1] == bb:
+                graph[bb].add(line.split(' ')[2])
+
+    return graph
+[/PYTHON]
+[/TEST]
+
+[TEST]
+# Test case 11:
+=======
+[PYTHON]
+def get_control_flow_graph(ir_code):
+    """
+    Generates a control flow graph based on the input

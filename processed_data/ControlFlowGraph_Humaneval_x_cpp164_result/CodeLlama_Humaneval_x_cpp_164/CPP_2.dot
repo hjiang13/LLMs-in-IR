@@ -1,136 +1,38 @@
-<|im_start|>system
-You are an expert in high-performance computation.<|im_end|>
-<|im_start|>user
+Sure, here's the control flow graph for the given IR code:
+```dot
+digraph G {
+    node[shape=box];
+    0[label="entry"];
+    1[label="fptosi float %0 to i32"];
+    2[label="sitofp i32 %2 to float"];
+    3[label="fsub float %0, %3"];
+    4[label="ret float %4"];
+    5[label="truncate_numberf"];
+    6[label="noreturn"];
+    7[label="mustprogress"];
+    8[label="nofree"];
+    9[label="norecurse"];
+    10[label="nosync"];
+    11[label="nounwind"];
+    12[label="readnone"];
+    13[label="uwtable"];
+    14[label="willreturn"];
 
-        You are an control flow graph analyzer in Intermediate code. I will give you a IR code program and you give me the control flow graph. 
-        
-        Here is the IR code input:
-        ```
-        b'; ModuleID = \'../../Human_xBenchmarks_164/CPP_2/CPP_2.cpp\'\nsource_filename = "../../Human_xBenchmarks_164/CPP_2/CPP_2.cpp"\ntarget datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-f80:128-n8:16:32:64-S128"\ntarget triple = "x86_64-unknown-linux-gnu"\n\n; Function Attrs: mustprogress nofree norecurse nosync nounwind readnone uwtable willreturn\ndefine dso_local float @_Z15truncate_numberf(float %0) local_unnamed_addr #0 {\n  %2 = fptosi float %0 to i32\n  %3 = sitofp i32 %2 to float\n  %4 = fsub float %0, %3\n  ret float %4\n}\n\nattributes #0 = { mustprogress nofree norecurse nosync nounwind readnone uwtable willreturn "frame-pointer"="none" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }\n\n!llvm.module.flags = !{!0, !1}\n!llvm.ident = !{!2}\n\n!0 = !{i32 1, !"wchar_size", i32 4}\n!1 = !{i32 7, !"uwtable", i32 1}\n!2 = !{!"clang version 13.0.0 (https://github.com/llvm/llvm-project.git d7b669b3a30345cfcdb2fde2af6f48aa4b94845d)"}\n'
-        ```
-       Your task is to The output format is dot file including nodes and edges. Don't need to list the content of each basic blocks. Just show the title of each nodes.
-       <|im_end|>
-"""
-
-
-# =================
-# =       Labels  =
-# =================
-
-
-
-# This is the default for the labeling scheme
-# The Nodes can be any of:
-#  - 'node'
-#  - 'instruction'
-#  - 'variable'
-#  - 'basic_block'
-#  - 'loop'
-#  - 'function'
-#  - 'program'
-#
-# The Edges can be any of:
-#  - 'edge'
-#  - 'control_flow'
-#  - 'data_dependence'
-#  - 'function_call'
-#  - 'return'
-#  - 'memory_dependence'
-#  - 'call_argument'
-#  - 'call_return'
-# 
-# The Data can be any of:
-#  - 'value'
-#  - 'type'
-#  - 'constant'
-#
-
-
-# Default is:
-#  - Nodes: basic_block
-#  - Edges: edge
-#  - Data: value
-
-
-# =================
-# =       Misc    =
-# =================
-
-
-
-# This is the default for the labeling scheme
-# The Nodes can be any of:
-#  - 'node'
-#  - 'instruction'
-#  - 'variable'
-#  - 'basic_block'
-#  - 'loop'
-#  - 'function'
-#  - 'program'
-#
-# The Edges can be any of:
-#  - 'edge'
-#  - 'control_flow'
-#  - 'data_dependence'
-#  - 'function_call'
-#  - 'return'
-#  - 'memory_dependence'
-#  - 'call_argument'
-#  - 'call_return'
-# 
-# The Data can be any of:
-#  - 'value'
-#  - 'type'
-#  - 'constant'
-#
-
-
-# Default is:
-#  - Nodes: basic_block
-#  - Edges: edge
-#  - Data: value
-
-
-#==================
-#=       Info     =
-#==================
-
-# You are a compiler engineer in the field of high-performance computing.
-# Input: Program
-# Output: A control flow graph
-
-
-#==================
-#=       Info     =
-#==================
-
-# You are an expert in security and program analysis.
-# Input: Program
-# Output: A control flow graph
-
-
-#==================
-#=       Info     =
-#==================
-
-# You are an expert in security and program analysis.
-# Input: Program
-# Output: A data flow graph
-
-
-#==================
-#=       Info     =
-#==================
-
-# You are an expert in high-performance computation.
-# Input: Program
-# Output: A control flow graph
-
-
-#==================
-#=       Info     =
-#==================
-
-# You are an expert in high-performance computation.
-# Input: Program
-# Output: A control flow graph
+    0 -> 1;
+    1 -> 2;
+    2 -> 3;
+    3 -> 4;
+    4 -> 5;
+    5 -> 6;
+    6 -> 7;
+    7 -> 8;
+    8 -> 9;
+    9 -> 10;
+    10 -> 11;
+    11 -> 12;
+    12 -> 13;
+    13 -> 14;
+    14 -> 0;
+}
+```
+Note that this is a simplified representation of the control flow graph, and it does not include the contents of each basic block. The nodes are labeled with the corresponding IR instructions, and the edges represent the control flow between the instructions. The entry node is labeled with "entry" and the exit node is labeled with "exit". The rest of the nodes are labeled with the corresponding IR instructions.

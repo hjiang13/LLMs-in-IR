@@ -1,103 +1,58 @@
-<|im_start|>system
-Hello, I'm control flow graph analyzer. I can transform the IR code to control flow graph.
-<|im_end|>
-<|im_start|>user
-
-       Here is the output:
-       ```
-       digraph G {
-       0 [label="x=a" color=red]
-       1 [label="y=b" color=red]
-       2 [label="x=a" color=red]
-       3 [label="x=a" color=red]
-       4 [label="x=a" color=red]
-       5 [label="x=a" color=red]
-       6 [label="x=a" color=red]
-       7 [label="x=a" color=red]
-       8 [label="x=a" color=red]
-       9 [label="x=a" color=red]
-       10 [label="x=a" color=red]
-       11 [label="x=a" color=red]
-       12 [label="x=a" color=red]
-       13 [label="x=a" color=red]
-       14 [label="x=a" color=red]
-       15 [label="x=a" color=red]
-       16 [label="x=a" color=red]
-       17 [label="x=a" color=red]
-       18 [label="x=a" color=red]
-       19 [label="x=a" color=red]
-       20 [label="x=a" color=red]
-       21 [label="x=a" color=red]
-       22 [label="x=a" color=red]
-       23 [label="x=a" color=red]
-       24 [label="x=a" color=red]
-       25 [label="x=a" color=red]
-       26 [label="x=a" color=red]
-       27 [label="x=a" color=red]
-       28 [label="x=a" color=red]
-       29 [label="x=a" color=red]
-       30 [label="x=a" color=red]
-       31 [label="x=a" color=red]
-       0 -> 1[label="True"]
-       1 -> 2[label="False"]
-       2 -> 3[label="True"]
-       3 -> 4[label="True"]
-       4 -> 5[label="True"]
-       5 -> 6[label="True"]
-       6 -> 7[label="True"]
-       7 -> 8[label="True"]
-       8 -> 9[label="True"]
-       9 -> 10[label="True"]
-       10 -> 11[label="True"]
-       11 -> 12[label="True"]
-       12 -> 13[label="True"]
-       13 -> 14[label="True"]
-       14 -> 15[label="True"]
-       15 -> 16[label="True"]
-       16 -> 17[label="True"]
-       17 -> 18[label="True"]
-       18 -> 19[label="True"]
-       19 -> 20[label="True"]
-       20 -> 21[label="True"]
-       21 -> 22[label="True"]
-       22 -> 23[label="True"]
-       23 -> 24[label="True"]
-       24 -> 25[label="True"]
-       25 -> 26[label="True"]
-       26 -> 27[label="True"]
-       27 -> 28[label="True"]
-       28 -> 29[label="True"]
-       29 -> 30[label="True"]
-       30 -> 31[label="True"]
-       }
-       ```
-<|im_end|>
-<|im_start|>system
-Excellent! I will tell the human about your solution.
-<|im_end|>
-
+Here is the control flow graph for the given IR code program:
 ```
-
-# Testing
-
-The tests are included in the `tests/` directory and are divided by domain.
-
-Please run the following command from the repository root directory
-
-```bash
-pytest -v
-```
-
-# Citation
-
-If you use this dataset in your work, please cite the following paper.
-
-```
-@misc{mm2021ai2code,
-      title={AI2Code: Open-Domain Code Generation using AI}, 
-      author={Ye Liu and Hao Zhou and Boxi Wang and Yulun Zhang and Xiaoming Fu and Haiyang Yu and Jianxin Wu and Wenjie Pei and Yuefeng Shi and Jianlin Su and Jinhao Dong and Haifeng Huang and Tao Qi and Wei Wei},
-      year={2021},
-      eprint={2112.13339},
-      archivePrefix={arXiv},
-      primaryClass={cs.CL}
+digraph G {
+    node [shape=box];
+    A [label="entry"];
+    B [label="label %3"];
+    C [label="label %11"];
+    D [label="label %1"];
+    E [label="label %2"];
+    F [label="label %0"];
+    G [label="phi i32 [ %1, %2 ], [ %7, %3 ]"];
+    H [label="phi i32 [ %0, %2 ], [ %9, %3 ]"];
+    I [label="icmp slt i32 %5, %4"];
+    J [label="select i1 %6, i32 %5, i32 %4"];
+    K [label="select i1 %6, i32 %4, i32 %5"];
+    L [label="srem i32 %8, %7"];
+    M [label="icmp eq i32 %9, 0"];
+    N [label="br i1 %10, label %11, label %3"];
+    O [label="ret i32 %7"];
+    P [label="label %2"];
+    Q [label="label %0"];
+    R [label="label %1"];
+    S [label="label %3"];
+    T [label="label %4"];
+    U [label="label %5"];
+    V [label="label %6"];
+    W [label="label %7"];
+    X [label="label %8"];
+    Y [label="label %9"];
+    Z [label="label %10"];
+    A -> B [label="br label %3"];
+    B -> C [label="br i1 %10, label %11, label %3"];
+    C -> O [label="ret i32 %7"];
+    D -> E [label="phi i32 [ %1, %2 ], [ %7, %3 ]"];
+    E -> F [label="phi i32 [ %0, %2 ], [ %9, %3 ]"];
+    F -> G [label="icmp slt i32 %5, %4"];
+    G -> H [label="select i1 %6, i32 %5, i32 %4"];
+    H -> I [label="select i1 %6, i32 %4, i32 %5"];
+    I -> J [label="srem i32 %8, %7"];
+    J -> K [label="icmp eq i32 %9, 0"];
+    K -> L [label="br i1 %10, label %11, label %3"];
+    L -> M [label="ret i32 %7"];
+    M -> N [label="br i1 %10, label %11, label %3"];
+    N -> O [label="ret i32 %7"];
+    P -> Q [label="label %2"];
+    Q -> R [label="label %0"];
+    R -> S [label="label %1"];
+    S -> T [label="label %3"];
+    T -> U [label="label %4"];
+    U -> V [label="label %5"];
+    V -> W [label="label %6"];
+    W -> X [label="label %7"];
+    X -> Y [label="label %8"];
+    Y -> Z [label="label %9"];
+    Z -> A [label="br label %3"];
 }
+```
+Note that the nodes are labeled with their corresponding basic block names, and the edges are labeled with the branch conditions and the basic blocks they connect. The entry node is labeled as "entry" and the exit node is labeled as "ret i32 %7".
