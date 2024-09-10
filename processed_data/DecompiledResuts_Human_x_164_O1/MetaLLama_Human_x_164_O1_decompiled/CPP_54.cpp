@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the equivalent C source code. Here it is:
-
-```c
 #include <string.h>
 
 int same_chars(const char* s1, const char* s2) {
@@ -71,6 +68,3 @@ int same_chars(const char* s1, const char* s2) {
 
     return k < i && j < i;
 }
-```
-
-Note that the generated C code may not be exactly equivalent to the original C++ code that was compiled to LLVM IR, as some information may have been lost during the compilation process. However, it should have the same functionality.

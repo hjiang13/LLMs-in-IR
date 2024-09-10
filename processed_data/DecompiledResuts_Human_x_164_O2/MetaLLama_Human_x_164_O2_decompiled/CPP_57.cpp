@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the equivalent C source code. Here it is:
-
-```c
 #include <stdio.h>
 
 typedef struct {
@@ -36,10 +33,3 @@ int monotonic(Vector* vec) {
 
     return increasing + decreasing != 2;
 }
-```
-
-Please note that this C code is a direct translation of the provided LLVM IR code. The original C++ code from which the IR was generated might have used the C++ Standard Template Library (STL) and thus looked significantly different. 
-
-Also, please note that the generated C code may not be compilable as is, as the original IR code seems to be a part of a larger program. You may need to add necessary header files, function declarations, or other code to make it compilable. 
-
-Finally, keep in mind that the C code may not be optimal or idiomatic, as it is a direct translation of the IR code. It is recommended to review and refactor the code to make it more readable, maintainable, and efficient.

@@ -1,5 +1,3 @@
-Here is the C source code generated from the provided LLVM IR code:
-```c
 #include <stdint.h>
 
 int can_arrange(int* data, int size) {
@@ -52,5 +50,3 @@ int can_arrange(int* data, int size) {
 
   return result;
 }
-```
-Please note that this C code may not be optimal or identical to the original C++ code that generated the LLVM IR, as the IR code has been optimized and transformed by the compiler. However, this code should produce the same results as the original code.

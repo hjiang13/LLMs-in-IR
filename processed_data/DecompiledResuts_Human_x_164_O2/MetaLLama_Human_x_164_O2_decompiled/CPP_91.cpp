@@ -1,6 +1,3 @@
-I can help you with translating the LLVM IR code to C source code. Here's the equivalent C code:
-
-```c
 #include <stdint.h>
 
 typedef struct {
@@ -59,6 +56,3 @@ int32_t is_bored(string_t* s) {
     }
     return ret;
 }
-```
-
-Please note that this is a direct translation of the LLVM IR code. The function `is_bored` takes a pointer to a `string_t` struct, which represents a string with a length. The function appears to count the number of spaces in the string, with some additional logic for handling punctuation and capital letters. The code has been written to closely match the LLVM IR, but may not be the most efficient or readable C code.

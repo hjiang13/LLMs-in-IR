@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the equivalent C source code. Here it is:
-
-```c
 #include <stdint.h>
 
 typedef struct {
@@ -38,6 +35,3 @@ int below_threshold(std_vector* vec, int threshold) {
 
     return result;
 }
-```
-
-Note that I've used the same naming conventions and data structures as in the IR code to maintain consistency. Also, I've assumed that the `std_vector` struct is defined elsewhere, as it's not fully defined in the provided IR code. If you need any further modifications or have additional questions, feel free to ask!

@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the equivalent C source code. Here it is:
-
-```c
 #include <stdio.h>
 
 int sum_squares(int* data, int size) {
@@ -17,6 +14,3 @@ int sum_squares(int* data, int size) {
     }
     return sum;
 }
-```
-
-Note that I've assumed the input `data` is an array of integers and `size` is the number of elements in the array. The function `sum_squares` calculates the sum of squares of the elements in the array, following the logic in the LLVM IR code.

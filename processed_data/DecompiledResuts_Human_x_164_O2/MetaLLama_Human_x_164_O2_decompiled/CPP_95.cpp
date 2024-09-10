@@ -1,7 +1,3 @@
-Based on the provided LLVM IR code, I will generate the equivalent C source code. Please note that the generated C code may not be perfect and might require some manual modifications to make it compile and run correctly.
-
-Here is the generated C source code:
-```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -90,5 +86,3 @@ int main() {
 
     return 0;
 }
-```
-Please note that I had to make some assumptions about the missing parts of the IR code, such as the `main` function and the initialization of the map. You may need to modify the generated C code to fit your specific use case. Additionally, this code may not be perfect and might require some manual modifications to make it compile and run correctly.

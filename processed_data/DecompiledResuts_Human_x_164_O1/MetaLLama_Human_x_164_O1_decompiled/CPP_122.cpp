@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the equivalent C source code. Here it is:
-
-```c
 #include <stdio.h>
 #include <stdint.h>
 
@@ -23,6 +20,3 @@ int main() {
     printf("%d\n", result);
     return 0;
 }
-```
-
-Note that I had to make some assumptions about the original C++ code, as the LLVM IR code does not contain all the information about the original source code. The generated C code might not be identical to the original C++ code, but it should have the same functionality.

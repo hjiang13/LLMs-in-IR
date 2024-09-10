@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the equivalent C source code. Here it is:
-
-```c
 int x_or_y(int a, int b, int c) {
   if (a > 1) {
     if (a < 4) {
@@ -30,6 +27,3 @@ int x_or_y(int a, int b, int c) {
     return b;
   }
 }
-```
-
-Note that I've used the names `a`, `b`, `c`, `d`, `e`, and `f` for the variables, as the IR code does not provide any specific names. Also, I've tried to preserve the same logic and structure as the IR code, but some minor optimizations or rearrangements might be possible.

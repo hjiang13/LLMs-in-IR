@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the equivalent C source code. Here it is:
-
-```c
 int prime_fib(int n) {
     int a = 1;
     int b = 2;
@@ -25,6 +22,3 @@ int prime_fib(int n) {
     }
     return c;
 }
-```
-
-Please note that the generated C code is a direct translation of the provided LLVM IR code and does not include any additional error checking or handling.

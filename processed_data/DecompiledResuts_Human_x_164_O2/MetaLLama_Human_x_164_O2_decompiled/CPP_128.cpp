@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the equivalent C source code. Here it is:
-
-```c
 #include <stdint.h>
 
 int prod_signs(int* data, int size) {
@@ -37,6 +34,3 @@ int prod_signs(int* data, int size) {
     }
     return result * sum;
 }
-```
-
-Please note that this C code assumes that the input array `data` is not null and that the size `size` is non-negative. Also, the generated C code uses the `abs` function from the `stdint.h` header file to compute the absolute value of integers. If you want to use a different method to compute the absolute value, you can replace the `abs` function calls accordingly.

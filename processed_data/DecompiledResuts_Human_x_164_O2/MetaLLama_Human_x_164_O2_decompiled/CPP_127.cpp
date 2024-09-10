@@ -1,6 +1,3 @@
-Here is the C source code that corresponds to the given LLVM IR code:
-
-```c
 #include <string.h>
 
 void intersection(std::string* result, std::vector<int>* v1, std::vector<int>* v2) {
@@ -40,8 +37,3 @@ void intersection(std::string* result, std::vector<int>* v1, std::vector<int>* v
     }
     result->_M_data._M_p[result->_M_string_length] = '\0';
 }
-```
-
-Note that I had to use `std::string` and `std::vector` from the C++ Standard Library to match the types used in the LLVM IR code. This code assumes that the input vectors `v1` and `v2` have at least two elements each. Also, I used `char*` to represent the string data, as the LLVM IR code uses `i8*` for string data. 
-
-Please note that this is a direct translation and might not be the most efficient or idiomatic C code.

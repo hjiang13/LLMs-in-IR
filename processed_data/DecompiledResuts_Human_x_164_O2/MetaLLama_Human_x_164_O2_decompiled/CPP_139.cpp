@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the equivalent C source code. Here it is:
-
-```c
 long long special_factorial(int n) {
     if (n < 1) {
         return 1;
@@ -50,6 +47,3 @@ long long special_factorial(int n) {
     }
     return result;
 }
-```
-
-Note that this C code is generated based on the provided LLVM IR code, and it may not be the most efficient or optimal implementation of the `special_factorial` function.

@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the corresponding C source code. Here it is:
-
-```c
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -22,6 +19,3 @@ int main() {
     printf("%s\n", str);
     return 0;
 }
-```
-
-Please note that this C code is a simplified version of the original C++ code, as some C++-specific features like `std::string` and exceptions are not directly translatable to C. This code should provide the same functionality as the original IR code, but it may not be a perfect translation.

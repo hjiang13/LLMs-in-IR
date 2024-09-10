@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the equivalent C source code. Here it is:
-
-```c
 #include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
@@ -53,6 +50,3 @@ int count_distinct_characters(const char* str) {
     free(t);
     return count;
 }
-```
-
-Please note that I've assumed the `__throw_length_error` function is defined elsewhere in your codebase, as it's not a standard C function. If you need help with that as well, please let me know!

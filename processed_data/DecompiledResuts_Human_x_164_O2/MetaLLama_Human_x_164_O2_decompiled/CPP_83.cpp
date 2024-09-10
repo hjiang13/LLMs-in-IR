@@ -1,5 +1,3 @@
-Based on the provided LLVM IR code, here is the equivalent C source code:
-```c
 #include <stdio.h>
 
 int starts_one_ends(int n) {
@@ -32,4 +30,3 @@ int starts_one_ends(int n) {
     }
     return 18;
 }
-```

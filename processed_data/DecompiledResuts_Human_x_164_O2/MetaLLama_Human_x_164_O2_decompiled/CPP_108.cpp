@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the equivalent C source code. Here it is:
-
-```c
 #include <stdio.h>
 #include <stdint.h>
 
@@ -29,6 +26,3 @@ int main() {
     // You can call the count_nums function from here
     return 0;
 }
-```
-
-Please note that I have only translated the provided LLVM IR code into C source code. The `main` function is added to make the code compilable, but you would need to modify it to call the `count_nums` function as per your requirements.

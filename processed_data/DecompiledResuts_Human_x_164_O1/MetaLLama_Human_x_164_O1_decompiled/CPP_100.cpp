@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the equivalent C source code. Here it is:
-
-```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -43,6 +40,3 @@ int main() {
     make_a_pile(&v, 10);
     return 0;
 }
-```
-
-Note that I've taken some liberties with the code to make it compile and run correctly, as the original IR code seems to be a part of a larger program. The generated C code may not be perfect, but it should give you a good starting point for further modifications.

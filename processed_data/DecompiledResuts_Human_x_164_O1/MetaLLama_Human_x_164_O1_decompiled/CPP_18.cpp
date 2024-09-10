@@ -1,6 +1,3 @@
-Here is the C source code generated from the provided LLVM IR code:
-
-```c
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -53,5 +50,3 @@ int how_many_times(string* str1, string* str2) {
 
     return result;
 }
-```
-Note that this C source code is a simplified version of the original C++ code, as some C++ features like classes and exceptions are not directly translatable to C. This code should work as expected, but it may not be fully equivalent to the original C++ code.

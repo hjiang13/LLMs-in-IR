@@ -1,6 +1,3 @@
-Here is the C source code generated from the provided LLVM IR code:
-
-```c
 #include <stdint.h>
 
 typedef struct {
@@ -30,6 +27,3 @@ int correct_bracketing(basic_string* s) {
 
     return bracket_count == 0;
 }
-```
-
-Please note that the generated code is a direct translation of the LLVM IR code and does not include any error handling or checks that may be present in the original C++ code.

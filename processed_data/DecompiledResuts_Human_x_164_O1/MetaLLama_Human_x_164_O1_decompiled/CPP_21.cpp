@@ -1,6 +1,3 @@
-Here is the C source code generated from the provided LLVM IR code:
-
-```c
 #include <stdio.h>
 #include <string.h>
 
@@ -60,6 +57,3 @@ void rescale_to_unit(std_vector* __result, std_vector* __x) {
     __result->_M_base._M_impl._M_end_of_storage = __x->_M_base._M_impl._M_end_of_storage;
     memset(__x, 0, sizeof(std_vector));
 }
-```
-
-Note that I've assumed the `std::vector` class layout as described in the LLVM IR code and implemented the `rescale_to_unit` function accordingly. Also, I've used `memset` to zero out the input vector as indicated in the LLVM IR code.

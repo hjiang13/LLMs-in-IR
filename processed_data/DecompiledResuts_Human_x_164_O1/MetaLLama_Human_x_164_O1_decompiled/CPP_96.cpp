@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the equivalent C source code. Here is the result:
-
-```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -67,6 +64,3 @@ void _ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_itera
     v->_M_base._M_impl._M_finish = _M_start + __len;
     v->_M_base._M_impl._M_end_of_storage = _M_start + __len;
 }
-```
-
-Please note that the generated C code might not be perfect and may require some manual adjustments to work as expected.

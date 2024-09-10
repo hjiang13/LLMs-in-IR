@@ -1,8 +1,3 @@
-However, please note that the provided IR code is quite complex and long, and converting it to C source code manually would be a tedious task.
-
-That being said, I'll provide the equivalent C source code for the given IR code. Here it is:
-
-```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -65,6 +60,3 @@ int check_dict_case(void* dict) {
 
     return 1;
 }
-```
-
-Note that this C source code is not exactly equivalent to the provided IR code, as some implementation details may vary depending on the specific C++ standard library being used. However, this code should provide the same functionality as the original IR code.

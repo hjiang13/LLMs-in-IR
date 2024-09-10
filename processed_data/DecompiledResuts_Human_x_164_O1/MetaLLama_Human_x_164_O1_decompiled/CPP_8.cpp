@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the equivalent C source code. Here it is:
-
-```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -60,6 +57,3 @@ int main() {
 
     return 0;
 }
-```
-
-Please note that the generated C code is a direct translation of the provided LLVM IR code and might not be the most efficient or idiomatic C code. Additionally, the `main` function is provided as an example usage of the `sum_product` function and is not part of the original LLVM IR code.

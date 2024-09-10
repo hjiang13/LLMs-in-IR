@@ -1,5 +1,3 @@
-Here is the C source code generated from the provided LLVM IR:
-```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -36,5 +34,3 @@ int has_close_elements(std_vector* v, float threshold) {
     }
     return 0;
 }
-```
-Note that I've assumed the `std_vector` struct to be similar to the C++ `std::vector` class, with a `_M_base` member that contains a `_Vector_impl_data` struct, which in turn contains three `float*` members: `_M_start`, `_M_finish`, and `_M_end_of_storage`. I've also assumed that the `has_close_elements` function takes a `std_vector*` and a `float` as arguments, and returns an `int` indicating whether any two elements in the vector are closer than the given threshold.

@@ -1,6 +1,3 @@
-Here is the C source code generated from the provided IR code:
-
-```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -53,4 +50,3 @@ int main() {
     f(&vec, 10);
     return 0;
 }
-```

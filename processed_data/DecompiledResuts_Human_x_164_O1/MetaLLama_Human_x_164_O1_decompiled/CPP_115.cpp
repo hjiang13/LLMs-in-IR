@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the corresponding C source code. Here is the result:
-
-```c
 #include <stdio.h>
 #include <stdint.h>
 
@@ -41,6 +38,3 @@ int max_fill(int** vec, int size, int num) {
 
     return total_sum - 1;
 }
-```
-
-Please note that I've made some assumptions about the input format and the expected output, as the IR code doesn't provide explicit type information. The generated C code might need further adjustments based on the actual requirements.

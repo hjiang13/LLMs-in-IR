@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the equivalent C source code. Here it is:
-
-```c
 #include <stdio.h>
 #include <string.h>
 
@@ -30,6 +27,3 @@ int is_nested(std_string* s) {
 
     return s->_M_string_length > i;
 }
-```
-
-Please note that the generated C code is not exactly equivalent to the original C++ code, as some information (like the `std::__cxx11::basic_string` class definition) is lost in the translation from LLVM IR to C. However, the generated code should preserve the same functionality as the original code.

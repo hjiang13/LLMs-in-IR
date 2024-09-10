@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I'll generate the equivalent C source code. Here it is:
-
-```c
 #include <stdio.h>
 #include <stdint.h>
 
@@ -47,6 +44,3 @@ float max_element(float* data, int size) {
 
     return max_val;
 }
-```
-
-Note that I've replaced the `std::vector` with a plain C array and adjusted the code accordingly. Also, I've removed any unnecessary variables and code blocks to make the code more concise.

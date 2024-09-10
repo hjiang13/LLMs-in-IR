@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the equivalent C source code. Here it is:
-
-```c
 int starts_one_ends(int x) {
   if (x < 1) return 0;
   if (x == 1) return 1;
@@ -13,4 +10,3 @@ int starts_one_ends(int x) {
   } while (i != x);
   return result;
 }
-```

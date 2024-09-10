@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, here is the equivalent C source code:
-
-```c
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -32,6 +29,3 @@ void encrypt(char *output, const char *input) {
     strcpy(output, buffer);
     free(buffer);
 }
-```
-
-Note that this C code assumes that the input string only contains characters that can be encrypted using the provided formula. Additionally, error handling for memory allocation failures is not included in this example.

@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the corresponding C source code. Here it is:
-
-```c
 int fib(int n) {
     int arr[100];
     arr[0] = 0;
@@ -20,6 +17,3 @@ int fib(int n) {
     }
     return arr[n];
 }
-```
-
-Note that I've only translated the `_Z6fibfibi` function from the IR code, as it appears to be the main function of interest. Let me know if you'd like me to translate any other functions or parts of the IR code.

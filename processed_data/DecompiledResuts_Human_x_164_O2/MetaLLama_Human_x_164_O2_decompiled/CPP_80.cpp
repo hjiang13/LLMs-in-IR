@@ -1,6 +1,3 @@
-Based on the LLVM IR code you provided, here is the equivalent C source code:
-
-```c
 #include <string.h>
 
 int is_happy(const char *str) {
@@ -22,6 +19,3 @@ int is_happy(const char *str) {
 
     return !match;
 }
-```
-
-Please note that the generated C code may not be identical to the original C++ code that was compiled to LLVM IR, as some information may be lost during the compilation process. However, this C code should have the same functionality as the original code.

@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the equivalent C source code. Please note that this will be a direct translation, without any optimizations or improvements.
-
-```c
 #include <stdlib.h>
 #include <string.h>
 
@@ -85,6 +82,3 @@ void _Z11intersperseSt6vectorIiSaIiEEi(vector* __result, vector* __input, int __
         __result->_M_base._M_impl._M_end_of_storage = __new_finish;
     }
 }
-```
-
-Please note that this is a direct translation, and the generated code may not be optimal or idiomatic C code. Additionally, the original IR code appears to be using C++ standard library functions and classes, which have been translated to equivalent C code.

@@ -1,6 +1,3 @@
-Based on the given LLVM IR code, I will generate the corresponding C source code. Here it is:
-
-```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -57,6 +54,3 @@ int main() {
     free(result.data);
     return 0;
 }
-```
-
-Please note that this is a possible C source code representation of the given LLVM IR code. The actual C code that was compiled to generate the IR code might have looked different.

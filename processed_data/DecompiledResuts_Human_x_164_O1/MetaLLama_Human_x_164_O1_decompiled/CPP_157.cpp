@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, here is the generated C source code:
-
-```c
 #include <math.h>
 
 int right_angle_triangle(float a, float b, float c) {
@@ -24,4 +21,3 @@ int right_angle_triangle(float a, float b, float c) {
     }
     return 0;
 }
-```

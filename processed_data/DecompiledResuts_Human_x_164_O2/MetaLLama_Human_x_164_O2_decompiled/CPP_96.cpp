@@ -1,5 +1,3 @@
-I can help you convert the LLVM IR code to C source code. Here is the C code:
-```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -104,5 +102,3 @@ int main() {
     count_up_to(&v, 10);
     return 0;
 }
-```
-Please note that the generated C code may not be perfect and may require additional modifications to work correctly. Additionally, the code may not be optimized for performance.

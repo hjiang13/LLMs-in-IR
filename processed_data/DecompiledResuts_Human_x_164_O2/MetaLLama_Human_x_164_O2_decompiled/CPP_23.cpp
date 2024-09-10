@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the equivalent C source code. Here it is:
-
-```c
 #include <stdint.h>
 
 typedef struct {
@@ -17,6 +14,3 @@ typedef struct {
 int32_t strlen(basic_string *s) {
     return (int32_t)s->_M_string_length;
 }
-```
-
-Please note that the generated C code is a simplified representation of the original C++ code and may not be fully functional or compatible with the original code. The LLVM IR code appears to be generated from a C++ program that uses the `std::string` class, which has been simplified to a struct in the generated C code.

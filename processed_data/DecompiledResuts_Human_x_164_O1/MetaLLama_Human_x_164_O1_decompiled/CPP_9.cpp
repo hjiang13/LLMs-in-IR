@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the corresponding C source code. Please note that this will be a direct translation, without any optimizations or improvements.
-
-```c
 #include <stdlib.h>
 #include <string.h>
 
@@ -86,6 +83,3 @@ void __throw_length_error(const char* __msg) {
 void __throw_bad_alloc(void) {
     // implement __throw_bad_alloc
 }
-```
-
-Note that this code may not be compilable as it is, since some functions (like `__throw_length_error` and `__throw_bad_alloc`) are not implemented. These functions are part of the C++ Standard Library and their implementation is not provided in the LLVM IR code. You may need to implement these functions or link against a C++ Standard Library implementation.

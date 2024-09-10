@@ -1,6 +1,3 @@
-Based on the LLVM IR code provided, here's the equivalent C source code:
-
-```c
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -28,6 +25,3 @@ int how_many_times(const char* s1, const char* s2) {
 
     return count;
 }
-```
-
-Please note that this C code is generated based on the provided LLVM IR code, and it might not be the most efficient or optimal implementation. Also, this code assumes that the input strings `s1` and `s2` are null-terminated.

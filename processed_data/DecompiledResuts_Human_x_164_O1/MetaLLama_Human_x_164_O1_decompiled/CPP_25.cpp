@@ -1,8 +1,3 @@
-Based on the provided LLVM IR code, I will generate the equivalent C source code. Please note that the generated C code may not be perfect and might require some manual adjustments.
-
-Here is the generated C source code:
-
-```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -108,6 +103,3 @@ int main() {
 
     return 0;
 }
-```
-
-Note that this code may not compile as-is, as it's generated from LLVM IR and might require some manual adjustments. Additionally, some functions like `_ZSt17__throw_bad_allocv` are not defined in this code and would need to be implemented separately.

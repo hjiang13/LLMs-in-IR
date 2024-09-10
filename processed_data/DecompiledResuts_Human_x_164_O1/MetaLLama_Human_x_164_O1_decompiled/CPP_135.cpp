@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the equivalent C source code. Here it is:
-
-```c
 #include <stdint.h>
 #include <string.h>
 
@@ -22,6 +19,3 @@ int main() {
     int result = can_arrange(data, size);
     return 0;
 }
-```
-
-Please note that the generated C code is a simplified version and may not cover all the nuances of the original LLVM IR code. Also, the `main` function is added just for demonstration purposes and is not part of the original IR code.

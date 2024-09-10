@@ -1,6 +1,3 @@
-Based on the provided IR code, here is the equivalent C source code:
-
-```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -31,6 +28,3 @@ int main() {
     printf("%d\n", count_upper(s));
     return 0;
 }
-```
-
-Note that this C code is a simplified version and may not cover all the nuances of the original IR code. The IR code appears to be generated from a C++ program, and some details may have been lost in translation.

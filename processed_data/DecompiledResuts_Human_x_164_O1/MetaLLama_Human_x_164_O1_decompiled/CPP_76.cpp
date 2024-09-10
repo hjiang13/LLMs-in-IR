@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the equivalent C source code. Here it is:
-
-```c
 #include <stdio.h>
 #include <stdbool.h>
 
@@ -23,6 +20,3 @@ bool is_simple_power(int a, int b) {
     }
     return false;
 }
-```
-
-Please note that this C code may not be exactly the original C code that was compiled to produce the LLVM IR, but it is a semantically equivalent representation of the IR code.

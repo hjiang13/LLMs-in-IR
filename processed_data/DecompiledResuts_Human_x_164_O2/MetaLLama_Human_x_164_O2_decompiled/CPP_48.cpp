@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, here is the corresponding C source code:
-
-```c
 #include <string.h>
 #include <stdlib.h>
 
@@ -73,4 +70,3 @@ int is_palindrome(__cxx11_basic_string* s) {
         return 0;
     }
 }
-```

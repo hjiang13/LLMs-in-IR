@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the equivalent C source code. Here it is:
-
-```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -84,6 +81,3 @@ void pluck(vector* v1, vector* v2) {
         }
     }
 }
-```
-
-This C code represents the LLVM IR code provided. It defines the necessary structures and functions to implement a vector class. The `pluck` function is the main entry point, which assigns the elements from one vector to another. If the destination vector is empty, it allocates new memory and copies the elements. If the destination vector is not empty, it checks if the old size is less than the new size and reallocates memory if necessary. Finally, it copies the elements from the source vector to the destination vector.

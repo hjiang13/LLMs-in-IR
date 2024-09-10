@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the corresponding C source code. Here it is:
-
-```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -28,6 +25,3 @@ int main() {
     printf("%d\n", digits(12345));
     return 0;
 }
-```
-
-Please note that this C code is a direct translation of the provided LLVM IR code. It may not be the most efficient or optimal implementation, but it should produce the same results as the original IR code.

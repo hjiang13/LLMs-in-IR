@@ -1,6 +1,3 @@
-Here is the C source code generated from the provided LLVM IR code:
-
-```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -64,4 +61,3 @@ void sum_product(Vector* result, Vector* input) {
     result->data[0] = final_product;
     result->data[1] = final_sum;
 }
-```

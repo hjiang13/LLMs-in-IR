@@ -1,6 +1,3 @@
-Here is the C source code generated from the LLVM IR code:
-
-```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -89,6 +86,3 @@ void __throw_bad_alloc() {
     printf("bad alloc\n");
     exit(1);
 }
-```
-
-Note that I've used some simplifications and assumptions while translating the IR code to C source code, as some parts of the IR code are not directly translatable to C.

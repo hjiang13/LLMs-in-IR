@@ -1,5 +1,3 @@
-Here is the C source code generated from the provided LLVM IR code:
-```c
 #include <stdlib.h>
 #include <string.h>
 
@@ -87,5 +85,3 @@ void _Z15file_name_checkNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(bas
 
     return;
 }
-```
-Note that some functions and variables have been assumed to be defined elsewhere, as they are not provided in the LLVM IR code.

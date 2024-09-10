@@ -1,6 +1,3 @@
-Here is the C source code generated from the provided LLVM IR code:
-
-```c
 #include <string.h>
 
 typedef struct {
@@ -46,4 +43,3 @@ int is_palindrome(basic_string* s) {
     free(reversed_data);
     return result == 0;
 }
-```

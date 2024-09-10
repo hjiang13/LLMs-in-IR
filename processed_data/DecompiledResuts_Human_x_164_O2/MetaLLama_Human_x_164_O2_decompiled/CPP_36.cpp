@@ -1,6 +1,3 @@
-Here is the C source code generated from the provided LLVM IR code:
-
-```c
 int fizz_buzz(int n) {
   int result = 0;
   if (n <= 0) return result;
@@ -20,6 +17,3 @@ int fizz_buzz(int n) {
     }
   } while (1);
 }
-```
-
-Note that I've replaced the original function name `_Z9fizz_buzzi` with `fizz_buzz` to make it more readable. Also, I've removed the `mustprogress` and other attributes as they are not necessary in the C source code.

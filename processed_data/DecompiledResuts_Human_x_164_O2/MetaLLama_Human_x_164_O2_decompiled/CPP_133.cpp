@@ -1,6 +1,3 @@
-Here is the C source code generated from the provided LLVM IR code:
-
-```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -56,4 +53,3 @@ int sum_squares(vector *v) {
 
     return result;
 }
-```

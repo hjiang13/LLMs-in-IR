@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the equivalent C source code. Here it is:
-
-```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -112,6 +109,3 @@ int main() {
 
     return 0;
 }
-```
-
-This C code implements the same functionality as the provided LLVM IR code. Note that the C code uses a simple implementation of a vector class, and the `intersperse` function inserts a specified value between each pair of elements in the input vector, storing the result in the result vector. The code also includes a `main` function to demonstrate the usage of the `intersperse` function.

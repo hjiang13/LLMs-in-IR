@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, here is the corresponding C source code:
-
-```c
 #include <math.h>
 
 int right_angle_triangle(float a, float b, float c) {
@@ -22,6 +19,3 @@ int right_angle_triangle(float a, float b, float c) {
   }
   return 0;
 }
-```
-
-Note that I've replaced the LLVM IR's `fmul`, `fadd`, `fsub`, and `fpext` instructions with their corresponding C operations. I've also replaced the `@llvm.fabs.f32` function call with the standard C `fabs` function from the `math.h` library. Additionally, I've removed the unnecessary `phi` instruction and the `ret` instruction, as they are not needed in C. The function signature has also been modified to match the C syntax.

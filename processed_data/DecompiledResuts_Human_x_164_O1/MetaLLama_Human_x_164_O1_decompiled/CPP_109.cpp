@@ -1,6 +1,3 @@
-Here is the C source code generated from the provided LLVM IR code:
-
-```c
 #include <stdint.h>
 
 typedef struct {
@@ -77,6 +74,3 @@ int move_one_ball(std_vector* v) {
     int _22 = _21 < 2;
     return _22;
 }
-```
-
-Note that this generated C code may not be perfect and may require some manual adjustments to compile and run correctly.

@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, here is the generated C source code:
-
-```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -49,6 +46,3 @@ int main() {
     longest(&vec, &str);
     return 0;
 }
-```
-
-Please note that this C source code is a translation of the provided LLVM IR code, but it may not be the original C++ code from which the IR was generated. The original C++ code would likely include additional features such as error handling, constructors, and destructors, which are not present in this translated code.

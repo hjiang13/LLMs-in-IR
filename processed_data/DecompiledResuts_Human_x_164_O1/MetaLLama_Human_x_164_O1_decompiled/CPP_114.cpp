@@ -1,5 +1,3 @@
-Based on the provided LLVM IR code, here is the equivalent C source code:
-```c
 #include <stdint.h>
 
 int64_t minSubArraySum(int64_t* data, int64_t size) {
@@ -18,5 +16,3 @@ int64_t minSubArraySum(int64_t* data, int64_t size) {
 
     return min_sum;
 }
-```
-Please note that the original IR code appears to be generated from a C++ program using the `std::vector` class. I have translated it into a C function with a more traditional array-based interface. If you need the original C++ code, please let me know and I can try to reconstruct it for you.

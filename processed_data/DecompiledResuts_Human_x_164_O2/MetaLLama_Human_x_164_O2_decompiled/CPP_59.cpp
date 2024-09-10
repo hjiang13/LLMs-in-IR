@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, here is the generated C source code:
-
-```c
 int largest_prime_factor(int n) {
   if (n < 4) return n;
   int i = 2;
@@ -13,4 +10,3 @@ int largest_prime_factor(int n) {
   }
   return n;
 }
-```

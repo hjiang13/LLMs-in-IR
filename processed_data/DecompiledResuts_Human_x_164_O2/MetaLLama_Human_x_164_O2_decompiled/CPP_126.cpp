@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the equivalent C source code. Here it is:
-
-```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -45,6 +42,3 @@ bool is_sorted(Vector* v) {
     }
     return true;
 }
-```
-
-Note that this C code is a direct translation of the provided LLVM IR code and may not be the most efficient or idiomatic way to implement the `is_sorted` function in C.

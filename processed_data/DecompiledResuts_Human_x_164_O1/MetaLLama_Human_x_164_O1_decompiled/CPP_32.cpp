@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, here is the equivalent C source code:
-
-```c
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
@@ -60,5 +57,3 @@ double find_zero(double *v, int n) {
         return 0.0;
     }
 }
-```
-Note that I've assumed that the input array `v` has `n` elements, and that the `poly` function is used to evaluate the polynomial at a given point `x`. Also, I've used `malloc` and `free` to manage memory, as the IR code seems to be using dynamic memory allocation. Additionally, I've used `exit(1)` to handle memory allocation failures, as the IR code doesn't seem to handle errors explicitly.

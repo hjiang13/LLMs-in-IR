@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the equivalent C source code. Here it is:
-
-```c
 #include <string.h>
 
 int hex_key(const char* str) {
@@ -25,6 +22,3 @@ int hex_key(const char* str) {
 
     return result;
 }
-```
-
-Please note that the generated C code is a direct translation of the provided LLVM IR code and may not be optimal or idiomatic C code.

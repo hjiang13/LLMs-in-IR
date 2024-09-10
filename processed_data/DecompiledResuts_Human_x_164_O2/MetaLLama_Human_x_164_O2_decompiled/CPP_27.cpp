@@ -1,6 +1,3 @@
-Here is the C source code generated from the provided LLVM IR code:
-
-```c
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -70,4 +67,3 @@ void _Z9filp_caseNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(std_string
         }
     }
 }
-```

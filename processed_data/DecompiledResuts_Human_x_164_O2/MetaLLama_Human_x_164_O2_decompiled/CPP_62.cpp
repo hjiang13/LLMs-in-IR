@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the equivalent C source code. Here it is:
-
-```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -74,6 +71,3 @@ void _Z10derivativeSt6vectorIfSaIfEE(std__vector* noalias sret, std__vector* rea
         }
     }
 }
-```
-
-Note that the generated C code might not be perfect and may require additional modifications to work correctly. The translation from LLVM IR to C is not always straightforward, and some details may be lost in translation. Additionally, the generated code may not be optimized for performance or readability.

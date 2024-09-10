@@ -1,7 +1,3 @@
-Based on the provided LLVM IR code, I will generate the corresponding C source code. Please note that the generated C code may not be perfect and might require some manual adjustments to make it fully functional.
-
-Here is the generated C source code:
-```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -44,5 +40,3 @@ int main() {
   _Z1fi(vec, 10);
   return 0;
 }
-```
-Please note that this generated C code is not fully functional and is only meant to demonstrate the translation of the provided LLVM IR code. It may require additional changes to work correctly.

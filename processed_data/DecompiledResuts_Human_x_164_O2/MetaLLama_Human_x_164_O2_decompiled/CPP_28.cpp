@@ -1,38 +1,3 @@
-Here is the C source code corresponding to the given LLVM IR code:
-```c
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-void concatenate(char* dest, const char* src1, const char* src2) {
-    char buffer[32];
-
-    while (*src1 != '\0') {
-        *dest++ = *src1++;
-    }
-
-    while (*src2 != '\0') {
-        *dest++ = *src2++;
-    }
-
-    *dest = '\0';
-}
-
-int main() {
-    char* result = (char*)malloc(32);
-    char* src1 = "Hello ";
-    char* src2 = "World";
-
-    concatenate(result, src1, src2);
-
-    printf("%s\n", result);
-
-    free(result);
-
-    return 0;
-}
-```
-```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -87,4 +52,3 @@ int main() {
 
     return 0;
 }
-```

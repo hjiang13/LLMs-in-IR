@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, here is the equivalent C source code:
-
-```c
 int is_bored(const char *str) {
     int count = 0;
     int len = strlen(str);
@@ -25,6 +22,3 @@ int is_bored(const char *str) {
 
     return count;
 }
-```
-
-Note that I've made some minor modifications to make the code more readable and idiomatic C. The original IR code appears to be generated from a C++ source file, but I've translated it to C since you requested C source code.

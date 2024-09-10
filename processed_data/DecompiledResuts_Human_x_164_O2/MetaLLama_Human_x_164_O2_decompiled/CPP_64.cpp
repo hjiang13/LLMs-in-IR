@@ -1,6 +1,3 @@
-Here is the C source code generated from the provided LLVM IR code:
-
-```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -18,6 +15,3 @@ int vowels_count(const char* str) {
     }
     return count;
 }
-```
-
-Note that the generated C code only includes the `vowels_count` function, which is the main function of interest in the provided IR code. The IR code appears to be a compiled version of a C++ program, but I've translated it into C code as per your request.

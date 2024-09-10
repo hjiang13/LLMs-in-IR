@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the corresponding C source code. Here it is:
-
-```c
 #include <stdio.h>
 
 int is_multiply_prime(int n) {
@@ -32,6 +29,3 @@ int is_multiply_prime(int n) {
 
     return j == 2;
 }
-```
-
-Note that I've only translated the `_Z17is_multiply_primei` function from the IR code, as it's the only function defined in the module. The generated C code should be equivalent to the original IR code. Let me know if you have any further questions!

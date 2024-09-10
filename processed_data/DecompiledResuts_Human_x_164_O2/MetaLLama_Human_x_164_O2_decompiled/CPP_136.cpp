@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, here is the equivalent C source code:
-
-```c
 #include <stdlib.h>
 #include <string.h>
 
@@ -33,8 +30,3 @@ void largest_smallest_integers(int** result, int* arr, int len) {
     (*result)[0] = min;
     (*result)[1] = max;
 }
-```
-
-Please note that the generated C code may not be exactly as the original C++ code that produced the LLVM IR, but it implements the same functionality. Also, I have assumed the input array `arr` has a length `len` and the function returns the result through the `result` pointer. If the original function had different parameters or return types, the generated C code might need to be adjusted accordingly. 
-
-Please also note that the generated C code does not handle memory deallocation. In a real-world scenario, you would need to manually free the allocated memory to prevent memory leaks.

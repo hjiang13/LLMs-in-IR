@@ -1,6 +1,3 @@
-Here is the C source code generated from the provided LLVM IR code:
-
-```c
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -52,6 +49,3 @@ int hex_key(const char *str) {
     }
     return result;
 }
-```
-
-Note that the generated C code may not be identical to the original C++ code, but it should have the same functionality. Also, the variable and function names may not match the original names.

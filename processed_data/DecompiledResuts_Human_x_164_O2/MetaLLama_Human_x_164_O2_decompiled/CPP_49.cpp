@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, here is the generated C source code:
-
-```c
 int modp(int a, int b) {
     if (a > 0) {
         int c = a - 1;
@@ -31,6 +28,3 @@ int modp(int a, int b) {
         return 1;
     }
 }
-```
-
-Please note that the variable names in the generated C code are arbitrary and do not necessarily match the original names in the IR code. Also, the generated code may not be optimal or identical to the original C++ code that was compiled to the IR code.

@@ -1,6 +1,3 @@
-Here is the C source code generated from the provided LLVM IR code:
-
-```c
 #include <stdio.h>
 #include <string.h>
 
@@ -59,6 +56,3 @@ void incr_list(vector* res, vector* input) {
     res->impl.capacity = input->impl.capacity;
     memset(input, 0, sizeof(vector));
 }
-```
-
-Note that I've kept the original variable names and structure names as much as possible to maintain consistency with the IR code. Also, I've assumed that the `vector` struct is defined as shown in the code, with a single member `impl` of type `vector_base`, which contains the actual vector data. If this is not the case, you may need to modify the code accordingly.

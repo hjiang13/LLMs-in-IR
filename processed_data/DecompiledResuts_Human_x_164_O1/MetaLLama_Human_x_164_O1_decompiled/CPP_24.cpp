@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the corresponding C source code. Here it is:
-
-```c
 int largest_divisor(int n) {
     if (n < 4) return 1;
     int i = 2;
@@ -12,6 +9,3 @@ int largest_divisor(int n) {
         if (i * i > n) return 1;
     }
 }
-```
-
-Please note that this C code is a direct translation of the provided LLVM IR code and may not be the most optimized or idiomatic C code.

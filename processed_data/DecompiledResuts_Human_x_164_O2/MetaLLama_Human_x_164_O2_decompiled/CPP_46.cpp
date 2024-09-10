@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the corresponding C source code. Here it is:
-
-```c
 #include <stdio.h>
 
 int fib4(int n) {
@@ -57,6 +54,3 @@ int fib4(int n) {
 
     return arr[n];
 }
-```
-
-Please note that the generated C code might not be the most optimized or efficient version, as it is a direct translation from the provided LLVM IR code.

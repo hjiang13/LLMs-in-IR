@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the corresponding C source code. Here is the result:
-
-```c
 #include <stdio.h>
 #include <string.h>
 
@@ -36,6 +33,3 @@ int is_nested(basic_string* str) {
 
     return max_nesting_level > 1;
 }
-```
-
-Please note that I've assumed the `basic_string` struct members based on the LLVM IR code. The actual struct members may vary depending on the original C++ code and the used compiler.

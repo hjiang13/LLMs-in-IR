@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate a C source code that corresponds to the given IR. Please note that this C code may not be perfect and might require some manual tuning for specific use cases.
-
-```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -65,6 +62,3 @@ int main() {
     generate_integers(&vector, 10, 20);
     return 0;
 }
-```
-
-Please note that the generated C code is simplified and might not be fully functional as it's generated from a low-level representation. You may need to adjust the code to suit your needs.

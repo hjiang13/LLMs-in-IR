@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the corresponding C source code. Here it is:
-
-```c
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -50,6 +47,3 @@ int main() {
     filp_case(str);
     return 0;
 }
-```
-
-This C source code corresponds to the provided LLVM IR code. It defines a function `filp_case` that takes a string as input and performs some operations on it, including case conversion and string copying. The `main` function is also defined to test the `filp_case` function.

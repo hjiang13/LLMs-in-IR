@@ -1,6 +1,3 @@
-Here is the C source code generated from the provided LLVM IR code:
-
-```c
 #include <stdint.h>
 #include <stdbool.h>
 
@@ -29,6 +26,3 @@ bool prime_length(basic_string* s) {
     bool result = (length % i) != 0;
     return result;
 }
-```
-
-Please note that the generated code may not be exactly the same as the original C++ code from which the IR code was generated, since some C++-specific features and standard library classes (like `std::string`) are not directly translatable to C. However, the generated code should have the same functionality as the original code.

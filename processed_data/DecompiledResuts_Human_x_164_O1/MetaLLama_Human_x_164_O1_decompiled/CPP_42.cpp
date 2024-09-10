@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the corresponding C source code. Here it is:
-
-```c
 #include <string.h>
 
 typedef struct {
@@ -41,6 +38,3 @@ void incr_list(std_vector* __result, std_vector* __x) {
     __result->_M_base._M_impl._M_end_of_storage = __x->_M_base._M_impl._M_end_of_storage;
     memset(__x, 0, 24);
 }
-```
-
-Note that I've made some assumptions about the struct layouts and naming conventions based on the IR code. The generated C code may not be exactly what the original C++ code looked like, but it should be functionally equivalent.

@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, here's the equivalent C source code:
-
-```c
 #include <stdlib.h>
 #include <string.h>
 
@@ -109,6 +106,3 @@ int main() {
     _Z3trii(&__vec, 5);
     return 0;
 }
-```
-
-Please note that the function `_Z3trii` is the main function generated from the IR code. I have also created a simple `main` function to test the generated function. This code does not include any error handling or additional functionality.

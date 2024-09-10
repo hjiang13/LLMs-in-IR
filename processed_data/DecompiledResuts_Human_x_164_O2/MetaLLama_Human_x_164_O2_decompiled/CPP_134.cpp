@@ -1,6 +1,3 @@
-Here is the C source code generated from the provided LLVM IR code:
-
-```c
 #include <stdbool.h>
 #include <stdint.h>
 
@@ -41,4 +38,3 @@ bool check_if_last_char_is_a_letter(const char* str, uint64_t length) {
 
     return false;
 }
-```

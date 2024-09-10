@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the equivalent C source code. Please note that this code may not be perfect and might require some manual tuning for better readability and performance.
-
-```c
 #include <stdbool.h>
 #include <string.h>
 
@@ -40,7 +37,3 @@ bool same_chars_str(const char* s1, const char* s2) {
 
     return same_chars(s1, s2, len1, len2);
 }
-```
-Please note that I have created two functions, `same_chars` and `same_chars_str`, where the latter is a convenience function that calculates the lengths of the input strings and calls the former. The generated code is a direct translation of the LLVM IR code and should have the same functionality. 
-
-However, please be aware that the generated code may not be perfect and might require some manual tuning for better readability and performance.

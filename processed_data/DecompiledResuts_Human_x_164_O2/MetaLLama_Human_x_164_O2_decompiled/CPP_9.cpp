@@ -1,7 +1,3 @@
-Based on the provided LLVM IR code, I will generate the corresponding C source code. Please note that the generated C code may not be perfect and might require some manual modifications to make it compile and run correctly.
-
-Here is the generated C source code:
-```c
 #include <stdlib.h>
 #include <string.h>
 
@@ -77,5 +73,3 @@ void llvm_memmove_p0i8_p0i8_i64(void* __dest, const void* __src, size_t __size) 
 void llvm_memset_p0i8_i64(void* __dest, int __val, size_t __size) {
   memset(__dest, __val, __size);
 }
-```
-Note that some functions (like `_ZSt20__throw_length_errorPKc`) are not implemented as they are not necessary for this example. Also, the generated code may not be optimal and might require manual modifications to make it compile and run correctly.

@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the equivalent C source code. Here it is:
-
-```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -20,6 +17,3 @@ long double_the_difference(float* data, long size) {
     }
     return result;
 }
-```
-
-Please note that I've made some assumptions about the input data and the expected output. The generated C code might need adjustments based on the actual requirements.

@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the equivalent C source code. Please note that the generated C code may not be perfect and might require some manual adjustments.
-
-```c
 #include <stdio.h>
 #include <stdint.h>
 
@@ -21,6 +18,3 @@ int main() {
     int result = add(data, size);
     return result;
 }
-```
-
-Note that the generated C code is a simplified version and may not cover all the nuances of the original LLVM IR code. Additionally, the `main` function is just a placeholder and should be replaced with the actual implementation.

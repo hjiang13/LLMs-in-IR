@@ -1,5 +1,3 @@
-Here is the C source code generated from the provided LLVM IR code:
-```c
 #include <stdbool.h>
 #include <stdint.h>
 
@@ -22,4 +20,3 @@ bool correct_bracketing(const char* s, size_t len) {
 
     return balance == 0;
 }
-```

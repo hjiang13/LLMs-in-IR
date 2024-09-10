@@ -1,6 +1,3 @@
-Here's the C source code generated from the given LLVM IR:
-
-```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -75,5 +72,3 @@ int main() {
     _Z10derivativeSt6vectorIfSaIfEE(&result, &input);
     return 0;
 }
-```
-Note that some functions like `_ZdlPv`, `_Znwm`, `_ZSt17__throw_bad_allocv`, `_ZSt20__throw_length_errorPKc` have been implemented for completeness but they are not actually used in the code. In a real-world scenario, these functions should be implemented according to their actual functionality in the C++ standard library.

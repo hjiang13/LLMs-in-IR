@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the equivalent C source code. Please note that the generated C code may not be perfect and might require some manual adjustments.
-
-```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -57,5 +54,3 @@ int valid_date(string* date) {
     }
     return false;
 }
-```
-Please note that the generated C code is not perfect and may require some manual adjustments. The code assumes that the input string is in the format "dd-mm-yyyy" and does not handle cases where the input string is not in this format.

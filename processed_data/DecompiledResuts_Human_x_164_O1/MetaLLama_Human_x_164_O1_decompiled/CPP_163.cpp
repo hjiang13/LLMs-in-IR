@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I'll generate the equivalent C source code. Please note that the generated C code may not be perfect and might require some manual adjustments.
-
-```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -68,6 +65,3 @@ int main() {
     generate_integers(&v, 10, 20);
     return 0;
 }
-```
-
-Note that I've omitted the implementation of some functions (e.g., `_ZSt20__throw_length_errorPKc`, `_ZSt17__throw_bad_allocv`, etc.) as they are not essential for the main functionality. Also, I've used a simplified version of the `vector` struct and its methods, as the original implementation is quite complex and not necessary for this example.

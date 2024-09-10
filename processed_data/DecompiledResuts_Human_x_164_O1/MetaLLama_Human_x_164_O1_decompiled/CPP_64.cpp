@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the equivalent C source code. Here it is:
-
-```c
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -31,6 +28,3 @@ int main() {
     printf("%d\n", count);
     return 0;
 }
-```
-
-Note that I've assumed the input string is null-terminated. Also, I've used the `const char*` type for the input string, as it is not modified within the function. The `main` function is just a simple example usage of the `vowels_count` function.

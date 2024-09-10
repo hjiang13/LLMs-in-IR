@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the equivalent C source code. Please note that the generated code may not be perfect and might require some manual adjustments.
-
-```c
 #include <stdlib.h>
 #include <string.h>
 
@@ -71,6 +68,3 @@ void _Z7compareSt6vectorIiSaIiEES1_(vector* __result, vector* __x, vector* __y) 
     __result->_M_base._M_impl._M_finish = __result_start;
     __result->_M_base._M_impl._M_end_of_storage = __result_end_of_storage;
 }
-```
-
-Note that the generated code may not be perfect and might require some manual adjustments. The code is based on my understanding of the LLVM IR code, and there might be some discrepancies.

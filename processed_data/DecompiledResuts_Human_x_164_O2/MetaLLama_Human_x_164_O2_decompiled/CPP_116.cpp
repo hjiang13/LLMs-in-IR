@@ -1,6 +1,3 @@
-Based on the LLVM IR code provided, here is the corresponding C source code:
-
-```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -141,5 +138,3 @@ label98:
   t = (int *)b + 1;
   return;
 }
-```
-Note that I have used some simplifications and assumptions while translating the IR code to C code. The generated C code may not be perfect and might need some modifications to make it work as expected. Also, the C code is not optimized for performance.

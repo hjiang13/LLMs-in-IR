@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the equivalent C source code. Here it is:
-
-```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -78,6 +75,3 @@ void _M_realloc_insert(vector* __v, float* __position, float* __x) {
         __v->_M_base._M_impl._M_end_of_storage = __new_start + __new_size;
     }
 }
-```
-
-Please note that I have omitted error handling for memory allocation failures and some other edge cases for brevity. You should add proper error handling in a production environment.

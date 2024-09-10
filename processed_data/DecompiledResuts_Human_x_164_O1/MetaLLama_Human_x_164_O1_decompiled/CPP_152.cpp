@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the corresponding C source code. Please note that the generated code may not be perfect and might require some manual adjustments.
-
-```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -87,6 +84,3 @@ void compare(vector* this, vector* __x, vector* __y) {
         ++__it;
     }
 }
-```
-
-Please note that the generated code might not be perfect, and some parts may require manual adjustments to work correctly. The code is based on the provided LLVM IR code and might not be fully functional or accurate.

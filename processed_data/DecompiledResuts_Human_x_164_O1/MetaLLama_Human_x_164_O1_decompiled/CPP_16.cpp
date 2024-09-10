@@ -1,6 +1,3 @@
-Based on the provided IR code, I will generate the corresponding C source code. Here it is:
-
-```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -55,6 +52,3 @@ int count_distinct_characters(char *str) {
     free(t);
     return distinct;
 }
-```
-
-Please note that this C source code is a translation of the provided IR code and may not be the most optimized or efficient version. Additionally, the `count_distinct_characters` function returns -1 in case of memory allocation failure. You may want to modify the error handling according to your needs.

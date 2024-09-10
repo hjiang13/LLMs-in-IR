@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the equivalent C source code. Here it is:
-
-```c
 int f(int n) {
     int a[1000];
     a[0] = 0;
@@ -11,6 +8,3 @@ int f(int n) {
     }
     return a[n];
 }
-```
-
-Note that I've only extracted the relevant function `f` from the IR code and converted it to C. Let me know if you need any further assistance!

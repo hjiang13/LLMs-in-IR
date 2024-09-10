@@ -1,6 +1,3 @@
-Based on the provided LLVM IR code, I will generate the equivalent C source code. Please note that the generated C code may not be perfect and might require some manual adjustments.
-
-```c
 #include <stdio.h>
 #include <stdint.h>
 #include <string.h>
@@ -88,6 +85,3 @@ void rescale_to_unit(vector* out, vector* in) {
     out->base.impl.capacity = in->base.impl.capacity;
     memset(in, 0, sizeof(vector));
 }
-```
-
-Please note that this is a direct translation of the IR code and may not be the most efficient or readable C code. It's also worth mentioning that the IR code seems to be using some LLVM-specific features and built-ins, which may not have direct equivalents in C. Additionally, the generated code assumes that the input vectors are non-empty and that the length of the vector is a multiple of 4. If these assumptions are not valid, the code may need to be adjusted accordingly.
