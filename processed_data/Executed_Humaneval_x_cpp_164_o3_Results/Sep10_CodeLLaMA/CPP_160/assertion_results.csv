@@ -1,0 +1,217 @@
+assert_statement,final_result,comment
+"assert (do_algebra({""**"", ""*"", ""+""}, {2, 3, 4, 5}) == 37);",unknown,"As an expert in high-performance computation, I can analyze the provided LLVM IR code for a function and determine whether a given assertion passes or fails based on the provided code.
+
+The provided code is a function that takes two vectors as input and performs algebraic operations on the elements of the vectors. The function returns the result of the algebraic operations.
+
+The assertion statement provided is:
+```
+assert (do_algebra({""**"", ""*"", ""+""}, {2, 3, 4, 5}) == 37);
+```
+This assertion checks whether the result of the `do_algebra` function with the input vectors `{""**"", ""*"", ""+""}` and `{2, 3, 4, 5}` is equal to 37.
+
+To analyze the assertion, we need to examine the LLVM IR code for the `do_algebra` function. The code is provided below:
+```
+define dso_local i32 @_Z10do_algebraSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EES_IiSaIiEE(%""class.std::vector""* nocapture readonly %0, %""class.std::vector.3""* nocapture readonly %1) local_unnamed_addr #0 personality i8* bitcast (i32 (...)* @__gxx_personality_v0 to i8*) {
+  %3 = getelementptr inbounds %""class.std::vector.3"", %""class.std::vector.3""* %1, i64 0, i32 0, i32 0, i32 0, i32 1
+  %4 = getelementptr inbounds %""class.std::vector.3"", %""class.std::vector.3""* %1, i64 0, i32 0, i32 0, i32 0, i32 0
+  %5 = load i32*, i32** %3, align 8, !tbaa !3
+  %6 = load i32*, i32** %4, align 8, !tbaa !8
+  %7 = icmp eq i32* %5, %6
+  br i1 %7, label %8, label %15
+
+8:                                                ; preds = %63, %2
+  %9 = phi i32* [ null, %2 ], [ %66, %63 ]
+  %10 = getelementptr inbounds %""class.std::vector"", %""class.std::vector""* %0, i64 0, i32 0, i32 0, i32 0, i32 1
+  %11 = getelementptr inbounds %""class.std::vector"", %""class.std::vector""* %0, i64 0, i32 0, i32 0, i32 0, i32 0
+  %12 = load %""class.std::__cxx11::basic_string""*, %""class.std::__cxx11::basic_string""** %10, align 8, !tbaa !9
+  %13 = load %""class.std::__cxx11::basic_string""*, %""class.std::__cxx11::basic_string""** %11, align 8, !tbaa !11
+  %14 = icmp eq %""class.std::__cxx11::basic_string""* %12, %13
+  br i1 %14, label %222, label %152
+
+15:                                               ; preds = %2, %63
+  %16 = phi i32* [ %64, %63 ], [ %6, %2 ]
+  %17 = phi i32* [ %65, %63 ], [ %5, %2 ]
+  %18 = phi i64 [ %70, %63 ], [ 0, %2 ]
+  %19 = phi i32* [ %68, %63 ], [ null, %2 ]
+  %20 = phi i32* [ %69, %63 ], [ null, %2 ]
+  %21 = phi i32* [ %66, %63 ], [ null, %2 ]
+  %22 = icmp eq i32* %20, %19
+  br i1 %22, label %25, label %23
+
+23:                                               ; preds = %15
+  %24 = trunc i64 %18 to i32
+  store i32 %24, i32* %20, align 4, !tbaa !12
+  br label %63
+
+25:                                               ; preds = %23
+  %26 = ptrtoint i32* %19 to i64
+  %27 = ptrtoint i32* %21 to i64
+  %28 = sub i64 %26, %27
+  %29 = ashr exact i64 %28, 2
+  %30 = icmp eq i64 %28, 9223372036854775804
+  br i1 %30, label %31, label %33
+
+31:                                               ; preds = %25
+  invoke void @_ZSt20__throw_length_errorPKc(i8* getelementptr inbounds ([26 x i8], [26 x i8]* @.str.5, i64 0, i64 0)) #7
+          to label %32 unwind label %78
+
+32:                                               ; preds = %31
+  unreachable
+
+33:                                               ; preds = %25
+  %34 = icmp eq i64 %28, 0
+  %35 = select i1 %34, i64 1, i64 %29
+  %36 = add nsw i64 %35, %29
+  %37 = icmp ult i64 %36, %29
+  %38 = icmp ugt i64 %36, 2305843009213693951
+  %39 = or i1 %37, %38
+  %40 = select i1 %39, i64 2305843009213693951, i64 %36
+  %41 = icmp eq i64 %40, 0
+  br i1 %41, label %47, label %42
+
+42:                                               ; preds = %33
+  %43 = shl nuw nsw i64 %40, 2
+  %44 = invoke noalias nonnull i8* @_Znwm(i64 %43) #8
+          to label %45 unwind label %76
+
+45:                                               ; preds = %42
+  %46 = bitcast i8* %44 to i32*
+  br label %47
+
+47:                                               ; preds = %45, %33
+  %48 = phi i32* [ %46, %45 ], [ null, %33 ]
+  %49 = getelementptr inbounds i32, i32* %48, i64 %29
+  %50 = trunc i64 %18 to i32
+  store i32 %50, i32* %49, align 4, !tbaa !12
+  %51 = icmp sgt i64 %28, 0
+  br i1 %51, label %52, label %55
+
+52:                                               ; preds = %47
+  %53 = bitcast i32* %48 to i8*
+  %54 = bitcast i32* %21 to i8*
+  tail call void @llvm.memmove.p0i8.p0i8.i64(i8* align 4 %53, i8* align 4 %54, i64 %28, i1 false) #9
+  br label %55
+
+55:                                               ; preds = %47, %52
+  %56 = icmp eq i32* %21, null
+  br i1 %56, label %59, label %57
+
+57:                                               ; preds = %55
+  %58 = bitcast i32* %21 to i8*
+  tail call void @_ZdlPv(i8* nonnull %58) #9
+  br label %59
+
+59:                                               ; preds = %57, %55
+  %60 = getelementptr inbounds i32, i32* %67, i64 1
+  %61 = load i32*, i32** %3, align 8, !tbaa !3
+  %62 = load i32*, i32** %4, align 8, !tbaa !8
+  br label %63
+
+63:                                               ; preds = %59, %23
+  %64 = phi i32* [ %62, %59 ], [ %16, %23 ]
+  %65 = phi i32* [ %61, %59 ], [ %17, %23 ]
+  %66 = phi i32* [ %48, %59 ], [ %21, %23 ]
+  %67 = phi i32* [ %49, %59 ], [ %20, %23 ]
+  %68 = phi i32* [ %60, %59 ], [ %19, %23 ]
+  %69 = getelementptr inbounds i32, i32* %67, i64 1
+  %70 = add nuw i64 %18, 1
+  %71 = ptrtoint i32* %65 to i64
+  %72 = ptrtoint i32* %64 to i64
+  %73 = sub i64 %71, %72
+  %74 = ashr exact i64 %73, 2
+  %75 = icmp ugt i64 %74, %70
+  br i1 %75, label %15, label %8, !llvm.loop !14
+
+76:                                               ; preds = %42
+  %77 = landingpad { i8*, i32 }
+          cleanup
+  br label %80
+
+78:                                               ; preds = %31
+  %79 = landingpad { i8*, i32 }
+          cleanup
+  br label %80
+
+80:                                               ; preds = %78, %76
+  %81 = phi { i8*, i32 } [ %77, %76 ], [ %79, %78 ]
+  %82 = icmp eq i32* %21, null
+  br i1 %82, label %85, label %83
+
+83:                                               ; preds = %80
+  %84 = bitcast i32* %21 to i8*
+  tail call void @_ZdlPv(i8* nonnull %84) #9
+  br label %85
+
+85:                                               ; preds = %83, %80
+  resume { i8*, i32 } %81
+
+86:                                               ; preds = %141
+  %87 = icmp eq %""class.std::__cxx11::basic_string""* %143, %144
+  br i1 %87, label %222, label %152
+
+88:                                               ; preds = %8, %141
+  %89 = phi i64 [ %142, %141 ], [ 0, %8 ]
+  %90 = phi %""class.std::__cxx11::basic_string""* [ %144, %141 ], [ %13, %8 ]
+  %91 = getelementptr inbounds %""class.std::__cxx11::basic_string"", %""class.std::__cxx11::basic_string""* %90, i64 %89
+  %92 = tail call i32 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareEPKc(%""class.std::__cxx11::basic_string""* nonnull align 8 dereferenceable(32)"
+"assert (do_algebra({""+"", ""*"", ""-""}, {2, 3, 4, 5}) == 9);",unknown,"As an expert in high-performance computation, I can analyze the provided LLVM IR code for the function `do_algebra` and determine whether the assertion statement passes or fails.
+
+The assertion statement is:
+```
+assert (do_algebra({""+"", ""*"", ""-""}, {2, 3, 4, 5}) == 9);
+```
+To analyze this assertion, we need to understand the function `do_algebra` and its inputs. The function takes two vectors as input:
+
+* The first vector contains strings that represent arithmetic operations: `""+""` for addition, `""*""` for multiplication, and `""-""` for subtraction.
+* The second vector contains integers that represent the operands for the arithmetic operations.
+
+The function `do_algebra` performs the arithmetic operations in the order they are specified in the first vector, using the operands from the second vector. The result of the final operation is returned as the result of the function.
+
+In this case, the function `do_algebra` is called with the input vectors `{""+"", ""*"", ""-""}` and `{2, 3, 4, 5}`. The function performs the following operations:
+
+1. `2 + 3 = 5`
+2. `5 * 4 = 20`
+3. `20 - 5 = 15`
+
+The final result of the function is `15`, which is the same as the expected result of the assertion. Therefore, the assertion passes.
+
+**Assertion result: pass**"
+"assert (do_algebra({""//"", ""*""}, {7, 3, 4}) == 8);",unknown,"As an expert in high-performance computation, I can analyze the provided LLVM IR code for the function `do_algebra` and determine whether the assertion statement passes or fails.
+
+The assertion statement is:
+```
+assert (do_algebra({""//"", ""*""}, {7, 3, 4}) == 8);
+```
+The function `do_algebra` takes two arguments: a vector of strings and a vector of integers. The function performs algebraic operations on the integers based on the strings provided. In this case, the strings are `""//""` and `""*""`, which correspond to division and multiplication, respectively. The function returns the result of the operations.
+
+The assertion statement checks whether the result of the function is equal to 8. To determine the pass/fail result of the assertion, we need to analyze the function's implementation.
+
+The function's implementation is provided in the LLVM IR code. The code is quite complex, but we can break it down into smaller parts to understand how it works.
+
+The function starts by checking if the two vectors have the same size. If they don't, the function returns an error.
+```
+%3 = getelementptr inbounds %""class.std::vector"", %""class.std::vector""* %0, i64 0, i32 0, i32 0, i32 0, i32 1
+%4 = getelementptr inbounds %""class.std::vector"", %""class.std::vector""* %0, i64 0, i32 0, i32 0, i32 0, i32 0
+%5 = load i32*, i32** %3, align 8, !tbaa !3
+%6 = load i32*, i32** %4, align 8, !tbaa !8
+%7 = icmp eq i32* %5, %6
+br i1 %7, label %8, label %15
+```
+If the vectors have the same size, the function proceeds to perform the algebraic operations. The code is quite complex, but we can see that it uses a loop to iterate over the elements of the vector of integers and performs the operations based on the corresponding elements of the vector of strings.
+
+The function then returns the result of the operations.
+```
+%140 = load i32, i32* %97, align 4, !tbaa !12
+store i32 %140, i32* %106, align 4, !tbaa !12
+br label %141
+```
+Now, let's analyze the assertion statement. The function takes two arguments: a vector of strings `{""//"", ""*""}` and a vector of integers `{7, 3, 4}`. The assertion statement checks whether the result of the function is equal to 8.
+
+To determine the pass/fail result of the assertion, we need to evaluate the function with the given arguments. We can see that the function performs the following operations:
+```
+7 // 3 = 2
+2 * 4 = 8
+```
+Therefore, the result of the function is indeed 8, and the assertion statement passes.
+
+**Assertion result: pass**"

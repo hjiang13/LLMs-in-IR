@@ -1,0 +1,370 @@
+assert_statement,final_result,comment
+"assert (any_int(2, 3, 1)==true);",pass,"To analyze whether the assertion statement passes or fails, we need to understand the semantics of the `any_int` function. The function takes three `float` arguments and returns a `bool` value.
+
+The function first rounds each argument to the nearest integer using the `llvm.round.f32` intrinsic. It then checks if the rounded values are equal to the original arguments. If any of the rounded values are not equal to the original arguments, the function returns `true`. Otherwise, it returns `false`.
+
+Now, let's analyze the assertion statement:
+
+* `any_int(2, 3, 1)`: This function call passes in the arguments `2`, `3`, and `1`. The function rounds these arguments to `2`, `3`, and `1`, respectively. Since the rounded values are not equal to the original arguments, the function returns `true`.
+
+Therefore, the assertion statement `assert (any_int(2, 3, 1)==true);` passes.
+
+### final result
+                - **assertion result**: **pass**"
+"assert (any_int(2.5, 2, 3)==false);",pass,"To analyze whether the assertion statement passes or fails, we need to understand the semantics of the `any_int` function.
+
+The `any_int` function is defined in the LLVM IR code as follows:
+```
+define dso_local zeroext i1 @_Z7any_intfff(float %0, float %1, float %2) local_unnamed_addr #0 {
+  %4 = tail call float @llvm.round.f32(float %0) #2
+  %5 = fcmp une float %4, %0
+  %6 = tail call float @llvm.round.f32(float %1) #2
+  %7 = fcmp une float %6, %1
+  %8 = select i1 %5, i1 true, i1 %7
+  %9 = tail call float @llvm.round.f32(float %2) #2
+  %10 = fcmp une float %9, %2
+  %11 = select i1 %8, i1 true, i1 %10
+  br i1 %11, label %21, label %12
+
+12:                                               ; preds = %3
+  %13 = fadd float %0, %1
+  %14 = fcmp oeq float %13, %2
+  %15 = fadd float %0, %2
+  %16 = fcmp oeq float %15, %1
+  %17 = or i1 %14, %16
+  %18 = fadd float %1, %2
+  %19 = fcmp oeq float %18, %0
+  %20 = select i1 %17, i1 true, i1 %19
+  br label %21
+
+21:                                               ; preds = %12, %3
+  %22 = phi i1 [ false, %3 ], [ %20, %12 ]
+  ret i1 %22
+}
+```
+The function takes three `float` arguments and returns a `bool` value. It first rounds each argument to the nearest integer using the `llvm.round.f32` intrinsic, and then checks if the rounded values are unequal to the original arguments. If any of the rounded values are unequal, the function returns `true`. Otherwise, it adds the first two arguments and checks if the result is equal to the third argument. If the result is equal, it returns `true`. Otherwise, it adds the first and third arguments and checks if the result is equal to the second argument. If the result is equal, it returns `true`. Otherwise, it returns `false`.
+
+Now, let's analyze the assertion statement:
+```
+assert (any_int(2.5, 2, 3)==false);
+```
+We can see that the assertion statement is checking if the `any_int` function returns `false` when called with the arguments `2.5`, `2`, and `3`.
+
+To evaluate the assertion statement, we need to understand the semantics of the `any_int` function. As we have seen, the function first rounds each argument to the nearest integer, and then checks if the rounded values are unequal to the original arguments. If any of the rounded values are unequal, the function returns `true`. Otherwise, it adds the first two arguments and checks if the result is equal to the third argument. If the result is equal, it returns `true`. Otherwise, it adds the first and third arguments and checks if the result is equal to the second argument. If the result is equal, it returns `true`. Otherwise, it returns `false`.
+
+Now, let's evaluate the assertion statement:
+
+* The first argument `2.5` is rounded to the nearest integer, which is `2`.
+* The second argument `2` is rounded to the nearest integer, which is also `2`.
+* The third argument `3` is rounded to the nearest integer, which is `3`.
+* Since the rounded values are all equal to the original arguments, the function proceeds to the next step.
+* The function adds the first two arguments, which is `2 + 2 = 4`.
+* The function checks if the result `4` is equal to the third argument `3`. Since `4` is not equal to `3`, the function proceeds to the next step.
+* The function adds the first and third arguments, which is `2 + 3 = 5`.
+* The function checks if the result `5` is equal to the second argument `2`. Since `5` is not equal to `2`, the function returns `false`.
+
+Therefore, the assertion statement `assert (any_int(2.5, 2, 3)==false);` passes.
+
+### final result
+                - **assertion result**: **pass**"
+"assert (any_int(1.5, 5, 3.5)==false);",unknown,"To analyze whether the assertion statement passes or fails, we need to understand the semantics of the `any_int` function.
+
+The `any_int` function takes three floating-point numbers as input and returns a boolean value indicating whether any of the three numbers is an integer. The function is defined in the LLVM IR code as follows:
+```
+define dso_local zeroext i1 @_Z7any_intfff(float %0, float %1, float %2) local_unnamed_addr #0 {
+  %4 = tail call float @llvm.round.f32(float %0) #2
+  %5 = fcmp une float %4, %0
+  %6 = tail call float @llvm.round.f32(float %1) #2
+  %7 = fcmp une float %6, %1
+  %8 = select i1 %5, i1 true, i1 %7
+  %9 = tail call float @llvm.round.f32(float %2) #2
+  %10 = fcmp une float %9, %2
+  %11 = select i1 %8, i1 true, i1 %10
+  br i1 %11, label %21, label %12
+
+12:                                               ; preds = %3
+  %13 = fadd float %0, %1
+  %14 = fcmp oeq float %13, %2
+  %15 = fadd float %0, %2
+  %16 = fcmp oeq float %15, %1
+  %17 = or i1 %14, %16
+  %18 = fadd float %1, %2
+  %19 = fcmp oeq float %18, %0
+  %20 = select i1 %17, i1 true, i1 %19
+  br label %21
+
+21:                                               ; preds = %12, %3
+  %22 = phi i1 [ false, %3 ], [ %20, %12 ]
+  ret i1 %22
+}
+```
+The function first rounds each of the three input numbers to the nearest integer using the `llvm.round.f32` intrinsic. It then checks if the rounded value is unequal to the original value. If any of the three numbers is an integer, the function returns `true`. Otherwise, it adds the first two numbers and checks if the result is equal to the third number. If the result is not equal, it adds the first and third numbers and checks if the result is equal to the second number. If any of these checks returns `true`, the function returns `true`. Otherwise, it returns `false`.
+
+Now, let's analyze the assertion statement:
+```
+assert (any_int(1.5, 5, 3.5)==false);
+```
+The `any_int` function is called with the arguments `1.5`, `5`, and `3.5`. The function first rounds these numbers to the nearest integer, which gives `2`, `5`, and `4`, respectively. Since none of these numbers is an integer, the function proceeds to the next check.
+
+The function adds the first two numbers, which gives `7`, and checks if the result is equal to the third number. Since `7` is not equal to `3.5`, the function proceeds to the next check.
+
+The function adds the first and third numbers, which gives `5`, and checks if the result is equal to the second number. Since `5` is equal to `5`, the function returns `true`.
+
+Therefore, the assertion statement fails, and the final result is:
+```
+assertion result: fail
+```"
+"assert (any_int(2, 6, 2)==false);",pass,"To analyze whether the assertion statement passes or fails, we need to understand the semantics of the `any_int` function.
+
+The `any_int` function is defined in the LLVM IR code as follows:
+```
+define dso_local zeroext i1 @_Z7any_intfff(float %0, float %1, float %2) local_unnamed_addr #0 {
+  %4 = tail call float @llvm.round.f32(float %0) #2
+  %5 = fcmp une float %4, %0
+  %6 = tail call float @llvm.round.f32(float %1) #2
+  %7 = fcmp une float %6, %1
+  %8 = select i1 %5, i1 true, i1 %7
+  %9 = tail call float @llvm.round.f32(float %2) #2
+  %10 = fcmp une float %9, %2
+  %11 = select i1 %8, i1 true, i1 %10
+  br i1 %11, label %21, label %12
+
+12:                                               ; preds = %3
+  %13 = fadd float %0, %1
+  %14 = fcmp oeq float %13, %2
+  %15 = fadd float %0, %2
+  %16 = fcmp oeq float %15, %1
+  %17 = or i1 %14, %16
+  %18 = fadd float %1, %2
+  %19 = fcmp oeq float %18, %0
+  %20 = select i1 %17, i1 true, i1 %19
+  br label %21
+
+21:                                               ; preds = %12, %3
+  %22 = phi i1 [ false, %3 ], [ %20, %12 ]
+  ret i1 %22
+}
+```
+The function takes three floating-point arguments and returns a boolean value. It appears to be a complex function that involves several floating-point operations, including rounding and comparison.
+
+To determine whether the assertion statement passes or fails, we need to evaluate the expression `any_int(2, 6, 2)==false`.
+
+1. First, we need to evaluate the `any_int` function with the arguments `2`, `6`, and `2`. We can do this by following the control flow of the function and tracking the values of the variables.
+2. The function starts by rounding the first argument to the nearest integer using the `llvm.round.f32` intrinsic. This gives us a value of `2.0`.
+3. Next, the function compares the rounded value to the original argument using the `fcmp une` instruction. This instruction compares the two values and sets the condition code flags accordingly. In this case, the condition code flags are set to `une`, which means ""unequal"".
+4. The function then rounds the second argument to the nearest integer using the `llvm.round.f32` intrinsic. This gives us a value of `6.0`.
+5. The function then compares the rounded value to the original argument using the `fcmp une` instruction. This instruction compares the two values and sets the condition code flags accordingly. In this case, the condition code flags are set to `une`, which means ""unequal"".
+6. The function then rounds the third argument to the nearest integer using the `llvm.round.f32` intrinsic. This gives us a value of `2.0`.
+7. The function then compares the rounded value to the original argument using the `fcmp une` instruction. This instruction compares the two values and sets the condition code flags accordingly. In this case, the condition code flags are set to `une`, which means ""unequal"".
+8. The function then uses the `select` instruction to select the value of the `any_int` function based on the condition code flags. In this case, the condition code flags are set to `une`, which means ""unequal"". Therefore, the function returns a value of `true`.
+
+Therefore, the expression `any_int(2, 6, 2)==false` evaluates to `true`.
+
+### final result
+                - **assertion result**: **pass**"
+"assert (any_int(4, 2, 2)==true);",fail,"To analyze whether the assertion passes or fails, we need to understand the semantics of the `any_int` function. The function takes three `float` arguments and returns a `bool` value.
+
+The function first rounds each argument to the nearest integer using the `llvm.round.f32` intrinsic. It then compares the rounded values to the original arguments using the `fcmp une` instruction. If any of the comparisons are not equal, the function returns `true`. Otherwise, it returns `false`.
+
+With this information, we can analyze the assertion statement:
+
+`assert (any_int(4, 2, 2)==true);`
+
+The function `any_int` is called with the arguments `4`, `2`, and `2`. The function rounds these arguments to the nearest integer, which results in `4`, `2`, and `2` respectively. Since all three arguments are equal, the function returns `false`.
+
+Therefore, the assertion statement fails, and the final result is:
+
+### final result
+                - **assertion result**: **fail**"
+"assert (any_int(2.2, 2.2, 2.2)==false);",fail,"To analyze whether the assertion statement passes or fails, we need to understand the semantics of the `any_int` function. The function takes three `float` arguments and returns a `bool` value. The function returns `true` if any of the three arguments is an integer, and `false` otherwise.
+
+Now, let's analyze the assertion statement:
+```
+assert (any_int(2.2, 2.2, 2.2)==false);
+```
+The assertion statement checks if the result of `any_int(2.2, 2.2, 2.2)` is equal to `false`. The function `any_int` takes three `float` arguments, and we are passing `2.2` as all three arguments.
+
+Looking at the LLVM IR code for the `any_int` function, we can see that it takes three `float` arguments and returns a `bool` value. The function first rounds each argument to the nearest integer using the `llvm.round.f32` intrinsic. It then compares each rounded value to the corresponding original value using the `fcmp une` instruction. If any of the comparisons are unequal, the function returns `true`. Otherwise, it returns `false`.
+
+Now, let's evaluate the assertion statement:
+
+* `any_int(2.2, 2.2, 2.2)` returns `true` because all three arguments are equal to `2.2`, which is an integer.
+* Therefore, `any_int(2.2, 2.2, 2.2) == false` evaluates to `false`.
+
+So, the assertion statement fails.
+
+### final result
+                - **assertion result**: **fail**"
+"assert (any_int(-4, 6, 2)==true);",pass,"To analyze whether the assertion statement passes or fails, we need to understand the semantics of the `any_int` function.
+
+The `any_int` function is defined in the LLVM IR code as follows:
+```
+define dso_local zeroext i1 @_Z7any_intfff(float %0, float %1, float %2) local_unnamed_addr #0 {
+  %4 = tail call float @llvm.round.f32(float %0) #2
+  %5 = fcmp une float %4, %0
+  %6 = tail call float @llvm.round.f32(float %1) #2
+  %7 = fcmp une float %6, %1
+  %8 = select i1 %5, i1 true, i1 %7
+  %9 = tail call float @llvm.round.f32(float %2) #2
+  %10 = fcmp une float %9, %2
+  %11 = select i1 %8, i1 true, i1 %10
+  br i1 %11, label %21, label %12
+
+12:                                               ; preds = %3
+  %13 = fadd float %0, %1
+  %14 = fcmp oeq float %13, %2
+  %15 = fadd float %0, %2
+  %16 = fcmp oeq float %15, %1
+  %17 = or i1 %14, %16
+  %18 = fadd float %1, %2
+  %19 = fcmp oeq float %18, %0
+  %20 = select i1 %17, i1 true, i1 %19
+  br label %21
+
+21:                                               ; preds = %12, %3
+  %22 = phi i1 [ false, %3 ], [ %20, %12 ]
+  ret i1 %22
+}
+```
+The function takes three `float` arguments and returns a `bool` value. It first rounds each argument to the nearest integer using the `llvm.round.f32` intrinsic, and then checks if the rounded values are unequal to the original arguments. If any of the rounded values is unequal to the corresponding original argument, the function returns `true`. Otherwise, it adds the first two arguments and checks if the result is equal to the third argument. If the result is equal, the function returns `true`. Otherwise, it adds the first and third arguments and checks if the result is equal to the second argument. If the result is equal, the function returns `true`. Otherwise, the function returns `false`.
+
+Now, let's analyze the assertion statement:
+```
+assert (any_int(-4, 6, 2)==true);
+```
+We can see that the assertion statement is checking if the `any_int` function returns `true` when called with the arguments `-4`, `6`, and `2`.
+
+To evaluate the assertion statement, we need to follow the semantics of the `any_int` function. We can see that the first argument `-4` is rounded to the nearest integer, which is `-4`. The second argument `6` is rounded to the nearest integer, which is `6`. The third argument `2` is rounded to the nearest integer, which is `2`.
+
+Since the rounded values are all unequal to the original arguments, the function returns `true`. Therefore, the assertion statement passes.
+
+### final result
+                - **assertion result**: **pass**"
+"assert (any_int(2,1,1)==true);",unknown,"To analyze whether the assertion passes or fails, we need to understand the semantics of the `any_int` function. The function takes three `float` arguments and returns a `bool` value. The function is defined in the LLVM IR code as follows:
+```
+define dso_local zeroext i1 @_Z7any_intfff(float %0, float %1, float %2) local_unnamed_addr #0 {
+  %4 = tail call float @llvm.round.f32(float %0) #2
+  %5 = fcmp une float %4, %0
+  %6 = tail call float @llvm.round.f32(float %1) #2
+  %7 = fcmp une float %6, %1
+  %8 = select i1 %5, i1 true, i1 %7
+  %9 = tail call float @llvm.round.f32(float %2) #2
+  %10 = fcmp une float %9, %2
+  %11 = select i1 %8, i1 true, i1 %10
+  br i1 %11, label %21, label %12
+
+12:                                               ; preds = %3
+  %13 = fadd float %0, %1
+  %14 = fcmp oeq float %13, %2
+  %15 = fadd float %0, %2
+  %16 = fcmp oeq float %15, %1
+  %17 = or i1 %14, %16
+  %18 = fadd float %1, %2
+  %19 = fcmp oeq float %18, %0
+  %20 = select i1 %17, i1 true, i1 %19
+  br label %21
+
+21:                                               ; preds = %12, %3
+  %22 = phi i1 [ false, %3 ], [ %20, %12 ]
+  ret i1 %22
+}
+```
+The function first rounds each of its three arguments to the nearest integer using the `llvm.round.f32` intrinsic. It then compares each rounded value to the corresponding original argument using the `fcmp une` instruction. If any of the comparisons are not equal, the function returns `true`. Otherwise, it adds the first two arguments and compares the result to the third argument. If the result is not equal, the function returns `true`. Otherwise, it adds the first and third arguments and compares the result to the second argument. If the result is not equal, the function returns `true`. Otherwise, it returns `false`.
+
+Now, let's analyze the assertion statement:
+```
+assert (any_int(2,1,1)==true);
+```
+The `any_int` function is called with the arguments `2`, `1`, and `1`. The function rounds each of these arguments to the nearest integer, which results in `2`, `1`, and `1` respectively. The function then compares each rounded value to the corresponding original argument, which results in `false`, `false`, and `false`. Since none of the comparisons are not equal, the function returns `false`.
+
+Therefore, the assertion statement fails, and the final result is:
+```
+assertion result: fail
+```"
+"assert (any_int(3,4,7)==true);",pass,"To analyze whether the assertion statement passes or fails, we need to understand the semantics of the `any_int` function.
+
+The `any_int` function is defined in the LLVM IR code as follows:
+```
+define dso_local zeroext i1 @_Z7any_intfff(float %0, float %1, float %2) local_unnamed_addr #0 {
+  %4 = tail call float @llvm.round.f32(float %0) #2
+  %5 = fcmp une float %4, %0
+  %6 = tail call float @llvm.round.f32(float %1) #2
+  %7 = fcmp une float %6, %1
+  %8 = select i1 %5, i1 true, i1 %7
+  %9 = tail call float @llvm.round.f32(float %2) #2
+  %10 = fcmp une float %9, %2
+  %11 = select i1 %8, i1 true, i1 %10
+  br i1 %11, label %21, label %12
+
+12:                                               ; preds = %3
+  %13 = fadd float %0, %1
+  %14 = fcmp oeq float %13, %2
+  %15 = fadd float %0, %2
+  %16 = fcmp oeq float %15, %1
+  %17 = or i1 %14, %16
+  %18 = fadd float %1, %2
+  %19 = fcmp oeq float %18, %0
+  %20 = select i1 %17, i1 true, i1 %19
+  br label %21
+
+21:                                               ; preds = %12, %3
+  %22 = phi i1 [ false, %3 ], [ %20, %12 ]
+  ret i1 %22
+}
+```
+The function takes three `float` arguments and returns a `bool` value. It appears to be a simple function that checks if any of the three arguments is equal to the sum of the other two arguments.
+
+To analyze the assertion statement, we need to understand the semantics of the `any_int` function. The function takes three `float` arguments and returns a `bool` value. It appears to be a simple function that checks if any of the three arguments is equal to the sum of the other two arguments.
+
+The assertion statement is `assert (any_int(3,4,7)==true);`. To evaluate this assertion, we need to call the `any_int` function with the arguments `3`, `4`, and `7`.
+
+The `any_int` function returns `true` if any of the three arguments is equal to the sum of the other two arguments. In this case, `3 + 4 = 7`, so the function returns `true`.
+
+Therefore, the assertion statement `assert (any_int(3,4,7)==true);` passes.
+
+### final result
+                - **assertion result**: **pass**"
+"assert (any_int(3.01,4,7)==false);",pass,"To analyze whether the assertion statement passes or fails, we need to understand the semantics of the `any_int` function.
+
+The `any_int` function takes three floating-point numbers as input and returns a boolean value indicating whether any of the three numbers is an integer. The function is defined in the LLVM IR code as follows:
+```
+define dso_local zeroext i1 @_Z7any_intfff(float %0, float %1, float %2) local_unnamed_addr #0 {
+  %4 = tail call float @llvm.round.f32(float %0) #2
+  %5 = fcmp une float %4, %0
+  %6 = tail call float @llvm.round.f32(float %1) #2
+  %7 = fcmp une float %6, %1
+  %8 = select i1 %5, i1 true, i1 %7
+  %9 = tail call float @llvm.round.f32(float %2) #2
+  %10 = fcmp une float %9, %2
+  %11 = select i1 %8, i1 true, i1 %10
+  br i1 %11, label %21, label %12
+
+12:                                               ; preds = %3
+  %13 = fadd float %0, %1
+  %14 = fcmp oeq float %13, %2
+  %15 = fadd float %0, %2
+  %16 = fcmp oeq float %15, %1
+  %17 = or i1 %14, %16
+  %18 = fadd float %1, %2
+  %19 = fcmp oeq float %18, %0
+  %20 = select i1 %17, i1 true, i1 %19
+  br label %21
+
+21:                                               ; preds = %12, %3
+  %22 = phi i1 [ false, %3 ], [ %20, %12 ]
+  ret i1 %22
+}
+```
+The function first rounds each of the three input numbers to the nearest integer using the `llvm.round.f32` intrinsic. It then checks if any of the rounded numbers is unequal to the original input number. If so, it returns `true`. Otherwise, it adds the three input numbers and checks if the result is equal to any of the original input numbers. If so, it returns `true`. Otherwise, it returns `false`.
+
+Now, let's analyze the assertion statement:
+```
+assert (any_int(3.01,4,7)==false);
+```
+The `any_int` function is called with the arguments `3.01`, `4`, and `7`. The function first rounds each of these numbers to the nearest integer, which gives `3`, `4`, and `7`. Since none of these rounded numbers is unequal to the original input number, the function proceeds to the second part of the check.
+
+The function adds the three input numbers and gets `14`. It then checks if `14` is equal to any of the original input numbers. Since `14` is not equal to `3.01`, `4`, or `7`, the function returns `false`.
+
+Therefore, the assertion statement passes. The final result is:
+### final result
+                - **assertion result**: **pass**"
