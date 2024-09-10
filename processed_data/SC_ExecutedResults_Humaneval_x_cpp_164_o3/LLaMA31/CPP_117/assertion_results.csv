@@ -1,0 +1,178 @@
+assert_statement,final_result,comment
+"assert (issame(select_words(""Mary had a little lamb"", 4) , {""little""}   ));",pass,"to analyze the assertion, let's go through the given c++ code step by step and see if the function `select_words` returns the expected output for the given input.
+
+1. the function `select_words` takes a string `s` and a natural number `n` as input.
+2. it initializes a string `vowels` containing all vowels, a string `current` to store the current word being processed, a vector `out` to store the output words, and an integer `numc` to keep track of the number of consonants in the current word.
+3. it adds a space at the end of the input string `s` to make sure the last word is processed correctly.
+4. it iterates through each character in the input string `s`.
+5. if the character is a space, it checks if the number of consonants in the current word is equal to `n`. if so, it adds the current word to the output vector `out`. then, it resets the `current` string and `numc`.
+6. if the character is not a space, it adds the character to the `current` string and checks if the character is a consonant by verifying if it's not present in the `vowels` string. if it's a consonant, it increments the `numc`.
+7. finally, the function returns the output vector `out`.
+
+now let's analyze the assertion statement:
+
+```
+assert (issame(select_words(""mary had a little lamb"", 4), {""little""}));
+```
+
+the function call `select_words(""mary had a little lamb"", 4)` should return a vector containing the words from the input string that have exactly 4 consonants. in this case, the only word with 4 consonants is ""little"". so, the expected output is `{""little""}`.
+
+the assertion checks if the returned vector from the function is the same as the expected output. since the function works as intended, the assertion should pass.
+
+### final result
+- **assertion result**: **pass**"
+"assert (issame(select_words(""Mary had a little lamb"", 3) , {""Mary"", ""lamb""} ));",pass,"to analyze the assertion, let's first understand the given code and the assertion statement.
+
+the `select_words` function takes a string `s` and a natural number `n` as input, and returns a vector of all words from the string `s` that contain exactly `n` consonants. the function iterates through the input string and checks for spaces to separate words. for each word, it counts the number of consonants and compares it with the given `n`. if the count matches, the word is added to the output vector.
+
+the assertion statement checks if the output of `select_words(""mary had a little lamb"", 3)` is equal to the vector `{""mary"", ""lamb""}`.
+
+now, let's analyze the given input string and the value of `n`:
+
+input string: ""mary had a little lamb""
+n: 3
+
+we can see that there are two words in the input string that have exactly 3 consonants: ""mary"" and ""lamb"". therefore, the expected output vector should be `{""mary"", ""lamb""}`.
+
+since the assertion statement is comparing the output of the `select_words` function with the expected output, and the function works as intended, the assertion should pass.
+
+### final result
+- **assertion result**: **pass**"
+"assert (issame(select_words(""simple white space"", 2) , {}     ));",pass,"to analyze the assertion, let's go through the provided c/c++ code and understand how the `select_words` function works.
+
+the function takes a string `s` and a natural number `n` as input. it initializes an empty vector `out` to store the words with exactly `n` consonants. it also initializes an empty string `current` to store the current word being processed and a variable `numc` to keep track of the number of consonants in the current word.
+
+the function iterates through each character in the input string `s`. if the character is a space, it checks if the number of consonants in the current word is equal to `n`. if so, it adds the current word to the `out` vector. then, it resets the `current` string and `numc` variable for the next word.
+
+if the character is not a space, it appends the character to the `current` string and checks if the character is a consonant. if the character is a consonant, it increments the `numc` variable.
+
+now let's analyze the given assertion statement:
+
+```
+assert (issame(select_words(""simple white space"", 2) , {} ));
+```
+
+the assertion checks if the result of `select_words(""simple white space"", 2)` is an empty vector. let's go through the function with the given input:
+
+1. the input string is ""simple white space"" and `n` is 2.
+2. the function iterates through each character in the input string.
+3. for the first word ""simple"", there are 4 consonants ('s', 'm', 'p', 'l'), so it doesn't meet the criteria of having exactly 2 consonants.
+4. for the second word ""white"", there are 3 consonants ('w', 'h', 't'), so it doesn't meet the criteria either.
+5. for the third word ""space"", there are 3 consonants ('s', 'p', 'c'), so it doesn't meet the criteria as well.
+6. since none of the words in the input string have exactly 2 consonants, the function returns an empty vector.
+
+since the function returns an empty vector, the assertion statement is true, and the assertion passes.
+
+### final result
+- **assertion result**: **pass**"
+"assert (issame(select_words(""Hello world"", 4) , {""world""}  ));",pass,"to analyze the assertion, let's go through the `select_words` function and see if it returns the expected output for the given input.
+
+input: ""hello world"", 4
+
+1. the function initializes the required variables and adds a space at the end of the input string.
+2. it iterates through the string and checks for spaces to separate words.
+3. for each word, it counts the consonants by checking if the character is not a vowel and is an alphabet.
+4. if the count of consonants in a word is equal to the given number `n`, it adds the word to the output vector.
+
+now let's go through the input string ""hello world"" and see how the function processes it:
+
+- the first word is ""hello"". it has 3 consonants, so it doesn't meet the criteria of having 4 consonants.
+- the second word is ""world"". it has 4 consonants, so it meets the criteria and is added to the output vector.
+
+the function returns {""world""} as the output, which matches the expected output in the assertion.
+
+### final result
+- **assertion result**: **pass**"
+"assert (issame(select_words(""Uncle sam"", 3) , {""Uncle""}));",fail,"to analyze the assertion, let's go through the `select_words` function step by step with the given input.
+
+input: `s = ""uncle sam"", n = 3`
+
+1. initialize variables:
+   - `vowels = ""aeiouaeiou""`
+   - `current = """"`
+   - `out = {}`
+   - `numc = 0`
+   - add a space at the end of the input string: `s = ""uncle sam ""`
+
+2. iterate through the characters of the input string `s`:
+   - for `i = 0` to `8` (length of ""uncle sam""):
+     - if `s[i] == ' '` (space):
+       - check if `numc == n`, if true, add `current` to `out`
+       - reset `current` and `numc`
+     - else (not a space):
+       - append `s[i]` to `current`
+       - check if `s[i]` is a consonant (not in `vowels`), if true, increment `numc`
+
+3. return `out`
+
+now let's go through the iteration:
+
+- i = 0, s[i] = 'u', current = ""u"", numc = 1
+- i = 1, s[i] = 'n', current = ""un"", numc = 2
+- i = 2, s[i] = 'c', current = ""unc"", numc = 3
+- i = 3, s[i] = 'l', current = ""uncl"", numc = 4
+- i = 4, s[i] = 'e', current = ""uncle"", numc = 4
+- i = 5, s[i] = ' ', current = """", numc = 0 (since numc != n, ""uncle"" is not added to out)
+- i = 6, s[i] = 's', current = ""s"", numc = 1
+- i = 7, s[i] = 'a', current = ""sa"", numc = 1
+- i = 8, s[i] = 'm', current = ""sam"", numc = 2
+- i = 9, s[i] = ' ', current = """", numc = 0 (since numc != n, ""sam"" is not added to out)
+
+the function returns an empty vector `out = {}`.
+
+the assertion statement is:
+```
+assert (issame(select_words(""uncle sam"", 3), {""uncle""}));
+```
+
+since `select_words(""uncle sam"", 3)` returns `{}`, the assertion will fail.
+
+### final result
+                - **assertion result**: **fail**"
+"assert (issame(select_words("""", 4) , {}));",pass,"to analyze the assertion, let's go through the provided c/c++ code and understand the logic of the `select_words` function.
+
+the function takes a string `s` and a natural number `n` as input. it initializes an empty string `current`, an empty vector `out`, and an integer `numc` to keep track of the number of consonants in the current word. it then iterates through the characters of the input string `s` (with an additional space added at the end).
+
+for each character in the string, if it encounters a space, it checks if the number of consonants in the current word is equal to `n`. if so, it adds the current word to the output vector. then, it resets the current word and the consonant count.
+
+if the character is not a space, it adds the character to the current word and checks if it is a consonant (by verifying that it is not a vowel). if it is a consonant, it increments the consonant count.
+
+finally, the function returns the output vector containing the words with exactly `n` consonants.
+
+now, let's analyze the given assertion:
+
+```
+assert (issame(select_words("""", 4) , {}));
+```
+
+the assertion checks if the result of calling `select_words` with an empty string and `n=4` is an empty vector. since the input string is empty, the function should return an empty vector according to the problem statement.
+
+going through the code, we can see that when the input string is empty, the loop will not execute, and the function will return the empty vector `out`. therefore, the assertion should pass.
+
+### final result
+- **assertion result**: **pass**"
+"assert (issame(select_words(""a b c d e f"", 1) , {""b"", ""c"", ""d"", ""f""}));",pass,"to analyze the assertion, let's go through the given c/c++ code step by step and apply the input from the assertion statement.
+
+1. the function `select_words` takes a string `s` and a natural number `n` as input. in the assertion, `s = ""a b c d e f""` and `n = 1`.
+2. the function initializes an empty vector `out` to store the output, an empty string `current` to store the current word being processed, and a variable `numc` to keep track of the number of consonants in the current word.
+3. the function iterates through each character in the input string `s`. if the character is a space, it checks if the number of consonants in the current word is equal to `n`. if it is, the current word is added to the output vector `out`. then, the current word and the number of consonants are reset.
+4. if the character is not a space, the character is added to the current word. if the character is an alphabet (uppercase or lowercase), the function checks if it is a consonant by searching for it in the `vowels` string. if the character is not found in the `vowels` string, it is a consonant, and the `numc` variable is incremented.
+5. after iterating through all the characters in the input string, the function returns the output vector `out`.
+
+now, let's apply the input from the assertion statement to the function:
+
+- the input string is ""a b c d e f"" and the number of consonants `n` is 1.
+- the function will iterate through the characters in the input string and identify the words with exactly one consonant.
+- the words with exactly one consonant are ""b"", ""c"", ""d"", and ""f"".
+- the function will return the vector `{""b"", ""c"", ""d"", ""f""}`.
+
+the assertion statement compares the output of the function with the expected output `{""b"", ""c"", ""d"", ""f""}`:
+
+```
+assert (issame(select_words(""a b c d e f"", 1) , {""b"", ""c"", ""d"", ""f""}));
+```
+
+since the output of the function matches the expected output, the assertion will pass.
+
+### final result
+- **assertion result**: **pass**"

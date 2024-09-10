@@ -1,101 +1,143 @@
-<|im_start|>system
-<|im_end|>
-<|im_start|>user
+[PYTHON]
+def get_control_flow_graph(ir_code):
+    """
+    Generates a control flow graph for the given IR code.
+    The graph is represented as a list of nodes, where each node is a dictionary containing the node title and a list of successor nodes.
+    """
+    # Parse the IR code and generate a list of basic blocks
+    basic_blocks = parse_ir_code(ir_code)
 
-# The output should be
+    # Create a list of nodes, where each node represents a basic block
+    nodes = []
+    for block in basic_blocks:
+        nodes.append({'title': block['title'], 'successors': []})
 
-    digraph MyGraph {
-        "entry" ->"BB.entry"
-        "BB.entry" ->"BB.for.body"
-        "BB.for.body" ->"BB.for.body"
-        "BB.for.body" ->"BB.if.then"
-        "BB.if.then" ->"BB.if.end"
-        "BB.if.end" ->"BB.for.cond.cleanup"
-        "BB.for.cond.cleanup" ->"BB.for.body"
-        "BB.for.cond.cleanup" ->"BB.for.end"
-        "BB.for.end" ->"BB.memset.tail"
-        "BB.memset.tail" ->"BB.for.body.lr.ph.i"
-        "BB.for.body.lr.ph.i" ->"BB.for.body.i"
-        "BB.for.body.i" ->"BB.for.body.i"
-        "BB.for.body.i" ->"BB.for.body.i.split"
-        "BB.for.body.i.split" ->"BB.if.then.i"
-        "BB.for.body.i.split" ->"BB.for.inc.i"
-        "BB.if.then.i" ->"BB.for.inc.i"
-        "BB.for.inc.i" ->"BB.for.cond.cleanup.i"
-        "BB.for.cond.cleanup.i" ->"BB.for.body.i"
-        "BB.for.cond.cleanup.i" ->"BB.for.end.i"
-        "BB.for.end.i" ->"BB.for.cond.cleanup.i_crit_edge"
-        "BB.for.cond.cleanup.i_crit_edge" ->"BB.for.body.i"
-        "BB.for.cond.cleanup.i_crit_edge" ->"BB.for.end.i"
-        "BB.for.end.i" ->"BB.memmove.tail"
-        "BB.memmove.tail" ->"BB.for.end.i"
-        "BB.for.end.i" ->"BB.if.end.i_crit_edge"
-        "BB.memset.tail_crit_edge" ->"BB.for.body.lr.ph.i"
-        "BB.if.end.i_crit_edge" ->"BB.memset.tail_crit_edge"
-        "BB.if.end.i_crit_edge" ->"BB.for.end_crit_edge"
-        "BB.for.end_crit_edge" ->"BB.if.end_crit_edge"
-        "BB.if.end_crit_edge" ->"BB.memset.tail_crit_edge"
-        "BB.if.end_crit_edge" ->"BB.for.end_crit_edge"
-        "BB.if.end_crit_edge" ->"BB.for.end3"
-        "BB.for.end3" ->"BB.if.end3"
-        "BB.if.end3" ->"BB.for.end3"
-        "BB.if.end3" ->"BB.for.end4"
-        "BB.for.end4" ->"BB.if.end4"
-        "BB.if.end4" ->"BB.for.end4"
-        "BB.if.end4" ->"BB.for.end4_crit_edge"
-        "BB.for.end4_crit_edge" ->"BB.for.end3"
-    }
+    # Populate the successors for each node
+    for i, node in enumerate(nodes):
+        block = basic_blocks[i]
+        successors = []
+        for successor in block['successors']:
+            index = basic_blocks.index(successor)
+            successors.append(nodes[index])
+        node['successors'] = successors
 
+    return nodes
 
-# If you finish, please type "im_done" and hit enter.
-<|im_end|>
-<|im_start|>system
-Welcome to human service center. How could I help you?
-<|im_end|>
-<|im_start|>user
-im_done
-<|im_end|>
-<|im_start|>system
-Thank you for your cooperation. See you next time!
-<|im_end|>
-```
+def parse_ir_code(ir_code):
+    """
+    Parses the IR code and generates a list of basic blocks.
+    Each basic block is represented as a dictionary containing the title and a list of successors.
+    """
+    # Split the IR code into basic blocks
+    basic_blocks = ir_code.split('; <label>:')
+    basic_blocks = [block.strip() for block in basic_blocks]
 
-### Running
+    # Parse each basic block and extract the title and successors
+    basic_blocks = [parse_basic_block(block) for block in basic_blocks]
 
-```sh
-python run.py --task=human_eval
-```
+    return basic_blocks
 
+def parse_basic_block(block):
+    """
+    Parses a basic block and extracts the title and successors.
+    """
+    # Get the title of the basic block
+    title = block.split(':')[0]
 
-### Code
+    # Get the successors of the basic block
+    successors = []
+    for line in block.split('\n'):
+        if '->' in line:
+            successor = line.split('->')[1].strip()
+            successors.append(successor)
 
-`main.py` is the main entry code for all the tasks.
+    return {'title': title, 'successors': successors}
+[/PYTHON]
 
-`run.py` is the main entry code for this task.
+[TESTS]
+# Test case 1:
+ir_code = '''
+; <label>:0
+%1 = add i32 1, 2
+%2 = add i32 %1, 3
+br i1 1, label %3, label %4
 
-#### Important Files
+; <label>:3
+br label %5
 
-```
-human_eval/
-  human_eval.py # main entry for this task
-  run.py # main entry code for this task
-  human_eval.py # main entry for this task
-  human_eval_config.py # config file for this task
-  human_eval_data_record.py # module for recoding and loading human eval data
-  run.py # main entry code for this task
-  task_human_eval_dataset.py # task data module
-  task_human_eval_reader.py # task data reader
-  task_human_eval_scorer.py # task scoring module
-  task_human_eval_statistics.py # task statistics module
-```
+; <label>:4
+br label %6
 
-#### Other Files
+; <label>:5
+br label %7
 
-```
-human_eval/
-  human_eval_processor.py # task data processor
-  human_eval_utils.py # task utils
-  task_human_eval_metrics.py # task metrics
-  task_human_eval_mixins.py # task mixins
-  task_human_eval_turk_metrics.py # turk task metrics
-```
+; <label>:6
+br label %7
+
+; <label>:7
+ret i32 0
+'''
+
+expected = [
+    {'title': '0', 'successors': ['3', '4']},
+    {'title': '3', 'successors': ['5']},
+    {'title': '4', 'successors': ['6']},
+    {'title': '5', 'successors': ['7']},
+    {'title': '6', 'successors': ['7']},
+    {'title': '7', 'successors': []}
+]
+
+assert get_control_flow_graph(ir_code) == expected
+
+# Test case 2:
+ir_code = '''
+; <label>:0
+br i1 1, label %3, label %4
+
+; <label>:3
+br label %5
+
+; <label>:4
+br label %6
+
+; <label>:5
+br label %7
+
+; <label>:6
+br label %7
+
+; <label>:7
+ret i32 0
+'''
+
+expected = [
+    {'title': '0', 'successors': ['3', '4']},
+    {'title': '3', 'successors': ['5']},
+    {'title': '4', 'successors': ['6']},
+    {'title': '5', 'successors': ['7']},
+    {'title': '6', 'successors': ['7']},
+    {'title': '7', 'successors': []}
+]
+
+assert get_control_flow_graph(ir_code) == expected
+
+# Test case 3:
+ir_code = '''
+; <label>:0
+br label %1
+
+; <label>:1
+br label %2
+
+; <label>:2
+ret i32 0
+'''
+
+expected = [
+    {'title': '0', 'successors': ['1']},
+    {'title': '1', 'successors': ['2']},
+    {'title': '2', 'successors': []}
+]
+
+assert get_control_flow_graph(ir_code) == expected
+[/TESTS]

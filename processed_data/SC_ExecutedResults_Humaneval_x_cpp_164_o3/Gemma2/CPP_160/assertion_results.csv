@@ -1,0 +1,114 @@
+assert_statement,final_result,comment
+"assert (do_algebra({""**"", ""*"", ""+""}, {2, 3, 4, 5}) == 37);",pass,"let's break down the code and analyze the assertion.
+
+**code analysis**
+
+the `do_algebra` function aims to evaluate a mathematical expression given in a specific format:
+
+* **`operator` vector:** contains strings representing mathematical operators (+, -, *, //, **).
+* **`operand` vector:** contains integers that are the operands for the operations.
+
+the function uses a somewhat unconventional approach to handle the order of operations:
+
+1. **exponentiation:** it first identifies exponentiation (**) operations and performs them directly on the operands.
+2. **multiplication and floor division:**  then, it handles multiplication (*) and floor division (//) in the order they appear.
+3. **addition and subtraction:** finally, it performs addition (+) and subtraction (-) operations.
+
+the `posto` vector seems intended to track the positions of operands after operations are performed, but its implementation is a bit convoluted and could be simplified.
+
+**assertion analysis**
+
+the assertion `assert (do_algebra({""**"", ""*"", ""+""}, {2, 3, 4, 5}) == 37);`  is testing the following expression:
+
+2 ** 3 * 4 + 5
+
+let's evaluate it step-by-step:
+
+1. **2 ** 3 = 8**
+2. **8 * 4 = 32**
+3. **32 + 5 = 37**
+
+**conclusion**
+
+the code correctly evaluates the expression, and the assertion should pass.
+
+### final result
+ - **assertion result**: **pass** 
+
+
+let me know if you'd like to analyze any other assertions or have more c/c++ code snippets to review!"
+"assert (do_algebra({""+"", ""*"", ""-""}, {2, 3, 4, 5}) == 9);",pass,"let's break down the code and analyze the assertion.
+
+**code analysis**
+
+the `do_algebra` function aims to evaluate a mathematical expression given in a specific format:
+
+* **`operator` vector:** contains strings representing mathematical operations (+, -, *, //, **).
+* **`operand` vector:** contains integers that are the operands for the operations.
+
+the function uses a somewhat unconventional approach to handle the order of operations. it iterates through the `operator` vector, performing exponentiation first, then multiplication and floor division, and finally addition and subtraction.
+
+here's a step-by-step explanation:
+
+1. **initialization:**
+   - `num` and `posto` vectors are created. `num` seems intended to store intermediate results but is not used. `posto` is used to track the positions of operands after operations are performed.
+
+2. **exponentiation:**
+   - the code iterates through the `operator` vector. if it encounters ""**"", it performs exponentiation on the corresponding operands in the `operand` vector using the `pow` function. the `posto` vector is updated to reflect the combined operand positions.
+
+3. **multiplication and floor division:**
+   - similar to exponentiation, the code handles ""*"" and ""//"" operations, updating the `operand` vector and `posto` vector accordingly.
+
+4. **addition and subtraction:**
+   - finally, the code handles ""+"" and ""-"" operations, again updating the `operand` vector and `posto` vector.
+
+5. **return:**
+   - the function returns the first element of the `operand` vector, which should hold the final result of the expression.
+
+**assertion analysis**
+
+the assertion `assert (do_algebra({""+"", ""*"", ""-""}, {2, 3, 4, 5}) == 9);` tests the function with the following expression:
+
+2 + 3 * 4 - 5
+
+let's evaluate this expression manually:
+
+2 + 3 * 4 - 5 = 2 + 12 - 5 = 9
+
+**conclusion**
+
+the `do_algebra` function correctly evaluates the expression and returns 9.
+
+### final result
+- **assertion result**: **pass**"
+"assert (do_algebra({""//"", ""*""}, {7, 3, 4}) == 8);",pass,"let's break down the code and analyze the assertion.
+
+**code analysis**
+
+the `do_algebra` function aims to evaluate a mathematical expression built from two input vectors:
+
+* `operator`: contains strings representing mathematical operators (+, -, *, //, **).
+* `operand`: contains integers that are the operands for the operations.
+
+the function uses a somewhat unconventional approach to handle the order of operations. it iterates through the operators, performing exponentiation first, then multiplication and floor division, and finally addition and subtraction. it uses a `posto` vector to keep track of the positions of operands after operations are performed.
+
+**assertion analysis**
+
+the assertion `assert (do_algebra({""//"", ""*""}, {7, 3, 4}) == 8);` tests the function with the following expression:
+
+7 // 3 * 4
+
+**step-by-step evaluation**
+
+1. **floor division:** 7 // 3 = 2
+2. **multiplication:** 2 * 4 = 8
+
+**conclusion**
+
+the `do_algebra` function correctly evaluates the expression to 8, matching the assertion.
+
+### final result
+                - **assertion result**: **pass** 
+
+
+let me know if you'd like to analyze any other assertions or have more c/c++ code snippets to review!"

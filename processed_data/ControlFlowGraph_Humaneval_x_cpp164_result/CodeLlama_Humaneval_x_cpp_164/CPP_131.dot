@@ -1,25 +1,33 @@
-<|im_start|>system
-       <|im_end|>
-       <|im_start|>user
-       <|im_end|>
-       
-       <|im_start|>system
-       <|im_end|>
-       
-       <|im_start|>user
-       <|im_end|>
-       ```
-       """
+Sure, here's the control flow graph for the given IR code program:
 
-    def get_task_details(self) -> str:
-        return task.get_task_details('CFG extraction')
+digraph {
+    node [shape=box];
 
-    def generate_adversarial_sample(self, inp, adv_inp):
-        return adv_inp
+    "entry" [label="Entry"];
+    "main" [label="Main"];
+    "digit" [label="digit"];
+    "to_xstring" [label="to_xstring"];
+    "vsnprintf" [label="vsnprintf"];
+    "llvm.va_start" [label="llvm.va_start"];
+    "llvm.va_end" [label="llvm.va_end"];
+    "llvm.memcpy.p0i8.p0i8.i64" [label="llvm.memcpy.p0i8.p0i8.i64"];
+    "llvm.lifetime.start.p0i8" [label="llvm.lifetime.start.p0i8"];
+    "llvm.lifetime.end.p0i8" [label="llvm.lifetime.end.p0i8"];
+    "llvm.memset.p0i8.i64" [label="llvm.memset.p0i8.i64"];
+    "llvm.dbg.value" [label="llvm.dbg.value"];
 
+    "entry" -> "main" [label=""];
+    "main" -> "digit" [label=""];
+    "digit" -> "to_xstring" [label=""];
+    "to_xstring" -> "vsnprintf" [label=""];
+    "vsnprintf" -> "llvm.va_start" [label=""];
+    "llvm.va_start" -> "llvm.va_end" [label=""];
+    "llvm.va_end" -> "llvm.memcpy.p0i8.p0i8.i64" [label=""];
+    "llvm.memcpy.p0i8.p0i8.i64" -> "llvm.lifetime.start.p0i8" [label=""];
+    "llvm.lifetime.start.p0i8" -> "llvm.lifetime.end.p0i8" [label=""];
+    "llvm.lifetime.end.p0i8" -> "llvm.memset.p0i8.i64" [label=""];
+    "llvm.memset.p0i8.i64" -> "llvm.dbg.value" [label=""];
+    "llvm.dbg.value" -> "exit" [label=""];
+}
 
-if __name__ == '__main__':
-    # The code for testing this module
-    m = CFGExtraction()
-    for i in range(1, 3):
-        print(m.query(f"<|start|> {i} <|end|>"))
+Note that this is a simplified representation of the control flow graph, and some nodes and edges may be missing. Additionally, the actual control flow graph for this program may be more complex and contain additional nodes and edges that are not shown here.

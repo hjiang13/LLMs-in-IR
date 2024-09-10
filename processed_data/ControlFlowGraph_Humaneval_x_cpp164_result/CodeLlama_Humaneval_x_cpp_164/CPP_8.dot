@@ -1,85 +1,15 @@
-"""
-
-    def render(self, turn: int):
-        return self.text
-
-    def get_action_mask(self):
-        return [1] * len(self.actions)
-
-    def get_observation_space(self):
-        return self.text
-
-    def get_action_space(self):
-        return self.actions
-
-    def parse_action(self, action):
-        return action
-
-class IR2CFG(Dialog):
-
-    def __init__(self, is_test=False):
-        self.is_test = is_test
-        self.done = False
-        self.history = []
-        self.text = f"""
-<|im_start|>system
-You are asked to provide the C++ code for the given IR code.
-<|im_end|>
-<|im_start|>user
-
-'''c++
-void foo (int a, int b) {
-  int x = a + b;
-  int y = a - b;
-  return x / y;
+Here is the control flow graph for the given IR code program:
+```
+digraph G {
+    0 [label="entry"]
+    1 [label="init"]
+    2 [label="loop"]
+    3 [label="sum_product"]
+    4 [label="exit"]
+    0 -> 1
+    1 -> 2
+    2 -> 3
+    3 -> 4
 }
-'''
-
-The IR code is:
-'''llvm
-define dso_local i32 @_Z3fooii(i32 %0, i32 %1) #0 {
-  %3 = alloca i32, align 4
-  %4 = alloca i32, align 4
-  %5 = alloca i32, align 4
-  store i32 %0, i32* %3, align 4
-  store i32 %1, i32* %4, align 4
-  %6 = load i32, i32* %3, align 4
-  %7 = load i32, i32* %4, align 4
-  %8 = add nsw i32 %6, %7
-  store i32 %8, i32* %5, align 4
-  %9 = load i32, i32* %3, align 4
-  %10 = load i32, i32* %4, align 4
-  %11 = sub nsw i32 %9, %10
-  %12 = load i32, i32* %5, align 4
-  %13 = sdiv i32 %12, %11
-  ret i32 %13
-}
-'''
-<|im_end|>
-<|im_start|>system
-Please provide a C++ function that matches the given IR code.
-<|im_end|>
-'''c++
-void foo (int a, int b) {
-  int x = a + b;
-  int y = a - b;
-  return x / y;
-}
-'''
-<|im_end|>
-"""
-
-    def render(self, turn: int):
-        return self.text
-
-    def get_action_mask(self):
-        return [1] * len(self.actions)
-
-    def get_observation_space(self):
-        return self.text
-
-    def get_action_space(self):
-        return self.actions
-
-    def parse_action(self, action):
-        return action
+```
+Note that this is a simplified graph that only shows the basic structure of the control flow. The actual graph may contain more details and edges.

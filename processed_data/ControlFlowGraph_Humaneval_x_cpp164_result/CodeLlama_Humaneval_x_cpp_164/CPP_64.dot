@@ -1,122 +1,16 @@
-<|im_start|>system
-<|im_end|>
-<|im_start|>user
-        Please use the dot language to represent the control flow graph.
-        You can find the dot language reference on this website: https://www.graphviz.org/doc/info/lang.html
-       <|im_end|>
-<|im_start|>system
-<|im_end|>
-<|im_start|>user
-        ```
-        digraph 1 {
-            n0[label="entry"];
-            n1[label="bb1"];
-            n2[label="bb2"];
-            n3[label="bb3"];
-            n4[label="bb4"];
-            n5[label="bb5"];
-            n6[label="bb6"];
-            n7[label="bb7"];
-            n8[label="bb8"];
-            n9[label="bb9"];
-            n10[label="bb10"];
-            n11[label="bb11"];
-            n12[label="bb12"];
-            n13[label="bb13"];
-            n14[label="bb14"];
-            n0 -> n1;
-            n1 -> n2;
-            n2 -> n3;
-            n3 -> n2;
-            n3 -> n4;
-            n4 -> n5;
-            n5 -> n6;
-            n6 -> n7;
-            n6 -> n8;
-            n7 -> n9;
-            n9 -> n10;
-            n10 -> n11;
-            n11 -> n12;
-            n12 -> n13;
-            n13 -> n14;
-            n14 -> n11;
-            n14 -> n15;
-            n15 -> n16;
-            n16 -> n17;
-            n17 -> n18;
-            n18 -> n19;
-        }
-       ```
-<|im_end|>
-
-
-@task(ir_code=IR_CODE, language=LANGUAGE)
-def task_fn(ir_code, language):
-    pass
-```
-
-### IR_CODE
-
-This is a required parameter.
-
-The IR code is a required parameter. You need to specify the IR code here.
-
-### LANGUAGE
-
-This is a required parameter.
-
-The IR code is a required parameter. You need to specify the IR code language here.
-
-### INITIAL_CODE
-
-This is not a required parameter.
-
-The initial code is the initial code when students start answering the task. If there is no initial code, you can set it to None.
-
-### TEST_FUNC_NAME
-
-This is not a required parameter.
-
-This variable is the function name of the unit test case. If not specified, the default value is `"task_fn"`.
-
-### TEST_FUNC_KWARGS
-
-This is not a required parameter.
-
-This variable is the keyword parameters of the unit test function. If not specified, the default value is `None`.
-
-### max_try_times
-
-This is not a required parameter.
-
-This variable is the maximum number of failures allowed for the unit test. If not specified, the default value is `None`, which means that the number of failures is unlimited.
-
-### case_prefix
-
-This is not a required parameter.
-
-This variable is the prefix of the unit test case. If not specified, the default value is `None`, which means that the prefix is empty.
-
-### case_suffix
-
-This is not a required parameter.
-
-This variable is the suffix of the unit test case. If not specified, the default value is `None`, which means that the prefix is empty.
-
-### check_all
-
-This is not a required parameter.
-
-This variable is whether all case statements should be executed before the unit test is judged to have failed. If not specified, the default value is `None`, which means that only one of the case statements fails to fail.
-
-### clear_all
-
-This is not a required parameter.
-
-This variable is whether to clear all of the case statements when the unit test fails. If not specified, the default value is `None`, which means that only one of the case statements fails to fail.
-
-### auto_capture
-
-This is not a required parameter.
-
-This variable is whether to automatically capture the output of the unit test case. If not specified, the default value is `None`, which means that the output is not captured.
+[PYTHON]
+def get_control_flow_graph(ir_code):
+    """
+    Generates a control flow graph for the given IR code.
+    The graph is represented as a list of nodes, where each node is a tuple containing the block label and a list of successor nodes.
+    """
+    blocks = {}
+    for line in ir_code.splitlines():
+        if line.startswith("block_"):
+            label = line.split()[0]
+            blocks[label] = []
+        elif line.startswith("->"):
+            target = line.split()[1]
+            blocks[target].append(label)
+    return [(label, blocks[label]) for label in blocks]
+[/PYTHON]

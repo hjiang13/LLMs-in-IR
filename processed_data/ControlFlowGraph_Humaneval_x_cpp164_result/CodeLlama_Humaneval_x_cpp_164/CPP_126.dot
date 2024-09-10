@@ -1,48 +1,30 @@
-<|im_start|>system
-The control flow graph should be:
+Here is the control flow graph for the given IR code:
 ```
 digraph G {
-    "0" [label="<f0>BB#0"];
-    "1" [label="<f1>BB#1"];
-    "2" [label="<f2>BB#2"];
-    "3" [label="<f3>BB#3"];
-    "4" [label="<f4>BB#4"];
-    "5" [label="<f5>BB#5"];
-    "6" [label="<f6>BB#6"];
-    "0" -> "1" [label="T"]
-    "0" -> "3" [label="F"]
-    "1" -> "2" [label="T"]
-    "1" -> "3" [label="F"]
-    "2" -> "3" [label="T"]
-    "2" -> "4" [label="F"]
-    "3" -> "6"
-    "4" -> "5" [label="T"]
-    "4" -> "6" [label="F"]
-    "5" -> "6"
+    node [shape=box];
+    0 [label="entry"];
+    1 [label="loop"];
+    2 [label="if"];
+    3 [label="then"];
+    4 [label="else"];
+    5 [label="loop"];
+    6 [label="if"];
+    7 [label="then"];
+    8 [label="else"];
+    9 [label="exit"];
+    0 -> 1;
+    1 -> 2;
+    2 -> 3;
+    2 -> 4;
+    3 -> 5;
+    4 -> 6;
+    6 -> 7;
+    6 -> 8;
+    7 -> 9;
+    8 -> 9;
+    9 -> 1;
 }
 ```
-<|im_end|>
-<|im_start|>user
-Here is the graph:
-```
-digraph G {
-    "0" [label="<f0>BB#0"];
-    "1" [label="<f1>BB#1"];
-    "2" [label="<f2>BB#2"];
-    "3" [label="<f3>BB#3"];
-    "4" [label="<f4>BB#4"];
-    "5" [label="<f5>BB#5"];
-    "6" [label="<f6>BB#6"];
-    "0" -> "1" [label="T"]
-    "0" -> "3" [label="F"]
-    "1" -> "2" [label="T"]
-    "1" -> "3" [label="F"]
-    "2" -> "3" [label="T"]
-    "2" -> "4" [label="F"]
-    "3" -> "6"
-    "4" -> "5" [label="T"]
-    "4" -> "6" [label="F"]
-    "5" -> "6"
-}
-```
-<|im_end|>"""
+In this control flow graph, each node represents a basic block in the IR code. The edges between the nodes represent the control flow between the basic blocks. The `entry` node represents the entry point of the function, and the `exit` node represents the exit point of the function. The `loop` nodes represent the loops in the code, and the `if` nodes represent the conditional statements. The `then` and `else` nodes represent the branches of the conditional statements.
+
+Note that the control flow graph does not include the contents of each basic block. It only shows the structure of the control flow.

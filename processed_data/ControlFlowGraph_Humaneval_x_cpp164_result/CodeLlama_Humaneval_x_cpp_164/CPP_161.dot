@@ -1,61 +1,33 @@
-<|im_start|>user
+[PYTHON]
+def get_control_flow_graph(ir_code):
+    """
+    Generates a control flow graph for the given IR code.
+    The graph is represented as a list of edges, where each edge is a tuple of the form (from_label, to_label).
+    """
+    # Parse the IR code to extract the basic blocks
+    basic_blocks = []
+    current_block = []
+    for line in ir_code.splitlines():
+        if line.startswith(";"):
+            continue
+        if not line.strip():
+            if current_block:
+                basic_blocks.append(current_block)
+                current_block = []
+            continue
+        current_block.append(line)
+    if current_block:
+        basic_blocks.append(current_block)
 
-        ```
-        digraph cfg {
-            node1 [label="entry"]
-            node2 [label="header"]
-            node3 [label="loop"]
-            node4 [label="exit"]
-            node5 [label="entry"]
-            node6 [label="header"]
-            node7 [label="loop"]
-            node8 [label="exit"]
-            node9 [label="entry"]
-            node10 [label="loop"]
-            node11 [label="exit"]
-            node12 [label="entry"]
-            node13 [label="loop"]
-            node14 [label="exit"]
-            node15 [label="entry"]
-            node16 [label="loop"]
-            node17 [label="exit"]
-            node1 -> node2 -> node3 -> node4 -> node5 -> node6 -> node7 -> node8 -> node9 -> node10 -> node11 -> node12 -> node13 -> node14 -> node15 -> node16 -> node17
-        }
-        ```
-        <|im_end|>
-
-        <|im_start|>system
-
-        ```
-        digraph cfg {
-            node1 [label="entry"]
-            node2 [label="header"]
-            node3 [label="loop"]
-            node4 [label="exit"]
-            node5 [label="entry"]
-            node6 [label="header"]
-            node7 [label="loop"]
-            node8 [label="exit"]
-            node9 [label="entry"]
-            node10 [label="loop"]
-            node11 [label="exit"]
-            node12 [label="entry"]
-            node13 [label="loop"]
-            node14 [label="exit"]
-            node15 [label="entry"]
-            node16 [label="loop"]
-            node17 [label="exit"]
-            node1 -> node2 -> node3 -> node4 -> node5 -> node6 -> node7 -> node8 -> node9 -> node10 -> node11 -> node12 -> node13 -> node14 -> node15 -> node16 -> node17
-        }
-        ```
-        <|im_end|>
-        '''
-        cfg = CFG()
-        cfg.from_text(input_text)
-        #cfg.show()
-        cfg.to_graphviz()
-        print()
-        cfg.to_graphviz('digraph cfg {\n', '\n}\n')
-
-if __name__ == '__main__':
-    unittest.main()
+    # Construct the control flow graph
+    edges = []
+    for block in basic_blocks:
+        for line in block:
+            if line.startswith("br label"):
+                label = line.split()[2]
+                edges.append(("label", label))
+            elif line.startswith("br i1"):
+                true_label, false_label = line.split()[3:5]
+                edges.append(("i1", true_label, false_label))
+    return edges
+[/PYTHON]

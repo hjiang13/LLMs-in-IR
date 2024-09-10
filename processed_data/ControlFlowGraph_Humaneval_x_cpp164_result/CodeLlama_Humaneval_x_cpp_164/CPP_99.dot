@@ -1,115 +1,16 @@
-<|im_start|>system
-Please check the IR code input and then you return the result.
-<|im_end|>
-<|im_start|>user
+Sure, here's the control flow graph for the given IR code program:
 
-```
 digraph G {
-  "entry" -> "entry_end"
-  "entry_end" -> "for.cond"
-  "for.cond" -> "for.cond.end"
-  "for.cond.end" -> "for.inc"
-  "for.cond.end" -> "for.end"
-  "for.inc" -> "for.inc.end"
-  "for.inc.end" -> "for.cond"
-  "for.inc.end" -> "for.end"
-  "for.end" -> "for.end.end"
-  "for.end.end" -> "for.cond1"
-  "for.cond1" -> "for.cond1.end"
-  "for.cond1.end" -> "for.inc2"
-  "for.cond1.end" -> "for.end3"
-  "for.inc2" -> "for.inc2.end"
-  "for.inc2.end" -> "for.cond1"
-  "for.inc2.end" -> "for.end3"
-  "for.end3" -> "for.end3.end"
-  "for.end3.end" -> "for.cond4"
-  "for.cond4" -> "for.cond4.end"
-  "for.cond4.end" -> "for.inc5"
-  "for.cond4.end" -> "for.end6"
-  "for.inc5" -> "for.inc5.end"
-  "for.inc5.end" -> "for.cond4"
-  "for.inc5.end" -> "for.end6"
-  "for.end6" -> "for.end6.end"
+    node [shape=box];
+    0 [label="entry"]
+    1 [label="strtod"]
+    2 [label="llvm.round.f64"]
+    3 [label="fptosi"]
+    4 [label="return"]
+    0 -> 1 [label="strtod"]
+    1 -> 2 [label="llvm.round.f64"]
+    2 -> 3 [label="fptosi"]
+    3 -> 4 [label="return"]
 }
-```
 
-<|im_end|>
-<|im_start|>system
-Congratulation! You have solved the problem!
-<|im_end|>
-""",
-    )
-    # return output_str
-
-    return output_str
-
-
-def generate_conversation(model):
-    # TODO: Handle conversation with multiple generations
-    # TODO: Add logic to detect eos and stop generation
-    # TODO: Add prompt that's different from what's in the test_prompts.jsonl file
-
-    # test_prompts = json.loads(open("test_prompts.jsonl", "r").read())
-    # prompts_list = [prompt.split("<|im_start|>")[1:] for prompt in test_prompts]
-    # print(prompts_list)
-    # prompt = prompts_list[1]
-    # print(prompt)
-
-    # prompt = [
-    #     "system: Hello.",
-    #     "user: Hello, I'm looking to use the API to calculate a payment schedule. How do I go about doing that?",
-    #     "system: You can use the following API to achieve your goal. Here is a link to the documentation: https://developer.zestmoney.com/#get-payment-schedule",
-    #     "user: Thank you!",
-    # ]
-
-    prompt = [
-        "system: Hello, I'm a virtual agent, how can I help you?",
-        "user: Hi, I'm looking to use the API to calculate a payment schedule. How do I go about doing that?",
-        "system: You can use the following API to achieve your goal. Here is a link to the documentation: https://developer.zestmoney.com/#get-payment-schedule",
-        "user: Thank you!",
-    ]
-
-    prompt_str = "\n".join(prompt) + "\n"
-    # TODO: Handle conversation with multiple generations
-    # TODO: Add logic to detect eos and stop generation
-    # TODO: Add prompt that's different from what's in the test_prompts.jsonl file
-
-    # test_prompts = json.loads(open("test_prompts.jsonl", "r").read())
-    # prompts_list = [prompt.split("<|im_start|>")[1:] for prompt in test_prompts]
-    # print(prompts_list)
-    # prompt = prompts_list[1]
-    # print(prompt)
-
-    # prompt = [
-    #     "system: Hello.",
-    #     "user: Hello, I'm looking to use the API to calculate a payment schedule. How do I go about doing that?",
-    #     "system: You can use the following API to achieve your goal. Here is a link to the documentation: https://developer.zestmoney.com/#get-payment-schedule",
-    #     "user: Thank you!",
-    # ]
-
-    # prompt_str = "\n".join(prompt) + "\n"
-    # print(prompt_str)
-    input_ids = tokenizer.encode(
-        prompt_str, return_tensors="pt", add_special_tokens=False
-    )
-    generated_ids = model.generate(
-        input_ids=input_ids,
-        max_length=500,
-        temperature=1.2,
-        repetition_penalty=1.2,
-        top_k=50,
-        top_p=0.95,
-    )
-
-    generated_text = tokenizer.batch_decode(
-        generated_ids, skip_special_tokens=True
-    )[0]
-
-    output = prompt + generated_text.split("\n")
-
-    # return json.dumps({"generated_text": output})
-    return output
-
-
-if __name__ == "__main__":
-    app.run(debug=True, port=8080)
+Note that this is a simplified graph, and the actual graph for a more complex program would be larger and more detailed.

@@ -1,0 +1,302 @@
+assert_statement,final_result,comment
+"assert (issame(select_words(""Mary had a little lamb"", 4) , {""little""}   ));",pass,"let's break down the code and analyze the assertion.
+
+**code analysis**
+
+the `select_words` function aims to extract words from a string that contain a specific number of consonants. here's a step-by-step explanation:
+
+1. **initialization:**
+   - `vowels`: a string containing all vowels (both lowercase and uppercase).
+   - `current`: an empty string to store the current word being processed.
+   - `out`: an empty vector to store the words with the desired consonant count.
+   - `numc`: a counter to keep track of the number of consonants in the current word.
+
+2. **looping through the string:**
+   - the code iterates through each character of the input string `s`.
+   - a space is appended to the end of `s` to ensure the last word is processed correctly.
+
+3. **word boundary detection:**
+   - when a space is encountered, it indicates the end of a word.
+   - if `numc` (consonant count) equals the target consonant count `n`, the `current` word is added to the `out` vector.
+   - `current` is reset to an empty string, and `numc` is reset to 0 to start processing the next word.
+
+4. **consonant counting:**
+   - for each character:
+     - if the character is a letter (checked using ascii values), it's further checked if it's not a vowel.
+     - if it's a consonant, `numc` is incremented.
+
+5. **return:**
+   - the function returns the `out` vector containing the words with the specified consonant count.
+
+**assertion analysis**
+
+the assertion `assert (issame(select_words(""mary had a little lamb"", 4) , {""little""}   ))` checks if the `select_words` function correctly returns a vector containing only the word ""little"" when given the string ""mary had a little lamb"" and a consonant count of 4.
+
+**reasoning:**
+
+- the word ""little"" in the input string has four consonants ('l', 't', 'l', 'l').
+- the function should correctly identify this word and include it in the output vector.
+
+**pass/fail result**
+
+- **assertion result**: **pass** 
+
+
+let me know if you'd like to analyze any other assertions or have more c/c++ code snippets to review!"
+"assert (issame(select_words(""Mary had a little lamb"", 3) , {""Mary"", ""lamb""} ));",pass,"let's break down the code and analyze the assertion.
+
+**code analysis**
+
+the `select_words` function aims to extract words from a string that have a specific number of consonants. here's a step-by-step explanation:
+
+1. **initialization:**
+   - `vowels`: a string containing all vowels (both uppercase and lowercase).
+   - `current`: an empty string to store the current word being processed.
+   - `out`: an empty vector to store the words with the desired consonant count.
+   - `numc`: a counter to keep track of the number of consonants in the current word.
+
+2. **looping through the string:**
+   - the code iterates through each character of the input string `s`.
+   - it appends a space at the end of the string to ensure the last word is processed correctly.
+
+3. **word boundary detection:**
+   - when a space is encountered, it indicates the end of a word.
+   - if the consonant count (`numc`) matches the target consonant count (`n`), the current word is added to the `out` vector.
+   - `current` is reset to an empty string, and `numc` is reset to 0 to start processing the next word.
+
+4. **consonant counting:**
+   - for each character:
+     - if it's a letter (checked using ascii values), it's further checked if it's a consonant (not found in the `vowels` string).
+     - if it's a consonant, `numc` is incremented.
+
+5. **return:**
+   - the function returns the `out` vector containing the words with the specified consonant count.
+
+**assertion analysis**
+
+the assertion `assert (issame(select_words(""mary had a little lamb"", 3) , {""mary"", ""lamb""} ));` checks if the output of `select_words` for the input ""mary had a little lamb"" and consonant count 3 matches the expected vector `{""mary"", ""lamb""}`.
+
+- the function correctly identifies ""mary"" and ""lamb"" as having 3 consonants each.
+
+**### final result**
+                - **assertion result**: **pass** 
+
+
+let me know if you have any other code snippets or assertions you'd like me to analyze!"
+"assert (issame(select_words(""simple white space"", 2) , {}     ));",pass,"let's break down the code and analyze the assertion.
+
+**code analysis**
+
+the `select_words` function aims to extract words from a string that have a specific number of consonants. here's a step-by-step explanation:
+
+1. **initialization:**
+   - `vowels`: a string containing all vowels (both uppercase and lowercase).
+   - `current`: an empty string to store the current word being processed.
+   - `out`: an empty vector to store the words with the desired consonant count.
+   - `numc`: a counter to keep track of the number of consonants in the current word.
+
+2. **looping through the string:**
+   - the code iterates through each character of the input string `s`.
+   - it appends a space to the end of the string to ensure the last word is processed correctly.
+
+3. **word boundary detection:**
+   - when a space is encountered, it indicates the end of a word.
+   - if the consonant count (`numc`) matches the target consonant count (`n`), the current word is added to the `out` vector.
+   - `current` is reset to an empty string, and `numc` is reset to 0 to start processing the next word.
+
+4. **consonant counting:**
+   - for each character:
+     - if it's a letter (checked using ascii values), it's further checked if it's a vowel using `find(vowels.begin(), vowels.end(), s[i])`.
+     - if it's not a vowel, it's considered a consonant, and `numc` is incremented.
+
+5. **return:**
+   - the function returns the `out` vector containing the words with the specified consonant count.
+
+**assertion analysis**
+
+the assertion `assert (issame(select_words(""simple white space"", 2) , {}     ))` checks if the `select_words` function returns an empty vector when called with the string ""simple white space"" and a target consonant count of 2.
+
+- **input:** ""simple white space"" and `n = 2`
+- **expected output:** an empty vector `{}` because no word in the input string has exactly two consonants.
+
+**result:**
+
+the `select_words` function correctly identifies that no words in the input string have exactly two consonants. therefore, it returns an empty vector.
+
+### final result
+                - **assertion result**: **pass**"
+"assert (issame(select_words(""Hello world"", 4) , {""world""}  ));",pass,"let's break down the code and analyze the assertion.
+
+**code analysis**
+
+the `select_words` function aims to extract words from a string that have a specific number of consonants. here's a step-by-step explanation:
+
+1. **initialization:**
+   - `vowels`: a string containing all vowels (both uppercase and lowercase).
+   - `current`: an empty string to store the current word being processed.
+   - `out`: an empty vector of strings to store the words with the desired consonant count.
+   - `numc`: an integer to keep track of the consonant count for the current word.
+
+2. **looping through the string:**
+   - the code iterates through each character of the input string `s`.
+   - a space is appended to the end of the string to ensure the last word is processed.
+
+3. **word boundary detection:**
+   - if a space is encountered (`s[i] == ' '`), it indicates the end of a word.
+   - the code checks if the consonant count (`numc`) for the current word matches the target consonant count (`n`). if they match, the current word (`current`) is added to the `out` vector.
+   - `current` is reset to an empty string, and `numc` is reset to 0 to start processing the next word.
+
+4. **consonant counting:**
+   - if the character is not a space:
+     - it's appended to the `current` word.
+     - the code checks if the character is a letter (uppercase or lowercase).
+     - if it's a letter and not a vowel (using `find` to check if it's present in the `vowels` string), the consonant count (`numc`) is incremented.
+
+5. **return:**
+   - the function returns the `out` vector containing the words with the specified consonant count.
+
+**assertion analysis**
+
+the assertion `assert(issame(select_words(""hello world"", 4), {""world""}));` checks if the `select_words` function correctly returns a vector containing only the word ""world"" when given the input string ""hello world"" and a target consonant count of 4.
+
+- **expected output:** the word ""world"" has 4 consonants. therefore, the `select_words` function should return a vector containing only ""world"".
+
+- **function behavior:** the code correctly identifies ""world"" as having 4 consonants and adds it to the output vector.
+
+**conclusion**
+
+the assertion will **pass**.
+
+### final result
+- **assertion result**: **pass**"
+"assert (issame(select_words(""Uncle sam"", 3) , {""Uncle""}));",pass,"let's break down the code and analyze the assertion.
+
+**code analysis**
+
+the `select_words` function aims to extract words from a string that have a specific number of consonants. here's a step-by-step explanation:
+
+1. **initialization:**
+   - `vowels`: a string containing all vowels (both lowercase and uppercase).
+   - `current`: an empty string to store the current word being processed.
+   - `out`: an empty vector to store the words with the desired consonant count.
+   - `numc`: a counter to keep track of the number of consonants in the current word.
+
+2. **looping through the string:**
+   - the code iterates through each character of the input string `s`.
+   - it appends a space to the end of the string (`s = s + ' '`) to ensure the last word is processed correctly.
+
+3. **word processing:**
+   - if a space is encountered:
+     - it checks if the consonant count (`numc`) matches the target consonant count (`n`). if they match, the current word (`current`) is added to the `out` vector.
+     - the `current` word is reset to an empty string, and the consonant counter (`numc`) is reset to 0.
+   - if the character is not a space:
+     - the character is appended to the `current` word.
+     - the code checks if the character is a letter (uppercase or lowercase) and if it's not a vowel. if both conditions are true, the consonant counter (`numc`) is incremented.
+
+4. **return:**
+   - the function returns the `out` vector containing the words with the specified consonant count.
+
+**assertion analysis**
+
+the assertion `assert (issame(select_words(""uncle sam"", 3) , {""uncle""}));` checks if the output of `select_words(""uncle sam"", 3)` is equal to the vector `{""uncle""}`.
+
+- **input:** the input string is ""uncle sam"" and the target consonant count is 3.
+- **expected output:** the assertion expects the function to return a vector containing only the word ""uncle"".
+
+let's see if the code produces the expected output:
+
+- ""uncle"" has 3 consonants ('n', 'c', 'l').
+- ""sam"" has 1 consonant ('s').
+
+therefore, the function should indeed return `{""uncle""}`.
+
+**### final result**
+- **assertion result**: **pass**"
+"assert (issame(select_words("""", 4) , {}));",pass,"let's break down the code and analyze the assertion.
+
+**code analysis**
+
+the `select_words` function aims to extract words from a string that have a specific number of consonants. here's a step-by-step explanation:
+
+1. **initialization:**
+   - `vowels`: a string containing all vowels (both uppercase and lowercase).
+   - `current`: an empty string to store the current word being processed.
+   - `out`: an empty vector to store the words with the desired consonant count.
+   - `numc`: a counter to keep track of the number of consonants in the current word.
+
+2. **looping through the string:**
+   - the code iterates through each character of the input string `s`.
+   - a space is appended to the end of the string (`s = s + ' '`) to ensure the last word is processed correctly.
+
+3. **word boundary detection:**
+   - if a space is encountered (`s[i] == ' '`), it indicates the end of a word.
+   - the code checks if the consonant count (`numc`) matches the target consonant count (`n`). if they match, the current word (`current`) is added to the `out` vector.
+   - `current` is reset to an empty string, and `numc` is reset to 0 to start processing the next word.
+
+4. **consonant counting:**
+   - for each character that is not a space:
+     - it checks if the character is a letter (uppercase or lowercase).
+     - if it's a letter and not a vowel (using `find` to check if it's present in the `vowels` string), the consonant counter `numc` is incremented.
+
+5. **return:**
+   - the function returns the `out` vector containing the words with the specified consonant count.
+
+**assertion analysis**
+
+the assertion `assert(issame(select_words("""", 4), {}))` checks if calling `select_words` with an empty string and a consonant count of 4 results in an empty vector.
+
+- **input:** `s = """"` (empty string), `n = 4`
+
+- **expected output:** an empty vector `{}`
+
+since the input string is empty, there are no words to process. therefore, the function should correctly return an empty vector.
+
+**conclusion**
+
+
+### final result
+                - **assertion result**: **pass**"
+"assert (issame(select_words(""a b c d e f"", 1) , {""b"", ""c"", ""d"", ""f""}));",pass,"let's break down the code and analyze the assertion.
+
+**code analysis**
+
+the `select_words` function aims to extract words from a string that have a specific number of consonants. here's a step-by-step explanation:
+
+1. **initialization:**
+   - `vowels`: a string containing all vowels (both lowercase and uppercase).
+   - `current`: an empty string to store the current word being processed.
+   - `out`: an empty vector to store the words with the desired consonant count.
+   - `numc`: a counter to keep track of the number of consonants in the current word.
+
+2. **looping through the string:**
+   - the code iterates through each character of the input string `s`.
+   - a space is appended to the end of the string to ensure the last word is processed correctly.
+
+3. **word boundary detection:**
+   - if a space is encountered, it indicates the end of a word.
+   - the code checks if `numc` (consonant count) matches the target consonant count `n`. if they match, the `current` word is added to the `out` vector.
+   - `current` is reset to an empty string, and `numc` is reset to 0 to start processing the next word.
+
+4. **consonant counting:**
+   - for each character:
+     - if the character is a letter (checked using ascii ranges), it's further checked if it's not a vowel.
+     - if it's a consonant, `numc` is incremented.
+
+5. **return:**
+   - the function returns the `out` vector containing the words with the desired consonant count.
+
+**assertion analysis**
+
+the assertion `assert (issame(select_words(""a b c d e f"", 1) , {""b"", ""c"", ""d"", ""f""}));`  is testing if the `select_words` function correctly identifies words with exactly one consonant in the input string ""a b c d e f"".
+
+- **expected output:** the assertion expects the function to return a vector containing the words ""b"", ""c"", ""d"", and ""f"".
+
+- **actual output:** the `select_words` function will indeed return the expected vector.
+
+**final result**
+
+- **assertion result**: **pass** 
+
+
+
+let me know if you have any other code snippets you'd like me to analyze!"
