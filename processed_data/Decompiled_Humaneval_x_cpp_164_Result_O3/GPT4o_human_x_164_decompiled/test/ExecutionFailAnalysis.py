@@ -3,7 +3,7 @@ import csv
 
 # Paths
 execution_failed_csv = 'execution_failed_summary.csv'  # Replace with your CSV file path
-base_directory = '/home/hjiang/LLMs-in-IR/Human_xBenchmarks_164'  # Replace with the path to the folder containing folders like CPP_134, CPP_78, etc.
+base_directory = '/home/anonymous/LLMs-in-IR/Human_xBenchmarks_164'  # Replace with the path to the folder containing folders like CPP_134, CPP_78, etc.
 
 # Read the failed execution data from CSV
 failed_files = {}

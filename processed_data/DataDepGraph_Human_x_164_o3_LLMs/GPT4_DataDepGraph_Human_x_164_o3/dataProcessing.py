@@ -3,7 +3,7 @@ import pandas as pd
 
 # Paths
 dot_folder = '.'  # Assuming the DOT files are in the current directory
-csv_file_path = '/home/hjiang/LLMs-in-IR/Data/DDG task/instruction_counts.csv'  # Replace with actual CSV file path
+csv_file_path = '/home/anonymous/LLMs-in-IR/Data/DDG task/instruction_counts.csv'  # Replace with actual CSV file path
 
 # Function to count "shape" in a DOT file
 def count_shapes_in_dot(file_path):

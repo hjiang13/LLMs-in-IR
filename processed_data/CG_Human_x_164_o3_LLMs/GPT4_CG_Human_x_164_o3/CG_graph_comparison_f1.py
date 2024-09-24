@@ -3,7 +3,7 @@ import networkx as nx
 import csv
 
 # Define directories containing the golden and testing DOT files
-golden_directory = "/home/hjiang/LLMs-in-IR/processed_data/Human_x_164_O3_CG"
+golden_directory = "/home/anonymous/LLMs-in-IR/processed_data/Human_x_164_O3_CG"
 testing_directory = "./"
 output_csv = "./comparison_results_with_f1.csv"
 

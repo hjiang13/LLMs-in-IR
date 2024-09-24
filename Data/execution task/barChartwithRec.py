@@ -9,7 +9,7 @@ csv_files = ['section_001.csv', 'section_010.csv', 'section_011.csv',
              'section_100.csv', 'section_101.csv', 'section_110.csv', 'section_111.csv']
 
 # Directory containing the CSV files
-directory = '/home/hjiang/LLMs-in-IR/Data/execution task/graph_properties_output'
+directory = '/home/anonymous/LLMs-in-IR/Data/execution task/graph_properties_output'
 
 # Dictionary to store density data
 density_data = {}

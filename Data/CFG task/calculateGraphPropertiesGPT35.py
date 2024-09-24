@@ -4,7 +4,7 @@ import os
 
 # 设置文件路径和结果CSV文件名
 csv_file = './CFG_completion_analysis_results_GPT35.csv'  # 结果CSV文件路径
-dot_file_base_path = '/home/hjiang/LLMs-in-IR/processed_data/Human_x_164_O3/organized dot/'  # DOT文件所在的目录
+dot_file_base_path = '/home/anonymous/LLMs-in-IR/processed_data/Human_x_164_O3/organized dot/'  # DOT文件所在的目录
 output_csv = 'summary_overall_completed_gpt35_summary.csv'  # 保存结果的CSV文件名
 
 # 读取GPT3.5结果文件

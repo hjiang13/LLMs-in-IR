@@ -37,7 +37,7 @@ sections = {
 }
 
 # Define the base path for the DOT files
-dot_file_base_path = '/home/hjiang/LLMs-in-IR/processed_data/Human_x_164_O3/organized dot/'
+dot_file_base_path = '/home/anonymous/LLMs-in-IR/processed_data/Human_x_164_O3/organized dot/'
 
 # Define a function to parse a DOT file and calculate graph properties
 def calculate_graph_properties(dot_file):

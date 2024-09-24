@@ -86,7 +86,7 @@ def calculate_graph_properties(graph):
 # Function to load and calculate properties for a list of CPP files
 def process_cpp_files(cpp_files, base_dir, output_file):
     results = []
-    base_dir = "/home/hjiang/LLMs-in-IR/processed_data/Human_x_164_O3_CG"
+    base_dir = "/home/anonymous/LLMs-in-IR/processed_data/Human_x_164_O3_CG"
     for cpp_file in cpp_files:
         cpp_number = cpp_file.split('.')[0]
         graph_path = os.path.join(base_dir, cpp_number, f"{cpp_number}_call_graph.dot")

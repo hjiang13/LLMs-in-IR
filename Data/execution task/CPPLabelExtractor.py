@@ -2,7 +2,7 @@ import os
 import pandas as pd
 
 # Paths
-cpp_folder = '/home/hjiang/LLMs-in-IR/Human_xBenchmarks_164/test'  # Replace with the path to your folder containing .cpp files
+cpp_folder = '/home/anonymous/LLMs-in-IR/Human_xBenchmarks_164/test'  # Replace with the path to your folder containing .cpp files
 gpt4o_summary = './GPT4o.summary.csv'  # Replace with the actual path to your GPT4o summary CSV
 gpt4_sc_summary = './GPT4_SC_summary.csv'  # Replace with the actual path to your GPT4_SC summary CSV
 

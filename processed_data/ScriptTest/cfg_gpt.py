@@ -68,10 +68,10 @@ def read_and_process_all_directories(root_dir, output_dir):
     
     return processed_files, failed_files, file_names, failed_file_names,token_lengths_list
 
-root_directory = "/Users/jianfengzhu/Desktop/LLMs-in-IR/processed_data/CFG"
+root_directory = "/Users/anonymous/Desktop/LLMs-in-IR/processed_data/CFG"
 #for test directory
-#root_directory = "/Users/jianfengzhu/Desktop/LLMs/LLMs_Evaluation_IR/LLMs-in-IR-1/processed_data/CFG_LLM/counting_sort2"
-output_directory = "/Users/jianfengzhu/Desktop/LLMs-in-IR/processed_data/CFG_GPT4o_result"
+#root_directory = "/Users/anonymous/Desktop/LLMs/LLMs_Evaluation_IR/LLMs-in-IR-1/processed_data/CFG_LLM/counting_sort2"
+output_directory = "/Users/anonymous/Desktop/LLMs-in-IR/processed_data/CFG_GPT4o_result"
 # Ensure the output directory exists
 os.makedirs(output_directory, exist_ok=True)
 
@@ -92,6 +92,6 @@ if failed_files > 0:
     for file in failed_file_names:
         print(file)
 # Save the DataFrame to a CSV file
-csv_output_path = "/Users/jianfengzhu/Desktop/LLMs-in-IR/processed_data/CFG_GPT4o_result/processed_files_statistics.csv"
+csv_output_path = "/Users/anonymous/Desktop/LLMs-in-IR/processed_data/CFG_GPT4o_result/processed_files_statistics.csv"
 df.to_csv(csv_output_path, index=False)
 print(f"DataFrame saved to {csv_output_path}")

@@ -66,7 +66,7 @@ def save_summarize_graphs(category, filename_base, graph_dir, gpt4o_files, metal
     return section_summaries
 
 # Directory containing the dot files
-graph_directory = '/home/hjiang/LLMs-in-IR/processed_data/Human_x_164_O3/organized dot/'
+graph_directory = '/home/anonymous/LLMs-in-IR/processed_data/Human_x_164_O3/organized dot/'
 
 # Load the CSV files
 gpt4o_file = './CFG_completion_analysis_results_GPT4o.csv'
