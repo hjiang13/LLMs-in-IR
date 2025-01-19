@@ -1,0 +1,69 @@
+#include <iostream>
+using namespace std;
+int main()
+{
+int a1[Max+10]={
+0}
+;
+int a2[Max+10]={
+0}
+;
+char s1[Max+10];
+char s2[Max+10];
+int i,j,k=0,e,f,n;
+int L1,L2;
+cin >> "%d",&n);
+do{
+cin >> "%s",s1);
+cin >> "%s",s2);
+L1=strlen(s1);
+L2=strlen(s2);
+j=0;
+if(L1==1&&L2==1)
+{
+e=s1[0]-'0';
+f=s2[0]-'0';
+cout << "%d",e-f);
+}
+else
+{
+for(i=L1-1; i>=0; i--)
+a1[j++]=s1[i]-'0';
+j=0;
+for(i=L2-1; i>=0; i--)
+a2[j++]=s2[i]-'0';
+for(i=0; i<Max; i++)
+{
+a1[i]-=a2[i];
+if(a1[i]<0)
+{
+a1[i]+=10;
+a1[i+1]--;
+}
+}
+for(i=Max; i>=0; i--)
+{
+if(a1[i]!=0)
+{
+j=i;
+break;
+}
+}
+for(i=j; i>=0; i--)
+{
+cout << "%d",a1[i]);
+if(i==0)
+cout << "\n");
+}
+for(i=0; i<Max; i++)
+{
+a1[i]=0;
+a2[i]=0;
+}
+getchar();
+k++;
+}
+}
+while(k<n);
+return 0;
+}

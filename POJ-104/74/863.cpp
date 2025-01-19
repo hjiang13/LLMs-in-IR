@@ -1,0 +1,39 @@
+#include <iostream>
+using namespace std;
+void main()
+{
+int a,b,i,j;
+int m,n,temp;
+int x,flag,y=0;
+cin >> "%d %d",&m,&n);
+flag=0;
+for(i=m; i<=n; i++)    /*??????a??????????,???????b?!!*/
+{
+a=i;
+b=0;
+for(j=1; a!=0; j++)
+{
+temp=b;
+b=a%10;
+b=10*temp+b;
+a=a/10;
+}
+if(b==i)
+{
+for(x=2; x<=b; x++)
+{
+if(b%x==0)break;
+}
+if(x==i)
+{
+if(y>0)
+cout << ",");
+cout << "%d",b);
+flag=1;
+y++;
+}
+}
+}
+if(flag==0)
+cout << "no\n");
+}

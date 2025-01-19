@@ -1,0 +1,19 @@
+#include <iostream>
+using namespace std;
+void main()
+{
+int n,t,i,z=1,a[5],m=0;
+cin >> "%d",&n);
+t=n;
+while(t/10!=0)
+{
+z++; t=t/10;
+}
+for(i=0; i<z; i++)
+{
+a[i]=n%10;
+m=m*10+a[i];
+n=n/10;
+}
+cout << "%d",m);
+}

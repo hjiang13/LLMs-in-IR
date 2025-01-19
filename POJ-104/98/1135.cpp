@@ -1,0 +1,38 @@
+#include <iostream>
+using namespace std;
+//bug????????
+int main()
+{
+int i,j;
+int n;
+int l;
+int num;
+char a[50];    //????
+char s[160];    //??
+cin >> "%d",&n);    //?????
+for(i=0; i<=n; i++)
+{
+//cout << "%d ",i);   //debug
+cin >> "%s",a);     //????????
+l=strlen(a);
+if((num+l>=80)||(n==i))   //????????
+{
+cout << "%s\n",s);    //?????
+num=0;         //???????
+}
+else
+if(num>0)     //???????
+{
+*(s+num)=' ';
+num++;      //????
+}
+for(j=0; j<l; j++)
+{
+*(s+num+j)=*(a+j);
+}
+*(s+num+l)='\0';
+num+=l;     //???
+//cout << "%d %s\n",i,s);   //debug
+}
+return 0;
+}

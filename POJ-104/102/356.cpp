@@ -1,0 +1,61 @@
+#include <iostream>
+using namespace std;
+main()
+{
+int n,i,j;
+cin >> "%d",&n);
+float girl[40]={
+0}
+,boy[40]={
+0}
+;
+int g=0,b=0; //??????
+char tender[8]; //??
+for(i=0; i<n; i++)
+{
+cin >> "%s",tender);
+if(tender[0]=='m')//???????????????
+{
+cin >> "%f",&boy[b]);
+b++;
+}
+else//??????????
+{
+cin >> "%f",&girl[g]);
+g++;
+}
+}
+for(i=g-1; i>0; i--)//??????????????
+{
+for(j=0; j<i; j++){
+if(girl[j]<girl[j+1])
+{
+float temp;
+temp=girl[j];
+girl[j]=girl[j+1];
+girl[j+1]=temp;
+}
+}
+}
+for(i=b-1; i>0; i--)//??????????????
+{
+for(j=0; j<i; j++){
+if(boy[j]>boy[j+1])
+{
+float temp;
+temp=boy[j];
+boy[j]=boy[j+1];
+boy[j+1]=temp;
+}
+}
+}
+for(i=0; i<b; i++)//?????????
+{
+cout << "%.2f ",boy[i]);
+}
+for(i=0; i<g; i++)//?????????
+{
+cout << "%.2f",girl[i]);
+if(i<g-1) cout << " ");
+}
+}

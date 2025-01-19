@@ -1,0 +1,45 @@
+#include <iostream>
+using namespace std;
+int main()
+{
+int m,n,i,j,k,flag,a[100]={
+0}
+,start=0,t=0;
+cin >> "%d %d",&m,&n);
+for(i=m; i<=n; i++)
+{
+flag=0;
+for(j=2; j<=sqrt(n); j++)
+if(i%j==0)
+{
+flag=1;
+break;
+}
+if(!flag)
+{
+k=i;
+for(j=0; k>0; j++)
+{
+a[j]=k%10;
+k=(k-a[j])/10;
+}
+for(k=0; k<j/2; k++)
+if(a[k]!=a[j-k-1])
+{
+flag=1;
+break;
+}
+}
+if(!flag)
+{
+if(!start){
+cout << "%d",i);
+start=1;
+}
+else cout << ",%d",i);
+t++;
+}
+}
+if(t==0)cout << "no");
+return 0;
+}

@@ -1,0 +1,58 @@
+#include <iostream>
+using namespace std;
+int main(int argc, char* argv[])
+{
+int a,b,c;
+cin >> "%d%d%d",&a,&b,&c);
+if((a%4==0&&a%100!=0)||a%400==0){
+if(b==1)
+cout << "%d",c);
+else if(b==2)
+cout << "%d",31+c);
+else if(b==3)
+cout << "%d",60+c);
+else if(b==4)
+cout << "%d",91+c);
+else if(b==5)
+cout << "%d",121+c);
+else if(b==6)
+cout << "%d",152+c);
+else if(b==7)
+cout << "%d",182+c);
+else if(b==8)
+cout << "%d",213+c);
+else if(b==9)
+cout << "%d",244+c);
+else if(b==10)
+cout << "%d",274+c);
+else if(b==11)
+cout << "%d",305+c);
+else if(b==12)
+cout << "%d",336+c); }
+else{
+if(b==1)
+cout << "%d",c);
+else if(b==2)
+cout << "%d",31+c);
+else if(b==3)
+cout << "%d",59+c);
+else if(b==4)
+cout << "%d",90+c);
+else if(b==5)
+cout << "%d",120+c);
+else if(b==6)
+cout << "%d",151+c);
+else if(b==7)
+cout << "%d",181+c);
+else if(b==8)
+cout << "%d",212+c);
+else if(b==9)
+cout << "%d",243+c);
+else if(b==10)
+cout << "%d",273+c);
+else if(b==11)
+cout << "%d",304+c);
+else if(b==12)
+cout << "%d",335+c); }
+return 0;
+}

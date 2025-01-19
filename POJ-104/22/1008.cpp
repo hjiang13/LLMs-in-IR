@@ -1,0 +1,32 @@
+#include <iostream>
+using namespace std;
+int main()
+{
+int a[300],i,j,c;
+for(i=1; i<300; i++)
+{
+a[i]=-10000; }
+cin >> "%d",&a[0]);
+for(i=1; i<300; i++)
+{
+cin >> ",%d",&a[i]); }
+if(a[1]==-10000) puts("No");
+else
+{
+for(i=1; i<300; i++)
+{
+if(a[i]<=a[i-1]) {
+c=a[i]; a[i]=a[i-1]; a[i-1]=c; }
+}
+for(i=0; i<300; i++)
+{
+if(a[i]==a[299]) a[i]=0; }
+for(i=1; i<300; i++)
+{
+if(a[i]<=a[i-1]) {
+c=a[i]; a[i]=a[i-1]; a[i-1]=c; }
+}
+if(a[299]==0)  puts("No");
+else cout << "%d",a[299]);
+}
+}

@@ -1,0 +1,29 @@
+#include <iostream>
+using namespace std;
+int main()
+{
+int days[] = {
+0, 31, 28, 31, 30, 31, 30,
+31, 31, 30, 31, 30, 31    }
+;
+char * weekdays[] =
+{
+"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"}
+;
+int y, m, d, w, i;
+cin >> "%d%d%d", &y, &m, &d);
+w = y % 7 + y / 4 - y / 100 + y / 400;
+for (i = 1;  i < m;  i++)
+w += days[i];
+w += d - 1;
+if (((y % 4 == 0 && y % 100 != 0) || y % 400 == 0) && (m <= 2))
+w--;
+if(w%7==0) cout <<  "Sun.");
+if(w%7==1) cout <<  "Mon.");
+if(w%7==2) cout <<  "Tue.");
+if(w%7==3) cout <<  "Wed.");
+if(w%7==4) cout << "Thu.");
+if(w%7==5) cout << "Fri.");
+if(w%7==6) cout <<  "Sat.");
+return 0;
+}

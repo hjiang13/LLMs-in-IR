@@ -1,0 +1,48 @@
+#include <iostream>
+using namespace std;
+int main()
+{
+int n,i;
+cin >> "%d",&n);
+for(i=1; i<=n; i++)
+{
+char s1[101],s2[101]={
+'0'}
+,s3[101]={
+'\0'}
+;
+cin >> "%s",s1);
+cin >> "%s",s2);
+cout << "\n");
+int l1,l2,j,u=0;
+l1=strlen(s1);
+l2=strlen(s2);
+for(j=1; j<=l2; j++)
+{
+int x,y,z;
+x=s1[l1-j]-'0';
+y=s2[l2-j]-'0';
+if(x+u>=y)
+{
+z=x-y+u;
+u=0;
+}
+else
+{
+z=10+x-y+u;
+u=-1;
+}
+s3[l1-j]=z+'0';
+}
+if(l1>l2)
+{
+int k,l;
+k=s1[l1-l2-1]-'0';
+s3[l1-l2-1]=k+u+'0';
+for(l=0; l<l1-l2-1; l++)
+s3[l]=s1[l];
+}
+cout << "%s",s3);
+}
+return 0;
+}

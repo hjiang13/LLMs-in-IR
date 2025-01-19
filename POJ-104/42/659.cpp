@@ -1,0 +1,30 @@
+#include <iostream>
+using namespace std;
+int main()
+{
+int a[100000],i,j,n,k,*p=a;
+cin >> "%d",&n);
+for(i=0; i<n; i++)
+cin >> "%d",&a[i]);                                 //*p?????????
+cin >> "%d",&k);
+p=a;
+for(i=n-1; i>=0; i--)
+{
+if(*(p+i)==k)                                       //????????????????????
+{
+for(j=i; j<n; j++)
+{
+*(p+j)=*(p+j+1);
+}
+n--;
+}
+//??????????????????
+}
+p=a;
+for(i=0; i<n-1; i++)
+{
+cout << "%d ",*(p+i));
+}
+cout << "%d",*(p+n-1));
+return 0;
+}
