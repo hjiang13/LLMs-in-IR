@@ -1,0 +1,1141 @@
+task_id,assert_statement,result
+CPP_0,"assert (has_close_elements(a, 0.3)==true);",pass
+CPP_0,"assert (has_close_elements(a, 0.05) == false);",pass
+CPP_0,"assert (has_close_elements({1.0, 2.0, 5.9, 4.0, 5.0}, 0.95) == true);",pass
+CPP_0,"assert (has_close_elements({1.0, 2.0, 5.9, 4.0, 5.0}, 0.8) ==false);",pass
+CPP_0,"assert (has_close_elements({1.0, 2.0, 3.0, 4.0, 5.0}, 2.0) == true);",pass
+CPP_0,"assert (has_close_elements({1.1, 2.2, 3.1, 4.1, 5.1}, 1.0) == true);",pass
+CPP_0,"assert (has_close_elements({1.1, 2.2, 3.1, 4.1, 5.1}, 0.5) == false);",pass
+CPP_1,"assert (issame(separate_paren_groups(""(()()) ((())) () ((())()())""),{""(()())"", ""((()))"", ""()"", ""((())()())""}));",pass
+CPP_1,"assert (issame(separate_paren_groups(""() (()) ((())) (((())))""), {""()"", ""(())"", ""((()))"", ""(((())))"" }));",pass
+CPP_1,"assert (issame(separate_paren_groups(""(()(())((())))"") ,{ ""(()(())((())))"" }));",pass
+CPP_1,"assert (issame(separate_paren_groups(""( ) (( )) (( )( ))"") ,{""()"", ""(())"", ""(()())""}));",fail
+CPP_2,assert (truncate_number(3.5) == 0.5);,pass
+CPP_2,assert (abs(truncate_number(1.33) - 0.33) < 1e-4);,pass
+CPP_2,assert (abs(truncate_number(123.456) - 0.456) < 1e-4);,pass
+CPP_3,assert (below_zero({}) == false);,pass
+CPP_3,"assert (below_zero({1, 2, -3, 1, 2, -3}) == false);",pass
+CPP_3,"assert (below_zero({1, 2, -4, 5, 6}) == true);",pass
+CPP_3,"assert (below_zero({1, -1, 2, -2, 5, -5, 4, -4}) == false);",pass
+CPP_3,"assert (below_zero({1, -1, 2, -2, 5, -5, 4, -5}) == true);",pass
+CPP_3,"assert (below_zero({1, -2, 2, -2, 5, -5, 4, -4}) == true);",pass
+CPP_4,"assert (abs(mean_absolute_deviation({1.0, 2.0, 3.0}) - 2.0/3.0) < 1e-4);",pass
+CPP_4,"assert (abs(mean_absolute_deviation({1.0, 2.0, 3.0, 4.0}) - 1.0) < 1e-4);",pass
+CPP_4,"assert (abs(mean_absolute_deviation({1.0, 2.0, 3.0, 4.0, 5.0}) - 6.0/5.0) < 1e-4);",pass
+CPP_5,"assert (issame(intersperse({}, 7), {}));",pass
+CPP_5,"assert (issame(intersperse({5, 6, 3, 2}, 8),{5, 8, 6, 8, 3, 8, 2}));",pass
+CPP_5,"assert (issame(intersperse({2, 2, 2}, 2),{2, 2, 2, 2, 2}));",fail
+CPP_6,"assert (issame(parse_nested_parens(""(()()) ((())) () ((())()())""),{2, 3, 1, 3}));",pass
+CPP_6,"assert (issame(parse_nested_parens(""() (()) ((())) (((())))"") , {1, 2, 3, 4}));",fail
+CPP_6,"assert (issame(parse_nested_parens(""(()(())((())))"") ,{4}));",fail
+CPP_7,"assert (issame(filter_by_substring({}, ""john""),{}));",pass
+CPP_7,"assert (issame(filter_by_substring({""xxx"", ""asd"", ""xxy"", ""john doe"", ""xxxAAA"", ""xxx""}, ""xxx""), {""xxx"", ""xxxAAA"", ""xxx""}));",pass
+CPP_7,"assert (issame(filter_by_substring({""xxx"", ""asd"", ""aaaxxy"", ""john doe"", ""xxxAAA"", ""xxx""}, ""xx""),{""xxx"", ""aaaxxy"", ""xxxAAA"", ""xxx""}));",pass
+CPP_7,"assert (issame(filter_by_substring({""grunt"", ""trumpet"", ""prune"", ""gruesome""}, ""run"") ,{""grunt"", ""prune""}));",pass
+CPP_8,"assert (issame(sum_product({}) ,{0, 1}));",fail
+CPP_8,"assert (issame(sum_product({1, 1, 1}), {3, 1}));",pass
+CPP_8,"assert (issame(sum_product({100, 0}),{100, 0}));",pass
+CPP_8,"assert (issame(sum_product({3, 5, 7}) , {3 + 5 + 7, 3 * 5 * 7}));",pass
+CPP_8,"assert (issame(sum_product({10}) ,{10, 10}));",fail
+CPP_9,"assert (issame(rolling_max({}),{}));",pass
+CPP_9,"assert (issame(rolling_max({1, 2, 3, 4}) , {1, 2, 3, 4}));",pass
+CPP_9,"assert (issame(rolling_max({4, 3, 2, 1}),{4, 4, 4, 4}));",pass
+CPP_9,"assert (issame(rolling_max({3, 2, 3, 100, 3}) ,{3, 3, 3, 100, 100}));",pass
+CPP_10,"assert (make_palindrome("""") == """");",pass
+CPP_10,"assert (make_palindrome(""x"") == ""x"");",pass
+CPP_10,"assert (make_palindrome(""xyz"") == ""xyzyx"");",pass
+CPP_10,"assert (make_palindrome(""xyx"") == ""xyx"") ;",pass
+CPP_10,"assert (make_palindrome(""jerry"") == ""jerryrrej"");",fail
+CPP_11,"assert (string_xor(""111000"", ""101010"") == ""010010"");",pass
+CPP_11,"assert (string_xor(""1"", ""1"") == ""0"");",pass
+CPP_11,"assert (string_xor(""0101"", ""0000"") == ""0101"");",pass
+CPP_12,"assert (longest({}) == """");",pass
+CPP_12,"assert (longest({""x"", ""y"", ""z""}) == ""x"");",pass
+CPP_12,"assert (longest({""x"", ""yyy"", ""zzzz"", ""www"", ""kkkk"", ""abc""}) == ""zzzz"");",pass
+CPP_13,"assert (greatest_common_divisor(3, 7) == 1);",pass
+CPP_13,"assert (greatest_common_divisor(10, 15) == 5);",pass
+CPP_13,"assert (greatest_common_divisor(49, 14) == 7);",pass
+CPP_13,"assert (greatest_common_divisor(144, 60) == 12);",pass
+CPP_14,"assert (issame(all_prefixes(""""),{}));",pass
+CPP_14,"assert (issame(all_prefixes(""asdfgh"") ,{""a"", ""as"", ""asd"", ""asdf"", ""asdfg"", ""asdfgh""}));",pass
+CPP_14,"assert (issame(all_prefixes(""WWW"") ,{""W"", ""WW"", ""WWW""}));",pass
+CPP_15,"assert (string_sequence(0) == ""0"");",pass
+CPP_15,"assert (string_sequence(3) == ""0 1 2 3"");",pass
+CPP_15,"assert (string_sequence(10) == ""0 1 2 3 4 5 6 7 8 9 10"");",pass
+CPP_16,"assert (count_distinct_characters("""") == 0);",pass
+CPP_16,"assert (count_distinct_characters(""abcde"") == 5);",pass
+CPP_16,"assert (count_distinct_characters(""abcdecadeCADE"") == 5);",pass
+CPP_16,"assert (count_distinct_characters(""aaaaAAAAaaaa"") == 1);",pass
+CPP_16,"assert (count_distinct_characters(""Jerry jERRY JeRRRY"") == 5);",pass
+CPP_17,"assert (issame(parse_music("""") , {}));",pass
+CPP_17,"assert (issame(parse_music(""o o o o"") ,{4, 4, 4, 4}));",pass
+CPP_17,"assert (issame(parse_music("".| .| .| .|"") , {1, 1, 1, 1}));",fail
+CPP_17,"assert (issame(parse_music(""o| o| .| .| o o o o"") , {2, 2, 1, 1, 4, 4, 4, 4}));",pass
+CPP_17,"assert (issame(parse_music(""o| .| o| .| o o| o o|"") , {2, 1, 2, 1, 4, 2, 4, 2}));",pass
+CPP_18,"assert (how_many_times("""", ""x"") == 0);",pass
+CPP_18,"assert (how_many_times(""xyxyxyx"", ""x"") == 4);",pass
+CPP_18,"assert (how_many_times(""cacacacac"", ""cac"") == 4);",pass
+CPP_18,"assert (how_many_times(""john doe"", ""john"") == 1);",pass
+CPP_19,"assert (sort_numbers("""") == """");",pass
+CPP_19,"assert (sort_numbers(""three"") == ""three"");",pass
+CPP_19,"assert (sort_numbers(""three five nine"") == ""three five nine"");",fail
+CPP_19,"assert (sort_numbers(""five zero four seven nine eight"") == ""zero four five seven eight nine"");",pass
+CPP_19,"assert (sort_numbers(""six five four three two one zero"") == ""zero one two three four five six"");",pass
+CPP_20,"assert (issame(find_closest_elements({1.0, 2.0, 3.9, 4.0, 5.0, 2.2}) , {3.9, 4.0}));",pass
+CPP_20,"assert (issame(find_closest_elements({1.0, 2.0, 5.9, 4.0, 5.0}) , {5.0, 5.9} ));",pass
+CPP_20,"assert (issame(find_closest_elements({1.0, 2.0, 3.0, 4.0, 5.0, 2.2}) ,{2.0, 2.2}));",fail
+CPP_20,"assert (issame(find_closest_elements({1.0, 2.0, 3.0, 4.0, 5.0, 2.0}) ,{2.0, 2.0}));",pass
+CPP_20,"assert (issame(find_closest_elements({1.1, 2.2, 3.1, 4.1, 5.1}) , {2.2, 3.1}));",fail
+CPP_21,"assert (issame(rescale_to_unit({2.0, 49.9}) , {0.0, 1.0}));",pass
+CPP_21,"assert (issame(rescale_to_unit({100.0, 49.9}) ,{1.0, 0.0}));",fail
+CPP_21,"assert (issame(rescale_to_unit({1.0, 2.0, 3.0, 4.0, 5.0}) , {0.0, 0.25, 0.5, 0.75, 1.0}));",pass
+CPP_21,"assert (issame(rescale_to_unit({2.0, 1.0, 5.0, 3.0, 4.0}) , {0.25, 0.0, 1.0, 0.5, 0.75}));",pass
+CPP_21,"assert (issame(rescale_to_unit({12.0, 11.0, 15.0, 13.0, 14.0}) ,{0.25, 0.0, 1.0, 0.5, 0.75}));",fail
+CPP_22,"assert (issame(filter_integers({}),{}));",fail
+CPP_22,"assert (issame(filter_integers({4,  {},23.2, 9, string(""adasd"")}) ,{4, 9}));",fail
+CPP_22,"assert (issame(filter_integers({3, 'c', 3, 3, 'a', 'b'}) ,{3, 3, 3}));",fail
+CPP_23,"assert (strlen("""") == 0);",pass
+CPP_23,"assert (strlen(""x"") == 1);",pass
+CPP_23,"assert (strlen(""asdasnakj"") == 9);",fail
+CPP_24,assert (largest_divisor(3) == 1);,pass
+CPP_24,assert (largest_divisor(7) == 1);,pass
+CPP_24,assert (largest_divisor(10) == 5);,pass
+CPP_24,assert (largest_divisor(100) == 50);,pass
+CPP_24,assert (largest_divisor(49) == 7);,pass
+CPP_25,"assert (issame(factorize(2) , {2}));",fail
+CPP_25,"assert (issame(factorize(4) , {2, 2}));",fail
+CPP_25,"assert (issame(factorize(8) , {2, 2, 2}));",fail
+CPP_25,"assert (issame(factorize(3 * 19) , {3, 19}));",fail
+CPP_25,"assert (issame(factorize(3 * 19 * 3 * 19) , {3, 3, 19, 19}));",pass
+CPP_25,"assert (issame(factorize(3 * 19 * 3 * 19 * 3 * 19) , {3, 3, 3, 19, 19, 19}));",fail
+CPP_25,"assert (issame(factorize(3 * 19 * 19 * 19) , {3, 19, 19, 19}));",fail
+CPP_25,"assert (issame(factorize(3 * 2 * 3) , {2, 3, 3}));",fail
+CPP_26,"assert (issame(remove_duplicates({}) , {}));",pass
+CPP_26,"assert (issame(remove_duplicates({1, 2, 3, 4}) , {1, 2, 3, 4}));",pass
+CPP_26,"assert (issame(remove_duplicates({1, 2, 3, 2, 4, 3, 5}) , {1, 4, 5}));",fail
+CPP_27,"assert (filp_case("""") == """");",pass
+CPP_27,"assert (filp_case(""Hello!"") == ""hELLO!"");",fail
+CPP_27,"assert (filp_case(""These violent delights have violent ends"") == ""tHESE VIOLENT DELIGHTS HAVE VIOLENT ENDS"");",pass
+CPP_28,"assert (concatenate({}) == """");",pass
+CPP_28,"assert (concatenate({""x"", ""y"", ""z""}) == ""xyz"");",pass
+CPP_28,"assert (concatenate({""x"", ""y"", ""z"", ""w"", ""k""}) == ""xyzwk"");",pass
+CPP_29,"assert (issame(filter_by_prefix({}, ""john"") , {}));",pass
+CPP_29,"assert (issame(filter_by_prefix({""xxx"", ""asd"", ""xxy"", ""john doe"", ""xxxAAA"", ""xxx""}, ""xxx"") , {""xxx"", ""xxxAAA"", ""xxx""}));",pass
+CPP_30,"assert (issame(get_positive({-1, -2, 4, 5, 6}) , {4, 5, 6} ));",pass
+CPP_30,"assert (issame(get_positive({5, 3, -5, 2, 3, 3, 9, 0, 123, 1, -10}) , {5, 3, 2, 3, 3, 9, 123, 1}));",pass
+CPP_30,"assert (issame(get_positive({-1, -2}) , {} ));",fail
+CPP_30,"assert (issame(get_positive({}) , {}));",pass
+CPP_31,assert (is_prime(6) == false);,pass
+CPP_31,assert (is_prime(101) == true);,pass
+CPP_31,assert (is_prime(11) == true);,pass
+CPP_31,assert (is_prime(13441) == true);,pass
+CPP_31,assert (is_prime(61) == true);,pass
+CPP_31,assert (is_prime(4) == false);,pass
+CPP_31,assert (is_prime(1) == false);,pass
+CPP_31,assert (is_prime(5) == true);,pass
+CPP_31,assert (is_prime(11) == true);,pass
+CPP_31,assert (is_prime(17) == true);,pass
+CPP_31,assert (is_prime(5 * 17) == false);,pass
+CPP_31,assert (is_prime(11 * 7) == false);,pass
+CPP_31,assert (is_prime(13441 * 19) == false);,pass
+CPP_32,"assert (abs(poly(coeffs, solution))< 1e-3);",pass
+CPP_33,"assert (issame(sort_third({1, 2, 3}) , sort_third({1, 2, 3})));",pass
+CPP_33,"assert (issame(sort_third({5, 3, -5, 2, -3, 3, 9, 0, 123, 1, -10}) , sort_third({5, 3, -5, 2, -3, 3, 9, 0, 123, 1, -10})));",pass
+CPP_33,"assert (issame(sort_third({5, 8, -12, 4, 23, 2, 3, 11, 12, -10}) , sort_third({5, 8, -12, 4, 23, 2, 3, 11, 12, -10})));",pass
+CPP_33,"assert (issame(sort_third({5, 6, 3, 4, 8, 9, 2}) , {2, 6, 3, 4, 8, 9, 5}));",fail
+CPP_33,"assert (issame(sort_third({5, 8, 3, 4, 6, 9, 2}) , {2, 8, 3, 4, 6, 9, 5}));",fail
+CPP_33,"assert (issame(sort_third({5, 6, 9, 4, 8, 3, 2}) , {2, 6, 9, 4, 8, 3, 5}));",fail
+CPP_33,"assert (issame(sort_third({5, 6, 3, 4, 8, 9, 2, 1}) , {2, 6, 3, 4, 8, 9, 5, 1}));",fail
+CPP_34,"assert (issame(unique({5, 3, 5, 2, 3, 3, 9, 0, 123}) , {0, 2, 3, 5, 9, 123}));",pass
+CPP_35,"assert (abs(max_element({1, 2, 3})- 3)<1e-4);",pass
+CPP_35,"assert (abs(max_element({5, 3, -5, 2, -3, 3, 9, 0, 124, 1, -10})- 124)<1e-4);",pass
+CPP_36,assert (fizz_buzz(50) == 0);,pass
+CPP_36,assert (fizz_buzz(78) == 2);,pass
+CPP_36,assert (fizz_buzz(79) == 3);,pass
+CPP_36,assert (fizz_buzz(100) == 3);,fail
+CPP_36,assert (fizz_buzz(200) == 6);,pass
+CPP_36,assert (fizz_buzz(4000) == 192);,pass
+CPP_36,assert (fizz_buzz(10000) == 639);,pass
+CPP_36,assert (fizz_buzz(100000) == 8026);,pass
+CPP_37,"assert (issame(sort_even({1, 2, 3}), {1, 2, 3}));",pass
+CPP_37,"assert (issame(sort_even({5, 3, -5, 2, -3, 3, 9, 0, 123, 1, -10}) , {-10, 3, -5, 2, -3, 3, 5, 0, 9, 1, 123}));",fail
+CPP_37,"assert (issame(sort_even({5, 8, -12, 4, 23, 2, 3, 11, 12, -10}) , {-12, 8, 3, 4, 5, 2, 12, 11, 23, -10}));",fail
+CPP_38,assert (decode_cyclic(encoded_str) == str);,fail
+CPP_39,assert (prime_fib(1) == 2);,pass
+CPP_39,assert (prime_fib(2) == 3);,pass
+CPP_39,assert (prime_fib(3) == 5);,pass
+CPP_39,assert (prime_fib(4) == 13);,pass
+CPP_39,assert (prime_fib(5) == 89);,pass
+CPP_39,assert (prime_fib(6) == 233);,pass
+CPP_39,assert (prime_fib(7) == 1597);,pass
+CPP_39,assert (prime_fib(8) == 28657);,pass
+CPP_39,assert (prime_fib(9) == 514229);,pass
+CPP_39,assert (prime_fib(10) == 433494437);,pass
+CPP_40,"assert (triples_sum_to_zero({1, 3, 5, 0}) == false);",pass
+CPP_40,"assert (triples_sum_to_zero({1, 3, 5, -1}) == false);",pass
+CPP_40,"assert (triples_sum_to_zero({1, 3, -2, 1}) == true);",pass
+CPP_40,"assert (triples_sum_to_zero({1, 2, 3, 7}) == false);",pass
+CPP_40,"assert (triples_sum_to_zero({1, 2, 5, 7}) == false);",pass
+CPP_40,"assert (triples_sum_to_zero({2, 4, -5, 3, 9, 7}) == true);",pass
+CPP_40,assert (triples_sum_to_zero({1}) == false);,pass
+CPP_40,"assert (triples_sum_to_zero({1, 3, 5, -100}) == false);",pass
+CPP_40,"assert (triples_sum_to_zero({100, 3, 5, -100}) == false);",pass
+CPP_41,assert (car_race_collision(2) == 4);,pass
+CPP_41,assert (car_race_collision(3) == 9);,pass
+CPP_41,assert (car_race_collision(4) == 16);,pass
+CPP_41,assert (car_race_collision(8) == 64);,pass
+CPP_41,assert (car_race_collision(10) == 100);,pass
+CPP_42,"assert (issame(incr_list({}) , {}));",fail
+CPP_42,"assert (issame(incr_list({3, 2, 1}) , {4, 3, 2}));",fail
+CPP_42,"assert (issame(incr_list({5, 2, 5, 2, 3, 3, 9, 0, 123}) , {6, 3, 6, 3, 4, 4, 10, 1, 124}));",pass
+CPP_43,"assert (pairs_sum_to_zero({1, 3, 5, 0}) == false);",pass
+CPP_43,"assert (pairs_sum_to_zero({1, 3, -2, 1}) == false);",pass
+CPP_43,"assert (pairs_sum_to_zero({1, 2, 3, 7}) == false);",pass
+CPP_43,"assert (pairs_sum_to_zero({2, 4, -5, 3, 5, 7}) == true);",pass
+CPP_43,assert (pairs_sum_to_zero({1}) == false);,pass
+CPP_43,"assert (pairs_sum_to_zero({-3, 9, -1, 3, 2, 30}) == true);",pass
+CPP_43,"assert (pairs_sum_to_zero({-3, 9, -1, 3, 2, 31}) == true);",pass
+CPP_43,"assert (pairs_sum_to_zero({-3, 9, -1, 4, 2, 30}) == false);",pass
+CPP_43,"assert (pairs_sum_to_zero({-3, 9, -1, 4, 2, 31}) == false);",pass
+CPP_44,"assert (change_base(8, 3) == ""22"");",fail
+CPP_44,"assert (change_base(9, 3) == ""100"");",pass
+CPP_44,"assert (change_base(234, 2) == ""11101010"");",fail
+CPP_44,"assert (change_base(16, 2) == ""10000"");",pass
+CPP_44,"assert (change_base(8, 2) == ""1000"");",fail
+CPP_44,"assert (change_base(7, 2) == ""111"");",pass
+CPP_44,"assert (change_base(x, x + 1) == to_string(x));",fail
+CPP_45,"assert (abs(triangle_area(5, 3) - 7.5)<1e-4);",pass
+CPP_45,"assert (abs(triangle_area(2, 2) - 2.0)<1e-4);",pass
+CPP_45,"assert (abs(triangle_area(10, 8) - 40.0)<1e-4);",pass
+CPP_46,assert (fib4(5) == 4);,pass
+CPP_46,assert (fib4(8) == 28);,pass
+CPP_46,assert (fib4(10) == 104);,pass
+CPP_46,assert (fib4(12) == 386);,pass
+CPP_47,"assert (abs(median({3, 1, 2, 4, 5}) - 3)<1e-4);",pass
+CPP_47,"assert (abs(median({-10, 4, 6, 1000, 10, 20}) -8.0)<1e-4);",pass
+CPP_47,assert (abs(median({5}) - 5)<1e-4);,pass
+CPP_47,"assert (abs(median({6, 5}) - 5.5)<1e-4);",pass
+CPP_47,"assert (abs(median({8, 1, 3, 9, 9, 2, 7}) - 7)<1e-4 );",pass
+CPP_48,"assert (is_palindrome("""") == true);",pass
+CPP_48,"assert (is_palindrome(""aba"") == true);",pass
+CPP_48,"assert (is_palindrome(""aaaaa"") == true);",pass
+CPP_48,"assert (is_palindrome(""zbcd"") == false);",pass
+CPP_48,"assert (is_palindrome(""xywyx"") == true);",pass
+CPP_48,"assert (is_palindrome(""xywyz"") == false);",pass
+CPP_48,"assert (is_palindrome(""xywzx"") == false);",pass
+CPP_49,"assert (modp(3, 5) == 3);",pass
+CPP_49,"assert (modp(1101, 101) == 2);",pass
+CPP_49,"assert (modp(0, 101) == 1);",pass
+CPP_49,"assert (modp(3, 11) == 8);",pass
+CPP_49,"assert (modp(100, 101) == 1);",pass
+CPP_49,"assert (modp(30, 5) == 4);",pass
+CPP_49,"assert (modp(31, 5) == 3);",pass
+CPP_50,assert (decode_shift(encoded_str) == str);,pass
+CPP_51,"assert (remove_vowels("""") == """");",pass
+CPP_51,"assert (remove_vowels(""abcdef\nghijklm"") == ""bcdf\nghjklm"");",fail
+CPP_51,"assert (remove_vowels(""fedcba"") == ""fdcb"");",fail
+CPP_51,"assert (remove_vowels(""eeeee"") == """");",pass
+CPP_51,"assert (remove_vowels(""acBAA"") == ""cB"");",pass
+CPP_51,"assert (remove_vowels(""EcBOO"") == ""cB"");",pass
+CPP_51,"assert (remove_vowels(""ybcd"") == ""ybcd"");",fail
+CPP_52,"assert (below_threshold({1, 2, 4, 10}, 100));",pass
+CPP_52,"assert (not(below_threshold({1, 20, 4, 10}, 5)));",pass
+CPP_52,"assert (below_threshold({1, 20, 4, 10}, 21));",pass
+CPP_52,"assert (below_threshold({1, 20, 4, 10}, 22));",pass
+CPP_52,"assert (below_threshold({1, 8, 4, 10}, 11));",pass
+CPP_52,"assert (not(below_threshold({1, 8, 4, 10}, 10)));",pass
+CPP_53,"assert (add(0, 1) == 1);",pass
+CPP_53,"assert (add(1, 0) == 1);",pass
+CPP_53,"assert (add(2, 3) == 5);",pass
+CPP_53,"assert (add(5, 7) == 12);",pass
+CPP_53,"assert (add(7, 5) == 12);",pass
+CPP_53,"assert (add(x, y) == x + y);",pass
+CPP_54,"assert (same_chars(""eabcdzzzz"", ""dddzzzzzzzddeddabc"") == true);",pass
+CPP_54,"assert (same_chars(""abcd"", ""dddddddabc"") == true);",pass
+CPP_54,"assert (same_chars(""dddddddabc"", ""abcd"") == true);",fail
+CPP_54,"assert (same_chars(""eabcd"", ""dddddddabc"") == false);",pass
+CPP_54,"assert (same_chars(""abcd"", ""dddddddabcf"") == false);",pass
+CPP_54,"assert (same_chars(""eabcdzzzz"", ""dddzzzzzzzddddabc"") == false);",pass
+CPP_54,"assert (same_chars(""aabb"", ""aaccc"") == false);",pass
+CPP_55,assert (fib(10) == 55);,pass
+CPP_55,assert (fib(1) == 1);,pass
+CPP_55,assert (fib(8) == 21);,pass
+CPP_55,assert (fib(11) == 89);,pass
+CPP_55,assert (fib(12) == 144);,pass
+CPP_56,"assert (correct_bracketing(""<>""));",pass
+CPP_56,"assert (correct_bracketing(""<<><>>""));",pass
+CPP_56,"assert (correct_bracketing(""<><><<><>><>""));",pass
+CPP_56,"assert (correct_bracketing(""<><><<<><><>><>><<><><<>>>""));",pass
+CPP_56,"assert (not (correct_bracketing(""<<<><>>>>"")));",fail
+CPP_56,"assert (not (correct_bracketing(""><<>"")));",fail
+CPP_56,"assert (not (correct_bracketing(""<"")));",pass
+CPP_56,"assert (not (correct_bracketing(""<<<<"")));",fail
+CPP_56,"assert (not (correct_bracketing("">"")));",fail
+CPP_56,"assert (not (correct_bracketing(""<<>"")));",fail
+CPP_56,"assert (not (correct_bracketing(""<><><<><>><>><<>"")));",pass
+CPP_56,"assert (not (correct_bracketing(""<><><<><>><>>><>"")));",pass
+CPP_57,"assert (monotonic({1, 2, 4, 10}) == true);",pass
+CPP_57,"assert (monotonic({1, 2, 4, 20}) == true);",pass
+CPP_57,"assert (monotonic({1, 20, 4, 10}) == false);",pass
+CPP_57,"assert (monotonic({4, 1, 0, -10}) == true);",pass
+CPP_57,"assert (monotonic({4, 1, 1, 0}) == true);",pass
+CPP_57,"assert (monotonic({1, 2, 3, 2, 5, 60}) == false);",pass
+CPP_57,"assert (monotonic({1, 2, 3, 4, 5, 60}) == true);",pass
+CPP_57,"assert (monotonic({9, 9, 9, 9}) == true);",pass
+CPP_58,"assert (issame(common({1, 4, 3, 34, 653, 2, 5}, {5, 7, 1, 5, 9, 653, 121}) , {1, 5, 653}));",pass
+CPP_58,"assert (issame(common({5, 3, 2, 8}, {3, 2}) , {2, 3}));",pass
+CPP_58,"assert (issame(common({4, 3, 2, 8}, {3, 2, 4}) , {2, 3, 4}));",pass
+CPP_58,"assert (issame(common({4, 3, 2, 8}, {}) , {}));",pass
+CPP_59,assert (largest_prime_factor(15) == 5);,pass
+CPP_59,assert (largest_prime_factor(27) == 3);,pass
+CPP_59,assert (largest_prime_factor(63) == 7);,pass
+CPP_59,assert (largest_prime_factor(330) == 11);,pass
+CPP_59,assert (largest_prime_factor(13195) == 29);,pass
+CPP_60,assert (sum_to_n(1) == 1);,pass
+CPP_60,assert (sum_to_n(6) == 21);,pass
+CPP_60,assert (sum_to_n(11) == 66);,pass
+CPP_60,assert (sum_to_n(30) == 465);,pass
+CPP_60,assert (sum_to_n(100) == 5050);,pass
+CPP_61,"assert (correct_bracketing(""()""));",pass
+CPP_61,"assert (correct_bracketing(""(()())""));",pass
+CPP_61,"assert (correct_bracketing(""()()(()())()""));",pass
+CPP_61,"assert (correct_bracketing(""()()((()()())())(()()(()))""));",pass
+CPP_61,"assert (not (correct_bracketing(""((()())))"")));",fail
+CPP_61,"assert (not (correct_bracketing("")(()"")));",fail
+CPP_61,"assert (not (correct_bracketing(""("")));",fail
+CPP_61,"assert (not (correct_bracketing(""(((("")));",pass
+CPP_61,"assert (not (correct_bracketing("")"")));",fail
+CPP_61,"assert (not (correct_bracketing(""(()"")));",fail
+CPP_61,"assert (not (correct_bracketing(""()()(()())())(()"")));",fail
+CPP_61,"assert (not (correct_bracketing(""()()(()())()))()"")));",fail
+CPP_62,"assert (issame(derivative({3, 1, 2, 4, 5}) , {1, 4, 12, 20}));",fail
+CPP_62,"assert (issame(derivative({1, 2, 3}) , {2, 6}));",fail
+CPP_62,"assert (issame(derivative({3, 2, 1}) , {2, 2}));",fail
+CPP_62,"assert (issame(derivative({3, 2, 1, 0, 4}) , {2, 2, 0, 16}));",fail
+CPP_62,"assert (issame(derivative({1}) , {}));",fail
+CPP_63,assert (fibfib(2) == 1);,pass
+CPP_63,assert (fibfib(1) == 0);,pass
+CPP_63,assert (fibfib(5) == 4);,pass
+CPP_63,assert (fibfib(8) == 24);,pass
+CPP_63,assert (fibfib(10) == 81);,pass
+CPP_63,assert (fibfib(12) == 274);,pass
+CPP_63,assert (fibfib(14) == 927);,pass
+CPP_64,"assert (vowels_count(""abcde"") == 2);",pass
+CPP_64,"assert (vowels_count(""Alone"") == 3);",pass
+CPP_64,"assert (vowels_count(""key"") == 2);",fail
+CPP_64,"assert (vowels_count(""bye"") == 1);",pass
+CPP_64,"assert (vowels_count(""keY"") == 2);",pass
+CPP_64,"assert (vowels_count(""bYe"") == 1);",pass
+CPP_64,"assert (vowels_count(""ACEDY"") == 3);",pass
+CPP_65,"assert (circular_shift(100, 2) == ""001"");",fail
+CPP_65,"assert (circular_shift(12, 2) == ""12"");",fail
+CPP_65,"assert (circular_shift(97, 8) == ""79"");",fail
+CPP_65,"assert (circular_shift(12, 1) == ""21"");",fail
+CPP_65,"assert (circular_shift(11, 101) == ""11"");",fail
+CPP_66,"assert (digitSum("""") == 0);",pass
+CPP_66,"assert (digitSum(""abAB"") == 131);",pass
+CPP_66,"assert (digitSum(""abcCd"") == 67);",pass
+CPP_66,"assert (digitSum(""helloE"") == 69);",pass
+CPP_66,"assert (digitSum(""woArBld"") == 131);",pass
+CPP_66,"assert (digitSum(""aAaaaXa"") == 153);",pass
+CPP_66,"assert (digitSum("" How are yOu?"") == 151);",pass
+CPP_66,"assert (digitSum(""You arE Very Smart"") == 327);",pass
+CPP_67,"assert (fruit_distribution(""5 apples and 6 oranges"",19) == 8);",pass
+CPP_67,"assert (fruit_distribution(""5 apples and 6 oranges"",21) == 10);",pass
+CPP_67,"assert (fruit_distribution(""0 apples and 1 oranges"",3) == 2);",pass
+CPP_67,"assert (fruit_distribution(""1 apples and 0 oranges"",3) == 2);",pass
+CPP_67,"assert (fruit_distribution(""2 apples and 3 oranges"",100) == 95);",pass
+CPP_67,"assert (fruit_distribution(""2 apples and 3 oranges"",5) == 0);",pass
+CPP_67,"assert (fruit_distribution(""1 apples and 100 oranges"",120) == 19);",pass
+CPP_68,"assert (issame(pluck({4,2,3}) , {2, 1}));",fail
+CPP_68,"assert (issame(pluck({1,2,3}) , {2, 1}));",fail
+CPP_68,"assert (issame(pluck({}) , {}));",pass
+CPP_68,"assert (issame(pluck({5, 0, 3, 0, 4, 2}) , {0, 1}));",fail
+CPP_68,"assert (issame(pluck({1, 2, 3, 0, 5, 3}) , {0, 3}));",pass
+CPP_68,"assert (issame(pluck({5, 4, 8, 4 ,8}) , {4, 1}));",fail
+CPP_68,"assert (issame(pluck({7, 6, 7, 1}) , {6, 1}));",fail
+CPP_68,"assert (issame(pluck({7, 9, 7, 1}) , {}));",pass
+CPP_69,"assert (search({5, 5, 5, 5, 1}) == 1);",pass
+CPP_69,"assert (search({4, 1, 4, 1, 4, 4}) == 4);",pass
+CPP_69,"assert (search({3, 3}) == -1);",pass
+CPP_69,"assert (search({8, 8, 8, 8, 8, 8, 8, 8}) == 8);",pass
+CPP_69,"assert (search({2, 3, 3, 2, 2}) == 2);",pass
+CPP_69,"assert (search({2, 7, 8, 8, 4, 8, 7, 3, 9, 6, 5, 10, 4, 3, 6, 7, 1, 7, 4, 10, 8, 1}) == 1);",pass
+CPP_69,"assert (search({3, 2, 8, 2}) == 2);",pass
+CPP_69,"assert (search({6, 7, 1, 8, 8, 10, 5, 8, 5, 3, 10}) == 1);",pass
+CPP_69,"assert (search({8, 8, 3, 6, 5, 6, 4}) == -1);",pass
+CPP_69,"assert (search({6, 9, 6, 7, 1, 4, 7, 1, 8, 8, 9, 8, 10, 10, 8, 4, 10, 4, 10, 1, 2, 9, 5, 7, 9}) == 1);",pass
+CPP_69,"assert (search({1, 9, 10, 1, 3}) == 1);",fail
+CPP_69,"assert (search({6, 9, 7, 5, 8, 7, 5, 3, 7, 5, 10, 10, 3, 6, 10, 2, 8, 6, 5, 4, 9, 5, 3, 10}) == 5);",pass
+CPP_69,assert (search({1}) == 1);,fail
+CPP_69,"assert (search({8, 8, 10, 6, 4, 3, 5, 8, 2, 4, 2, 8, 4, 6, 10, 4, 2, 1, 10, 2, 1, 1, 5}) == 4);",pass
+CPP_69,"assert (search({2, 10, 4, 8, 2, 10, 5, 1, 2, 9, 5, 5, 6, 3, 8, 6, 4, 10}) == 2);",pass
+CPP_69,"assert (search({1, 6, 10, 1, 6, 9, 10, 8, 6, 8, 7, 3}) == 1);",pass
+CPP_69,"assert (search({9, 2, 4, 1, 5, 1, 5, 2, 5, 7, 7, 7, 3, 10, 1, 5, 4, 2, 8, 4, 1, 9, 10, 7, 10, 2, 8, 10, 9, 4}) == 4);",pass
+CPP_69,"assert (search({2, 6, 4, 2, 8, 7, 5, 6, 4, 10, 4, 6, 3, 7, 8, 8, 3, 1, 4, 2, 2, 10, 7}) == 4);",pass
+CPP_69,"assert (search({9, 8, 6, 10, 2, 6, 10, 2, 7, 8, 10, 3, 8, 2, 6, 2, 3, 1}) == 2);",pass
+CPP_69,"assert (search({5, 5, 3, 9, 5, 6, 3, 2, 8, 5, 6, 10, 10, 6, 8, 4, 10, 7, 7, 10, 8}) == -1);",pass
+CPP_69,assert (search({10}) == -1);,pass
+CPP_69,"assert (search({9, 7, 7, 2, 4, 7, 2, 10, 9, 7, 5, 7, 2}) == 2);",pass
+CPP_69,"assert (search({5, 4, 10, 2, 1, 1, 10, 3, 6, 1, 8}) == 1);",pass
+CPP_69,"assert (search({7, 9, 9, 9, 3, 4, 1, 5, 9, 1, 2, 1, 1, 10, 7, 5, 6, 7, 6, 7, 7, 6}) == 1);",pass
+CPP_69,"assert (search({3, 10, 10, 9, 2}) == -1);",pass
+CPP_70,"assert (issame(strange_sort_list({1, 2, 3, 4}) , {1, 4, 2, 3}));",fail
+CPP_70,"assert (issame(strange_sort_list({5, 6, 7, 8, 9}) , {5, 9, 6, 8, 7}));",fail
+CPP_70,"assert (issame(strange_sort_list({1, 2, 3, 4, 5}) , {1, 5, 2, 4, 3}));",fail
+CPP_70,"assert (issame(strange_sort_list({5, 6, 7, 8, 9, 1}) , {1, 9, 5, 8, 6, 7}));",fail
+CPP_70,"assert (issame(strange_sort_list({5, 5, 5, 5}) , {5, 5, 5, 5}));",pass
+CPP_70,"assert (issame(strange_sort_list({}) , {}));",pass
+CPP_70,"assert (issame(strange_sort_list({1,2,3,4,5,6,7,8}) , {1, 8, 2, 7, 3, 6, 4, 5}));",pass
+CPP_70,"assert (issame(strange_sort_list({0,2,2,2,5,5,-5,-5}) , {-5, 5, -5, 5, 0, 2, 2, 2}));",fail
+CPP_70,"assert (issame(strange_sort_list({111111}) , {111111}));",pass
+CPP_71,"assert (abs(triangle_area(3, 4, 5)-6.00)<0.01);",pass
+CPP_71,"assert (abs(triangle_area(1, 2, 10) +1)<0.01);",fail
+CPP_71,"assert (abs(triangle_area(4, 8, 5) -8.18)<0.01);",pass
+CPP_71,"assert (abs(triangle_area(2, 2, 2) -1.73)<0.01);",fail
+CPP_71,"assert (abs(triangle_area(1, 2, 3) +1)<0.01);",fail
+CPP_71,"assert (abs(triangle_area(10, 5, 7) - 16.25)<0.01);",pass
+CPP_71,"assert (abs(triangle_area(2, 6, 3) +1)<0.01);",pass
+CPP_71,"assert (abs(triangle_area(1, 1, 1) -0.43)<0.01);",fail
+CPP_71,"assert (abs(triangle_area(2, 2, 10) +1)<0.01);",fail
+CPP_72,"assert (will_it_fly({3, 2, 3}, 9)==true);",pass
+CPP_72,"assert (will_it_fly({1, 2}, 5) == false);",pass
+CPP_72,"assert (will_it_fly({3}, 5) == true);",pass
+CPP_72,"assert (will_it_fly({3, 2, 3}, 1) == false);",pass
+CPP_72,"assert (will_it_fly({1, 2, 3}, 6) ==false);",pass
+CPP_72,"assert (will_it_fly({5}, 5) == true);",pass
+CPP_73,"assert (smallest_change({1,2,3,5,4,7,9,6}) == 4);",pass
+CPP_73,"assert (smallest_change({1, 2, 3, 4, 3, 2, 2}) == 1);",pass
+CPP_73,"assert (smallest_change({1, 4, 2}) == 1);",pass
+CPP_73,"assert (smallest_change({1, 4, 4, 2}) == 1);",pass
+CPP_73,"assert (smallest_change({1, 2, 3, 2, 1}) == 0);",pass
+CPP_73,"assert (smallest_change({3, 1, 1, 3}) == 0);",pass
+CPP_73,assert (smallest_change({1}) == 0);,pass
+CPP_73,"assert (smallest_change({0, 1}) == 1);",pass
+CPP_74,"assert (issame(total_match({}, {}) , {}));",pass
+CPP_74,"assert (issame(total_match({""hi"", ""admin""}, {""hi"", ""hi""}) , {""hi"", ""hi""}));",pass
+CPP_74,"assert (issame(total_match({""hi"", ""admin""}, {""hi"", ""hi"", ""admin"", ""project""}) , {""hi"", ""admin""}));",pass
+CPP_74,"assert (issame(total_match({""4""}, {""1"", ""2"", ""3"", ""4"", ""5""}) , {""4""}));",pass
+CPP_74,"assert (issame(total_match({""hi"", ""admin""}, {""hI"", ""Hi""}) , {""hI"", ""Hi""}));",pass
+CPP_74,"assert (issame(total_match({""hi"", ""admin""}, {""hI"", ""hi"", ""hi""}) , {""hI"", ""hi"", ""hi""}));",pass
+CPP_74,"assert (issame(total_match({""hi"", ""admin""}, {""hI"", ""hi"", ""hii""}) , {""hi"", ""admin""}));",fail
+CPP_74,"assert (issame(total_match({}, {""this""}) , {}));",pass
+CPP_74,"assert (issame(total_match({""this""}, {}) , {}));",pass
+CPP_75,assert (is_multiply_prime(5) == false);,pass
+CPP_75,assert (is_multiply_prime(30) == true);,pass
+CPP_75,assert (is_multiply_prime(8) == true);,fail
+CPP_75,assert (is_multiply_prime(10) == false);,pass
+CPP_75,assert (is_multiply_prime(125) == true);,pass
+CPP_75,assert (is_multiply_prime(3 * 5 * 7) == true);,pass
+CPP_75,assert (is_multiply_prime(3 * 6 * 7) == false);,pass
+CPP_75,assert (is_multiply_prime(9 * 9 * 9) == false);,pass
+CPP_75,assert (is_multiply_prime(11 * 9 * 9) == false);,pass
+CPP_75,assert (is_multiply_prime(11 * 13 * 7) == true);,pass
+CPP_76,"assert (is_simple_power(1, 4)== true);",pass
+CPP_76,"assert (is_simple_power(2, 2)==true);",pass
+CPP_76,"assert (is_simple_power(8, 2)==true);",pass
+CPP_76,"assert (is_simple_power(3, 2)==false);",pass
+CPP_76,"assert (is_simple_power(3, 1)==false);",pass
+CPP_76,"assert (is_simple_power(5, 3)==false);",pass
+CPP_76,"assert (is_simple_power(16, 2)== true);",pass
+CPP_76,"assert (is_simple_power(143214, 16)== false);",pass
+CPP_76,"assert (is_simple_power(4, 2)==true);",pass
+CPP_76,"assert (is_simple_power(9, 3)==true);",pass
+CPP_76,"assert (is_simple_power(16, 4)==true);",pass
+CPP_76,"assert (is_simple_power(24, 2)==false);",pass
+CPP_76,"assert (is_simple_power(128, 4)==false);",pass
+CPP_76,"assert (is_simple_power(12, 6)==false);",pass
+CPP_76,"assert (is_simple_power(1, 1)==true);",pass
+CPP_76,"assert (is_simple_power(1, 12)==true);",pass
+CPP_77,assert (iscuber(1) == true);,pass
+CPP_77,assert (iscuber(2) == false);,pass
+CPP_77,assert (iscuber(-1) == true);,pass
+CPP_77,assert (iscuber(64) == true);,pass
+CPP_77,assert (iscuber(180) == false);,pass
+CPP_77,assert (iscuber(1000) == true);,pass
+CPP_77,assert (iscuber(0) == true);,pass
+CPP_77,assert (iscuber(1729) == false);,pass
+CPP_78,"assert (hex_key(""AB"") == 1      );",pass
+CPP_78,"assert (hex_key(""1077E"") == 2 );",fail
+CPP_78,"assert (hex_key(""ABED1A33"") == 4     );",pass
+CPP_78,"assert (hex_key(""2020"") == 2 );",pass
+CPP_78,"assert (hex_key(""123456789ABCDEF0"") == 6      );",pass
+CPP_78,"assert (hex_key(""112233445566778899AABBCCDDEEFF00"") == 12 );",pass
+CPP_78,"assert (hex_key("""") == 0);",pass
+CPP_79,"assert (decimal_to_binary(0) == ""db0db"");",pass
+CPP_79,"assert (decimal_to_binary(32) == ""db100000db"");",fail
+CPP_79,"assert (decimal_to_binary(103) == ""db1100111db"");",fail
+CPP_79,"assert (decimal_to_binary(15) == ""db1111db"");",fail
+CPP_80,"assert (is_happy(""a"") == false );",pass
+CPP_80,"assert (is_happy(""aa"") == false );",pass
+CPP_80,"assert (is_happy(""abcd"") == true );",pass
+CPP_80,"assert (is_happy(""aabb"") == false );",pass
+CPP_80,"assert (is_happy(""adb"") == true );",pass
+CPP_80,"assert (is_happy(""xyy"") == false );",pass
+CPP_80,"assert (is_happy(""iopaxpoi"") == true );",pass
+CPP_80,"assert (is_happy(""iopaxioi"") == false );",pass
+CPP_81,"assert (issame(numerical_letter_grade({4.0, 3, 1.7, 2, 3.5}) , {""A+"", ""B"", ""C-"", ""C"", ""A-""}));",pass
+CPP_81,"assert (issame(numerical_letter_grade({1.2}) , {""D+""}));",pass
+CPP_81,"assert (issame(numerical_letter_grade({0.5}) , {""D-""}));",pass
+CPP_81,"assert (issame(numerical_letter_grade({0.0}) , {""E""}));",pass
+CPP_81,"assert (issame(numerical_letter_grade({1, 0.3, 1.5, 2.8, 3.3}) , {""D"", ""D-"", ""C-"", ""B"", ""B+""}));",fail
+CPP_81,"assert (issame(numerical_letter_grade({0, 0.7}) , {""E"", ""D-""}));",pass
+CPP_82,"assert (prime_length(""Hello"") == true);",pass
+CPP_82,"assert (prime_length(""abcdcba"") == true);",pass
+CPP_82,"assert (prime_length(""kittens"") == true);",pass
+CPP_82,"assert (prime_length(""orange"") == false);",pass
+CPP_82,"assert (prime_length(""wow"") == true);",pass
+CPP_82,"assert (prime_length(""world"") == true);",pass
+CPP_82,"assert (prime_length(""MadaM"") == true);",pass
+CPP_82,"assert (prime_length(""Wow"") == true);",pass
+CPP_82,"assert (prime_length("""") == false);",pass
+CPP_82,"assert (prime_length(""HI"") == true);",pass
+CPP_82,"assert (prime_length(""go"") == true);",pass
+CPP_82,"assert (prime_length(""gogo"") == false);",pass
+CPP_82,"assert (prime_length(""aaaaaaaaaaaaaaa"") == false);",pass
+CPP_82,"assert (prime_length(""Madam"") == true);",pass
+CPP_82,"assert (prime_length(""M"") == false);",pass
+CPP_82,"assert (prime_length(""0"") == false);",pass
+CPP_83,assert (starts_one_ends(1) == 1);,pass
+CPP_83,assert (starts_one_ends(2) == 18);,pass
+CPP_83,assert (starts_one_ends(3) == 180);,pass
+CPP_83,assert (starts_one_ends(4) == 1800);,pass
+CPP_83,assert (starts_one_ends(5) == 18000);,pass
+CPP_84,"assert (solve(1000) == ""1"");",pass
+CPP_84,"assert (solve(150) == ""110"");",pass
+CPP_84,"assert (solve(147) == ""1100"");",pass
+CPP_84,"assert (solve(333) == ""1001"");",pass
+CPP_84,"assert (solve(963) == ""10010"");",pass
+CPP_85,"assert (add({4, 88}) == 88);",pass
+CPP_85,"assert (add({4, 5, 6, 7, 2, 122}) == 122);",pass
+CPP_85,"assert (add({4, 0, 6, 7}) == 0);",fail
+CPP_85,"assert (add({4, 4, 6, 8}) == 12);",fail
+CPP_86,"assert (anti_shuffle(""Hi"") == ""Hi"");",pass
+CPP_86,"assert (anti_shuffle(""hello"") == ""ehllo"");",fail
+CPP_86,"assert (anti_shuffle(""number"") == ""bemnru"");",fail
+CPP_86,"assert (anti_shuffle(""abcd"") == ""abcd"");",pass
+CPP_86,"assert (anti_shuffle(""Hello World!!!"") == ""Hello !!!Wdlor"");",fail
+CPP_86,"assert (anti_shuffle("""") == """");",pass
+CPP_86,"assert (anti_shuffle(""Hi. My name is Mister Robot. How are you?"") == "".Hi My aemn is Meirst .Rboot How aer ?ouy"");",fail
+CPP_87,assert (issame(get_row({,fail
+CPP_87,assert (issame(get_row({,fail
+CPP_87,assert (issame(get_row({,fail
+CPP_87,"assert (issame(get_row({}, 1) , {}));",fail
+CPP_87,"assert (issame(get_row({{1}}, 2) , {}));",fail
+CPP_87,"assert (issame(get_row({{}, {1}, {1, 2, 3}}, 3) , {{2, 2}}));",pass
+CPP_88,"assert (issame(sort_array({}) , {}));",pass
+CPP_88,"assert (issame(sort_array({5}) , {5}));",pass
+CPP_88,"assert (issame(sort_array({2, 4, 3, 0, 1, 5}) , {0, 1, 2, 3, 4, 5}));",pass
+CPP_88,"assert (issame(sort_array({2, 4, 3, 0, 1, 5, 6}) , {6, 5, 4, 3, 2, 1, 0}));",fail
+CPP_88,"assert (issame(sort_array({2, 1}) , {1, 2}));",pass
+CPP_88,"assert (issame(sort_array({15, 42, 87, 32 ,11, 0}) , {0, 11, 15, 32, 42, 87}));",pass
+CPP_88,"assert (issame(sort_array({21, 14, 23, 11}) , {23, 21, 14, 11}));",fail
+CPP_89,"assert (encrypt(""hi"") == ""lm"");",fail
+CPP_89,"assert (encrypt(""asdfghjkl"") == ""ewhjklnop"");",fail
+CPP_89,"assert (encrypt(""gf"") == ""kj"");",pass
+CPP_89,"assert (encrypt(""et"") == ""ix"");",pass
+CPP_89,"assert (encrypt(""faewfawefaewg"")==""jeiajeaijeiak"");",fail
+CPP_89,"assert (encrypt(""hellomyfriend"")==""lippsqcjvmirh"");",pass
+CPP_89,"assert (encrypt(""dxzdlmnilfuhmilufhlihufnmlimnufhlimnufhfucufh"")==""hbdhpqrmpjylqmpyjlpmlyjrqpmqryjlpmqryjljygyjl"");",fail
+CPP_89,"assert (encrypt(""a"")==""e"");",pass
+CPP_90,"assert (next_smallest({1, 2, 3, 4, 5}) == 2);",pass
+CPP_90,"assert (next_smallest({5, 1, 4, 3, 2}) == 2);",pass
+CPP_90,assert (next_smallest({}) == -1);,pass
+CPP_90,"assert (next_smallest({1, 1}) == -1);",pass
+CPP_90,"assert (next_smallest({1,1,1,1,0}) == 1);",pass
+CPP_90,"assert (next_smallest({-35, 34, 12, -45}) == -35);",pass
+CPP_91,"assert (is_bored(""Hello world"") == 0);",pass
+CPP_91,"assert (is_bored(""Is the sky blue?"") == 0);",pass
+CPP_91,"assert (is_bored(""I love It !"") == 1);",pass
+CPP_91,"assert (is_bored(""bIt"") == 0);",pass
+CPP_91,"assert (is_bored(""I feel good today. I will be productive. will kill It"") == 2);",pass
+CPP_91,"assert (is_bored(""You and I are going for a walk"") == 0);",fail
+CPP_92,"assert (any_int(2, 3, 1)==true);",pass
+CPP_92,"assert (any_int(2.5, 2, 3)==false);",pass
+CPP_92,"assert (any_int(1.5, 5, 3.5)==false);",pass
+CPP_92,"assert (any_int(2, 6, 2)==false);",pass
+CPP_92,"assert (any_int(4, 2, 2)==true);",pass
+CPP_92,"assert (any_int(2.2, 2.2, 2.2)==false);",fail
+CPP_92,"assert (any_int(-4, 6, 2)==true);",pass
+CPP_92,"assert (any_int(2,1,1)==true);",pass
+CPP_92,"assert (any_int(3,4,7)==true);",pass
+CPP_92,"assert (any_int(3.01,4,7)==false);",pass
+CPP_93,"assert (encode(""TEST"") == ""tgst"");",fail
+CPP_93,"assert (encode(""Mudasir"") == ""mWDCSKR"");",fail
+CPP_93,"assert (encode(""YES"") == ""ygs"");",fail
+CPP_93,"assert (encode(""This is a message"") == ""tHKS KS C MGSSCGG"");",fail
+CPP_93,"assert (encode(""I DoNt KnOw WhAt tO WrItE"") == ""k dQnT kNqW wHcT Tq wRkTg"");",fail
+CPP_94,"assert (skjkasdkd({0,3,2,1,3,5,7,4,5,5,5,2,181,32,4,32,3,2,32,324,4,3}) == 10);",pass
+CPP_94,"assert (skjkasdkd({1,0,1,8,2,4597,2,1,3,40,1,2,1,2,4,2,5,1}) == 25);",pass
+CPP_94,"assert (skjkasdkd({1,3,1,32,5107,34,83278,109,163,23,2323,32,30,1,9,3}) == 13);",pass
+CPP_94,"assert (skjkasdkd({0,724,32,71,99,32,6,0,5,91,83,0,5,6}) == 11);",pass
+CPP_94,"assert (skjkasdkd({0,81,12,3,1,21}) == 3);",pass
+CPP_94,"assert (skjkasdkd({0,8,1,2,1,7}) == 7);",pass
+CPP_94,assert (skjkasdkd({8191}) == 19);,pass
+CPP_94,"assert (skjkasdkd({8191, 123456, 127, 7}) == 19);",pass
+CPP_94,"assert (skjkasdkd({127, 97, 8192}) == 10);",pass
+CPP_95,"assert (check_dict_case({{""p"",""pineapple""}, {""b"",""banana""}}) == true);",pass
+CPP_95,"assert (check_dict_case({{""p"",""pineapple""}, {""A"",""banana""}, {""B"",""banana""}}) == false);",pass
+CPP_95,"assert (check_dict_case({{""p"",""pineapple""}, {""5"",""banana""}, {""a"",""apple""}}) == false);",pass
+CPP_95,"assert (check_dict_case({{""Name"",""John""}, {""Age"",""36""}, {""City"",""Houston""}}) == false);",pass
+CPP_95,"assert (check_dict_case({{""STATE"",""NC""}, {""ZIP"",""12345""} }) == true  );",pass
+CPP_95,"assert (check_dict_case({{""fruit"",""Orange""}, {""taste"",""Sweet""} }) == true  );",pass
+CPP_95,assert (check_dict_case({}) == false);,pass
+CPP_96,"assert (issame(count_up_to(5) , {2,3}));",fail
+CPP_96,"assert (issame(count_up_to(6) , {2,3,5}));",fail
+CPP_96,"assert (issame(count_up_to(7) , {2,3,5}));",fail
+CPP_96,"assert (issame(count_up_to(10) , {2,3,5,7}));",fail
+CPP_96,"assert (issame(count_up_to(0) , {}));",pass
+CPP_96,"assert (issame(count_up_to(22) , {2,3,5,7,11,13,17,19}));",fail
+CPP_96,"assert (issame(count_up_to(1) , {}));",pass
+CPP_96,"assert (issame(count_up_to(18) , {2,3,5,7,11,13,17}));",fail
+CPP_96,"assert (issame(count_up_to(47) , {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43}));",pass
+CPP_96,"assert (issame(count_up_to(101) , {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97}));",pass
+CPP_97,"assert (multiply(148, 412) == 16                   );",fail
+CPP_97,"assert (multiply(19, 28) == 72       );",fail
+CPP_97,"assert (multiply(2020, 1851) == 0);",fail
+CPP_97,"assert (multiply(14,-15) == 20   );",pass
+CPP_97,"assert (multiply(76, 67) == 42    );",fail
+CPP_97,"assert (multiply(17, 27) == 49    );",fail
+CPP_97,"assert (multiply(0, 1) == 0);",pass
+CPP_97,"assert (multiply(0, 0) == 0);",pass
+CPP_98,"assert (count_upper(""aBCdEf"")  == 1);",pass
+CPP_98,"assert (count_upper(""abcdefg"") == 0);",pass
+CPP_98,"assert (count_upper(""dBBE"") == 0);",fail
+CPP_98,"assert (count_upper(""B"")  == 0);",fail
+CPP_98,"assert (count_upper(""U"")  == 1);",pass
+CPP_98,"assert (count_upper("""") == 0);",pass
+CPP_98,"assert (count_upper(""EEEE"") == 2);",pass
+CPP_99,"assert (closest_integer(""10"") == 10);",pass
+CPP_99,"assert (closest_integer(""14.5"") == 15);",pass
+CPP_99,"assert (closest_integer(""-15.5"") == -16);",pass
+CPP_99,"assert (closest_integer(""15.3"") == 15);",pass
+CPP_99,"assert (closest_integer(""0"") == 0);",pass
+CPP_100,"assert (issame(make_a_pile(3) , {3, 5, 7}));",fail
+CPP_100,"assert (issame(make_a_pile(4) , {4,6,8,10}));",fail
+CPP_100,"assert (issame(make_a_pile(5) , {5, 7, 9, 11, 13}));",fail
+CPP_100,"assert (issame(make_a_pile(6) , {6, 8, 10, 12, 14, 16}));",pass
+CPP_100,"assert (issame(make_a_pile(8) , {8, 10, 12, 14, 16, 18, 20, 22}));",fail
+CPP_101,"assert (issame(words_string(""Hi, my name is John"") , {""Hi"", ""my"", ""name"", ""is"", ""John""}));",pass
+CPP_101,"assert (issame(words_string(""One, two, three, four, five, six"") , {""One"", ""two"", ""three"", ""four"", ""five"", ""six""}));",pass
+CPP_101,"assert (issame(words_string(""Hi, my name"") , {""Hi"", ""my"", ""name""}));",pass
+CPP_101,"assert (issame(words_string(""One,, two, three, four, five, six,"") , {""One"", ""two"", ""three"", ""four"", ""five"", ""six""}));",pass
+CPP_101,"assert (issame(words_string("""") , {}));",pass
+CPP_101,"assert (issame(words_string(""ahmed     , gamal"") , {""ahmed"", ""gamal""}));",pass
+CPP_102,"assert (choose_num(12, 15) == 14);",pass
+CPP_102,"assert (choose_num(13, 12) == -1);",pass
+CPP_102,"assert (choose_num(33, 12354) == 12354);",fail
+CPP_102,"assert (choose_num(5234, 5233) == -1);",pass
+CPP_102,"assert (choose_num(6, 29) == 28);",fail
+CPP_102,"assert (choose_num(27, 10) == -1);",pass
+CPP_102,"assert (choose_num(7, 7) == -1);",pass
+CPP_102,"assert (choose_num(546, 546) == 546);",pass
+CPP_103,"assert (rounded_avg(1, 5) == ""11"");",fail
+CPP_103,"assert (rounded_avg(7, 13) == ""1010"");",pass
+CPP_103,"assert (rounded_avg(964,977) == ""1111001010"");",fail
+CPP_103,"assert (rounded_avg(996,997) == ""1111100100"");",fail
+CPP_103,"assert (rounded_avg(560,851) == ""1011000001"");",fail
+CPP_103,"assert (rounded_avg(185,546) == ""101101101"");",fail
+CPP_103,"assert (rounded_avg(362,496) == ""110101101"");",fail
+CPP_103,"assert (rounded_avg(350,902) == ""1001110010"");",fail
+CPP_103,"assert (rounded_avg(197,233) == ""11010111"");",fail
+CPP_103,"assert (rounded_avg(7, 5) == ""-1"");",fail
+CPP_103,"assert (rounded_avg(5, 1) == ""-1"");",fail
+CPP_103,"assert (rounded_avg(5, 5) == ""101"");",fail
+CPP_104,"assert (issame(unique_digits({15, 33, 1422, 1}) , {1, 15, 33}));",pass
+CPP_104,"assert (issame(unique_digits({152, 323, 1422, 10}) , {}));",pass
+CPP_104,"assert (issame(unique_digits({12345, 2033, 111, 151}) , {111, 151}));",pass
+CPP_104,"assert (issame(unique_digits({135, 103, 31}) , {31, 135}));",pass
+CPP_105,"assert (issame(by_length({2, 1, 1, 4, 5, 8, 2, 3}) , {""Eight"", ""Five"", ""Four"", ""Three"", ""Two"", ""Two"", ""One"", ""One""}));",pass
+CPP_105,"assert (issame(by_length({}) , {}));",pass
+CPP_105,"assert (issame(by_length({1, -1 , 55}) , {""One""}));",fail
+CPP_105,"assert (issame(by_length({1, -1, 3, 2}) , {""Three"", ""Two"", ""One""}));",pass
+CPP_105,"assert (issame(by_length({9, 4, 8}) , {""Nine"", ""Eight"", ""Four""}));",pass
+CPP_106,"assert (issame(f(5) , {1, 2, 6, 24, 15}));",fail
+CPP_106,"assert (issame(f(7) , {1, 2, 6, 24, 15, 720, 28}));",fail
+CPP_106,"assert (issame(f(1) , {1}));",pass
+CPP_106,"assert (issame(f(3) , {1, 2, 6}));",fail
+CPP_107,"assert (issame(even_odd_palindrome(123) , {8, 13}));",fail
+CPP_107,"assert (issame(even_odd_palindrome(12) , {4, 6}));",fail
+CPP_107,"assert (issame(even_odd_palindrome(3) , {1, 2}));",fail
+CPP_107,"assert (issame(even_odd_palindrome(63) , {6, 8}));",fail
+CPP_107,"assert (issame(even_odd_palindrome(25) , {5, 6}));",fail
+CPP_107,"assert (issame(even_odd_palindrome(19) , {4, 6}));",fail
+CPP_107,"assert (issame(even_odd_palindrome(9) , {4, 5}));",fail
+CPP_107,"assert (issame(even_odd_palindrome(1) , {0, 1}));",pass
+CPP_108,assert (count_nums({}) == 0);,pass
+CPP_108,"assert (count_nums({-1, -2, 0}) == 0);",pass
+CPP_108,"assert (count_nums({1, 1, 2, -2, 3, 4, 5}) == 6);",pass
+CPP_108,"assert (count_nums({1, 6, 9, -6, 0, 1, 5}) == 5);",pass
+CPP_108,"assert (count_nums({1, 100, 98, -7, 1, -1}) == 4);",pass
+CPP_108,"assert (count_nums({12, 23, 34, -45, -56, 0}) == 5);",pass
+CPP_108,"assert (count_nums({-0, 1}) == 1);",pass
+CPP_108,assert (count_nums({1}) == 1);,pass
+CPP_109,"assert (move_one_ball({3, 4, 5, 1, 2})==true);",pass
+CPP_109,"assert (move_one_ball({3, 5, 10, 1, 2})==true);",pass
+CPP_109,"assert (move_one_ball({4, 3, 1, 2})==false);",pass
+CPP_109,"assert (move_one_ball({3, 5, 4, 1, 2})==false);",pass
+CPP_109,assert (move_one_ball({})==true);,fail
+CPP_110,"assert (exchange({1, 2, 3, 4}, {1, 2, 3, 4}) == ""YES"");",pass
+CPP_110,"assert (exchange({1, 2, 3, 4}, {1, 5, 3, 4}) == ""NO"");",fail
+CPP_110,"assert (exchange({1, 2, 3, 4}, {2, 1, 4, 3}) == ""YES"" );",pass
+CPP_110,"assert (exchange({5, 7, 3}, {2, 6, 4}) == ""YES"");",pass
+CPP_110,"assert (exchange({5, 7, 3}, {2, 6, 3}) == ""NO"" );",fail
+CPP_110,"assert (exchange({3, 2, 6, 1, 8, 9}, {3, 5, 5, 1, 1, 1}) == ""NO"");",fail
+CPP_110,"assert (exchange({100, 200}, {200, 200}) == ""YES"");",pass
+CPP_111,"assert (issame(histogram(""a b b a"") , {{'a',2},{'b', 2}}));",pass
+CPP_111,"assert (issame(histogram(""a b c a b"") , {{'a', 2},{'b', 2}}));",pass
+CPP_111,"assert (issame(histogram(""a b c d g"") , {{'a', 1}, {'b', 1}, {'c', 1}, {'d', 1}, {'g', 1}}));",pass
+CPP_111,"assert (issame(histogram(""r t g"") , {{'r', 1},{'t', 1},{'g', 1}}));",pass
+CPP_111,"assert (issame(histogram(""b b b b a"") , {{'b', 4}}));",pass
+CPP_111,"assert (issame(histogram(""r t g"") , {{'r', 1},{'t', 1},{'g', 1}}));",pass
+CPP_111,"assert (issame(histogram("""") , {}));",pass
+CPP_111,"assert (issame(histogram(""a"") , {{'a', 1}}));",pass
+CPP_112,"assert (issame(reverse_delete(""abcde"",""ae"") , {""bcd"",""False""}));",fail
+CPP_112,"assert (issame(reverse_delete(""abcdef"", ""b"") , {""acdef"",""False""}));",fail
+CPP_112,"assert (issame(reverse_delete(""abcdedcba"",""ab"") , {""cdedc"",""True""}));",fail
+CPP_112,"assert (issame(reverse_delete(""dwik"",""w"") , {""dik"",""False""}));",pass
+CPP_112,"assert (issame(reverse_delete(""a"",""a"") , {"""",""True""}));",fail
+CPP_112,"assert (issame(reverse_delete(""abcdedcba"","""") , {""abcdedcba"",""True""}));",pass
+CPP_112,"assert (issame(reverse_delete(""abcdedcba"",""v"") , {""abcdedcba"",""True""}));",fail
+CPP_112,"assert (issame(reverse_delete(""vabba"",""v"") , {""abba"",""True""}));",fail
+CPP_112,"assert (issame(reverse_delete(""mamma"", ""mia"") , {"""", ""True""}));",fail
+CPP_113,"assert (issame(odd_count({""1234567""}) , {""the number of odd elements 4n the str4ng 4 of the 4nput.""}));",fail
+CPP_113,"assert (issame(odd_count({""3"",""11111111""}) , {""the number of odd elements 1n the str1ng 1 of the 1nput."", ""the number of odd elements 8n the str8ng 8 of the 8nput.""}));",fail
+CPP_113,"assert (issame(odd_count({""271"", ""137"", ""314""}) , {",fail
+CPP_114,"assert (minSubArraySum({2, 3, 4, 1, 2, 4}) == 1);",pass
+CPP_114,"assert (minSubArraySum({-1, -2, -3}) == -6);",pass
+CPP_114,"assert (minSubArraySum({-1, -2, -3, 2, -10}) == -14);",pass
+CPP_114,assert (minSubArraySum({-9999999999999999}) == -9999999999999999);,fail
+CPP_114,"assert (minSubArraySum({0, 10, 20, 1000000}) == 0);",pass
+CPP_114,"assert (minSubArraySum({-1, -2, -3, 10, -5}) == -6);",pass
+CPP_114,"assert (minSubArraySum({100, -1, -2, -3, 10, -5}) == -6);",pass
+CPP_114,"assert (minSubArraySum({10, 11, 13, 8, 3, 4}) == 3);",pass
+CPP_114,"assert (minSubArraySum({100, -33, 32, -1, 0, -2}) == -33);",pass
+CPP_114,assert (minSubArraySum({-10}) == -10);,pass
+CPP_114,assert (minSubArraySum({7}) == 7);,pass
+CPP_114,"assert (minSubArraySum({1, -1}) == -1);",pass
+CPP_115,"assert (max_fill({{0,0,1,0}, {0,1,0,0}, {1,1,1,1}}, 1) == 6);",pass
+CPP_115,"assert (max_fill({{0,0,1,1}, {0,0,0,0}, {1,1,1,1}, {0,1,1,1}}, 2) == 5);",pass
+CPP_115,"assert (max_fill({{0,0,0}, {0,0,0}}, 5) == 0);",pass
+CPP_115,"assert (max_fill({{1,1,1,1}, {1,1,1,1}}, 2) == 4);",pass
+CPP_115,"assert (max_fill({{1,1,1,1}, {1,1,1,1}}, 9) == 2);",pass
+CPP_116,"assert (issame(sort_array({1,5,2,3,4}) , {1, 2, 4, 3, 5}));",fail
+CPP_116,"assert (issame(sort_array({-2,-3,-4,-5,-6}) , {-4, -2, -6, -5, -3}));",fail
+CPP_116,"assert (issame(sort_array({1,0,2,3,4}) , {0, 1, 2, 4, 3}));",fail
+CPP_116,"assert (issame(sort_array({}) , {}));",pass
+CPP_116,"assert (issame(sort_array({2,5,77,4,5,3,5,7,2,3,4}) , {2, 2, 4, 4, 3, 3, 5, 5, 5, 7, 77}));",fail
+CPP_116,"assert (issame(sort_array({3,6,44,12,32,5}) , {32, 3, 5, 6, 12, 44}));",fail
+CPP_116,"assert (issame(sort_array({2,4,8,16,32}) , {2, 4, 8, 16, 32}));",pass
+CPP_116,"assert (issame(sort_array({2,4,8,16,32}) , {2, 4, 8, 16, 32}));",pass
+CPP_117,"assert (issame(select_words(""Mary had a little lamb"", 4) , {""little""}   ));",pass
+CPP_117,"assert (issame(select_words(""Mary had a little lamb"", 3) , {""Mary"", ""lamb""} ));",pass
+CPP_117,"assert (issame(select_words(""simple white space"", 2) , {}     ));",fail
+CPP_117,"assert (issame(select_words(""Hello world"", 4) , {""world""}  ));",pass
+CPP_117,"assert (issame(select_words(""Uncle sam"", 3) , {""Uncle""}));",pass
+CPP_117,"assert (issame(select_words("""", 4) , {}));",pass
+CPP_117,"assert (issame(select_words(""a b c d e f"", 1) , {""b"", ""c"", ""d"", ""f""}));",fail
+CPP_118,"assert (get_closest_vowel(""yogurt"") == ""u"");",fail
+CPP_118,"assert (get_closest_vowel(""full"") == ""u"");",pass
+CPP_118,"assert (get_closest_vowel(""easy"") == """");",fail
+CPP_118,"assert (get_closest_vowel(""eAsy"") == """");",fail
+CPP_118,"assert (get_closest_vowel(""ali"") == """");",fail
+CPP_118,"assert (get_closest_vowel(""bad"") == ""a"");",pass
+CPP_118,"assert (get_closest_vowel(""most"") ==""o"");",pass
+CPP_118,"assert (get_closest_vowel(""ab"") == """");",fail
+CPP_118,"assert (get_closest_vowel(""ba"") == """");",fail
+CPP_118,"assert (get_closest_vowel(""quick"") == """");",fail
+CPP_118,"assert (get_closest_vowel(""anime"") == ""i"");",pass
+CPP_118,"assert (get_closest_vowel(""Asia"") == """");",fail
+CPP_118,"assert (get_closest_vowel(""Above"") == ""o"");",fail
+CPP_119,"assert (match_parens({""()("", "")""}) == ""Yes"");",pass
+CPP_119,"assert (match_parens({"")"", "")""}) == ""No"");",fail
+CPP_119,"assert (match_parens({""(()(())"", ""())())""}) == ""No"");",pass
+CPP_119,"assert (match_parens({"")())"", ""(()()(""}) == ""Yes"");",pass
+CPP_119,"assert (match_parens({""(())))"", ""(()())((""}) == ""Yes"");",pass
+CPP_119,"assert (match_parens({""()"", ""())""}) == ""No"");",fail
+CPP_119,"assert (match_parens({""(()("", ""()))()""}) == ""Yes"");",pass
+CPP_119,"assert (match_parens({""(((("", ""((())""}) == ""No"");",fail
+CPP_119,"assert (match_parens({"")(()"", ""(()(""}) == ""No"");",fail
+CPP_119,"assert (match_parens({"")("", "")(""}) == ""No"");",pass
+CPP_119,"assert (match_parens({""("", "")""}) == ""Yes"");",pass
+CPP_119,"assert (match_parens({"")"", ""(""}) == ""Yes"" );",pass
+CPP_120,"assert (issame(maximum({-3, -4, 5}, 3) , {-4, -3, 5}));",pass
+CPP_120,"assert (issame(maximum({4, -4, 4}, 2) , {4, 4}));",pass
+CPP_120,"assert (issame(maximum({-3, 2, 1, 2, -1, -2, 1}, 1) , {2}));",pass
+CPP_120,"assert (issame(maximum({123, -123, 20, 0 , 1, 2, -3}, 3) , {2, 20, 123}));",pass
+CPP_120,"assert (issame(maximum({-123, 20, 0 , 1, 2, -3}, 4) , {0, 1, 2, 20}));",pass
+CPP_120,"assert (issame(maximum({5, 15, 0, 3, -13, -8, 0}, 7) , {-13, -8, 0, 0, 3, 5, 15}));",pass
+CPP_120,"assert (issame(maximum({-1, 0, 2, 5, 3, -10}, 2) , {3, 5}));",pass
+CPP_120,"assert (issame(maximum({1, 0, 5, -7}, 1) , {5}));",pass
+CPP_120,"assert (issame(maximum({4, -4}, 2) , {-4, 4}));",pass
+CPP_120,"assert (issame(maximum({-10, 10}, 2) , {-10, 10}));",pass
+CPP_120,"assert (issame(maximum({1, 2, 3, -23, 243, -400, 0}, 0) , {}));",fail
+CPP_121,"assert (solutions({5, 8, 7, 1})    == 12);",pass
+CPP_121,"assert (solutions({3, 3, 3, 3, 3}) == 9);",pass
+CPP_121,"assert (solutions({30, 13, 24, 321}) == 0);",pass
+CPP_121,"assert (solutions({5, 9}) == 5);",pass
+CPP_121,"assert (solutions({2, 4, 8}) == 0);",pass
+CPP_121,"assert (solutions({30, 13, 23, 32}) == 23);",pass
+CPP_121,"assert (solutions({3, 13, 2, 9}) == 3);",pass
+CPP_122,"assert (add_elements({1,-2,-3,41,57,76,87,88,99}, 3) == -4);",pass
+CPP_122,"assert (add_elements({111,121,3,4000,5,6}, 2) == 0);",fail
+CPP_122,"assert (add_elements({11,21,3,90,5,6,7,8,9}, 4) == 125);",pass
+CPP_122,"assert (add_elements({111,21,3,4000,5,6,7,8,9}, 4) == 24);",pass
+CPP_122,"assert (add_elements({1}, 1) == 1);",pass
+CPP_123,"assert (issame(get_odd_collatz(14) , {1, 5, 7, 11, 13, 17}));",fail
+CPP_123,"assert (issame(get_odd_collatz(5) , {1, 5}));",pass
+CPP_123,"assert (issame(get_odd_collatz(12) , {1, 3, 5}));",fail
+CPP_123,"assert (issame(get_odd_collatz(1) , {1}));",pass
+CPP_124,"assert (valid_date(""03-11-2000"") == true);",pass
+CPP_124,"assert (valid_date(""15-01-2012"") == false);",pass
+CPP_124,"assert (valid_date(""04-0-2040"") == false);",pass
+CPP_124,"assert (valid_date(""06-04-2020"") == true);",pass
+CPP_124,"assert (valid_date(""01-01-2007"") == true);",pass
+CPP_124,"assert (valid_date(""03-32-2011"") == false);",pass
+CPP_124,"assert (valid_date("""") == false);",pass
+CPP_124,"assert (valid_date(""04-31-3000"") == false);",pass
+CPP_124,"assert (valid_date(""06-06-2005"") == true);",pass
+CPP_124,"assert (valid_date(""21-31-2000"") == false);",pass
+CPP_124,"assert (valid_date(""04-12-2003"") == true);",pass
+CPP_124,"assert (valid_date(""04122003"") == false);",pass
+CPP_124,"assert (valid_date(""20030412"") == false);",pass
+CPP_124,"assert (valid_date(""2003-04"") == false);",pass
+CPP_124,"assert (valid_date(""2003-04-12"") == false);",pass
+CPP_124,"assert (valid_date(""04-2003"") == false);",pass
+CPP_125,"assert (issame(split_words(""Hello world!"") , {""Hello"",""world!""}));",pass
+CPP_125,"assert (issame(split_words(""Hello,world!"") , {""Hello"",""world!""}));",pass
+CPP_125,"assert (issame(split_words(""Hello world,!"") , {""Hello"",""world,!""}));",pass
+CPP_125,"assert (issame(split_words(""Hello,Hello,world !"") , {""Hello,Hello,world"",""!""}));",pass
+CPP_125,"assert (issame(split_words(""abcdef"") , {""3""}));",fail
+CPP_125,"assert (issame(split_words(""aaabb"") , {""2""}));",pass
+CPP_125,"assert (issame(split_words(""aaaBb"") , {""1""}));",fail
+CPP_125,"assert (issame(split_words("""") ,{""0""}));",fail
+CPP_126,assert (is_sorted({5}) == true);,pass
+CPP_126,"assert (is_sorted({1, 2, 3, 4, 5}) == true);",pass
+CPP_126,"assert (is_sorted({1, 3, 2, 4, 5}) == false);",pass
+CPP_126,"assert (is_sorted({1, 2, 3, 4, 5, 6}) == true);",pass
+CPP_126,"assert (is_sorted({1, 2, 3, 4, 5, 6, 7}) == true);",pass
+CPP_126,"assert (is_sorted({1, 3, 2, 4, 5, 6, 7}) == false);",pass
+CPP_126,assert (is_sorted({}) == true);,pass
+CPP_126,assert (is_sorted({1}) == true);,pass
+CPP_126,"assert (is_sorted({3, 2, 1}) == false);",pass
+CPP_126,"assert (is_sorted({1, 2, 2, 2, 3, 4}) == false);",pass
+CPP_126,"assert (is_sorted({1, 2, 3, 3, 3, 4}) == false);",fail
+CPP_126,"assert (is_sorted({1, 2, 2, 3, 3, 4}) == true);",pass
+CPP_126,"assert (is_sorted({1, 2, 3, 4}) == true);",pass
+CPP_127,"assert (intersection({1, 2}, {2, 3}) == ""NO"");",pass
+CPP_127,"assert (intersection({-1, 1}, {0, 4}) == ""NO"");",pass
+CPP_127,"assert (intersection({-3, -1}, {-5, 5}) == ""YES"");",pass
+CPP_127,"assert (intersection({-2, 2}, {-4, 0}) == ""YES"");",pass
+CPP_127,"assert (intersection({-11, 2}, {-1, -1}) == ""NO"");",fail
+CPP_127,"assert (intersection({1, 2}, {3, 5}) == ""NO"");",fail
+CPP_127,"assert (intersection({1, 2}, {1, 2}) == ""NO"");",fail
+CPP_127,"assert (intersection({-2, -2}, {-3, -2}) == ""NO"");",fail
+CPP_128,"assert (prod_signs({1, 2, 2, -4}) == -9);",fail
+CPP_128,"assert (prod_signs({0, 1}) == 0);",pass
+CPP_128,"assert (prod_signs({1, 1, 1, 2, 3, -1, 1}) == -10);",fail
+CPP_128,assert (prod_signs({}) == -32768);,pass
+CPP_128,"assert (prod_signs({2, 4,1, 2, -1, -1, 9}) == 20);",pass
+CPP_128,"assert (prod_signs({-1, 1, -1, 1}) == 4);",fail
+CPP_128,"assert (prod_signs({-1, 1, 1, 1}) == -4);",fail
+CPP_128,"assert (prod_signs({-1, 1, 1, 0}) == 0);",pass
+CPP_129,"assert (issame(minPath({{1, 2, 3}, {4, 5, 6}, {7, 8, 9}}, 3) , {1, 2, 1}));",fail
+CPP_129,"assert (issame(minPath({{5, 9, 3}, {4, 1, 6}, {7, 8, 2}}, 1) , {1}));",fail
+CPP_129,"assert (issame(minPath({{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}, {13, 14, 15, 16}}, 4) , {1, 2, 1, 2}));",fail
+CPP_129,"assert (issame(minPath({{6, 4, 13, 10}, {5, 7, 12, 1}, {3, 16, 11, 15}, {8, 14, 9, 2}}, 7) , {1, 10, 1, 10, 1, 10, 1}));",fail
+CPP_129,"assert (issame(minPath({{8, 14, 9, 2}, {6, 4, 13, 15}, {5, 7, 1, 12}, {3, 10, 11, 16}}, 5) , {1, 7, 1, 7, 1}));",fail
+CPP_129,"assert (issame(minPath({{11, 8, 7, 2}, {5, 16, 14, 4}, {9, 3, 15, 6}, {12, 13, 10, 1}}, 9) , {1, 6, 1, 6, 1, 6, 1, 6, 1}));",fail
+CPP_129,"assert (issame(minPath({{12, 13, 10, 1}, {9, 3, 15, 6}, {5, 16, 14, 4}, {11, 8, 7, 2}}, 12) , {1, 6, 1, 6, 1, 6, 1, 6, 1, 6, 1, 6}));",fail
+CPP_129,"assert (issame(minPath({{2, 7, 4}, {3, 1, 5}, {6, 8, 9}}, 8) , {1, 3, 1, 3, 1, 3, 1, 3}));",fail
+CPP_129,"assert (issame(minPath({{6, 1, 5}, {3, 8, 9}, {2, 7, 4}}, 8) , {1, 5, 1, 5, 1, 5, 1, 5}));",fail
+CPP_129,"assert (issame(minPath({{1, 2}, {3, 4}}, 10) , {1, 2, 1, 2, 1, 2, 1, 2, 1, 2}));",fail
+CPP_129,"assert (issame(minPath({{1, 3}, {3, 2}}, 10) , {1, 3, 1, 3, 1, 3, 1, 3, 1, 3}));",fail
+CPP_130,"assert (issame(tri(3) , {1, 3, 2, 8}));",fail
+CPP_130,"assert (issame(tri(4) , {1, 3, 2, 8, 3}));",fail
+CPP_130,"assert (issame(tri(5) , {1, 3, 2, 8, 3, 15}));",fail
+CPP_130,"assert (issame(tri(6) , {1, 3, 2, 8, 3, 15, 4}));",fail
+CPP_130,"assert (issame(tri(7) , {1, 3, 2, 8, 3, 15, 4, 24}));",fail
+CPP_130,"assert (issame(tri(8) , {1, 3, 2, 8, 3, 15, 4, 24, 5}));",fail
+CPP_130,"assert (issame(tri(9) , {1, 3, 2, 8, 3, 15, 4, 24, 5, 35}));",fail
+CPP_130,"assert (issame(tri(20) , {1, 3, 2, 8, 3, 15, 4, 24, 5, 35, 6, 48, 7, 63, 8, 80, 9, 99, 10, 120, 11}));",fail
+CPP_130,"assert (issame(tri(0) , {1}));",pass
+CPP_130,"assert (issame(tri(1) , {1, 3}));",fail
+CPP_131,assert (digits(5) == 5);,pass
+CPP_131,assert (digits(54) == 5);,pass
+CPP_131,assert (digits(120) ==1);,fail
+CPP_131,assert (digits(5014) == 5);,pass
+CPP_131,assert (digits(98765) == 315);,fail
+CPP_131,assert (digits(5576543) == 2625);,pass
+CPP_131,assert (digits(2468) == 0);,fail
+CPP_132,"assert (is_nested(""[[]]"") == true);",pass
+CPP_132,"assert (is_nested(""[]]]]]]][[[[[]"") == false);",pass
+CPP_132,"assert (is_nested(""[][]"") == false);",pass
+CPP_132,"assert (is_nested((""[]"")) == false);",pass
+CPP_132,"assert (is_nested(""[[[[]]]]"") == true);",pass
+CPP_132,"assert (is_nested(""[]]]]]]]]]]"") == false);",pass
+CPP_132,"assert (is_nested(""[][][[]]"") == true);",pass
+CPP_132,"assert (is_nested(""[[]"") == false);",pass
+CPP_132,"assert (is_nested(""[]]"") == false);",pass
+CPP_132,"assert (is_nested(""[[]][["") == true);",pass
+CPP_132,"assert (is_nested(""[[][]]"") == true);",pass
+CPP_132,"assert (is_nested("""") == false);",pass
+CPP_132,"assert (is_nested(""[[[[[[[["") == false);",pass
+CPP_132,"assert (is_nested(""]]]]]]]]"") == false);",pass
+CPP_133,"assert (sum_squares({1,2,3})==14);",pass
+CPP_133,"assert (sum_squares({1.0,2,3})==14);",pass
+CPP_133,"assert (sum_squares({1,3,5,7})==84);",pass
+CPP_133,"assert (sum_squares({1.4,4.2,0})==29);",fail
+CPP_133,"assert (sum_squares({-2.4,1,1})==6);",pass
+CPP_133,"assert (sum_squares({100,1,15,2})==10230);",pass
+CPP_133,"assert (sum_squares({10000,10000})==200000000);",fail
+CPP_133,"assert (sum_squares({-1.4,4.6,6.3})==75);",pass
+CPP_133,"assert (sum_squares({-1.4,17.9,18.9,19.9})==1086);",pass
+CPP_133,assert (sum_squares({0})==0);,pass
+CPP_133,assert (sum_squares({-1})==1);,pass
+CPP_133,"assert (sum_squares({-1,1,0})==2);",pass
+CPP_134,"assert (check_if_last_char_is_a_letter(""apple"") == false);",pass
+CPP_134,"assert (check_if_last_char_is_a_letter(""apple pi e"") == true);",fail
+CPP_134,"assert (check_if_last_char_is_a_letter(""eeeee"") == false);",pass
+CPP_134,"assert (check_if_last_char_is_a_letter(""A"") == true);",pass
+CPP_134,"assert (check_if_last_char_is_a_letter(""Pumpkin pie "") == false);",pass
+CPP_134,"assert (check_if_last_char_is_a_letter(""Pumpkin pie 1"") == false);",pass
+CPP_134,"assert (check_if_last_char_is_a_letter("""") == false);",pass
+CPP_134,"assert (check_if_last_char_is_a_letter(""eeeee e "") == false);",pass
+CPP_134,"assert (check_if_last_char_is_a_letter(""apple pie"") == false);",pass
+CPP_134,"assert (check_if_last_char_is_a_letter(""apple pi e "") == false);",pass
+CPP_135,"assert (can_arrange({1,2,4,3,5})==3);",pass
+CPP_135,"assert (can_arrange({1,2,4,5})==-1);",pass
+CPP_135,"assert (can_arrange({1,4,2,5,6,7,8,9,10})==2);",fail
+CPP_135,"assert (can_arrange({4,8,5,7,3})==4);",pass
+CPP_135,assert (can_arrange({})==-1);,pass
+CPP_136,"assert (issame(largest_smallest_integers({2, 4, 1, 3, 5, 7}) , {0, 1}));",fail
+CPP_136,"assert (issame(largest_smallest_integers({2, 4, 1, 3, 5, 7, 0}) , {0, 1}));",fail
+CPP_136,"assert (issame(largest_smallest_integers({1, 3, 2, 4, 5, 6, -2}) , {-2, 1}));",pass
+CPP_136,"assert (issame(largest_smallest_integers({4, 5, 3, 6, 2, 7, -7}) , {-7, 2}));",pass
+CPP_136,"assert (issame(largest_smallest_integers({7, 3, 8, 4, 9, 2, 5, -9}) , {-9, 2}));",pass
+CPP_136,"assert (issame(largest_smallest_integers({}) , {0, 0}));",fail
+CPP_136,"assert (issame(largest_smallest_integers({0}) , {0, 0}));",fail
+CPP_136,"assert (issame(largest_smallest_integers({-1, -3, -5, -6}) , {-1, 0}));",fail
+CPP_136,"assert (issame(largest_smallest_integers({-1, -3, -5, -6, 0}) , {-1, 0}));",pass
+CPP_136,"assert (issame(largest_smallest_integers({-6, -4, -4, -3, 1}) , {-3, 1}));",pass
+CPP_136,"assert (issame(largest_smallest_integers({-6, -4, -4, -3, -100, 1}) , {-3, 1}));",pass
+CPP_137,"assert (boost::any_cast<int>(compare_one(1, 2)) == 2);",fail
+CPP_137,"assert (boost::any_cast<double>(compare_one(1, 2.5))== 2.5);",pass
+CPP_137,"assert (boost::any_cast<int>(compare_one(2, 3)) == 3);",fail
+CPP_137,"assert (boost::any_cast<int>(compare_one(5, 6)) == 6);",fail
+CPP_137,"assert (boost::any_cast<string>(compare_one(1, string(""2,3"")))== ""2,3"");",pass
+CPP_137,"assert (boost::any_cast<string>(compare_one(string(""5,1""), string(""6""))) == ""6"");",pass
+CPP_137,"assert (boost::any_cast<string>(compare_one(string(""1""), string(""2""))) == ""2"");",pass
+CPP_137,"assert (boost::any_cast<string>(compare_one(string(""1""), 1)) == ""None"");",fail
+CPP_138,assert (is_equal_to_sum_even(4) == false);,pass
+CPP_138,assert (is_equal_to_sum_even(6) == false);,pass
+CPP_138,assert (is_equal_to_sum_even(8) == true);,pass
+CPP_138,assert (is_equal_to_sum_even(10) == true);,pass
+CPP_138,assert (is_equal_to_sum_even(11) == false);,pass
+CPP_138,assert (is_equal_to_sum_even(12) == true);,pass
+CPP_138,assert (is_equal_to_sum_even(13) == false);,pass
+CPP_138,assert (is_equal_to_sum_even(16) == true);,pass
+CPP_139,assert (special_factorial(4) == 288);,pass
+CPP_139,assert (special_factorial(5) == 34560);,pass
+CPP_139,assert (special_factorial(7) == 125411328000);,pass
+CPP_139,assert (special_factorial(1) == 1);,pass
+CPP_140,"assert (fix_spaces(""Example"") == ""Example"");",pass
+CPP_140,"assert (fix_spaces(""Mudasir Hanif "") == ""Mudasir_Hanif_"");",pass
+CPP_140,"assert (fix_spaces(""Yellow Yellow  Dirty  Fellow"") == ""Yellow_Yellow__Dirty__Fellow"");",pass
+CPP_140,"assert (fix_spaces(""Exa   mple"") == ""Exa-mple"");",fail
+CPP_140,"assert (fix_spaces(""   Exa 1 2 2 mple"") == ""-Exa_1_2_2_mple"");",pass
+CPP_141,"assert (file_name_check(""example.txt"") == ""Yes"");",pass
+CPP_141,"assert (file_name_check(""1example.dll"") == ""No"");",pass
+CPP_141,"assert (file_name_check(""s1sdf3.asd"") == ""No"");",pass
+CPP_141,"assert (file_name_check(""K.dll"") == ""Yes"");",pass
+CPP_141,"assert (file_name_check(""MY16FILE3.exe"") == ""Yes"");",pass
+CPP_141,"assert (file_name_check(""His12FILE94.exe"") == ""No"");",pass
+CPP_141,"assert (file_name_check(""_Y.txt"") == ""No"");",pass
+CPP_141,"assert (file_name_check(""?aREYA.exe"") == ""No"");",pass
+CPP_141,"assert (file_name_check(""/this_is_valid.dll"") == ""No"");",fail
+CPP_141,"assert (file_name_check(""this_is_valid.wow"") == ""No"");",fail
+CPP_141,"assert (file_name_check(""this_is_valid.txt"") == ""Yes"");",pass
+CPP_141,"assert (file_name_check(""this_is_valid.txtexe"") == ""No"");",fail
+CPP_141,"assert (file_name_check(""#this2_i4s_5valid.ten"") == ""No"");",fail
+CPP_141,"assert (file_name_check(""@this1_is6_valid.exe"") == ""No"");",fail
+CPP_141,"assert (file_name_check(""this_is_12valid.6exe4.txt"") == ""No"");",pass
+CPP_141,"assert (file_name_check(""all.exe.txt"") == ""No"");",pass
+CPP_141,"assert (file_name_check(""I563_No.exe"") == ""Yes"");",pass
+CPP_141,"assert (file_name_check(""Is3youfault.txt"") == ""Yes"");",pass
+CPP_141,"assert (file_name_check(""no_one#knows.dll"") == ""Yes"");",fail
+CPP_141,"assert (file_name_check(""1I563_Yes3.exe"") == ""No"");",fail
+CPP_141,"assert (file_name_check(""I563_Yes3.txtt"") == ""No"");",fail
+CPP_141,"assert (file_name_check(""final..txt"") == ""No"");",pass
+CPP_141,"assert (file_name_check(""final132"") == ""No"");",pass
+CPP_141,"assert (file_name_check(""_f4indsartal132."") == ""No"");",pass
+CPP_141,"assert (file_name_check("".txt"") == ""No"");",pass
+CPP_141,"assert (file_name_check(""s."") == ""No"");",pass
+CPP_142,"assert (sum_squares({1,2,3}) == 6);",fail
+CPP_142,"assert (sum_squares({1,4,9}) == 14);",pass
+CPP_142,assert (sum_squares({}) == 0);,pass
+CPP_142,"assert (sum_squares({1,1,1,1,1,1,1,1,1}) == 9);",fail
+CPP_142,"assert (sum_squares({-1,-1,-1,-1,-1,-1,-1,-1,-1}) == -3);",fail
+CPP_142,assert (sum_squares({0}) == 0);,pass
+CPP_142,"assert (sum_squares({-1,-5,2,-1,-5}) == -126);",fail
+CPP_142,"assert (sum_squares({-56,-99,1,0,-2}) == 3030);",pass
+CPP_142,"assert (sum_squares({-1,0,0,0,0,0,0,0,-1}) == 0);",pass
+CPP_142,"assert (sum_squares({-16, -9, -2, 36, 36, 26, -20, 25, -40, 20, -4, 12, -26, 35, 37}) == -14196);",fail
+CPP_142,"assert (sum_squares({-1, -3, 17, -1, -15, 13, -1, 14, -14, -12, -5, 14, -14, 6, 13, 11, 16, 16, 4, 10}) == -1448);",pass
+CPP_143,"assert (words_in_sentence(""This is a test"") == ""is"");",fail
+CPP_143,"assert (words_in_sentence(""lets go for swimming"") == ""go for"");",fail
+CPP_143,"assert (words_in_sentence(""there is no place available here"") == ""there is no place"");",fail
+CPP_143,"assert (words_in_sentence(""Hi I am Hussein"") == ""Hi am Hussein"");",fail
+CPP_143,"assert (words_in_sentence(""go for it"") == ""go for it"");",pass
+CPP_143,"assert (words_in_sentence(""here"") == """");",fail
+CPP_143,"assert (words_in_sentence(""here is"") == ""is"");",fail
+CPP_144,"assert (simplify(""1/5"", ""5/1"") == true);",pass
+CPP_144,"assert (simplify(""1/6"", ""2/1"") == false);",pass
+CPP_144,"assert (simplify(""5/1"", ""3/1"") == true);",pass
+CPP_144,"assert (simplify(""7/10"", ""10/2"") == false);",pass
+CPP_144,"assert (simplify(""2/10"", ""50/10"") == true);",pass
+CPP_144,"assert (simplify(""7/2"", ""4/2"") == true);",pass
+CPP_144,"assert (simplify(""11/6"", ""6/1"") == true);",pass
+CPP_144,"assert (simplify(""2/3"", ""5/2"") == false);",pass
+CPP_144,"assert (simplify(""5/2"", ""3/5"") == false);",pass
+CPP_144,"assert (simplify(""2/4"", ""8/4"") == true);",pass
+CPP_144,"assert (simplify(""2/4"", ""4/2"") == true);",pass
+CPP_144,"assert (simplify(""1/5"", ""5/1"") == true);",pass
+CPP_144,"assert (simplify(""1/5"", ""1/5"") == false);",pass
+CPP_145,"assert (issame(order_by_points({1, 11, -1, -11, -12}) , {-1, -11, 1, -12, 11}));",pass
+CPP_145,"assert (issame(order_by_points({1234,423,463,145,2,423,423,53,6,37,3457,3,56,0,46}) , {0, 2, 3, 6, 53, 423, 423, 423, 1234, 145, 37, 46, 56, 463, 3457}));",pass
+CPP_145,"assert (issame(order_by_points({}) , {}));",pass
+CPP_145,"assert (issame(order_by_points({1, -11, -32, 43, 54, -98, 2, -3}) , {-3, -32, -98, -11, 1, 2, 43, 54}));",pass
+CPP_145,"assert (issame(order_by_points({1,2,3,4,5,6,7,8,9,10,11}) , {1, 10, 2, 11, 3, 4, 5, 6, 7, 8, 9}));",fail
+CPP_145,"assert (issame(order_by_points({0,6,6,-76,-21,23,4}) , {-76, -21, 0, 4, 23, 6, 6}));",fail
+CPP_146,"assert (specialFilter({5, -2, 1, -5}) == 0  );",pass
+CPP_146,"assert (specialFilter({15, -73, 14, -15}) == 1);",pass
+CPP_146,"assert (specialFilter({33, -2, -3, 45, 21, 109}) == 2);",pass
+CPP_146,"assert (specialFilter({43, -12, 93, 125, 121, 109}) == 4);",pass
+CPP_146,"assert (specialFilter({71, -2, -33, 75, 21, 19}) == 3);",pass
+CPP_146,assert (specialFilter({1}) == 0              );,pass
+CPP_146,assert (specialFilter({}) == 0                   );,pass
+CPP_147,assert (get_matrix_triples(5) == 1);,fail
+CPP_147,assert (get_matrix_triples(6) == 4);,fail
+CPP_147,assert (get_matrix_triples(10) == 36);,fail
+CPP_147,assert (get_matrix_triples(100) == 53361);,fail
+CPP_148,"assert (issame(bf(""Jupiter"", ""Neptune"") , {""Saturn"", ""Uranus""}));",fail
+CPP_148,"assert (issame(bf(""Earth"", ""Mercury"") , {""Venus"",}));",pass
+CPP_148,"assert (issame(bf(""Mercury"", ""Uranus"") , {""Venus"", ""Earth"", ""Mars"", ""Jupiter"", ""Saturn""}));",fail
+CPP_148,"assert (issame(bf(""Neptune"", ""Venus"") , {""Earth"", ""Mars"", ""Jupiter"", ""Saturn"", ""Uranus""}));",fail
+CPP_148,"assert (issame(bf(""Earth"", ""Earth"") , {}));",pass
+CPP_148,"assert (issame(bf(""Mars"", ""Earth"") , {}));",fail
+CPP_148,"assert (issame(bf(""Jupiter"", ""Makemake"") , {}));",fail
+CPP_149,"assert (issame(sorted_list_sum({""aa"", ""a"", ""aaa""}) , {""aa""}));",pass
+CPP_149,"assert (issame(sorted_list_sum({""school"", ""AI"", ""asdf"", ""b""}) , {""AI"", ""asdf"", ""school""}));",pass
+CPP_149,"assert (issame(sorted_list_sum({""d"", ""b"", ""c"", ""a""}) , {}));",fail
+CPP_149,"assert (issame(sorted_list_sum({""d"", ""dcba"", ""abcd"", ""a""}) , {""abcd"", ""dcba""}));",pass
+CPP_149,"assert (issame(sorted_list_sum({""AI"", ""ai"", ""au""}) , {""AI"", ""ai"", ""au""}));",pass
+CPP_149,"assert (issame(sorted_list_sum({""a"", ""b"", ""b"", ""c"", ""c"", ""a""}) , {}));",fail
+CPP_149,"assert (issame(sorted_list_sum({""aaaa"", ""bbbb"", ""dd"", ""cc""}) , {""cc"", ""dd"", ""aaaa"", ""bbbb""}));",pass
+CPP_150,"assert (x_or_y(7, 34, 12) == 34);",pass
+CPP_150,"assert (x_or_y(15, 8, 5) == 5);",pass
+CPP_150,"assert (x_or_y(3, 33, 5212) == 33);",pass
+CPP_150,"assert (x_or_y(1259, 3, 52) == 3);",pass
+CPP_150,"assert (x_or_y(7919, -1, 12) == -1);",pass
+CPP_150,"assert (x_or_y(3609, 1245, 583) == 583);",pass
+CPP_150,"assert (x_or_y(91, 56, 129) == 129);",pass
+CPP_150,"assert (x_or_y(6, 34, 1234) == 1234);",pass
+CPP_150,"assert (x_or_y(1, 2, 0) == 0);",pass
+CPP_150,"assert (x_or_y(2, 2, 0) == 2);",pass
+CPP_151,assert (double_the_difference({}) == 0);,pass
+CPP_151,"assert (double_the_difference({5, 4}) == 25);",pass
+CPP_151,"assert (double_the_difference({0.1, 0.2, 0.3}) == 0 );",fail
+CPP_151,"assert (double_the_difference({-10, -20, -30}) == 0 );",pass
+CPP_151,"assert (double_the_difference({-1, -2, 8}) == 0);",pass
+CPP_151,"assert (double_the_difference({0.2, 3, 5}) == 34);",fail
+CPP_151,assert (double_the_difference(lst) == odd_sum );,fail
+CPP_152,"assert (issame(compare({1,2,3,4,5,1},{1,2,3,4,2,-2}),{0,0,0,0,3,3}));",fail
+CPP_152,"assert (issame(compare({0,5,0,0,0,4},{4,1,1,0,0,-2}),{4,4,1,0,0,6}));",fail
+CPP_152,"assert (issame(compare({1,2,3,4,5,1},{1,2,3,4,2,-2}),{0,0,0,0,3,3}));",fail
+CPP_152,"assert (issame(compare({0,0,0,0,0,0},{0,0,0,0,0,0}),{0,0,0,0,0,0}));",pass
+CPP_152,"assert (issame(compare({1,2,3},{-1,-2,-3}),{2,4,6}));",fail
+CPP_152,"assert (issame(compare({1,2,3,5},{-1,2,3,4}),{2,0,0,1}));",fail
+CPP_153,"assert (Strongest_Extension(""Watashi"", {""tEN"", ""niNE"", ""eIGHt8OKe""}) == ""Watashi.eIGHt8OKe"");",pass
+CPP_153,"assert (Strongest_Extension(""Boku123"", {""nani"", ""NazeDa"", ""YEs.WeCaNe"", ""32145tggg""}) == ""Boku123.YEs.WeCaNe"");",pass
+CPP_153,"assert (Strongest_Extension(""__YESIMHERE"", {""t"", ""eMptY"", ""(nothing"", ""zeR00"", ""NuLl__"", ""123NoooneB321""}) == ""__YESIMHERE.NuLl__"");",fail
+CPP_153,"assert (Strongest_Extension(""K"", {""Ta"", ""TAR"", ""t234An"", ""cosSo""}) == ""K.TAR"");",fail
+CPP_153,"assert (Strongest_Extension(""__HAHA"", {""Tab"", ""123"", ""781345"", ""-_-""}) == ""__HAHA.123"");",fail
+CPP_153,"assert (Strongest_Extension(""YameRore"", {""HhAas"", ""okIWILL123"", ""WorkOut"", ""Fails"", ""-_-""}) == ""YameRore.okIWILL123"");",fail
+CPP_153,"assert (Strongest_Extension(""finNNalLLly"", {""Die"", ""NowW"", ""Wow"", ""WoW""}) == ""finNNalLLly.WoW"");",pass
+CPP_153,"assert (Strongest_Extension(""_"", {""Bb"", ""91245""}) == ""_.Bb"");",fail
+CPP_153,"assert (Strongest_Extension(""Sp"", {""671235"", ""Bb""}) == ""Sp.671235"");",fail
+CPP_154,"assert  (cycpattern_check(""xyzw"",""xyw"") == false );",pass
+CPP_154,"assert  (cycpattern_check(""yello"",""ell"") == true );",pass
+CPP_154,"assert  (cycpattern_check(""whattup"",""ptut"") == false );",pass
+CPP_154,"assert  (cycpattern_check(""efef"",""fee"") == true );",pass
+CPP_154,"assert  (cycpattern_check(""abab"",""aabb"") == false );",pass
+CPP_154,"assert  (cycpattern_check(""winemtt"",""tinem"") == true );",pass
+CPP_155,"assert (issame(even_odd_count(7) , {0, 1}));",pass
+CPP_155,"assert (issame(even_odd_count(-78) , {1, 1}));",pass
+CPP_155,"assert (issame(even_odd_count(3452) , {2, 2}));",pass
+CPP_155,"assert (issame(even_odd_count(346211) , {3, 3}));",fail
+CPP_155,"assert (issame(even_odd_count(-345821) , {3, 3}));",fail
+CPP_155,"assert (issame(even_odd_count(-2) , {1, 0}));",pass
+CPP_155,"assert (issame(even_odd_count(-45347) , {2, 3}));",pass
+CPP_155,"assert (issame(even_odd_count(0) , {1, 0}));",fail
+CPP_156,"assert (int_to_mini_romank(19) == ""xix"");",pass
+CPP_156,"assert (int_to_mini_romank(152) == ""clii"");",pass
+CPP_156,"assert (int_to_mini_romank(251) == ""ccli"");",pass
+CPP_156,"assert (int_to_mini_romank(426) == ""cdxxvi"");",pass
+CPP_156,"assert (int_to_mini_romank(500) == ""d"");",pass
+CPP_156,"assert (int_to_mini_romank(1) == ""i"");",pass
+CPP_156,"assert (int_to_mini_romank(4) == ""iv"");",pass
+CPP_156,"assert (int_to_mini_romank(43) == ""xliii"");",pass
+CPP_156,"assert (int_to_mini_romank(90) == ""xc"");",pass
+CPP_156,"assert (int_to_mini_romank(94) == ""xciv"");",pass
+CPP_156,"assert (int_to_mini_romank(532) == ""dxxxii"");",pass
+CPP_156,"assert (int_to_mini_romank(900) == ""cm"");",pass
+CPP_156,"assert (int_to_mini_romank(994) == ""cmxciv"");",pass
+CPP_156,"assert (int_to_mini_romank(1000) == ""m"");",pass
+CPP_157,"assert (right_angle_triangle(3, 4, 5) == true);",pass
+CPP_157,"assert (right_angle_triangle(1, 2, 3) == false);",pass
+CPP_157,"assert (right_angle_triangle(10, 6, 8) == true);",pass
+CPP_157,"assert (right_angle_triangle(2, 2, 2) == false);",pass
+CPP_157,"assert (right_angle_triangle(7, 24, 25) == true);",pass
+CPP_157,"assert (right_angle_triangle(10, 5, 7) == false);",pass
+CPP_157,"assert (right_angle_triangle(5, 12, 13) == true);",pass
+CPP_157,"assert (right_angle_triangle(15, 8, 17) == true);",pass
+CPP_157,"assert (right_angle_triangle(48, 55, 73) == true);",pass
+CPP_157,"assert (right_angle_triangle(1, 1, 1) == false);",pass
+CPP_157,"assert (right_angle_triangle(2, 2, 10) == false);",pass
+CPP_158,"assert ((find_max({""name"", ""of"", ""string""}) == ""string""));",pass
+CPP_158,"assert ((find_max({""name"", ""enam"", ""game""}) == ""enam""));",pass
+CPP_158,"assert ((find_max({""aaaaaaa"", ""bb"", ""cc""}) == ""aaaaaaa""));",pass
+CPP_158,"assert ((find_max({""abc"", ""cba""}) == ""abc""));",pass
+CPP_158,"assert ((find_max({""play"", ""this"", ""game"", ""of"",""footbott""}) == ""footbott""));",pass
+CPP_158,"assert ((find_max({""we"", ""are"", ""gonna"", ""rock""}) == ""gonna""));",pass
+CPP_158,"assert ((find_max({""we"", ""are"", ""a"", ""mad"", ""nation""}) == ""nation""));",pass
+CPP_158,"assert ((find_max({""this"", ""is"", ""a"", ""prrk""}) == ""this""));",fail
+CPP_158,"assert ((find_max({""b""}) == ""b""));",pass
+CPP_158,"assert ((find_max({""play"", ""play"", ""play""}) == ""play""));",pass
+CPP_159,"assert (issame(eat(5, 6, 10) , {11, 4}));",fail
+CPP_159,"assert (issame(eat(4, 8, 9) , {12, 1}));",fail
+CPP_159,"assert (issame(eat(1, 10, 10) , {11, 0}));",fail
+CPP_159,"assert (issame(eat(2, 11, 5) , {7, 0}));",fail
+CPP_159,"assert (issame(eat(4, 5, 7) , {9, 2}));",fail
+CPP_159,"assert (issame(eat(4, 5, 1) , {5, 0}));",fail
+CPP_160,"assert (do_algebra({""**"", ""*"", ""+""}, {2, 3, 4, 5}) == 37);",fail
+CPP_160,"assert (do_algebra({""+"", ""*"", ""-""}, {2, 3, 4, 5}) == 9);",fail
+CPP_160,"assert (do_algebra({""//"", ""*""}, {7, 3, 4}) == 8);",pass
+CPP_161,"assert (solve(""AsDf"") == ""aSdF"");",pass
+CPP_161,"assert (solve(""1234"") == ""4321"");",pass
+CPP_161,"assert (solve(""ab"") == ""AB"");",pass
+CPP_161,"assert (solve(""#a@C"") == ""#A@c"");",pass
+CPP_161,"assert (solve(""#AsdfW^45"") == ""#aSDFw^45"");",fail
+CPP_161,"assert (solve(""#6@2"") == ""2@6#"");",fail
+CPP_161,"assert (solve(""#$a^D"") == ""#$A^d"");",fail
+CPP_161,"assert (solve(""#ccc"") == ""#CCC"");",pass
+CPP_162,"assert (string_to_md5(""Hello world"") == ""3e25960a79dbc69b674cd4ec67a72c62"");",pass
+CPP_162,"assert (string_to_md5("""") == ""None"");",fail
+CPP_162,"assert (string_to_md5(""A B C"") == ""0ef78513b0cb8cef12743f5aeb35f888"");",fail
+CPP_162,"assert (string_to_md5(""password"") == ""5f4dcc3b5aa765d61d8327deb882cf99"");",pass
+CPP_163,"assert (issame(generate_integers(2, 10) , {2, 4, 6, 8}));",fail
+CPP_163,"assert (issame(generate_integers(10, 2) , {2, 4, 6, 8}));",fail
+CPP_163,"assert (issame(generate_integers(132, 2) , {2, 4, 6, 8}));",fail
+CPP_163,"assert (issame(generate_integers(17,89) , {}));",fail
